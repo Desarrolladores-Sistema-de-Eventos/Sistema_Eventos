@@ -1,0 +1,128 @@
+
+# Guía de Contribución
+
+Este documento describe cómo colaboramos en el equipo, seguimos buenas prácticas de control de versiones y simulamos un entorno profesional con Jira y GitHub.
+
+---
+## 🧩 Estructura del Trabajo Colaborativo
+
+- Cada integrante trabaja en una **rama independiente**.
+- Utilizamos **Gitflow** para organizar el flujo de trabajo: `main`, `develop`, `feature/*`, `hotfix/*`.
+- Se deben hacer **commits claros y frecuentes**.
+- Todo cambio debe pasar por un **pull request** con revisión de al menos otro miembro.
+- Se asignan tareas y cambios vía **issues en GitHub** y **tickets en Jira**.
+
+
+## 👨‍💻 Flujo de Trabajo
+
+Utilizamos el modelo **Gitflow**, con las siguientes ramas:
+
+- `main`: Versión estable de la aplicación.
+- `develop`: Integración continua de funcionalidades.
+- `feature/nombre-funcion`: Funcionalidades nuevas.
+- `bugfix/nombre-error`: Corrección de errores.
+- `hotfix/urgente`: Cambios urgentes a producción.
+
+---
+## 🛠️ Proceso de Control de Cambios
+
+1. Crear un issue en GitHub o ticket en Jira para documentar el cambio.
+2. Asignar el issue a un desarrollador y crear una rama `feature/nombre`.
+3. Hacer los cambios localmente y realizar commits.
+4. Subir la rama al repositorio remoto y hacer un pull request.
+5. Revisar el código en equipo y aprobar la fusión.
+6. El comité de control de cambios (2 miembros del equipo) verifica y aprueba cambios mayores.
+
+## 🧠 Herramientas Utilizadas
+
+- **Git** y **GitHub**: control de versiones, issues y pull requests.
+- **Jira Service Management**: control de cambios, asignación de tareas, flujo de estados.
+
+Cada cambio debe iniciar en **Jira**, vincularse a un **issue en GitHub**, y finalizar en un **pull request** aprobado.
+
+---
+
+## 🛠️ Cómo Contribuir
+
+1. **Crea un ticket de cambio en Jira** (tipo: Tarea, Bug, Mejora).
+2. Asócialo con un **issue en GitHub** y asígnate la tarea.
+3. Crea una nueva rama:  
+   ```bash
+   git checkout -b feature/nombre-cambio
+   ```
+4. Realiza los cambios localmente con **commits claros y frecuentes**:
+   ```bash
+   git commit -m "[Feature]: Agregada validación de inscripción"
+   ```
+5. Sube tu rama al repositorio remoto:
+   ```bash
+   git push origin feature/nombre-cambio
+   ```
+6. Abre un **Pull Request** a `develop`, con referencia al issue y Jira.
+7. Otro miembro del equipo debe **revisar y aprobar**.
+8. El comité de control de cambios (2 miembros) valida cambios mayores.
+
+---
+
+## ✍️ Convención de Commits
+
+Formato recomendado:
+```
+[Tipo]: Descripción clara del cambio
+```
+
+Ejemplos:
+- `[Feature]: Registro de nuevos participantes`
+- `[Fix]: Corregido error en la carga del comprobante`
+- `[Docs]: Actualizado README con capturas`
+
+Tipos comunes:
+- `Feature`
+- `Fix`
+- `Docs`
+- `Refactor`
+- `Style`
+- `Test`
+
+---
+
+## 🔎 Revisión de Código
+
+- Cada Pull Request debe ser revisado por al menos 1 integrante.
+- Revisar nombres de funciones, limpieza del código, modularidad.
+- Añadir comentarios si se requieren ajustes o explicaciones.
+
+---
+
+## 🧪 Pruebas
+
+- Todo módulo debe incluir pruebas unitarias o de integración.
+- Las pruebas se deben ubicar en el directorio `/test`.
+- Verifica que no se rompa funcionalidad existente antes de fusionar.
+
+---
+
+## 📋 Documentación
+
+- Documentar cada cambio relevante en `/docs`.
+- Usar comentarios en código donde sea necesario.
+- Mantener actualizados los diagramas, si se modifica la estructura.
+
+---
+
+## 🧑‍⚖️ Comité de Control de Cambios
+
+- El equipo cuenta con 2 miembros encargados de **revisar y aprobar** cambios importantes o estructurales.
+- Ellos validan decisiones antes de fusionar a `main`.
+
+---
+
+## 📌 Enlaces Relevantes
+
+- 🔗 [Repositorio GitHub](https://github.com/usuario/proyecto-eventos)
+- 🔗 [Tablero Jira - Cambios y Tareas](https://tu-enlace-de-jira)
+- 📄 [README.md](./README.md)
+
+---
+
+Para cualquier duda o sugerencia, puedes abrir un issue o comunicarte con cualquier miembro del equipo.
