@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CTT - Verificar Certificado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .top-bar {
+      background-color: #941c1c;
+      color: white;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+    .btn-primary-custom {
+      background-color: #941c1c;
+      border-color: #941c1c;
+    }
+    .btn-primary-custom:hover {
+      background-color: #7b1616;
+      border-color: #7b1616;
+    }
+    footer {
+      background-color: #222;
+      color: #fff;
+      padding: 2rem 1rem;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <div class="top-bar text-start">
+    📧 Correo electrónico: ctt.fisei@uta.edu.ec; talleresfisei@uta.edu.ec
+  </div>
+
+  <!-- Contenido principal -->
+  <main class="container text-center my-5">
+    <img src="logo-fisei.png" alt="Logo FISEI" style="max-height: 80px;" class="mb-4">
+
+    <h2 class="fw-bold">CTT - Talleres Tecnológicos FISEI</h2>
+    <p class="mb-4">Ingrese su código para verificar su certificado</p>
+
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <form>
+          <div class="mb-3 text-start">
+            <label for="codigo" class="form-label">Código</label>
+            <input type="text" class="form-control" id="codigo" placeholder="Ej. ABC123456">
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary-custom">Verificar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-5">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <img src="logo-fisei.png" alt="Logo FISEI" style="max-height: 60px;" class="mb-2">
+        <p>
+          Los progresos dentro de los talleres deben dar respuesta a las necesidades propias del contexto y a la ciudadanía en general, a través de un enfoque multidisciplinar.
+        </p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Información</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">Universidad Técnica de Ambato</a></li>
+          <li><a href="#">Facultad de Ingeniería en Sistemas, Electrónica e Industrial</a></li>
+          <li><a href="#">Centro de Transferencia y Desarrollo de Tecnologías FISEI</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Contacta</h5>
+        <p>
+          Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi<br>
+          📧 <a href="mailto:ctt.fisei@uta.edu.ec">ctt.fisei@uta.edu.ec</a><br>
+          📧 <a href="mailto:talleresfisei@uta.edu.ec">talleresfisei@uta.edu.ec</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
