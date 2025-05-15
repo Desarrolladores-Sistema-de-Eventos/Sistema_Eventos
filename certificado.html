@@ -63,33 +63,17 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="mt-5">
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <img src="logo-fisei.png" alt="Logo FISEI" style="max-height: 60px;" class="mb-2">
-        <p>
-          Los progresos dentro de los talleres deben dar respuesta a las necesidades propias del contexto y a la ciudadanía en general, a través de un enfoque multidisciplinar.
-        </p>
-      </div>
-      <div class="col-md-4 mb-3">
-        <h5>Información</h5>
-        <ul class="list-unstyled">
-          <li><a href="#">Universidad Técnica de Ambato</a></li>
-          <li><a href="#">Facultad de Ingeniería en Sistemas, Electrónica e Industrial</a></li>
-          <li><a href="#">Centro de Transferencia y Desarrollo de Tecnologías FISEI</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4 mb-3">
-        <h5>Contacta</h5>
-        <p>
-          Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi<br>
-          📧 <a href="mailto:ctt.fisei@uta.edu.ec">ctt.fisei@uta.edu.ec</a><br>
-          📧 <a href="mailto:talleresfisei@uta.edu.ec">talleresfisei@uta.edu.ec</a>
-        </p>
-      </div>
-    </div>
-  </footer>
+   <!-- Footer Start -->
+    <div id="footer-placeholder"></div>
+    <script>
+      fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+    <!-- Footer End -->
+
 
 </body>
 </html>
