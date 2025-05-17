@@ -9,6 +9,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
         .topbar {
@@ -91,7 +93,7 @@
     <!-- Header -->
     <div class="container my-4">
         <div class="d-flex align-items-center mb-4">
-            <img src="img/sello_UTA.jpg" alt="Logo" class="mr-3" style="height: 70px;">
+            <img src="../public/img/sello_UTA.jpg" alt="Logo" class="mr-3" style="height: 70px;">
             <div>
                 <h6 class="mb-0 text-uppercase font-weight-bold text-danger">FACULTAD DE INGENIERÍA EN</h6>
                 <h4 class="mb-1 font-weight-bold text-danger">SISTEMAS, ELECTRÓNICA E INDUSTRIAL</h4>
@@ -118,46 +120,13 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <img src="img/sello_UTA.jpg" alt="Logo" class="footer-logo mb-2">
-                    <p>Los progresos dentro de los talleres deben dar respuesta a las necesidades propias del contexto y a la ciudadanía en general, a través de un enfoque multidisciplinar.</p>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5>Información</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Universidad Técnica de Ambato</a></li>
-                        <li><a href="#">Facultad de Ingeniería en Sistemas</a></li>
-                        <li><a href="#">Centro de Transferencia y Desarrollo</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5>Contacta</h5>
-                    <p>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi</p>
-                    <p>📧 <a href="mailto:fisei@uta.edu.ec">fisei@uta.edu.ec</a></p>
-                    <p>📧 <a href="mailto:universidad_tecnica@uta.edu.ec">universidad_tecnica@uta.edu.ec</a></p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
-        document.getElementById("verificacionForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const codigo = document.getElementById("codigo").value.trim();
-            const resultado = document.getElementById("resultado");
-
-            if (codigo === "CTT2024-001") {
-                resultado.innerHTML = `<div class="alert alert-success">✔️ Comprobante válido. <a href="certificados/CTT2024-001.pdf" target="_blank">Descargar comprobante</a></div>`;
-            } else {
-                resultado.innerHTML = `<div class="alert alert-danger">❌ Código inválido o no encontrado.</div>`;
-            }
-        });
-    </script>
+<!-- Footer -->
+ <?php include('partials/footer.php'); ?>
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>    
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/js/all.min.js"></script>
 
 </body>
 </html>
