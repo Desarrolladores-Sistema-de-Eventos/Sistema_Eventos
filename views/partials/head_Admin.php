@@ -27,8 +27,8 @@
         <li class="text-center">
           <img src="../public/assets/img/find_user.png" class="user-image img-responsive" />
         </li>
-        <li><a href="dashboard_page.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
-        <li><a href="eventos_page.php"><i class="fa fa-calendar fa-3x"></i> Eventos</a></li>
+        <li><a href="#"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
+        <li><a href="#"><i class="fa fa-calendar fa-3x"></i> Eventos</a></li>
         <li><a href="#"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
         <li><a href="#"><i class="fa fa-edit fa-3x"></i> Inscripciones</a></li>
         <li><a href="#"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>

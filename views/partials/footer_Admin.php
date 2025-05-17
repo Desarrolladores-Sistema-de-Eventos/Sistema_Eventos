@@ -1,5 +1,4 @@
-</div> <!-- Cierre de page-wrapper -->
-</div> <!-- Cierre de wrapper -->
+
 <script src="../public/assets/js/jquery-1.10.2.js"></script>
 <script src="../public/assets/js/bootstrap.min.js"></script>
 <script src="../public/assets/js/jquery.metisMenu.js"></script>
