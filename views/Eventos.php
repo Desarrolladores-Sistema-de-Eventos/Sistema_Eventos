@@ -124,6 +124,12 @@
 <?php include("partials/footer_Admin.php"); ?>
 
 <script>
+// 👉 Mostrar u ocultar el campo "Costo" según si es pagado
+function toggleCosto() {
+    const esPagado = document.getElementById("espagado").value;
+    const grupoCosto = document.getElementById("grupoCosto");
+    grupoCosto.style.display = esPagado === "1" ? "block" : "none";
+}
 
 // 👉 Función vacía para editar (la usarás cuando conectes con el backend)
 function editarEvento(evento) {
@@ -139,6 +145,9 @@ function editarEvento(evento) {
     document.getElementById("espagado").value = evento.espagado;
     document.getElementById("costo").value = evento.costo;
     document.getElementById("internos").value = evento.internos;
+
+    toggleCosto(); // ajustar el campo costo en modo edición
+
     document.querySelector("#formEvento button").textContent = "Actualizar Evento";
 }
 
