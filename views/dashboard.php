@@ -5,8 +5,10 @@
 <div id="page-wrapper">
 <div id="page-inner">
 
-<h2 style="color: red;">Titulo de su CRUD</h2>
-<h5>Descripcion</h5>
+<h2 style="color: red;">Crear/Añadir Usuarios</h2>
+<h5>Listar todos los usuarios con paginación.
+Crear/editar usuario.
+Iconos para editar/borrar.</h5>
 <hr />
 
 <!-- Tu contenido -->
