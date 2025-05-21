@@ -1,0 +1,66 @@
+:root {
+  --primary: #4a90e2;
+  --dark: #333;
+  --light: #f9f9f9;
+  --gray: #ddd;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--light);
+  color: var(--dark);
+}
+
+.main-title {
+  color: var(--primary);
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.main-subtitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+
+.btn-group .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.stat-title {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.table thead {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.filter-group .form-control,
+.filter-group .btn {
+  min-width: 180px;
+}
