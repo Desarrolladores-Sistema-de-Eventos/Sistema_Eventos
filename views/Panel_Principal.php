@@ -137,28 +137,29 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <script>
   lucide.createIcons();
-</script>
 
-<!-- Aquí podrías pegar directamente el código JS de panel_charts_dynamic.js si no quieres separarlo -->
-<script>
-// Ejemplo básico de interacción con botones
-document.getElementById('btnMenuUsuarios').onclick = () => {
-  document.querySelectorAll('#contentUsuarios, #contentTablas, #contentEstadisticas, #contentEstudiantes').forEach(div => div.style.display = 'none');
-  document.getElementById('contentUsuarios').style.display = 'block';
-};
+  const hideAll = () => {
+    document.querySelectorAll('#contentUsuarios, #contentTablas, #contentEstadisticas, #contentEstudiantes')
+      .forEach(div => div.style.display = 'none');
+  };
 
-document.getElementById('btnMenuTablas').onclick = () => {
-  document.querySelectorAll('#contentUsuarios, #contentTablas, #contentEstadisticas, #contentEstudiantes').forEach(div => div.style.display = 'none');
-  document.getElementById('contentTablas').style.display = 'block';
-};
+  document.getElementById('btnMenuUsuarios').onclick = () => {
+    hideAll();
+    document.getElementById('contentUsuarios').style.display = 'block';
+  };
 
-document.getElementById('btnMenuEstadisticas').onclick = () => {
-  document.querySelectorAll('#contentUsuarios, #contentTablas, #contentEstadisticas, #contentEstudiantes').forEach(div => div.style.display = 'none');
-  document.getElementById('contentEstadisticas').style.display = 'block';
-};
+  document.getElementById('btnMenuTablas').onclick = () => {
+    hideAll();
+    document.getElementById('contentTablas').style.display = 'block';
+  };
 
-document.getElementById('btnMenuEstudiantes').onclick = () => {
-  document.querySelectorAll('#contentUsuarios, #contentTablas, #contentEstadisticas, #contentEstudiantes').forEach(div => div.style.display = 'none');
-  document.getElementById('contentEstudiantes').style.display = 'block';
-};
+  document.getElementById('btnMenuEstadisticas').onclick = () => {
+    hideAll();
+    document.getElementById('contentEstadisticas').style.display = 'block';
+  };
+
+  document.getElementById('btnMenuEstudiantes').onclick = () => {
+    hideAll();
+    document.getElementById('contentEstudiantes').style.display = 'block';
+  };
 </script>
