@@ -8,6 +8,7 @@
   <link href="../public/assets/css/font-awesome.css" rel="stylesheet" />
   <link href="../public/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
   <link href="../public/assets/css/custom.css" rel="stylesheet" />
+  <link href="../public/assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 <body>
@@ -24,9 +25,6 @@
   <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
       <ul class="nav" id="main-menu">
-        <li class="text-center">
-          <img src="../public/assets/img/find_user.png" class="user-image img-responsive" />
-        </li>
         <li><a href="#"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
         <li><a href="#"><i class="fa fa-calendar fa-3x"></i> Eventos</a></li>
         <li><a href="#"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
