@@ -1,0 +1,146 @@
+:root {
+  --primary: #d32f2f;    /* Rojo */
+  --secondary: #388e3c;  /* Verde */
+  --dark: #000000;       /* Negro */
+  --light: #f5f5f5;      /* Fondo claro */
+  --gray: #cccccc;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--light);
+  color: var(--dark);
+  overflow-y: auto; /* Permite scroll global */
+}
+
+#page-wrapper {
+  display: flex;
+  min-height: 100vh;
+    height: auto;
+
+}
+
+#sidebar {
+  width: 250px;
+  background-color: var(--primary);
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+    padding: 20px;
+
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  height: auto;
+
+  height: 100vh;
+  min-height: auto;
+  position: sticky;
+}
+#page-inner {
+  margin-left: 30px; /* Compensa el ancho del sidebar */
+  padding: 20px 30px;
+  width: 1100px;
+  height: auto;
+  box-sizing: border-box;
+  overflow-y: auto; /* Scroll solo para contenido largo dentro */
+}
+
+
+.main-title {
+  color: var(--primary);
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.main-subtitle {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+
+.btn-group {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.btn-group .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn.btn-primary {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn.btn-primary:hover {
+  background-color: #2e7d32;
+}
+
+.btn.btn-outline-primary:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.stat-title {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.table thead {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.filter-group .form-control {
+  min-width: 130px;
+  max-width: 160px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.filter-group .btn {
+  min-width: 110px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
