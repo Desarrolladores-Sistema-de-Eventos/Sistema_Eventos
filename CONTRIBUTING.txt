@@ -4,6 +4,19 @@
 Este documento describe cómo colaboramos en el equipo, seguimos buenas prácticas de control de versiones y simulamos un entorno profesional con Jira y GitHub.
 
 ---
+## 📊 Dashboard en Jira
+
+Puedes acceder al tablero de seguimiento y control de cambios del proyecto en el siguiente enlace:
+
+🔗 Dashboard de Jira - Gestión de Cambios(https://cristian-jurado.atlassian.net/jira/software/projects/GDEA/list)
+
+Este panel contiene:
+- Peticiones de cambio
+- Asignación de tareas
+- Flujo de estados
+- Evidencia del proceso colaborativo
+
+---
 ## 🧩 Estructura del Trabajo Colaborativo
 
 - Cada integrante trabaja en una **rama independiente**.
@@ -22,6 +35,7 @@ Utilizamos el modelo **Gitflow**, con las siguientes ramas:
 - `feature/nombre-funcion`: Funcionalidades nuevas.
 - `bugfix/nombre-error`: Corrección de errores.
 - `hotfix/urgente`: Cambios urgentes a producción.
+- `release/V1.0.0`: Lanzamiento de versiones.
 
 ---
 ## 🛠️ Proceso de Control de Cambios
@@ -31,7 +45,7 @@ Utilizamos el modelo **Gitflow**, con las siguientes ramas:
 3. Hacer los cambios localmente y realizar commits.
 4. Subir la rama al repositorio remoto y hacer un pull request.
 5. Revisar el código en equipo y aprobar la fusión.
-6. El comité de control de cambios (2 miembros del equipo) verifica y aprueba cambios mayores.
+6. El comité de control de cambios verifica y aprueba cambios mayores.
 
 ## 🧠 Herramientas Utilizadas
 
@@ -39,28 +53,6 @@ Utilizamos el modelo **Gitflow**, con las siguientes ramas:
 - **Jira Service Management**: control de cambios, asignación de tareas, flujo de estados.
 
 Cada cambio debe iniciar en **Jira**, vincularse a un **issue en GitHub**, y finalizar en un **pull request** aprobado.
-
----
-
-## 🛠️ Cómo Contribuir
-
-1. **Crea un ticket de cambio en Jira** (tipo: Tarea, Bug, Mejora).
-2. Asócialo con un **issue en GitHub** y asígnate la tarea.
-3. Crea una nueva rama:  
-   ```bash
-   git checkout -b feature/nombre-cambio
-   ```
-4. Realiza los cambios localmente con **commits claros y frecuentes**:
-   ```bash
-   git commit -m "[Feature]: Agregada validación de inscripción"
-   ```
-5. Sube tu rama al repositorio remoto:
-   ```bash
-   git push origin feature/nombre-cambio
-   ```
-6. Abre un **Pull Request** a `develop`, con referencia al issue y Jira.
-7. Otro miembro del equipo debe **revisar y aprobar**.
-8. El comité de control de cambios (2 miembros) valida cambios mayores.
 
 ---
 
@@ -79,11 +71,6 @@ Ejemplos:
 Tipos comunes:
 - `Feature`
 - `Fix`
-- `Docs`
-- `Refactor`
-- `Style`
-- `Test`
-
 ---
 
 ## 🔎 Revisión de Código
@@ -96,18 +83,7 @@ Tipos comunes:
 
 ## 🧪 Pruebas
 
-- Todo módulo debe incluir pruebas unitarias o de integración.
-- Las pruebas se deben ubicar en el directorio `/test`.
-- Verifica que no se rompa funcionalidad existente antes de fusionar.
-
----
-
-## 📋 Documentación
-
-- Documentar cada cambio relevante en `/docs`.
-- Usar comentarios en código donde sea necesario.
-- Mantener actualizados los diagramas, si se modifica la estructura.
-
+- Todo módulo se verifica que no se rompa funcionalidad existente antes de fusionar.
 ---
 
 ## 🧑‍⚖️ Comité de Control de Cambios
@@ -116,13 +92,3 @@ Tipos comunes:
 - Ellos validan decisiones antes de fusionar a `main`.
 
 ---
-
-## 📌 Enlaces Relevantes
-
-- 🔗 [Repositorio GitHub](https://github.com/usuario/proyecto-eventos)
-- 🔗 [Tablero Jira - Cambios y Tareas](https://tu-enlace-de-jira)
-- 📄 [README.md](./README.md)
-
----
-
-Para cualquier duda o sugerencia, puedes abrir un issue o comunicarte con cualquier miembro del equipo.

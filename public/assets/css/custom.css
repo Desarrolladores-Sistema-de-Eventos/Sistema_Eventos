@@ -12,27 +12,33 @@
 /*==============================================
     GENERAL  STYLES    
     =============================================*/
-body {
+
+    body {
     font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+  
 }
 
  #wrapper {
     width: 100%;
     background:#202020;
+   
+    
 }
 
 #page-wrapper {
     padding: 15px 15px;
     min-height: 600px;
-    background:#F3F3F3;
-   
+    background:#F3F3F3;  
 }
 #page-inner {
-    width:100%;
-    margin:10px 20px 10px 0px;
-    background-color:#fff!important;
-    padding:10px;
-    min-height:1200px;
+    width: 100%;
+    height: 520px;          
+    overflow-y: auto;       
+    overflow-x: hidden;   
+    padding: 10px;
+    background-color: #fff;
+    flex: 1;                
 }
 
 .text-center {
@@ -243,23 +249,25 @@ font-weight: 700;
 .nav-third-level li a {
     padding-left: 55px;
 }
+
 .sidebar-collapse , .sidebar-collapse .nav{
 	background:none;
+    
+
 }
-.sidebar-collapse .nav {
-	padding:0;
-}
+
 .sidebar-collapse .nav > li > a {
 	color:#fff;
 	background:#202020;
-	text-shadow:none;
-	
+	text-shadow:none;	
 }
 .sidebar-collapse > .nav > li > a {
 	padding:15px 10px;
+    
 }
 .sidebar-collapse > .nav > li {
 	border-bottom: 1px solid rgba(107, 108, 109, 0.19);
+    
 }
 .sidebar-collapse .nav > li > a:hover,
 .sidebar-collapse .nav > li > a:focus {
@@ -301,13 +309,12 @@ font-weight: 700;
 }
 .navbar-side {
 	border:none;
-	background-color: #202020;
-	
+	background-color: #202020;	
+     
 }
 .navbar-cls-top {
 	background:#4D4D4D;
 	border-bottom:none;
-	
 }
 .navbar-cls-top .navbar-brand:hover {
 
@@ -318,10 +325,11 @@ color:#fff;
 
 .navbar-default {
 border:0px solid black;
+
      
 }
 .navbar-header {
-    background: #A70303;
+background: #A70303;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
 background-color: #B40101;
@@ -336,6 +344,17 @@ background-color: #FFF;
 .nav > li > a > i {
     margin-right:10px;
 }
+.sidebar-collapse > ul {
+  height: 100%;
+  padding-bottom: 55px; 
+}
+.navbar-side {
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #202020;
+}
+
+
 /*==============================================
     UI ELEMENTS STYLES     
     =============================================*/
@@ -357,7 +376,7 @@ line-height: 1.428571429;
  
  @media(min-width:768px) {
      #page-wrapper{
-               margin: 0 0 0 260px;
+        margin: 0 0 0 260px;
         padding: 15px 30px;
         min-height: 1200px;
 		

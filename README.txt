@@ -1,6 +1,6 @@
-# Sistema de Gestión de Eventos Académicos
-
-Este proyecto es una aplicación web desarrollada por un equipo de seis integrantes como parte del Segundo Parcial de la materia **Manejo y Configuración de Software** en la Universidad Técnica de Ambato. Su objetivo es facilitar la gestión de cursos, congresos, conferencias y otros eventos académicos organizados por la Facultad de Ingeniería en Sistemas, Electrónica e Industrial.
+# Sistema de Gestión de Cursos y Eventos Académicos - FISEI
+#Descripción: 
+Sistema web desarrollada para la gestión integral de eventos académicos (cursos, congresos, webinars o eventos académicos) en la Facultad de Ingeniería en Sistemas, Electrónica e Industrial. Permite administrar eventos, gestionar inscripciones, generar reportes y certificados, con un sistema de roles y control de acceso.
 
 ## 🚀 Funcionalidades Principales
 
@@ -11,74 +11,57 @@ Este proyecto es una aplicación web desarrollada por un equipo de seis integran
 - Carga y validación de comprobantes de pago.
 - Generación de reportes de asistencia, notas y certificados.
 
+📈 Evidencias de Desarrollo
+![Vista principal del sistema](./public/img/Evidencia.png)
+
 ## 🧠 Tecnologías Utilizadas
 
-- Lenguaje: [especificar, ej. Python, Java, JavaScript...]
-- Framework: [ej. Django, React, Spring Boot...]
-- Base de datos: [ej. PostgreSQL, MySQL...]
+- Lenguaje: PHP, JavaScript, 
+- Frontend:Html, CSS, Bootstramp.  
+- Base de datos: MySQL Server, PHPAdmin
 - Control de versiones: Git + GitHub
 - Gestión de cambios: Jira Service Management
 
-## 📸 Capturas de Pantalla
 
-> *[Aquí puedes insertar tus capturas como imágenes locales o enlaces a Drive/GitHub]*
+## 📦 Estructura del Proyecto MVC
 
-### Vista principal de eventos
-![Vista principal](./assets/screenshots/eventos.png)
-
-### Inscripción al evento
-![Inscripción](./assets/screenshots/inscripcion.png)
-
-### Panel administrativo
-![Panel admin](./assets/screenshots/admin.png)
-
----
-## 📊 Dashboard en Jira
-
-Puedes acceder al tablero de seguimiento y control de cambios del proyecto en el siguiente enlace:
-
-🔗 **[Dashboard de Jira - Gestión de Cambios](https://tu-enlace-de-jira)**
-
-Este panel contiene:
-- Peticiones de cambio
-- Asignación de tareas
-- Flujo de estados
-- Evidencia del proceso colaborativo
-
----
-
-## 📦 Estructura del Proyecto
-
-/docs -> Documentación del proyecto
-/src -> Código fuente
-/assets -> Imágenes y recursos
-/test -> Pruebas unitarias
+├── .vscode/ # Configuración de VSCode
+├── config/ # Archivos de configuración (DB, constantes, etc.)
+├── controllers/ # Controladores (MVC - lógica de control)
+├── core/ # Núcleo del sistema (helpers, enrutador, clases base)
+├── models/ # Modelos (MVC - acceso a datos, lógica de negocio)
+├── public/ # Recursos públicos (CSS, JS, imágenes)
+├── routes/ # Definición de rutas del sistema
+├── vendor/ # Dependencias externas (Composer)
+│
+├── views/ # Vistas (MVC - interfaz de usuario)
+│ ├── partials/ # Fragmentos reutilizables (headers, footers, etc.)|
+│
+├── .gitignore # Archivos/carpetas ignoradas por Git
+├── auth.php # Lógica de autenticación
+├── CONTRIBUTING.txt # Guía para colaboradores del proyecto
+└── README.txt # Descripción general del proyecto
 
 ## 🧪 Instalación y Ejecución
 
 1. Clona este repositorio:
-git clone https://github.com/usuario/proyecto-eventos.git
+git clone https://github.com/Desarrolladores-Sistema-de-Eventos/Sistema_Eventos.git
 2. Instala las dependencias:
-npm install / pip install -r requirements.txt
-3. Ejecuta la aplicación:
-npm start / python manage.py runserver
+npm install / pip install composer
+
 
 ## 📖 Documentación Adicional
-
-- [CONTRIBUTING.md](./CONTRIBUTING.md)
-- [Diagrama de base de datos (si aplica)](./docs/db-diagram.png)
-
+- [CONTRIBUTING.md]
 ---
-
 
 ## 👥 Equipo de Desarrollo
 
-- Integrante 1
-- Integrante 2
-- Integrante 3
-- Integrante 4
-- Integrante 5
-- Integrante 6
+- Cristian Jurado
+- Josue Llumitasig
+- Andrea Vásquez
+- Bryan López
+- Dennis Quisaguano
+- Ariel Cholota
 
 ## 📄 Licencia
 
