@@ -18,7 +18,7 @@
                 </span>
                 <div class="text-box" >
                     <p class="main-text">20</p>
-                    <p class="text-muted">Inscriptos</p>
+                    <p class="text-muted">Inscritos</p>
                 </div>
              </div>
 		     </div>
