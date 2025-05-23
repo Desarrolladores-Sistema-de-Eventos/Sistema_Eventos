@@ -137,7 +137,7 @@
                                             <td>Internet Explorer 4.0</td>
                                             <td>Win 95+</td>
                                             <td class="center">4</td>
-                                            <td>
+                                            <td class="text-center">
                                              <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                              <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>   
                                             </td>

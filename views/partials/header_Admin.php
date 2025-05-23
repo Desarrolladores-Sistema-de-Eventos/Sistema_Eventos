@@ -9,6 +9,7 @@
   <link href="../public/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
   <link href="../public/assets/css/custom.css" rel="stylesheet" />
   <link href="../public/assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 <body>
