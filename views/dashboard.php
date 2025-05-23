@@ -1,6 +1,6 @@
 ﻿<!-- Archivo plantilla en el cual deben trabajar, copiar ese codigo 
  y hacerlo en otro archivo-->
-<?php include("partials/head_Admin.php"); ?>
+<?php include("partials/header_Admin.php"); ?>
 
 <div id="page-wrapper">
 <div id="page-inner">
