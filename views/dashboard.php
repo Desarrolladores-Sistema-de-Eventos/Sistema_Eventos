@@ -1,6 +1,6 @@
 ﻿<!-- Archivo plantilla en el cual deben trabajar, copiar ese codigo 
  y hacerlo en otro archivo-->
-<?php include("partials/header_Admin.php"); ?>
+<?php include("partials/head_Admin.php"); ?>
 
 <div id="page-wrapper">
 <div id="page-inner">
@@ -18,5 +18,6 @@ todo los elementos de este diseño</h1>
 
 </div> <!-- Cierre de page-wrapper -->
 </div> <!-- Cierre de wrapper -->
+
 
 <?php include("partials/footer_Admin.php"); ?>
