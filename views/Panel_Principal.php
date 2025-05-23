@@ -1,165 +1,195 @@
-<?php include("partials/head_Admin.php"); ?>
+<?php include("partials/header_Admin.php"); ?>
+
 
 <div id="page-wrapper">
   <div id="page-inner">
-    <link rel="stylesheet" href="../public/css/panel.css">
-    <link rel="stylesheet" href="https://unpkg.com/lucide@latest" />
-
-    <h2 class="main-title">
-      <i data-lucide="layout-dashboard"></i> Panel Principal - Gestión de Eventos Académicos
-    </h2>
-    <h5 class="main-subtitle">
-      <i data-lucide="search-check"></i> Busca, filtra y consulta estadísticas de eventos y estudiantes inscritos
-    </h5>
-    <hr />
-
-    <!-- Menú pequeño con botones tipo grupo -->
-    <div id="btnMenu" class="btn-group mb-4" role="group" aria-label="Menu principal">
-      <button type="button" class="btn btn-outline-primary" id="btnMenuUsuarios"><i data-lucide="user"></i> Usuarios</button>
-      <button type="button" class="btn btn-outline-primary" id="btnMenuTablas"><i data-lucide="table"></i> Tablas</button>
-      <button type="button" class="btn btn-outline-primary" id="btnMenuEstadisticas"><i data-lucide="bar-chart-3"></i> Estadísticas</button>
-      <button type="button" class="btn btn-outline-primary" id="btnMenuEstudiantes"><i data-lucide="graduation-cap"></i> Estudiantes</button>
-    </div>
-
-    <!-- Filtros y búsqueda -->
-    <div id="filtersContainer" class="filter-group mb-4">
-      <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre de evento...">
-
-      <select id="filterType" class="form-control" title="Tipo de evento">
-        <option value="todos">Todos</option>
-        <option value="curso">Cursos</option>
-        <option value="congreso">Congresos</option>
-      </select>
-
-      <select id="filterMonth" class="form-control" title="Mes">
-        <option value="todos">Todos los meses</option>
-        <option value="01">Enero</option>
-        <option value="02">Febrero</option>
-        <option value="03">Marzo</option>
-        <option value="04">Abril</option>
-        <option value="05">Mayo</option>
-        <option value="06">Junio</option>
-        <option value="07">Julio</option>
-        <option value="08">Agosto</option>
-        <option value="09">Septiembre</option>
-        <option value="10">Octubre</option>
-        <option value="11">Noviembre</option>
-        <option value="12">Diciembre</option>
-      </select>
-
-      <select id="filterModalidad" class="form-control" title="Modalidad">
-        <option value="todos">Todos</option>
-        <option value="gratuito">Gratuito</option>
-        <option value="pagado">Pagado</option>
-      </select>
-
-      <button id="btnSearch" class="btn btn-primary"><i data-lucide="search"></i> Buscar</button>
-    </div>
-
-    <!-- Contenedores para secciones -->
-    <div id="contentUsuarios" style="display:none;">
-      <div class="card">
-        <h4><i data-lucide="users"></i> Usuarios</h4>
-        <hr />
-        <p>Aquí se mostrarían tablas o información de usuarios.</p>
-      </div>
-    </div>
-
-    <div id="contentTablas" style="display:none;">
-      <div class="card">
-        <h4><i data-lucide="database"></i> Tablas de eventos y datos</h4>
-        <hr />
-        <p>Aquí se mostrarían tablas completas con eventos, inscripciones, etc.</p>
-      </div>
-    </div>
-
-    <div id="contentEstadisticas" style="display:none;">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card">
-            <h5 class="stat-title"><i data-lucide="bar-chart-horizontal"></i> Eventos por Tipo</h5>
-            <hr />
-            <canvas id="barChart"></canvas>
-          </div>
+    <div class="row">
+                    <div class="col-md-12">
+                      <h2><i class="fa fa-dashboard fa"></i>Panel Principal</h2>
+                        <h5>Welcome Andrea </h5>
+                     </div>
+                </div> 
+                      <hr />
+                <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-6">           
+			<div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-red set-icon">
+                    <i class="fa fa-edit"></i>
+                </span>
+                <div class="text-box" >
+                    <p class="main-text">20</p>
+                    <p class="text-muted">Inscriptos</p>
+                </div>
+             </div>
+		     </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">           
+			<div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-green set-icon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <div class="text-box" >
+                    <p class="main-text">30</p>
+                    <p class="text-muted">Eventos</p>
+                </div>
+             </div>
+		     </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">           
+			<div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-blue set-icon">
+                    <i class="fa fa-user"></i>
+                </span>
+                <div class="text-box" >
+                    <p class="main-text">40</p>
+                    <p class="text-muted"> Pendientes</p>
+                </div>
+             </div>
+		     </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">           
+			<div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-brown set-icon">
+                    <i class="fa fa-bar-chart-o"></i>
+                </span>
+                <div class="text-box" >
+                    <p class="main-text">2 </p>
+                    <p class="text-muted">Reportes</p>
+                </div>
+             </div>
+		     </div>
+			</div>
+       <hr />
+   <!-- /. ROW  -->
+<div class="row">
+    <!-- Tabla existente (sin modificar) -->
+    <div class="col-md-9 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               Inscripciones Pendientes
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td class="text-center">
+                                    <button class="btn btn-info btn-sm"><i class="fa fa-eye" style="color: black;"></i> Ver Detalle</button>  
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6">
-          <div class="card">
-            <h5 class="stat-title"><i data-lucide="pie-chart"></i> Cursos Gratuitos vs Pagados</h5>
-            <hr />
-            <canvas id="pieChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mt-4">
-        <div class="col-md-6">
-          <div class="card">
-            <h5 class="stat-title"><i data-lucide="activity"></i> Inscripciones por Mes</h5>
-            <hr />
-            <canvas id="lineChart"></canvas>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card">
-            <h5 class="stat-title"><i data-lucide="file-bar-chart-2"></i> Resumen Estadístico</h5>
-            <hr />
-            <table class="table table-striped" id="tablaResumen">
-              <thead>
-                <tr><th>Tipo</th><th>Total</th></tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <div id="contentEstudiantes" style="display:none; margin-top:20px;">
-      <div class="card">
-        <h4><i data-lucide="users-round"></i> Lista de Estudiantes Inscritos</h4>
-        <hr />
-        <table class="table table-bordered">
-          <thead>
-            <tr><th>Nombre</th><th>Carrera</th><th>Estado</th></tr>
-          </thead>
-          <tbody id="studentsBody"></tbody>
-        </table>
-      </div>
+    <!-- Nuevo gráfico donut al lado derecho -->
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Estado de Inscripciones
+            </div>
+            <div class="panel-body text-center">
+                <div id="inscripciones-donut-chart" style="height: 200px; margin: auto;"></div>
+            </div>
+        </div>
     </div>
+</div>
+<hr/>
+<!-- /. ROW -->
+<!-- /. ROW  -->
+             <div class="row"> 
+    <!-- Gráfico de barras -->
+    <div class="col-md-6 col-sm-12 col-xs-12">                     
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Inscripciones por Evento.
+            </div>
+            <div class="panel-body">
+                <div id="eventos-morris-bar-chart"></div>
+            </div>
+        </div>            
+    </div> 
 
+    <!-- Gráfico area -->
+    <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Certificados emitidos por Evento.
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-area-chart"></div>
+                        </div>
+                    </div>            
+                </div> 
+<!-- /. ROW  -->
   </div>
 </div>
 
 <?php include("partials/footer_Admin.php"); ?>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../public/js/panel_charts_dynamic.js"></script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <script>
-  lucide.createIcons();
+Morris.Donut({
+        element: 'inscripciones-donut-chart',
+        data: [
+            { label: "Pendientes", value: 12 },
+            { label: "Aprobadas", value: 30 },
+            { label: "Rechazadas", value: 5 }
+        ],
+        colors: ['#f0ad4e', '#5cb85c', '#d9534f'],
+        resize: true
+    });
+Morris.Bar({
+  element: 'eventos-morris-bar-chart',
+  data: [
+    { y: 'Congreso de Tecnología 2024', total: 120 },
+    { y: 'Taller de Robótica', total: 85 },
+    { y: 'Seminario de IA', total: 95 },
+    { y: 'Curso de Python Avanzado', total: 110 },
+    { y: 'Webinar Ciberseguridad', total: 70 }
+  ],
+  xkey: 'y',
+  ykeys: ['total'],
+  labels: ['Inscripciones'],
+  barColors: ['#1abc9c'],
+  hideHover: 'auto',
+  resize: true
+});
 
-  const hideAll = () => {
-    document.querySelectorAll('#contentUsuarios, #contentTablas, #contentEstadisticas, #contentEstudiantes')
-      .forEach(div => div.style.display = 'none');
-  };
+Morris.Area({
+  element: 'morris-area-chart',
+  data: [
+    { y: '2020', congreso: 45, taller: 30, webinar: 20 },
+    { y: '2021', congreso: 60, taller: 35, webinar: 28 },
+    { y: '2022', congreso: 70, taller: 50, webinar: 40 },
+    { y: '2023', congreso: 85, taller: 55, webinar: 45 },
+    { y: '2024', congreso: 95, taller: 65, webinar: 58 }
+  ],
+  xkey: 'y',
+  ykeys: ['congreso', 'taller', 'webinar'],
+  labels: ['Congresos', 'Talleres', 'Webinars'],
+  lineColors: ['#1abc9c', '#3498db', '#f39c12'],
+  fillOpacity: 0.5,
+  behaveLikeLine: true,
+  hideHover: 'auto',
+  resize: true,
+  pointSize: 4,
+  smooth: true
+});
 
-  document.getElementById('btnMenuUsuarios').onclick = () => {
-    hideAll();
-    document.getElementById('contentUsuarios').style.display = 'block';
-  };
+</script>
 
-  document.getElementById('btnMenuTablas').onclick = () => {
-    hideAll();
-    document.getElementById('contentTablas').style.display = 'block';
-  };
-
-  document.getElementById('btnMenuEstadisticas').onclick = () => {
-    hideAll();
-    document.getElementById('contentEstadisticas').style.display = 'block';
-  };
-
-  document.getElementById('btnMenuEstudiantes').onclick = () => {
-    hideAll();
-    document.getElementById('contentEstudiantes').style.display = 'block';
-  };
+    
+    
 </script>
