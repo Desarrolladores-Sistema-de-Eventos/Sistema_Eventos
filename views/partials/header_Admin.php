@@ -35,7 +35,7 @@
           <a href="#"><i class="fa fa-gear fa-3x"></i> Configuraciones<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level">
             <li>
-              <a href="eventos_config.php">Configurar Eventos <span class="fa arrow"></span></a>
+              <a href="#">Configurar Eventos <span class="fa arrow"></span></a>
               <li>
               <a href="#">Configurar Usuarios <span class="fa arrow"></span></a>
               <ul class="nav nav-third-level">

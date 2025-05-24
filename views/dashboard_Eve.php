@@ -1,175 +1,207 @@
 <?php include("partials/header_Admin.php"); ?>
 
-<div id="page-wrapper">
-<div id="page-inner">
+<!-- Contenedor principal con scroll y margen del sidebar -->
+<div id="page-wrapper" style="margin-left: 260px; height: 100vh; overflow-y: auto;">
+    <div class="container-fluid py-4" style="min-height: 100%; background-color: #f5f5f5;">
+        
+        <!-- Encabezado -->
+        <h2 class="text-danger mb-1">
+            <i class="fa fa-calendar-plus"></i> Configuración de Eventos
+        </h2>
 
-<h2 class="text-primary">Gestión de Eventos</h2>
-<h5>Desde aquí puedes crear, buscar y listar eventos.</h5>
-<hr />
+        <!-- Tarjeta principal -->
+        <div class="card shadow-sm border-0 mb-5">
+            <div class="card-header bg-light">
+                <h4 class="mb-0"><i class="fa fa-edit"></i> Nuevo Evento</h4>
+            </div>
 
-<!-- 🔧 FORMULARIO CREAR/EDITAR EVENTO -->
-<form id="formEvento">
-    <div class="form-group">
-        <label for="titulo">Título del Evento</label>
-        <input type="text" class="form-control" id="titulo" name="titulo" required>
-        <input type="hidden" id="eventoId" name="eventoId">
+            <div class="card-body">
+                 <!-- Título y horas -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="titulo">
+                                <i class="fas fa-book-open"></i> Título del Evento
+                            </label>
+                            <input type="text" class="form-control" id="titulo" placeholder="Ej: Congreso de Tecnología">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="horas">
+                              <i class="fas fa-clock"></i> Horas del Evento
+                            </label>
+                            <input type="number" class="form-control" id="horas" min="20" step="0.1">
+                        </div>
+                    </div>
 
-    </div>
+                    <!-- Descripción -->
+                    <div class="mb-3">
+                        <label for="descripcion">
+                            <i class="fas fa-list-alt"></i> Descripción del Evento
+                        </label>
+                        <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                    </div>
 
-    <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
-    </div>
+                    <!-- Tipo, modalidad, categoría -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="tipoEvento">
+                              <i class="fas fa-folder-open"></i> Tipo de Evento
+                            </label>
+                            <select class="form-control" id="tipoEvento">
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="modalidad">
+                              <i class="fas fa-random"></i> Modalidad
+                            </label>
+                            <select class="form-control" id="modalidad">
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="categoria">
+                              <i class="fas fa-tags"></i> Categoría
+                            </label>
+                            <select class="form-control" id="categoria">
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="fechainicio">Fecha Inicio</label>
-            <input type="date" class="form-control" id="fechainicio" name="fechainicio" required>
+                    <!-- Fechas -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="fechaInicio">
+                              <i class="fas fa-calendar-alt"></i> Fecha de Inicio
+                            </label>
+                            <input type="date" class="form-control" id="fechaInicio">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="fechaFin">
+                              <i class="fas fa-calendar-alt"></i> Fecha de Fin
+                            </label>
+                            <input type="date" class="form-control" id="fechaFin">
+                        </div>
+                    </div>
+
+                    <!-- Nota y pago -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="notaAprobacion">
+                              <i class="fas fa-check-circle"></i> Nota mínima de aprobación
+                            </label>
+                            <input type="number" class="form-control" id="notaAprobacion" min="0" step="0.1">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="d-block">
+                             <i class="fas fa-dollar-sign"></i> ¿El evento es pagado?
+                            </label>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" id="esPagado">
+                                <label class="form-check-label" for="esPagado">Sí</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Costo -->
+                    <div class="row" id="costoContainer" style="display: none;">
+                        <div class="col-md-6 mb-3">
+                            <label for="costo">Costo ($)</label>
+                            <input type="number" class="form-control" id="costo">
+                        </div>
+                    </div>
+
+                    <!-- Facultad y carrera -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="facultad">
+                              <i class="fas fa-university"></i> Facultad
+                            </label>
+                            <select class="form-control" id="facultad">
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="carrera">
+                              <i class="fas fa-graduation-cap"></i> Carrera
+                            </label>
+                            <select class="form-control" id="carrera" disabled>
+                                <option value="">Seleccione una facultad primero</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Publico destino -->
+                    <div class="mb-3">
+                        <label for="publicoDestino">
+                          <i class="fas fa-users"></i> ¿Quiénes pueden inscribirse?
+                        </label>
+                        <select id="publicoDestino" name="publicoDestino" class="form-control">
+                            <option value="">Seleccione</option>
+                            <option value="internos">Solo internos</option>
+                            <option value="externos">Solo externos</option>
+                            <option value="ambos">Internos y externos</option>
+                        </select>
+                    </div>
+
+                    <!-- Certificado -->
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="otorgaCertificado" name="otorgaCertificado">
+                        <label class="form-check-label" for="otorgaCertificado">
+                            <i class="fas fa-certificate"></i> Este evento otorga certificado 
+                        </label>
+                    </div>
+
+                    <!-- Requisitos -->
+                    <h5 class="mt-4"><i class="fa fa-tasks"></i> Requisitos del Evento</h5>
+                    <p class="text-muted">Seleccione al menos 2 requisitos necesarios para participar en este evento.</p>
+                    <select id="requisitosSelect" name="requisitos[]" class="form-control" multiple="multiple">
+                        <!-- Opciones se llenarán desde la base de datos vía PHP o AJAX -->
+                    </select>
+
+                    <!-- Organizadores -->
+                    <h5 class="mt-4"><i class="fa fa-user-cog"></i> Organizadores del Evento</h5>
+                    <p class="text-muted">Seleccione al menos 2 usuarios que coordinarán o liderarán el evento.</p>
+                    <select id="organizadoresSelect" name="organizadores[]" class="form-control" multiple="multiple">
+                        <!-- Opciones se llenarán desde la base de datos vía PHP o AJAX -->
+                    </select>
+                    
+                    <br>
+                    <!-- Botón de guardar -->
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="fa fa-save"></i> Guardar Evento
+                        </button>
+                    </div>
+                     <br>
+                     <br><br>
+  
+
+                <form id="formEvento">...</form>
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="fechafin">Fecha Fin</label>
-            <input type="date" class="form-control" id="fechafin" name="fechafin" required>
-        </div>
     </div>
-
-    <div class="form-group">
-        <label for="tipoevento">Tipo de Evento</label>
-        <select class="form-control" id="tipoevento" name="tipoevento">
-            <option value="CURSO">Curso</option>
-            <option value="CONGRESO">Congreso</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="modalidad">Modalidad</label>
-        <select class="form-control" id="modalidad" name="modalidad">
-            <option value="VIRTUAL">Virtual</option>
-            <option value="PRESENCIAL">Presencial</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="horas">Horas</label>
-        <input type="number" class="form-control" id="horas" name="horas" required>
-    </div>
-
-    <div class="form-group">
-        <label for="notaaprobacion">Nota Aprobación</label>
-        <input type="number" step="0.01" class="form-control" id="notaaprobacion" name="notaaprobacion">
-    </div>
-
-    <div class="form-group">
-        <label for="espagado">¿Es Pagado?</label>
-        <select class="form-control" id="espagado" name="espagado">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-        </select>
-    </div>
-
-   <div class="form-group" id="grupoCosto">
-    <label for="costo">Costo</label>
-    <input type="number" step="0.01" class="form-control" id="costo" name="costo">
 </div>
 
-
-    <div class="form-group">
-        <label for="internos">¿Solo para Internos?</label>
-        <select class="form-control" id="internos" name="internos">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-success">Guardar Evento</button>
-</form>
-
-<hr class="my-4">
-
-<!-- 🔍 BÚSQUEDA Y FILTROS -->
-<div class="row mb-3">
-    <div class="col-md-4">
-        <input type="text" id="buscarNombre" class="form-control" placeholder="Buscar por título...">
-    </div>
-    <div class="col-md-4">
-        <input type="date" id="buscarFecha" class="form-control" placeholder="Buscar por fecha...">
-    </div>
-    <div class="col-md-4">
-        <select id="filtrarEstado" class="form-control">
-            <option value="">Filtrar por estado</option>
-            <option value="activo">Activo</option>
-            <option value="inactivo">Inactivo</option>
-        </select>
-    </div>
-</div>
-
-<!-- 📋 TABLA DE EVENTOS -->
-<table class="table table-bordered table-hover">
-    <thead class="thead-dark">
-        <tr>
-            <th>Título</th>
-            <th>Fecha Inicio</th>
-            <th>Modalidad</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="tablaEventos">
-        <!-- Aquí irán los eventos cargados dinámicamente más adelante -->
-    </tbody>
-</table>
-
-</div> <!-- /#page-inner -->
-</div> <!-- /#page-wrapper -->
-
-<?php include("partials/footer_Admin.php"); ?>
 
 <script>
-// 👉 Mostrar u ocultar el campo "Costo" según si es pagado
-function toggleCosto() {
-    const esPagado = document.getElementById("espagado").value;
-    const grupoCosto = document.getElementById("grupoCosto");
-    grupoCosto.style.display = esPagado === "1" ? "block" : "none";
-}
-
-// 👉 Función vacía para editar (la usarás cuando conectes con el backend)
-function editarEvento(evento) {
-    document.getElementById("eventoId").value = evento.id;
-    document.getElementById("titulo").value = evento.titulo;
-    document.getElementById("descripcion").value = evento.descripcion;
-    document.getElementById("fechainicio").value = evento.fechainicio;
-    document.getElementById("fechafin").value = evento.fechafin;
-    document.getElementById("tipoevento").value = evento.tipoevento;
-    document.getElementById("modalidad").value = evento.modalidad;
-    document.getElementById("horas").value = evento.horas;
-    document.getElementById("notaaprobacion").value = evento.notaaprobacion;
-    document.getElementById("espagado").value = evento.espagado;
-    document.getElementById("costo").value = evento.costo;
-    document.getElementById("internos").value = evento.internos;
-
-    toggleCosto(); // ajustar el campo costo en modo edición
-
-    document.querySelector("#formEvento button").textContent = "Actualizar Evento";
-}
-
-// 👉 Inicializar al cargar
-document.addEventListener("DOMContentLoaded", () => {
-    // Comportamiento para mostrar/ocultar campo costo
-    document.getElementById("espagado").addEventListener("change", toggleCosto);
-    toggleCosto();
-
-    // Filtros (quedarán activos cuando tengas datos del backend)
-    document.getElementById("buscarNombre").addEventListener("input", function () {
-        // Aquí luego aplicarás búsqueda cuando tengas eventos reales
+$(document).ready(function () {
+    $('#requisitosSelect, #organizadoresSelect').select2({
+        placeholder: "Seleccione una o más opciones",
+        width: '100%'
     });
+});
 
-    document.getElementById("buscarFecha").addEventListener("input", function () {
-        // Aquí luego aplicarás búsqueda por fecha real
-    });
+document.getElementById("esPagado").addEventListener("change", function () {
+    document.getElementById("costoContainer").style.display = this.checked ? "block" : "none";
+});
 
-    document.getElementById("filtrarEstado").addEventListener("change", function () {
-        // Aquí luego aplicarás filtro por estado real
-    });
+document.getElementById("facultad").addEventListener("change", function () {
+    const carrera = document.getElementById("carrera");
+    carrera.innerHTML = "<option>Cargando...</option>";
+    carrera.disabled = false;
+    // futura llamada AJAX
 });
 </script>
 
-
+<?php include("partials/footer_Admin.php"); ?>
