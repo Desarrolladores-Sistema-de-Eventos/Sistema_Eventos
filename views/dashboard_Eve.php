@@ -1,4 +1,4 @@
-<?php include("partials/head_Admin.php"); ?>
+<?php include("partials/header_Admin.php"); ?>
 
 <div id="page-wrapper">
 <div id="page-inner">

@@ -7,8 +7,8 @@
                     <div class="col-md-12">
                       <h2><i class="fa fa-dashboard fa"></i>Panel Principal</h2>
                         <h5>Welcome Andrea </h5>
-                     </div>
-                </div> 
+                     </div> 
+                    </div>
                       <hr />
                 <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-6">           
@@ -67,7 +67,7 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-inscripciones">
                         <thead>
                             <tr>
                                 <th>#</th>
