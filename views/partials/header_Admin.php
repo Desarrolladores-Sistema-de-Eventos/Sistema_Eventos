@@ -29,6 +29,7 @@
         <li><a href="#"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
         <li><a href="#"><i class="fa fa-edit fa-3x"></i> Inscripciones</a></li>
         <li><a href="#"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
+        <li><a href="configuracion_datos_base.php"><i class="fa fa-database fa-3x"></i> Configuración Base</a></li>
         <li>
           <a href="#"><i class="fa fa-gear fa-3x"></i> Configuraciones<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level">
@@ -41,8 +42,10 @@
                 <li><a href="#">Facultades</a></li>
                 <li><a href="#">Carreras</a></li>
               </ul>
+              
             </li>
           </ul>
+
         </li>
       </ul>
     </div>
