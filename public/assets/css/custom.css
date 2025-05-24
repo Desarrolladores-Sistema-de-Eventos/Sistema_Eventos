@@ -385,6 +385,7 @@ line-height: 1.428571429;
         overflow-y: auto;
     }
 	
+	
     .navbar-side {
         z-index: 1;
         position: absolute;
@@ -397,4 +398,13 @@ line-height: 1.428571429;
    
 }
 
+body, #page-wrapper {
+    background-color: #e5e5e5 !important;
+}
 
+/* Tarjetas con fondo blanco para contraste */
+.panel {
+    background-color: #ffffff !important;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
