@@ -35,8 +35,16 @@
           <a href="#"><i class="fa fa-gear fa-3x"></i> Configuraciones<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level">
             <li>
-              <a href="eventos_config.php">Configurar Eventos <span class="fa arrow"></span></a>
-              <li>
+              <a href="#">Configurar Eventos <span class="fa arrow"></span></a>
+              <ul class="nav nav-third-level">
+                <li><a href="#">Tipos de Evento</a></li>
+                <li><a href="#">Modalidades</a></li>
+                <li><a href="#">Categorías</a></li>
+                <li><a href="#">Requisitos</a></li>
+                <li><a href="#">Organizadores</a></li>
+              </ul>
+            </li>
+            <li>
               <a href="#">Configurar Usuarios <span class="fa arrow"></span></a>
               <ul class="nav nav-third-level">
                 <li><a href="#">Roles</a></li>

@@ -1,175 +1,219 @@
 <?php include("partials/header_Admin.php"); ?>
-
 <div id="page-wrapper">
-<div id="page-inner">
-
-<h2 class="text-primary">Gestión de Eventos</h2>
-<h5>Desde aquí puedes crear, buscar y listar eventos.</h5>
-<hr />
-
-<!-- 🔧 FORMULARIO CREAR/EDITAR EVENTO -->
-<form id="formEvento">
-    <div class="form-group">
-        <label for="titulo">Título del Evento</label>
-        <input type="text" class="form-control" id="titulo" name="titulo" required>
-        <input type="hidden" id="eventoId" name="eventoId">
-
-    </div>
-
-    <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="fechainicio">Fecha Inicio</label>
-            <input type="date" class="form-control" id="fechainicio" name="fechainicio" required>
+  <div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+        <h2><i class="fa fa-calendar"></i>Gestion Eventos</h2>
+</div>
+     </div> 
+         <hr /> 
+    <div class="panel panel-default">
+      <div class="panel-heading">Lista de Eventos</div>
+      <div class="panel-body">
+        <!-- Botón que abre el modal -->
+        <a href="#" class="btn btn-custom" data-toggle="modal" data-target="#modalEvento">
+          <span class="icon-circle"><i class="fa fa-plus"></i></span> Nuevo
+        </a>
+        <br><br>
+        <!-- Tabla de eventos -->
+                        <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-eventos">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td class="text-center">
+                                <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</button>
+                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button> 
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="fechafin">Fecha Fin</label>
-            <input type="date" class="form-control" id="fechafin" name="fechafin" required>
+    </div>
+    <!-- fin de Table -->
+        <!-- Modal -->
+        <div class="modal fade" id="modalEvento" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modalEventoLabel"><i class="fa fa-edit"></i> Crear/Editar Evento</h4>
+              </div>
+
+              <div class="modal-body">
+                <form id="formEvento" role="form">
+
+                  <!-- Título y horas -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="titulo"><i class="fa fa-book"></i> Título del Evento</label>
+                      <input type="text" class="form-control" id="titulo" placeholder="Ej: Congreso de Tecnología">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="horas"><i class="fa fa-clock-o"></i> Horas del Evento</label>
+                      <input type="number" class="form-control" id="horas" min="20" step="0.1">
+                    </div>
+                  </div><br>
+
+                  <!-- Descripción -->
+                  <div class="form-group">
+                    <label for="descripcion"><i class="fa fa-align-left"></i> Descripción del Evento</label>
+                    <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                  </div>
+
+                  <!-- Tipo, modalidad, categoría -->
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label for="tipoEvento"><i class="fa fa-folder-open"></i> Tipo de Evento</label>
+                      <select class="form-control" id="tipoEvento"><option value="">Seleccione</option></select>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="modalidad"><i class="fa fa-random"></i> Modalidad</label>
+                      <select class="form-control" id="modalidad"><option value="">Seleccione</option></select>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="categoria"><i class="fa fa-tags"></i> Categoría</label>
+                      <select class="form-control" id="categoria"><option value="">Seleccione</option></select>
+                    </div>
+                  </div><br>
+
+                  <!-- Fechas -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="fechaInicio"><i class="fa fa-calendar"></i> Fecha de Inicio</label>
+                      <input type="date" class="form-control" id="fechaInicio">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="fechaFin"><i class="fa fa-calendar"></i> Fecha de Fin</label>
+                      <input type="date" class="form-control" id="fechaFin">
+                    </div>
+                  </div><br>
+
+                  <!-- Nota y pago -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="notaAprobacion"><i class="fa fa-check-circle"></i> Nota mínima de aprobación</label>
+                      <input type="number" class="form-control" id="notaAprobacion" min="0" step="0.1">
+                    </div>
+                    <div class="col-md-6">
+                      <label><i class="fa fa-money"></i> ¿El evento es pagado?</label><br>
+                      <input type="checkbox" id="esPagado"> Sí
+                    </div>
+                  </div><br>
+
+                  <!-- Costo -->
+                  <div class="row" id="costoContainer" style="display: none;">
+                    <div class="col-md-6">
+                      <label for="costo">Costo ($)</label>
+                      <input type="number" class="form-control" id="costo">
+                    </div>
+                  </div><br>
+
+                  <!-- Facultad y carrera -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="facultad"><i class="fa fa-university"></i> Facultad</label>
+                      <select class="form-control" id="facultad"><option value="">Seleccione</option></select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="carrera"><i class="fa fa-graduation-cap"></i> Carrera</label>
+                      <select class="form-control" id="carrera" disabled><option>Seleccione una facultad primero</option></select>
+                    </div>
+                  </div><br>
+
+                  <!-- Público -->
+                  <div class="form-group">
+                    <label for="publicoDestino"><i class="fa fa-users"></i> ¿Quiénes pueden inscribirse?</label>
+                    <select id="publicoDestino" class="form-control">
+                      <option value="">Seleccione</option>
+                      <option value="internos">Solo internos</option>
+                      <option value="externos">Solo externos</option>
+                      <option value="ambos">Internos y externos</option>
+                    </select>
+                  </div>
+
+                  <!-- Certificado -->
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="otorgaCertificado"> <i class="fa fa-certificate"></i> Este evento otorga certificado
+                    </label>
+                  </div><br>
+
+                  <!-- Requisitos -->
+                  <h5><i class="fa fa-tasks"></i> Requisitos del Evento</h5>
+                  <p class="text-muted">Seleccione al menos 2 requisitos necesarios para participar.</p>
+                  <select id="requisitosSelect" class="form-control" multiple="multiple"></select><br>
+
+                  <!-- Organizadores -->
+                  <h5><i class="fa fa-user"></i> Organizadores del Evento</h5>
+                  <p class="text-muted">Seleccione al menos 2 organizadores.</p>
+                  <select id="organizadoresSelect" class="form-control" multiple="multiple"></select><br>
+
+                  <!-- Botón guardar -->
+                  <div class="text-right">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fa fa-save"></i> Guardar Evento
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+
+            </div>
+          </div>
         </div>
-    </div>
+        <!-- Fin modal -->
+         
 
-    <div class="form-group">
-        <label for="tipoevento">Tipo de Evento</label>
-        <select class="form-control" id="tipoevento" name="tipoevento">
-            <option value="CURSO">Curso</option>
-            <option value="CONGRESO">Congreso</option>
-        </select>
+      </div>
     </div>
-
-    <div class="form-group">
-        <label for="modalidad">Modalidad</label>
-        <select class="form-control" id="modalidad" name="modalidad">
-            <option value="VIRTUAL">Virtual</option>
-            <option value="PRESENCIAL">Presencial</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="horas">Horas</label>
-        <input type="number" class="form-control" id="horas" name="horas" required>
-    </div>
-
-    <div class="form-group">
-        <label for="notaaprobacion">Nota Aprobación</label>
-        <input type="number" step="0.01" class="form-control" id="notaaprobacion" name="notaaprobacion">
-    </div>
-
-    <div class="form-group">
-        <label for="espagado">¿Es Pagado?</label>
-        <select class="form-control" id="espagado" name="espagado">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-        </select>
-    </div>
-
-   <div class="form-group" id="grupoCosto">
-    <label for="costo">Costo</label>
-    <input type="number" step="0.01" class="form-control" id="costo" name="costo">
+  </div>
 </div>
 
+<!-- Scripts necesarios -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <div class="form-group">
-        <label for="internos">¿Solo para Internos?</label>
-        <select class="form-control" id="internos" name="internos">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-success">Guardar Evento</button>
-</form>
-
-<hr class="my-4">
-
-<!-- 🔍 BÚSQUEDA Y FILTROS -->
-<div class="row mb-3">
-    <div class="col-md-4">
-        <input type="text" id="buscarNombre" class="form-control" placeholder="Buscar por título...">
-    </div>
-    <div class="col-md-4">
-        <input type="date" id="buscarFecha" class="form-control" placeholder="Buscar por fecha...">
-    </div>
-    <div class="col-md-4">
-        <select id="filtrarEstado" class="form-control">
-            <option value="">Filtrar por estado</option>
-            <option value="activo">Activo</option>
-            <option value="inactivo">Inactivo</option>
-        </select>
-    </div>
-</div>
-
-<!-- 📋 TABLA DE EVENTOS -->
-<table class="table table-bordered table-hover">
-    <thead class="thead-dark">
-        <tr>
-            <th>Título</th>
-            <th>Fecha Inicio</th>
-            <th>Modalidad</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="tablaEventos">
-        <!-- Aquí irán los eventos cargados dinámicamente más adelante -->
-    </tbody>
-</table>
-
-</div> <!-- /#page-inner -->
-</div> <!-- /#page-wrapper -->
-
-<?php include("partials/footer_Admin.php"); ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-// 👉 Mostrar u ocultar el campo "Costo" según si es pagado
-function toggleCosto() {
-    const esPagado = document.getElementById("espagado").value;
-    const grupoCosto = document.getElementById("grupoCosto");
-    grupoCosto.style.display = esPagado === "1" ? "block" : "none";
-}
+$(document).ready(function () {
+  $('#requisitosSelect, #organizadoresSelect').select2({
+    placeholder: "Seleccione una o más opciones",
+    width: '100%'
+  });
 
-// 👉 Función vacía para editar (la usarás cuando conectes con el backend)
-function editarEvento(evento) {
-    document.getElementById("eventoId").value = evento.id;
-    document.getElementById("titulo").value = evento.titulo;
-    document.getElementById("descripcion").value = evento.descripcion;
-    document.getElementById("fechainicio").value = evento.fechainicio;
-    document.getElementById("fechafin").value = evento.fechafin;
-    document.getElementById("tipoevento").value = evento.tipoevento;
-    document.getElementById("modalidad").value = evento.modalidad;
-    document.getElementById("horas").value = evento.horas;
-    document.getElementById("notaaprobacion").value = evento.notaaprobacion;
-    document.getElementById("espagado").value = evento.espagado;
-    document.getElementById("costo").value = evento.costo;
-    document.getElementById("internos").value = evento.internos;
+  $('#esPagado').change(function () {
+    $('#costoContainer').toggle(this.checked);
+  });
 
-    toggleCosto(); // ajustar el campo costo en modo edición
-
-    document.querySelector("#formEvento button").textContent = "Actualizar Evento";
-}
-
-// 👉 Inicializar al cargar
-document.addEventListener("DOMContentLoaded", () => {
-    // Comportamiento para mostrar/ocultar campo costo
-    document.getElementById("espagado").addEventListener("change", toggleCosto);
-    toggleCosto();
-
-    // Filtros (quedarán activos cuando tengas datos del backend)
-    document.getElementById("buscarNombre").addEventListener("input", function () {
-        // Aquí luego aplicarás búsqueda cuando tengas eventos reales
-    });
-
-    document.getElementById("buscarFecha").addEventListener("input", function () {
-        // Aquí luego aplicarás búsqueda por fecha real
-    });
-
-    document.getElementById("filtrarEstado").addEventListener("change", function () {
-        // Aquí luego aplicarás filtro por estado real
-    });
+  $('#facultad').change(function () {
+    const carrera = $('#carrera');
+    carrera.html("<option>Cargando...</option>");
+    carrera.prop("disabled", false);
+    // Lógica AJAX aquí
+  });
 });
 </script>
 
-
+<?php include("partials/footer_Admin.php"); ?>
