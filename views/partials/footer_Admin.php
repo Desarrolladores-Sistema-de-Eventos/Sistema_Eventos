@@ -8,7 +8,18 @@
 <!-- Inicialización -->
 <script>
     $(document).ready(function () {
-        $('#dataTables-example').DataTable();
+        $('#dataTables-inscripciones').DataTable();
+        $('#dataTables-users').DataTable();
+        $('#dataTables-eventos').DataTable();
+        $('#dataTables-example4').DataTable();
+        $('#dataTables-example5').DataTable();  
+        $('#dataTables-example6').DataTable();
+        $('#dataTables-example7').DataTable();
+        $('#dataTables-example8').DataTable();
+        $('#dataTables-example9').DataTable();
+        $('#dataTables-example10').DataTable();
+        $('#dataTables-example11').DataTable();
+        $('#dataTables-example12').DataTable();
     });
 </script>
 
