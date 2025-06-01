@@ -35,10 +35,13 @@ include __DIR__ . '/partials/header_Admin.php';
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nombre completo</th>
-                                <th>Correo institucional</th>
-                                <th>Rol</th>
-                                <th>Estado</th>
+                                <th>SECUENCIAL</th>
+                                <th>NOMBRE_COMPLETO</th>
+                                <th>CORREO</th>
+                                <th>CODIGOROL</th>
+                                <th>CODIGOESTADO</th>
+                                <th>ES_INTERNO</th>
+                                <th>FOTO_PERFIL</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -46,9 +49,11 @@ include __DIR__ . '/partials/header_Admin.php';
                             <tr>
                                 <td>001</td>
                                 <td>Juan Pérez García</td>
-                                <td>juan.perez@uta.edu.ec</td>
-                                <td>Estudiante</td>
-                                <td>Activo</td>
+                                <td>juan@ejemplo.com</td>
+                                <td>ESTUDIANTE</td>
+                                <td>ACTIVO</td>
+                                <td>1</td>
+                                <td>foto_juan.jpg</td>
                                 <td class="action-buttons">
                                     <button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</button>
                                     <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-edit"></i> Editar</button>
@@ -58,9 +63,11 @@ include __DIR__ . '/partials/header_Admin.php';
                             <tr>
                                 <td>002</td>
                                 <td>Ana López Torres</td>
-                                <td>ana.lopez@uta.edu.ec</td>
-                                <td>Promotor</td>
-                                <td>Activo</td>
+                                <td>ana@ejemplo.com</td>
+                                <td>ADMIN</td>
+                                <td>ACTIVO</td>
+                                <td>1</td>
+                                <td>foto_ana.jpg</td>
                                 <td class="action-buttons">
                                     <button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</button>
                                     <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-edit"></i> Editar</button>
@@ -70,9 +77,11 @@ include __DIR__ . '/partials/header_Admin.php';
                             <tr>
                                 <td>003</td>
                                 <td>David Ramos</td>
-                                <td>dramos@uta.edu.ec</td>
+                                <td>carlos@ejemplo.com</td>
                                 <td>Administrador</td>
                                 <td>Inactivo</td>
+                                <td>1</td>
+                                <td>foto_david.jpg</td>
                                 <td class="action-buttons">
                                     <button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</button>
                                     <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserModal"><i class="fas fa-edit"></i> Editar</button>
@@ -110,32 +119,44 @@ include __DIR__ . '/partials/header_Admin.php';
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="add_nombre_completo">📛 Nombre completo:</label>
-                                <input type="text" class="form-control" id="add_nombre_completo" name="nombre_completo" required>
+                                <label for="NOMBRE_COMPLETO">📛 Nombre completo:</label>
+                                <input type="text" class="form-control" id="NOMBRE_COMPLETO" name="NOMBRE_COMPLETO" required>
                             </div>
                             <div class="form-group">
-                                <label for="add_correo_institucional">📧 Correo institucional:</label>
-                                <input type="email" class="form-control" id="add_correo_institucional" name="correo_institucional" required>
+                                <label for="CORREO">📧 Correo institucional:</label>
+                                <input type="email" class="form-control" id="CORREO" name="CORREO" required>
                             </div>
                             <div class="form-group">
-                                <label for="add_contrasena">🔒 Contraseña:</label>
-                                <input type="password" class="form-control" id="add_contrasena" name="contrasena" required>
+                                <label for="CONTRASENA">🔒 Contraseña:</label>
+                                <input type="password" class="form-control" id="CONTRASENA" name="CONTRASENA" required>
                             </div>
                             <div class="form-group">
-                                <label for="add_rol">🧑‍🏫 Rol:</label>
-                                <select class="form-control" id="add_rol" name="rol" required>
-                                    <option value="estudiante">Estudiante</option>
-                                    <option value="promotor">Promotor</option>
-                                    <option value="administrador">Administrador</option>
+                                <label for="CODIGOROL">🧑‍🏫 Rol:</label>
+                                <select class="form-control" id="CODIGOROL" name="CODIGOROL" required>
+                                    <option value="ESTUDIANTE">Estudiante</option>
+                                    <option value="DOCENTE">Docente</option>
+                                    <option value="ADMIN">Admin</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="add_telefono">📱 Teléfono (opcional):</label>
-                                <input type="text" class="form-control" id="add_telefono" name="telefono">
+                                <label for="TELEFONO">📱 Teléfono:</label>
+                                <input type="text" class="form-control" id="TELEFONO" name="TELEFONO" required>
                             </div>
                             <div class="form-group">
-                                <label for="add_carrera">🏫 Carrera (si aplica):</label>
-                                <input type="text" class="form-control" id="add_carrera" name="carrera">
+                                <label for="DIRECCION">🏠 Dirección:</label>
+                                <input type="text" class="form-control" id="DIRECCION" name="DIRECCION">
+                            </div>
+                            <div class="form-group">
+                                <label for="ES_INTERNO">🏢 Es Interno:</label>
+                                <select class="form-control" id="ES_INTERNO" name="ES_INTERNO" required>
+                                    <option value="1">Sí</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="FOTO_PERFIL">🖼️ Foto de Perfil:</label>
+                                <input type="file" class="form-control-file" id="FOTO_PERFIL" name="FOTO_PERFIL">
+
                             </div>
                             <div class="form-group">
                                 <label for="add_estado">🟢 Estado:</label>
@@ -165,30 +186,46 @@ include __DIR__ . '/partials/header_Admin.php';
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="edit_nombre_completo">📛 Nombre completo:</label>
-                                <input type="text" class="form-control" id="edit_nombre_completo" name="nombre_completo" value="Juan Pérez García" required>
+                                <label for="edit_NOMBRE_COMPLETO">📛 Nombre completo:</label>
+                                <input type="text" class="form-control" id="edit_NOMBRE_COMPLETO" name="NOMBRE_COMPLETO" required>
                             </div>
                             <div class="form-group">
-                                <label for="edit_correo_institucional">📧 Correo institucional:</label>
-                                <input type="email" class="form-control" id="edit_correo_institucional" name="correo_institucional" value="juan.perez@uta.edu.ec" required>
+                                <label for="edit_CORREO">📧 Correo institucional:</label>
+                                <input type="email" class="form-control" id="edit_CORREO" name="CORREO" required>
                             </div>
                             <div class="form-group">
-                                <label for="edit_contrasena">🔒 Cambiar contraseña (opcional):</label>
-                                <input type="password" class="form-control" id="edit_contrasena" name="nueva_contrasena">
+                                <label for="edit_CONTRASENA">🔒 Cambiar contraseña (opcional):</label>
+                                <input type="password" class="form-control" id="edit_CONTRASENA" name="CONTRASENA">
                             </div>
                             <div class="form-group">
-                                <label for="edit_rol">🧑‍🏫 Rol:</label>
-                                <select class="form-control" id="edit_rol" name="rol" required>
-                                    <option value="estudiante">Estudiante</option>
-                                    <option value="promotor">Promotor</option>
-                                    <option value="administrador">Administrador</option>
+                                <label for="edit_CODIGOROL">🧑‍🏫 Rol:</label>
+                                <select class="form-control" id="edit_CODIGOROL" name="CODIGOROL" required>
+                                     <option value="ESTUDIANTE">Estudiante</option>
+                                    <option value="DOCENTE">Docente</option>
+                                    <option value="ADMIN">Admin</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="edit_estado">🟢 Estado:</label>
                                 <select class="form-control" id="edit_estado" name="estado" required>
-                                    <option value="activo">Activo</option>
-                                    <option value="inactivo">Inactivo</option>
+                                    <option value="ACTIVO">Activo</option>
+                                    <option value="INACTIVO">Inactivo</option>
+                                    <option value="BLOQUEADO">Bloqueado</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="edit_TELEFONO">📱 Teléfono:</label>
+                                <input type="text" class="form-control" id="edit_TELEFONO" name="TELEFONO" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_DIRECCION">🏠 Dirección:</label>
+                                <input type="text" class="form-control" id="edit_DIRECCION" name="DIRECCION">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_ES_INTERNO">🏢 Es Interno:</label>
+                                <select class="form-control" id="edit_ES_INTERNO" name="ES_INTERNO" required>
+                                    <option value="1">Sí</option>
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">💾 Actualizar datos</button>
@@ -227,17 +264,23 @@ include __DIR__ . '/partials/header_Admin.php';
  $(document).on('click', '.btn-warning', function() {
                 // Datos de marcador de posición - En una aplicación real, obtendrías estos datos
                 // de tu backend basado en el ID de usuario asociado a la fila.
-                var userName = $(this).closest('tr').find('td:nth-child(2)').text();
-                var userEmail = $(this).closest('tr').find('td:nth-child(3)').text();
+                var userId = $(this).closest('tr').find('td:nth-child(1)').text();
+                var userNombreCompleto = $(this).closest('tr').find('td:nth-child(2)').text();
+                var userCorreo = $(this).closest('tr').find('td:nth-child(3)').text();
                 var userRole = $(this).closest('tr').find('td:nth-child(4)').text();
                 var userStatus = $(this).closest('tr').find('td:nth-child(5)').text();
- var userId = $(this).closest('tr').find('td:nth-child(1)').text(); // Asumiendo que la primera columna es el ID
+                var userTelefono = $(this).closest('tr').find('td:nth-child(6)').text();
+                var userDireccion = $(this).closest('tr').find('td:nth-child(7)').text();
+                var userEsInterno = $(this).closest('tr').find('td:nth-child(8)').text();
 
-                $('#edit_nombre_completo').val(userName);
-                $('#edit_correo_institucional').val(userEmail);
-                $('#edit_rol').val(userRole.toLowerCase()); // Set dropdown value
-                $('#edit_estado').val(userStatus.toLowerCase()); // Set dropdown value
 
+                $('#edit_NOMBRE_COMPLETO').val(userNombreCompleto);
+                $('#edit_CORREO').val(userCorreo);
+                $('#edit_CODIGOROL').val(userRole); // Set dropdown value
+                $('#edit_estado').val(userStatus); // Set dropdown value
+                $('#edit_TELEFONO').val(userTelefono);
+                $('#edit_DIRECCION').val(userDireccion);
+                $('#edit_ES_INTERNO').val(userEsInterno);
                 // Limpiar el campo de contraseña al abrir el modal de edición
                 $('#edit_contrasena').val('');
             });
@@ -246,18 +289,24 @@ include __DIR__ . '/partials/header_Admin.php';
             $(document).on('click', '.btn-info', function() {
                 // Obtener datos de la fila del usuario
                 var userId = $(this).closest('tr').find('td:nth-child(1)').text();
-                var userName = $(this).closest('tr').find('td:nth-child(2)').text();
-                var userEmail = $(this).closest('tr').find('td:nth-child(3)').text();
+                var userNombreCompleto = $(this).closest('tr').find('td:nth-child(2)').text();
+                var userCorreo = $(this).closest('tr').find('td:nth-child(3)').text();
                 var userRole = $(this).closest('tr').find('td:nth-child(4)').text();
                 var userStatus = $(this).closest('tr').find('td:nth-child(5)').text();
+                var userTelefono = $(this).closest('tr').find('td:nth-child(6)').text();
+                var userDireccion = $(this).closest('tr').find('td:nth-child(7)').text();
+                var userEsInterno = $(this).closest('tr').find('td:nth-child(8)').text();
+                var userFotoPerfil = $(this).closest('tr').find('td:nth-child(9)').text();
 
                 // Mostrar la información en una alerta
                 alert('Detalles del Usuario:\n' +
                       'ID: ' + userId + '\n' +
-                      'Nombre: ' + userName + '\n' +
-                      'Correo: ' + userEmail + '\n' +
-                      'Rol: ' + userRole + '\n' + // Corregido para usar userRole
-                      'Estado: ' + userStatus);
+                      'Nombre Completo: ' + userNombreCompleto + '\n' +
+                      'Correo: ' + userCorreo + '\n' +
+                      'Rol: ' + userRole + '\n' +
+                      'Estado: ' + userStatus + '\n' +
+                      'Telefono: ' + userTelefono + '\n' +
+                      'Es Interno: ' + userEsInterno);
             });
 
             // Manejar clic en el botón Eliminar
@@ -279,7 +328,7 @@ include __DIR__ . '/partials/header_Admin.php';
             // Manejar clic en el botón Eliminar dentro del modal de confirmación
             $('#confirmDeleteButton').click(function() {
                 var userId = $(this).data('userId'); // Obtener el ID del usuario almacenado
-                console.log('Se intentaría eliminar al usuario con ID: ' + userId);
+                console.log('Attempting to delete user with ID: ' + userId);
                 $('#deleteConfirmModal').modal('hide'); // Cerrar el modal
             });
 
@@ -290,7 +339,7 @@ include __DIR__ . '/partials/header_Admin.php';
 
             // Optional: Clear edit user form password field when the modal is closed
              $('#editUserModal').on('hidden.bs.modal', function () {
-                $('#edit_contrasena').val('');
+                $('#edit_CONTRASENA').val('');
             });
         }); // Cierre de $(document).ready
 </script>
