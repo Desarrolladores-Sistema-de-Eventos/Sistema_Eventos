@@ -18,7 +18,7 @@ function cargarTarjetas() {
             </div>
             <div class="panel-footer text-center" style="padding:6px;">
               <button class="btn btn-success btn-sm" onclick="window.location.href='dashboard_Notas_Res.php?idEvento=${e.SECUENCIAL}&titulo=${encodeURIComponent(e.TITULO)}&fecha=${encodeURIComponent(e.FECHAINICIO)}&tipo=${encodeURIComponent(e.TIPO)}'">
-            <i class="fa fa-edit"></i> Registrar
+                <i class="fa fa-edit"></i>
               </button>
             </div>
           </div>
@@ -58,11 +58,11 @@ function verInscritosEvento(idEvento, titulo, fecha, tipo) {
                         <input type="number" min="0" max="10" step="0.1" class="form-control form-control-sm" id="nota-${ins.INSCRIPCION_ID}" value="${ins.NOTA !== null ? ins.NOTA : ''}" ${esEditable ? '' : 'disabled'}>
                     </td>
                     <td>
-                        <button class="btn btn-warning btn-sm" id="btn-editar-${ins.INSCRIPCION_ID}" onclick="habilitarEdicion(${ins.INSCRIPCION_ID})">
-                            <i class="fa fa-pencil" style="color: #000;"></i> <span style="color: #000;">Editar</span>
+                        <button class="btn btn-warning btn-sm" id="btn-editar-${ins.INSCRIPCION_ID}" onclick="habilitarEdicion(${ins.INSCRIPCION_ID})" title="Editar">
+                            <i class="fa fa-pencil" style="color: #000;"></i>
                         </button>
-                        <button class="btn btn-success btn-sm d-none" id="btn-guardar-${ins.INSCRIPCION_ID}" onclick="guardarAsistenciaNota(${ins.INSCRIPCION_ID})">
-                            <i class="fa fa-save" style="color: #000;"></i> <span style="color: #000;">Guardar</span>
+                        <button class="btn btn-success btn-sm d-none" id="btn-guardar-${ins.INSCRIPCION_ID}" onclick="guardarAsistenciaNota(${ins.INSCRIPCION_ID})" title="Guardar">
+                            <i class="fa fa-save" style="color: #000;"></i>
                         </button>
                     </td>
                 </tr>
@@ -100,11 +100,16 @@ function guardarAsistenciaNota(idInscripcion) {
 
     axios.post('../controllers/Asistencia_NotaController.php?option=guardarAsistenciaNota', formData)
         .then(res => {
+            // Combina mensaje principal y mensaje de certificado si existe
+            let mensaje = res.data.mensaje ? res.data.mensaje : (res.data.success ? 'Registro actualizado correctamente.' : 'No se pudo guardar.');
+            if (res.data.mensaje_certificado) {
+                mensaje += '\n' + res.data.mensaje_certificado;
+            }
             Swal.fire({
                 icon: res.data.success ? 'success' : 'error',
                 title: res.data.success ? 'Guardado' : 'Error',
-                text: res.data.mensaje ? res.data.mensaje : (res.data.success ? 'Registro actualizado correctamente.' : 'No se pudo guardar.'),
-                timer: 1800,
+                text: mensaje,
+                timer: 2200,
                 showConfirmButton: false
             });
             // Deshabilita los campos y muestra solo el botón Editar

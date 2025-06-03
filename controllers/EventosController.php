@@ -62,8 +62,8 @@ class EventosController
         $data = $this->eventoModelo->getEventosPorResponsable($this->idUsuario);
         foreach ($data as &$e) {
             $e['accion'] = '
-                <button onclick="edit(' . $e['SECUENCIAL'] . ')" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i>Editar</button> 
-                <button onclick="eliminar(' . $e['SECUENCIAL'] . ')" class="btn btn-danger btn-sm"><i class="fa fa-close"></i>Cancelar</button>';
+                <button onclick="edit(' . $e['SECUENCIAL'] . ')" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button> 
+                <button onclick="eliminar(' . $e['SECUENCIAL'] . ')" class="btn btn-danger btn-sm"><i class="fa fa-close"></i></button>';
         }
         $this->json($data);
     }

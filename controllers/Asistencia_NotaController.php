@@ -59,11 +59,12 @@ private function guardarAsistenciaNota()
 
     if (!$idInscripcion || $asistencia === null || $nota === null) {
         $this->json(['success' => false, 'mensaje' => 'Datos incompletos']);
+        return; // <-- Agrega esto
     }
 
-    $ok = $this->modelo->guardarAsistenciaNota($idInscripcion, $asistencia, $nota);
+    $resultado = $this->modelo->guardarAsistenciaNota($idInscripcion, $asistencia, $nota);
 
-    $this->json(['success' => $ok]);
+    $this->json($resultado);
 }
     
 

@@ -1,5 +1,4 @@
 <?php include("partials/header_Admin.php"); ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
   .password-wrapper {
@@ -22,7 +21,8 @@
   }
 </style>
 
-<div id="page-wrapper" style="margin-left: 260px; padding: 30px;">
+<div id="page-wrapper">
+  <div id="page-inner">
   <h3 class="text-info"><i class="fa fa-users"></i> Gestión de Usuarios</h3>
   <p class="text-muted">Administra la información de los usuarios del sistema.</p>
 
@@ -83,8 +83,11 @@
         </tr>
       </tbody>
     </table>
-    <h1>Se cargaran dinamicamente desde la base de datos</h1>
   </div>
+  <div>
+      <a href="configuracion_datos_base.php" class="btn btn-secondary mt-2"><i class="fa fa-arrow-left"></i> Volver a configuración</a>
+    </div>
+</div>
 </div>
 
 <script>
@@ -97,5 +100,5 @@
     icon.classList.toggle("fa-eye-slash");
   }
 </script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <?php include("partials/footer_Admin.php"); ?>

@@ -56,7 +56,7 @@
     <!-- Topbar End -->
     <div class="register-container">
         <h2 class="form-title text-center">Registro de Usuario</h2>
-        <form id="formRegistro" method="POST" action="../controllers/RegisterController.php" enctype="multipart/form-data" autocomplete="off">
+        <form id="formRegistroUsuario" method="POST" autocomplete="off">
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -67,7 +67,6 @@
                         <label for="apellidos" class="form-label">Apellidos</label>
                         <input type="text" class="form-control" id="apellidos" name="apellidos" required maxlength="100">
                     </div>
-
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
                         <input type="text" class="form-control" id="telefono" name="telefono" required maxlength="20">
@@ -81,14 +80,18 @@
                     <div class="mb-3">
                         <label for="correo" class="form-label">Correo electrónico</label>
                         <input type="email" class="form-control" id="correo" name="correo" required maxlength="100">
+                        <small id="correoHelp" class="form-text text-muted">
+                            - Estudiantes y Docentes: debe terminar en <b>@uta.edu.ec</b><br>
+                            - Invitados: debe terminar en <b>@gmail.com</b>
+                        </small>
                     </div>
                     <div class="mb-3">
                         <label for="contrasena" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="contrasena" name="contrasena" required minlength="6" maxlength="255">
                     </div>
                     <div class="mb-3">
-                        <label for="rol" class="form-label">Rol de Participante: </label>
-                        <select class="form-select" id="rol" name="rol" required>
+                        <label for="codigorol" class="form-label">Rol de Participante: </label>
+                        <select class="form-select" id="codigorol" name="codigorol" required>
                             <option value="">Seleccione...</option>
                             <option value="EST">Estudiante</option>
                             <option value="DOC">Docente</option>
@@ -96,7 +99,9 @@
                         </select>
                     </div>
                 </div>
-            <button type="submit" class="btn w-100" style="background-color: #660000; color: #fff;">Registrarse</button>  </form>
+            </div>
+            <button type="submit" class="btn w-100" style="background-color: #660000; color: #fff;">Registrarse</button>
+        </form>
         <div class="text-center mt-3">
             ¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a>
         </div>
@@ -106,9 +111,13 @@
 <script src="../public/js/jquery.min.js"></script>
 <script src="../public/js/popper.js"></script>
 <script src="../public/js/bootstrap.min.js"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../public/js/usuario.js"></script>
 <script src="../public/js/registro.js"></script>
+
 <?php include('partials/footer.php'); ?>

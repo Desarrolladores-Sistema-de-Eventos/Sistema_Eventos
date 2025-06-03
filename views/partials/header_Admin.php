@@ -52,32 +52,9 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
         <?php if ($rol === 'ADMIN'): ?>
           <li><a href="../views/dashboard_Pri_Adm.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
           <li><a href="../views/dashboard_Eve_Adm.php"><i class="fa fa-calendar fa-3x"></i>Eventos</a></li>
-          <li><a href="../views/dashboard_Ins_Adm.php"><i class="fa fa-edit fa-3x"></i> Inscripciones</a></li>
-          <li><a href="../views/dashboard_Rep_Adm.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
           <li><a href="../views/dashboard_Usu_Adm.php"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
-          <li>
-            <a href="../views/configuracion_datos_base.php"><i class="fa fa-gear fa-3x"></i> Configuraciones<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-              <li>
-                <a href="#">Configurar Eventos <span class="fa arrow"></span></a>
-                <ul class="nav nav-third-level">
-                  <li><a href="#">Tipos de Evento</a></li>
-                  <li><a href="#">Modalidades</a></li>
-                  <li><a href="#">Categorías</a></li>
-                  <li><a href="#">Requisitos</a></li>
-                  <li><a href="#">Organizadores</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Configurar Usuarios <span class="fa arrow"></span></a>
-                <ul class="nav nav-third-level">
-                  <li><a href="#">Roles</a></li>
-                  <li><a href="#">Facultades</a></li>
-                  <li><a href="#">Carreras</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+          <li><a href="../views/dashboard_Rep_Adm.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
+          <li><a href="../views/configuracion_datos_base.php"><i class="fa fa-gear fa-3x"></i> Configuraciones</a></li>
         <?php endif; ?>
 
         

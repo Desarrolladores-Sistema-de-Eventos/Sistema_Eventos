@@ -1,7 +1,7 @@
 <?php include("partials/header_Admin.php"); ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-<div id="page-wrapper" style="margin-left: 260px; padding: 30px;">
+<div id="page-wrapper">
+  <div id="page-inner">
   <h3 class="text-danger"><i class="fa fa-university"></i> Gestión de Facultades</h3>
   <p class="text-muted">Administra la información de las facultades disponibles en la institución.</p>
 
@@ -45,8 +45,11 @@
         </tr>
       </tbody>
     </table>
-    <h1>Se cargaran dinamicamente desde la BD</h1>
   </div>
+  <div>
+      <a href="configuracion_datos_base.php" class="btn btn-secondary mt-2"><i class="fa fa-arrow-left"></i> Volver a configuración</a>
+    </div>
 </div>
-
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <?php include("partials/footer_Admin.php"); ?>

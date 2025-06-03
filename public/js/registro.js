@@ -20,7 +20,7 @@ $(document).ready(function() {
                         text: res.success,
                         confirmButtonColor: '#660000'
                     }).then(() => {
-                        window.location.href = 'login.php';
+                        window.location.href = '../views/login.php';
                     });
                 } else if (res.errores) {
                     Swal.fire({

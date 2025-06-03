@@ -16,7 +16,7 @@
         </button>
         <div class="form-check mb-2">
           <label class="form-check-label">
-            <input type="checkbox" id="mostrarCancelados" class="form-check-input"> Mostrar eventos cancelados
+            <input type="checkbox" id="mostrarCancelados" class="form-check-input">Mostrar eventos cancelados
           </label>
         </div>
         <br><br>
@@ -118,22 +118,42 @@
       </div>
     </div><br>
 
-    <!-- Carrera -->
+   <!-- Carrera -->
+<div class="form-group">
+  <label for="carrera"><i class="fa fa-graduation-cap"></i> Carrera</label>
+  <select class="form-control" id="carrera" name="carrera" required>
+    <option value="">Seleccione</option>
+  </select>
+</div><br>
+
+<!-- Responsable y Organizador (nuevo) -->
+<div class="row">
+  <div class="col-md-6">
     <div class="form-group">
-      <label for="carrera"><i class="fa fa-graduation-cap"></i> Carrera</label>
-      <select class="form-control" id="carrera" name="carrera" required>
+      <label for="responsable"><i class="fa fa-user-shield"></i> Responsable del Evento</label>
+      <select class="form-control" id="responsable" name="responsable" required>
         <option value="">Seleccione</option>
       </select>
-    </div><br>
-
-    <!-- Público destino -->
+    </div>
+  </div>
+  <div class="col-md-6">
     <div class="form-group">
-      <label for="publicoDestino"><i class="fa fa-users"></i> ¿Quiénes pueden inscribirse?</label>
-      <select id="publicoDestino" name="publicoDestino" class="form-control" required>
-        <option value="internos">Internos</option>
-        <option value="externos">Externos</option>
+      <label for="organizador"><i class="fa fa-user"></i> Organizador del Evento</label>
+      <select class="form-control" id="organizador" name="organizador" required>
+        <option value="">Seleccione</option>
       </select>
-    </div><br>
+    </div>
+  </div>
+</div>
+<br>
+<!-- Público destino -->
+<div class="form-group">
+  <label for="publicoDestino"><i class="fa fa-users"></i> ¿Quiénes pueden inscribirse?</label>
+  <select id="publicoDestino" name="publicoDestino" class="form-control" required>
+    <option value="internos">Internos</option>
+    <option value="externos">Externos</option>
+  </select>
+</div>
 
     <!-- Certificado -->
     <div class="form-group">
@@ -198,6 +218,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <script src="../public/js/eve_Res.js"></script>
+    <script src="../public/js/eventoAdmin.js"></script>
 
 <?php include("partials/footer_Admin.php"); ?>

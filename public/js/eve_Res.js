@@ -1,6 +1,5 @@
 // ==== TABLA EVENTOS RESPONSABLE ====
 let tablaEventos;
-
 function inicializarTablaEventos() {
   const incluirCancelados = document.getElementById('mostrarCancelados')?.checked;
   localStorage.setItem('verCancelados', incluirCancelados ? '1' : '0');
@@ -11,8 +10,15 @@ function inicializarTablaEventos() {
     ajax: {
       url: '../controllers/EventosController.php?option=listarResponsable',
       dataSrc: function (json) {
-        console.log('🔍 Datos cargados:', json);
-        return incluirCancelados ? json : json.filter(e => e.ESTADO !== 'CANCELADO');
+        if (incluirCancelados) {
+          // Mostrar solo eventos CANCELADOS o CERRADOS
+          return json.filter(e => {
+            const estado = (e.ESTADO || '').trim().toUpperCase();
+            return estado === 'CANCELADO' || estado === 'CERRADO';
+          });
+        }
+        // Mostrar solo eventos DISPONIBLES
+        return json.filter(e => (e.ESTADO || '').trim().toUpperCase() === 'DISPONIBLE');
       }
     },
     columns: [
