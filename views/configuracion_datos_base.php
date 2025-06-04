@@ -1,5 +1,4 @@
 <?php include("partials/header_Admin.php"); ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
   .titulo-catalogo {
@@ -59,10 +58,11 @@
   }
 </style>
 
-<div id="page-wrapper" style="margin-left: 260px; padding: 30px;">
+<div id="page-wrapper">
+  <div id="page-inner">
   <div class="titulo-catalogo">
     <i class="fa fa-database"></i> Gestión de Catálogos
-  </div>
+  </div><hr/>
   <p class="subtitulo-catalogo">
     Administra los datos base que alimentan la creación de eventos.
   </p>
@@ -97,10 +97,11 @@
       <a href="config_formas_pago.php">Formas de Pago</a>
     </div>
     <div class="catalogo-item">
-      <i class="fa fa-user-shield text-info"></i>
+      <i class="fa fa-user text-info"></i>
       <a href="config_usuarios_roles.php">Roles de Usuario</a>
     </div>
   </div>
 </div>
-
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <?php include("partials/footer_Admin.php"); ?>

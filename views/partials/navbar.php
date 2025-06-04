@@ -15,16 +15,9 @@
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
                         <a href="../public/index.php" class="nav-item nav-link active">Home</a>
-                        <a href="../views/courses.php" class="nav-item nav-link">Cursos</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Eventos</a>
-                            <div class="dropdown-menu border-0 rounded-0 m-0">
-                                <a href="../views/events.php" class="dropdown-item">Congresos</a>
-                            </div>
-                        </div>
-                        <a href="../views/contact.php" class="nav-item nav-link">Contáctanos</a>
+                        <a href="../views/Eventos_Publico.php" class="nav-item nav-link">Eventos Académicos</a>
                         <a href="../views/about.php" class="nav-item nav-link">Nosotros</a>
-
+                        <a href="../views/contact.php" class="nav-item nav-link">Contáctanos</a>
                     </div>
                 </div>
             </nav>

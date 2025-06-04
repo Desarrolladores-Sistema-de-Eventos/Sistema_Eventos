@@ -1,23 +1,262 @@
 <?php
-require_once '../core/auth.php';         // ← 👈 Validación central aquí
-require_once '../models/Evento.php';
+session_start();
+require_once '../models/Eventos.php';
 
-$cedula = $_SESSION['usuario']['CEDULA'];
+header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'actualizar') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $idEvento = $data['ID_EVENTO'] ?? null;
+class EventosController
+{
+    private $eventoModelo;
+    private $idUsuario;
 
-    if (!Evento::esResponsableDelEvento($cedula, $idEvento)) {
-        http_response_code(403);
-        echo json_encode(['error' => 'No autorizado']);
-        exit;
+    public function __construct()
+    {
+        $this->eventoModelo = new Evento();
+        $this->idUsuario = $_SESSION['usuario']['SECUENCIAL'] ?? null;
+
+        if (!$this->idUsuario) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Sesión expirada']);
+            exit;
+        }
     }
 
-    if (Evento::actualizar($idEvento, $data)) {
-        echo json_encode(['ok' => true]);
-    } else {
-        http_response_code(500);
-        echo json_encode(['error' => 'Error al actualizar']);
+    public function handleRequest()
+    {
+        $option = $_GET['option'] ?? '';
+
+        switch ($option) {
+            case 'listarResponsable':
+                $this->listarResponsable();
+                break;
+            case 'esResponsable':
+                $this->verificarResponsable();
+                break;
+            case 'edit':
+                $this->editar();
+                break;
+            case 'save':
+                $this->guardar();
+                break;
+            case 'update':
+                $this->actualizar();
+                break;
+            case 'delete':
+                $this->cancelar();
+                break;
+            case 'listarTarjetas':
+                $this->listarTarjetas();
+                break;
+            case 'listarPublicos':
+                $this->listarPublicos();
+                break;
+            case 'detalleEvento':
+                $this->detalleEvento();
+                break;
+            default:
+                $this->json(['tipo' => 'error', 'mensaje' => 'Acción no válida']);
+        }
+    }
+
+    private function listarResponsable()
+    {
+        $data = $this->eventoModelo->getEventosPorResponsable($this->idUsuario);
+        foreach ($data as &$e) {
+            $e['accion'] = '
+                <button onclick="edit(' . $e['SECUENCIAL'] . ')" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button> 
+                <button onclick="eliminar(' . $e['SECUENCIAL'] . ')" class="btn btn-danger btn-sm"><i class="fa fa-close"></i></button>';
+        }
+        $this->json($data);
+    }
+
+    private function verificarResponsable()
+    {
+        $esResponsable = Evento::esResponsable($this->idUsuario);
+        $this->json(['responsable' => $esResponsable]);
+    }
+
+    private function editar()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'ID faltante']);
+            return;
+        }
+        $evento = $this->eventoModelo->getEvento($id);
+        $this->json($evento);
+    }
+
+private function guardar()
+{
+    $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'categoria', 'tipoEvento', 'carrera', 'estado'];
+    foreach ($required as $campo) {
+        if (empty($_POST[$campo])) {
+            $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
+            return;
+        }
+    }
+
+    try {
+        // Procesar archivo de portada
+        $urlPortada = null;
+        if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
+            $rutaDestino = '../public/img/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
+                $urlPortada = 'public/img/eventos/' . $nombreArchivo;
+            }
+        }
+
+        // Procesar archivo de galería
+        $urlGaleria = null;
+        if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
+            $rutaDestino = '../public/img/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
+                $urlGaleria = 'public/img/' . $nombreArchivo;
+            }
+        }
+
+        $idEvento = $this->eventoModelo->crearEvento(
+            $_POST['titulo'],
+            $_POST['descripcion'],
+            $_POST['horas'],
+            $_POST['fechaInicio'],
+            $_POST['fechaFin'],
+            $_POST['modalidad'],
+            $_POST['notaAprobacion'],
+            $_POST['costo'] ?? 0,
+            $_POST['publicoDestino'],
+            isset($_POST['esPagado']) ? 1 : 0,
+            $_POST['categoria'],
+            $_POST['tipoEvento'],
+            $_POST['carrera'],
+            $_POST['estado'],
+            $this->idUsuario,
+            $urlPortada,
+            $urlGaleria
+        );
+
+        $requisitosSeleccionados = $_POST['requisitos'] ?? [];
+
+        if (!empty($requisitosSeleccionados)) {
+            require_once '../models/Requisitos.php';
+            $reqModel = new Requisitos();
+            $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
+        }
+
+        $this->json(['tipo' => 'success', 'mensaje' => 'Evento creado']);
+    } catch (Exception $e) {
+        $this->json([
+            'tipo' => 'error',
+            'mensaje' => 'Error al crear evento',
+            'debug' => $e->getMessage()
+        ]);
     }
 }
+
+private function actualizar()
+{
+    $idEvento = $_POST['idEvento'] ?? null;
+    if (!$idEvento) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'ID del evento requerido.']);
+        return;
+    }
+
+    try {
+        // Procesar archivo de portada
+        $urlPortada = null;
+        if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
+            $rutaDestino = '../public/img/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
+                $urlPortada = 'public/img/' . $nombreArchivo;
+            }
+        }
+
+        // Procesar archivo de galería
+        $urlGaleria = null;
+        if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
+            $rutaDestino = '../public/img/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
+                $urlGaleria = 'public/img/' . $nombreArchivo;
+            }
+        }
+
+        $resultado = $this->eventoModelo->actualizarEvento(
+            $_POST['titulo'],
+            $_POST['descripcion'],
+            $_POST['horas'],
+            $_POST['fechaInicio'],
+            $_POST['fechaFin'],
+            $_POST['modalidad'],
+            $_POST['notaAprobacion'],
+            $_POST['costo'] ?? 0,
+            $_POST['publicoDestino'],
+            isset($_POST['esPagado']) ? 1 : 0,
+            $_POST['categoria'],
+            $_POST['tipoEvento'],
+            $_POST['carrera'],
+            $_POST['estado'],
+            $idEvento,
+            $this->idUsuario,
+            $urlPortada,
+            $urlGaleria
+        );
+
+        if ($resultado) {
+            $requisitosSeleccionados = $_POST['requisitos'] ?? [];
+
+            require_once '../models/Requisitos.php';
+            $reqModel = new Requisitos();
+
+            $reqModel->eliminarPorEvento($idEvento);
+
+            if (!empty($requisitosSeleccionados)) {
+                $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
+            }
+
+            $this->json(['tipo' => 'success', 'mensaje' => 'Evento actualizado']);
+        } else {
+            $this->json(['tipo' => 'error', 'mensaje' => 'No tienes permisos para actualizar este evento']);
+        }
+    } catch (Exception $e) {
+        $this->json([
+            'tipo' => 'error',
+            'mensaje' => 'Error al actualizar evento',
+            'debug' => $e->getMessage()
+        ]);
+    }
+}
+
+    private function cancelar()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']);
+            return;
+        }
+
+        $ok = $this->eventoModelo->cancelarEvento($id, $this->idUsuario);
+        $this->json([
+            'tipo' => $ok ? 'success' : 'error',
+            'mensaje' => $ok ? 'Evento cancelado' : 'No tienes permisos para cancelar el evento'
+        ]);
+    }
+
+    private function json($data)
+    {
+        echo json_encode($data);
+    }
+
+private function listarTarjetas()
+{
+    $eventos = $this->eventoModelo->getEventosConPortadaPorResponsable($this->idUsuario);
+    $this->json($eventos);
+}
+
+}
+
+// Instancia y ejecución
+$controller = new EventosController();
+$controller->handleRequest();
