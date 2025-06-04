@@ -19,7 +19,7 @@ if (formLogin) {
         Swal.fire({
           icon: 'success',
           title: 'Bienvenido',
-          text: 'Hola ' + data.usuario.NOMBRES,
+          text:  data.usuario.NOMBRES,
           timer: 1500,
           showConfirmButton: false
         });

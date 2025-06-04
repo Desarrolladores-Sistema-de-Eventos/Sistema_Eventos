@@ -169,7 +169,7 @@
     <!-- Botón -->
     <div class="text-right">
       <button type="submit" id="btn-save" class="btn btn-success">
-        <i class="fa fa-save"></i> Guardar Evento
+        <i class="fa fa-floppy-o"></i> Guardar Evento
       </button>
     </div>
   </form>
@@ -190,8 +190,8 @@
   </div>
 </div>
     <!-- Scripts necesarios -->
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
