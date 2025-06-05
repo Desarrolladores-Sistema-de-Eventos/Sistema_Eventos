@@ -38,7 +38,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
   <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
       <ul class="nav" id="main-menu">
-        
+
           <?php if ($esResponsable): ?> 
           <li><a href="../views/dashboard_Pri_Res.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
           <li><a href="../views/dashboard_Eve_Res.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
