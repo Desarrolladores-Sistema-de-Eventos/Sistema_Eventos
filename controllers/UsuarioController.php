@@ -19,10 +19,10 @@ class UsuarioController {
         $option = $_GET['option'] ?? '';
         switch ($option) {
             case 'insertar':
-                $this->insertar();
+                $this->guardar();
                 break;
             case 'editar':
-                $this->editar();
+                $this->actualizar();
                 break;
             case 'eliminar':
                 $this->eliminar();
@@ -44,41 +44,82 @@ class UsuarioController {
         }
     }
 
-    // Solo para administrador
-    private function insertar() {
+    // Guardar (insertar) usuario
+    private function guardar() {
         if ($this->rol !== 'ADM') {
             $this->json(['success' => false, 'mensaje' => 'No autorizado']);
             return;
         }
-        $data = $_POST;
-        $resp = $this->usuarioModelo->insertar(
-            $data['nombres'], $data['apellidos'], $data['telefono'], $data['direccion'],
-            $data['correo'], $data['contrasena'], $data['codigorol'], $data['es_interno'] ?? 1
-        );
-        $this->json($resp);
+        $required = ['nombres', 'apellidos', 'telefono', 'correo', 'contrasena', 'codigorol'];
+        foreach ($required as $campo) {
+            if (empty($_POST[$campo])) {
+                $this->json(['success' => false, 'mensaje' => "El campo '$campo' es obligatorio."]);
+                return;
+            }
+        }
+        try {
+            $foto_perfil = $this->procesarFotoPerfil();
+            $resp = $this->usuarioModelo->insertar(
+                $_POST['nombres'],
+                $_POST['apellidos'],
+                $_POST['telefono'],
+                $_POST['direccion'] ?? '',
+                $_POST['correo'],
+                $_POST['contrasena'],
+                $_POST['codigorol'],
+                $_POST['es_interno'] ?? 1,
+                $foto_perfil
+            );
+            $this->json($resp);
+        } catch (Exception $e) {
+            $this->json([
+                'success' => false,
+                'mensaje' => 'Error al crear usuario',
+                'debug' => $e->getMessage()
+            ]);
+        }
     }
 
-    private function editar() {
+    // Actualizar (editar) usuario
+    private function actualizar() {
         if ($this->rol !== 'ADM') {
             $this->json(['success' => false, 'mensaje' => 'No autorizado']);
             return;
         }
-        $data = $_POST;
-        // Añadimos la contraseña como parámetro opcional
-        $contrasena = isset($data['contrasena']) ? $data['contrasena'] : '';
-        $resp = $this->usuarioModelo->editar(
-            $data['id'],
-            $data['nombres'],
-            $data['apellidos'],
-            $data['telefono'],
-            $data['direccion'],
-            $data['correo'],
-            $data['codigorol'],
-            $data['estado'],
-            $data['es_interno'] ?? 1,
-            $contrasena // Nuevo parámetro
-        );
-        $this->json($resp);
+        $required = ['id', 'nombres', 'apellidos', 'telefono', 'correo', 'codigorol', 'estado'];
+        foreach ($required as $campo) {
+            if (empty($_POST[$campo])) {
+                $this->json(['success' => false, 'mensaje' => "El campo '$campo' es obligatorio."]);
+                return;
+            }
+        }
+        try {
+            $foto_perfil = $this->procesarFotoPerfil();
+            if (!$foto_perfil && isset($_POST['foto_perfil_actual'])) {
+                $foto_perfil = $_POST['foto_perfil_actual'];
+            }
+            $contrasena = isset($_POST['contrasena']) ? $_POST['contrasena'] : '';
+            $resp = $this->usuarioModelo->editar(
+                $_POST['id'],
+                $_POST['nombres'],
+                $_POST['apellidos'],
+                $_POST['telefono'],
+                $_POST['direccion'] ?? '',
+                $_POST['correo'],
+                $_POST['codigorol'],
+                $_POST['estado'],
+                $_POST['es_interno'] ?? 1,
+                $contrasena,
+                $foto_perfil
+            );
+            $this->json($resp);
+        } catch (Exception $e) {
+            $this->json([
+                'success' => false,
+                'mensaje' => 'Error al actualizar usuario',
+                'debug' => $e->getMessage()
+            ]);
+        }
     }
 
     private function eliminar() {
@@ -134,19 +175,46 @@ class UsuarioController {
 
     // Registro público (sin sesión)
     private function registrarUsuario() {
-        $data = $_POST;
         $required = ['nombres', 'apellidos', 'telefono', 'direccion', 'correo', 'contrasena', 'codigorol'];
         foreach ($required as $campo) {
-            if (empty($data[$campo])) {
+            if (empty($_POST[$campo])) {
                 $this->json(['success' => false, 'mensaje' => "El campo $campo es obligatorio"]);
                 return;
             }
         }
-        $resp = $this->usuarioModelo->insertar(
-            $data['nombres'], $data['apellidos'], $data['telefono'], $data['direccion'],
-            $data['correo'], $data['contrasena'], $data['codigorol'], $data['es_interno'] ?? 1
-        );
-        $this->json($resp);
+        try {
+            $foto_perfil = $this->procesarFotoPerfil();
+            $resp = $this->usuarioModelo->insertar(
+                $_POST['nombres'],
+                $_POST['apellidos'],
+                $_POST['telefono'],
+                $_POST['direccion'],
+                $_POST['correo'],
+                $_POST['contrasena'],
+                $_POST['codigorol'],
+                $_POST['es_interno'] ?? 1,
+                $foto_perfil
+            );
+            $this->json($resp);
+        } catch (Exception $e) {
+            $this->json([
+                'success' => false,
+                'mensaje' => 'Error al registrar usuario',
+                'debug' => $e->getMessage()
+            ]);
+        }
+    }
+
+    // Procesa la subida de la foto de perfil y retorna el nombre del archivo o null
+    private function procesarFotoPerfil() {
+        if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = uniqid('perfil_') . '_' . basename($_FILES['foto_perfil']['name']);
+            $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
+            if (move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $rutaDestino)) {
+                return $nombreArchivo;
+            }
+        }
+        return null;
     }
 
     private function json($data) {
@@ -156,4 +224,3 @@ class UsuarioController {
 
 $controller = new UsuarioController();
 $controller->handleRequest();
-?>
