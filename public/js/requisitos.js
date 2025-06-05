@@ -110,6 +110,15 @@ window.eliminarRequisitoConfirm = async function(id) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    renderRequisitosTable();
+$(document).ready(function() {
+    renderRequisitosTable().then(() => {
+        if ($.fn.DataTable.isDataTable('#tablaRequisitos')) {
+            $('#tablaRequisitos').DataTable().destroy();
+        }
+        $('#tablaRequisitos').DataTable({
+            language: {
+                url: '../public/js/es-ES.json'
+            }
+        });
+    });
 });
