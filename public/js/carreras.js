@@ -132,6 +132,15 @@ window.eliminarCarreraConfirm = async function(id) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    renderCarrerasTable();
+$(document).ready(function() {
+    renderCarrerasTable().then(() => {
+        if ($.fn.DataTable.isDataTable('#tablaCarreras')) {
+            $('#tablaCarreras').DataTable().destroy();
+        }
+        $('#tablaCarreras').DataTable({
+            language: {
+                url: '../public/js/es-ES.json'
+            }
+        });
+    });
 });

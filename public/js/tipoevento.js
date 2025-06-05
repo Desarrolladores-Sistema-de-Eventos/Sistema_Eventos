@@ -114,6 +114,15 @@ window.eliminarTipoEventoConfirm = async function(codigo) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    renderTiposEventoTable();
+$(document).ready(function() {
+    renderTiposEventoTable().then(() => {
+        if ($.fn.DataTable.isDataTable('#tablaTiposEvento')) {
+            $('#tablaTiposEvento').DataTable().destroy();
+        }
+        $('#tablaTiposEvento').DataTable({
+            language: {
+                url: '../public/js/es-ES.json'
+            }
+        });
+    });
 });

@@ -36,6 +36,9 @@ async function eliminarRolUsuario(codigo) {
 // Renderizar tabla de roles de usuario
 async function renderRolesUsuarioTable() {
     const roles = await listarRolesUsuario();
+    if ($.fn.DataTable.isDataTable('#tablaRolesUsuario')) {
+        $('#tablaRolesUsuario').DataTable().destroy();
+    }
     const tbody = document.querySelector('#tablaRolesUsuario tbody');
     tbody.innerHTML = '';
     if (Array.isArray(roles)) {
@@ -52,6 +55,11 @@ async function renderRolesUsuarioTable() {
             `;
         });
     }
+    $('#tablaRolesUsuario').DataTable({
+        language: {
+            url: '../public/js/es-ES.json'
+        }
+    });
 }
 
 // Abrir modal para agregar rol de usuario
@@ -111,6 +119,6 @@ window.eliminarRolUsuarioConfirm = async function(codigo) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
     renderRolesUsuarioTable();
 });

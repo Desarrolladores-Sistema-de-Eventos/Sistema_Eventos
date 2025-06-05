@@ -306,11 +306,20 @@ class ConfiguracionesController
             $this->json(['tipo' => 'error', 'mensaje' => 'El campo "descripcion" es obligatorio.']);
             return;
         }
+        // Solo permite guardar requisitos generales (idEvento debe ser null)
         $idEvento = $_POST['idEvento'] ?? null;
+        if ($idEvento !== null && $idEvento !== '' && strtolower($idEvento) !== 'null') {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Solo se pueden crear requisitos generales (sin evento asociado).']);
+            return;
+        }
         $esObligatorio = $_POST['esObligatorio'] ?? null;
         try {
-            $id = $this->configuracionesModelo->crearRequisitoEvento($descripcion, $idEvento, $esObligatorio);
-            $this->json(['tipo' => 'success', 'mensaje' => 'Requisito creado', 'id' => $id]);
+            $id = $this->configuracionesModelo->crearRequisitoEvento($descripcion, null, $esObligatorio);
+            if ($id === false) {
+                $this->json(['tipo' => 'error', 'mensaje' => 'No se pudo crear el requisito.']);
+            } else {
+                $this->json(['tipo' => 'success', 'mensaje' => 'Requisito creado', 'id' => $id]);
+            }
         } catch (Exception $e) {
             $this->json(['tipo' => 'error', 'mensaje' => 'Error al crear requisito', 'debug' => $e->getMessage()]);
         }

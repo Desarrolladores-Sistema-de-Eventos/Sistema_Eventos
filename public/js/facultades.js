@@ -119,6 +119,15 @@ window.eliminarFacultadConfirm = async function(id) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    renderFacultadesTable();
+$(document).ready(function() {
+    renderFacultadesTable().then(() => {
+        if ($.fn.DataTable.isDataTable('#tablaFacultades')) {
+            $('#tablaFacultades').DataTable().destroy();
+        }
+        $('#tablaFacultades').DataTable({
+            language: {
+                url: '../public/js/es-ES.json'
+            }
+        });
+    });
 });

@@ -113,6 +113,15 @@ window.eliminarCategoriaConfirm = async function(id) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    renderCategoriasTable();
+$(document).ready(function() {
+    renderCategoriasTable().then(() => {
+        if ($.fn.DataTable.isDataTable('#tablaCategorias')) {
+            $('#tablaCategorias').DataTable().destroy();
+        }
+        $('#tablaCategorias').DataTable({
+            language: {
+                url: '../public/js/es-ES.json'
+            }
+        });
+    });
 });
