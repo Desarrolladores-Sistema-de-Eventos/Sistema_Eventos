@@ -30,7 +30,7 @@
         <li><a href="#"><i class="fa fa-calendar fa-3x"></i> Eventos</a></li>
         <li><a href="#"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
         <li><a href="#"><i class="fa fa-edit fa-3x"></i> Inscripciones</a></li>
-        <li><a href="#"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
+        <li><a href="Reportes.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
         <li><a href="configuracion_datos_base.php"><i class="fa fa-database fa-3x"></i> Configuración Base</a></li>
         <li>
           <a href="#"><i class="fa fa-gear fa-3x"></i> Configuraciones<span class="fa arrow"></span></a>
@@ -38,19 +38,19 @@
             <li>
               <a href="#">Configurar Eventos <span class="fa arrow"></span></a>
               <ul class="nav nav-third-level">
-                <li><a href="#">Tipos de Evento</a></li>
-                <li><a href="#">Modalidades</a></li>
-                <li><a href="#">Categorías</a></li>
-                <li><a href="#">Requisitos</a></li>
+                <li><a href="config_tipo_evento.php">Tipos de Evento</a></li>
+                <li><a href="config_modalidades.php">Modalidades</a></li>
+                <li><a href="config_categorias.php">Categorías</a></li>
+                <li><a href="config_requisitos.php">Requisitos</a></li>
                 <li><a href="#">Organizadores</a></li>
               </ul>
             </li>
             <li>
               <a href="#">Configurar Usuarios <span class="fa arrow"></span></a>
               <ul class="nav nav-third-level">
-                <li><a href="#">Roles</a></li>
-                <li><a href="#">Facultades</a></li>
-                <li><a href="#">Carreras</a></li>
+                <li><a href="config_usuarios_roles.php">Roles</a></li>
+                <li><a href="config_facultades.php">Facultades</a></li>
+                <li><a href="config_carreras.php">Carreras</a></li>
               </ul>
               
             </li>
