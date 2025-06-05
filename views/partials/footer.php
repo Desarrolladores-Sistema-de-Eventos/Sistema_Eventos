@@ -5,34 +5,19 @@
       <div class="col-md-4 mb-4">
         <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">CONTACTO</h5>
         <ul style="list-style:none; padding-left:0; line-height:1.8;">
-          <li><i class="fa fa-map-marker"></i> Av. Los Chasquis y Río Guayllabamba</li>
-          <li><i class="fa fa-envelope"></i> talleresfisei@uta.edu.ec</li>
           <li><i class="fa fa-envelope"></i> ctt.fisei@uta.edu.ec</li>
+          <li><i class="fa fa-clock-o"></i> Lun-Vie: 08:00 - 18:00</li>
+          <li><i class="fa fa-phone"></i>(03)3700090</li>
           <li><i class="fa fa-desktop"></i> <a href="#" style="color:#ffc107;">Plataforma Educativa</a></li>
         </ul>
-        <div>
-          <a href="#" style="color:#fff; margin-right:8px;"><i class="fa fa-twitter"></i></a>
-          <a href="#" style="color:#fff; margin-right:8px;"><i class="fa fa-facebook"></i></a>
-          <a href="#" style="color:#fff; margin-right:8px;"><i class="fa fa-linkedin"></i></a>
-          <a href="#" style="color:#fff;"><i class="fa fa-instagram"></i></a>
-        </div>
       </div>
-
-      <!-- Cursos -->
-      <div class="col-md-4 mb-4">
-        <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">CURSOS</h5>
-        <ul style="list-style:none; padding-left:0; line-height:1.8;">
-          <li>&#8250; Fundamentos de Python 1</li>
-          <li>&#8250; Fundamentos de Python 2</li>
-          <li>&#8250; JavaScript Essentials 1</li>
-          <li>&#8250; JavaScript Essentials 2</li>
-          <li>&#8250; Ciencia y Analítica de Datos</li>
-          <li>&#8250; Ethical Hacker</li>
-          <li>&#8250; Conceptos Básicos de Redes</li>
-          <li>&#8250; Ciberseguridad en Dispositivos Finales</li>
-        </ul>
-      </div>
-
+     <div class="col-md-4 mb-4">
+    <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">UBICACIÓN</h5>
+    <ul style="list-style:none; padding-left:0; line-height:1.8;">
+        <li><i class="fa fa-map-marker"></i> Av. Los Chasquis y Río Guayllabamba</li>
+        <li><i class="fa fa-map"></i> <a href="https://maps.app.goo.gl/3Gffknn2nbLt13g47" target="_blank" style="color:#fff; text-decoration:underline;">Ver en Google Maps</a></li>
+    </ul>
+</div>
       <!-- Información -->
       <div class="col-md-4 mb-4">
         <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">INFORMACIÓN</h5>
