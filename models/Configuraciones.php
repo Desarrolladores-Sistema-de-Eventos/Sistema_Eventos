@@ -125,13 +125,17 @@ class Configuraciones {
 
     // ================= REQUISITO EVENTO =================
     public function crearRequisitoEvento($descripcion, $idEvento = null, $esObligatorio = null) {
-        $sql = "INSERT INTO requisito_evento (DESCRIPCION, SECUENCIALEVENTO, ES_OBLIGATORIO) VALUES (?, ?, ?)";
+        // Solo permite insertar si $idEvento es null (requisito general)
+        if ($idEvento !== null) {
+            return false; // No inserta si se intenta asociar a un evento específico
+        }
+        $sql = "INSERT INTO requisito_evento (DESCRIPCION, SECUENCIALEVENTO, ES_OBLIGATORIO) VALUES (?, NULL, ?)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$descripcion, $idEvento, $esObligatorio]);
+        $stmt->execute([$descripcion, $esObligatorio]);
         return $this->pdo->lastInsertId();
     }
     public function obtenerRequisitosEvento() {
-        $sql = "SELECT * FROM requisito_evento";
+        $sql = "SELECT * FROM requisito_evento WHERE SECUENCIALEVENTO IS NULL";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

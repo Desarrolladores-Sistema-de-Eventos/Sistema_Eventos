@@ -111,6 +111,15 @@ window.eliminarModalidadConfirm = async function(codigo) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    renderModalidadesTable();
+$(document).ready(function() {
+    renderModalidadesTable().then(() => {
+        if ($.fn.DataTable.isDataTable('#tablaModalidades')) {
+            $('#tablaModalidades').DataTable().destroy();
+        }
+        $('#tablaModalidades').DataTable({
+            language: {
+                url: '../public/js/es-ES.json'
+            }
+        });
+    });
 });

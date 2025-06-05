@@ -111,6 +111,15 @@ window.eliminarFormaPagoConfirm = async function(codigo) {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    renderFormasPagoTable();
+$(document).ready(function() {
+    renderFormasPagoTable().then(() => {
+        if ($.fn.DataTable.isDataTable('#tablaFormasPago')) {
+            $('#tablaFormasPago').DataTable().destroy();
+        }
+        $('#tablaFormasPago').DataTable({
+            language: {
+                url: '../public/js/es-ES.json'
+            }
+        });
+    });
 });
