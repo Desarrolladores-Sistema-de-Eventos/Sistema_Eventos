@@ -33,32 +33,56 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Ana Ruiz</td>
-                <td>1</td>
-                <td>2025-06-01</td>
-                <td>Pendiente</td>
-                <td>
-                  <button type="button" class="btn btn-info btn-ver"
-                    data-toggle="tooltip" title="Ver solicitud"
-                    data-nombre="Ana Ruiz"
-                    data-codigo="1"
-                    data-fecha="2025-06-01"
-                    data-modulo="Matrícula">
-                    <i class="fa fa-eye"></i>
-                  </button>
-                  <button type="button" class="btn btn-success btn-evaluar"
-                    data-toggle="tooltip" title="Evaluar cambio"
-                    data-nombre="Ana Ruiz"
-                    data-codigo="1"
-                    data-fecha="2025-06-01"
-                    data-modulo="Matrícula">
-                    <i class="fa fa-pencil"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+  <?php
+  require_once("../core/Conexion.php");
+  $conn = Conexion::getConexion();
+
+  $stmt = $conn->query("
+  SELECT sc.*, u.NOMBRES, u.APELLIDOS
+  FROM solicitud_cambio sc
+  JOIN usuario u ON sc.SECUENCIAL_USUARIO = u.SECUENCIAL
+  ORDER BY sc.FECHA_ENVIO DESC
+");
+
+  $i = 1;
+
+  while ($row = $stmt->fetch()) {
+    $nombre = htmlspecialchars($row['NOMBRES'] . ' ' . $row['APELLIDOS']);
+    $codigo = htmlspecialchars($row['SECUENCIAL']);
+    $fecha = htmlspecialchars($row['FECHA_ENVIO']);
+    $estado = htmlspecialchars($row['ESTADO']);
+    $modulo = htmlspecialchars($row['MODULO_AFECTADO']);
+  ?>
+
+    <tr>
+      <td><?= $i++ ?></td>
+      <td><?= $nombre ?></td>
+      <td><?= $codigo ?></td>
+      <td><?= $fecha ?></td>
+      <td><?= $estado ?></td>
+      <td>
+        <button type="button" class="btn btn-info btn-ver"
+          data-toggle="tooltip" title="Ver solicitud"
+          data-nombre="<?= $nombre ?>"
+          data-codigo="<?= $codigo ?>"
+          data-fecha="<?= $fecha ?>"
+          data-modulo="<?= $modulo ?>">
+          <i class="fa fa-eye"></i>
+        </button>
+
+        <button type="button" class="btn btn-success btn-evaluar"
+          data-toggle="tooltip" title="Evaluar cambio"
+          data-nombre="<?= $nombre ?>"
+          data-codigo="<?= $codigo ?>"
+          data-fecha="<?= $fecha ?>"
+          data-modulo="<?= $modulo ?>">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </td>
+    </tr>
+  <?php } ?>
+</tbody>
+
           </table>
         </div>
 
@@ -74,7 +98,7 @@
               </div>
 
               <div class="modal-body">
-                <form id="formEvaluacion" method="POST" action="guardar_evaluacion.php">
+                <form id="formEvaluacion" method="POST" action="../controllers/guardar_evaluacion.php">
                   <div class="panel panel-info">
                     <div class="panel-heading">Información general</div>
                     <div class="panel-body">
@@ -170,7 +194,7 @@
 
                       <div class="form-group">
                         <label>Fecha de decisión</label>
-                        <input type="date" class="form-control" name="FECHA_DECISION">
+                        <input type="date" class="form-control" name="FECHA_DECISION" id="FECHA_DECISION" readonly onkeydown="return false;">
                       </div>
 
                       <div class="form-group">
@@ -221,7 +245,7 @@ $(document).ready(function () {
   $('.btn-evaluar').click(function () {
     const nombre = $(this).data('nombre');
     const codigo = $(this).data('codigo');
-    const fecha = $(this).data('fecha');
+    const fecha = $(this).data('fecha').substring(0, 10);
     const modulo = $(this).data('modulo');
 
     $('#formEvaluacion')[0].reset();
@@ -230,80 +254,109 @@ $(document).ready(function () {
     $('#fecha_solicitud').val(fecha);
     $('#modulo').val(modulo);
 
+     const hoy = new Date().toISOString().split("T")[0];
+  $('#FECHA_DECISION').val(hoy);
+
     $('#formEvaluacion .form-control, #formEvaluacion textarea').removeClass('is-invalid');
     $('#modalEvaluacion').modal('show');
   });
 
-  $('#formEvaluacion').submit(function (e) {
-    e.preventDefault();
+$('#formEvaluacion').submit(function (e) {
+  e.preventDefault();
 
-    let errores = [];
+  let errores = [];
 
-    $('#formEvaluacion .form-control, #formEvaluacion textarea').removeClass('is-invalid');
+  $('#formEvaluacion .form-control, #formEvaluacion textarea').removeClass('is-invalid');
 
-    function marcarInvalido(selector) {
-      $(selector).addClass('is-invalid');
-    }
+  function marcarInvalido(selector) {
+    $(selector).addClass('is-invalid');
+  }
 
-    const tipo = $('input[name="TIPO_ITIL"]:checked').val();
-    const prioridad = $('input[name="PRIORIDAD"]:checked').val();
-    const categoria = $('select[name="CATEGORIA_TECNICA"]').val();
-    const evaluacion = $('textarea[name="EVALUACION"]');
-    const beneficios = $('textarea[name="BENEFICIOS"]');
-    const impacto = $('textarea[name="IMPACTO_NEGATIVO"]');
-    const acciones = $('textarea[name="ACCIONES"]');
-    const decision = $('input[name="DECISION"]:checked').val();
-    const fecha_decision = $('input[name="FECHA_DECISION"]');
-    const responsable = $('input[name="RESPONSABLE_TECNICO"]');
+  const tipo = $('input[name="TIPO_ITIL"]:checked').val();
+  const prioridad = $('input[name="PRIORIDAD"]:checked').val();
+  const categoria = $('select[name="CATEGORIA_TECNICA"]').val();
+  const evaluacion = $('textarea[name="EVALUACION"]');
+  const beneficios = $('textarea[name="BENEFICIOS"]');
+  const impacto = $('textarea[name="IMPACTO_NEGATIVO"]');
+  const acciones = $('textarea[name="ACCIONES"]');
+  const decision = $('input[name="DECISION"]:checked').val();
+  const fecha_decision = $('input[name="FECHA_DECISION"]');
+  const responsable = $('input[name="RESPONSABLE_TECNICO"]');
+  const codigo = $('#SECUENCIAL_CAMBIO').val();
 
-    if (!tipo) errores.push("Selecciona un tipo de cambio.");
-    if (!prioridad) errores.push("Selecciona la prioridad.");
-    if (!categoria) {
-      errores.push("Selecciona la categoría técnica.");
-      marcarInvalido('select[name="CATEGORIA_TECNICA"]');
-    }
-    if (evaluacion.val().trim().length < 10) {
-      errores.push("Evaluación técnica debe tener mínimo 10 caracteres.");
-      marcarInvalido(evaluacion);
-    }
-    if (beneficios.val().trim().length < 10) {
-      errores.push("Beneficios deben tener mínimo 10 caracteres.");
-      marcarInvalido(beneficios);
-    }
-    if (impacto.val().trim().length < 10) {
-      errores.push("Impacto negativo debe tener mínimo 10 caracteres.");
-      marcarInvalido(impacto);
-    }
-    if (acciones.val().trim().length < 10) {
-      errores.push("Acciones requeridas deben tener mínimo 10 caracteres.");
-      marcarInvalido(acciones);
-    }
-    if (!decision) errores.push("Selecciona una decisión.");
-    if (responsable.val().trim() === "") {
-      errores.push("Responsable técnico es obligatorio.");
-      marcarInvalido(responsable);
-    }
+  const hoy = new Date().toISOString().split("T")[0];
+  $('#FECHA_DECISION').val(hoy); // Asignar fecha actual
 
-    const hoy = new Date().toISOString().split("T")[0];
-    if (!fecha_decision.val()) {
-      errores.push("La fecha de decisión es obligatoria.");
-      marcarInvalido(fecha_decision);
-    } else if (fecha_decision.val() > hoy) {
-      errores.push("La fecha de decisión no puede estar en el futuro.");
-      marcarInvalido(fecha_decision);
-    }
+  if (!tipo) errores.push("Selecciona un tipo de cambio.");
+  if (!prioridad) errores.push("Selecciona la prioridad.");
+  if (!categoria) {
+    errores.push("Selecciona la categoría técnica.");
+    marcarInvalido('select[name="CATEGORIA_TECNICA"]');
+  }
+  if (evaluacion.val().trim().length < 10) {
+    errores.push("Evaluación técnica debe tener mínimo 10 caracteres.");
+    marcarInvalido(evaluacion);
+  }
+  if (beneficios.val().trim().length < 10) {
+    errores.push("Beneficios deben tener mínimo 10 caracteres.");
+    marcarInvalido(beneficios);
+  }
+  if (impacto.val().trim().length < 10) {
+    errores.push("Impacto negativo debe tener mínimo 10 caracteres.");
+    marcarInvalido(impacto);
+  }
+  if (acciones.val().trim().length < 10) {
+    errores.push("Acciones requeridas deben tener mínimo 10 caracteres.");
+    marcarInvalido(acciones);
+  }
+  if (!decision) errores.push("Selecciona una decisión.");
+  if (responsable.val().trim() === "") {
+    errores.push("Responsable técnico es obligatorio.");
+    marcarInvalido(responsable);
+  }
+  if (!fecha_decision.val()) {
+    errores.push("La fecha de decisión es obligatoria.");
+    marcarInvalido(fecha_decision);
+  } else if (fecha_decision.val() > hoy) {
+    errores.push("La fecha de decisión no puede estar en el futuro.");
+    marcarInvalido(fecha_decision);
+  }
 
-    if (errores.length > 0) {
+  if (errores.length > 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Formulario incompleto o inválido',
+      html: '<ul style="text-align:left;">' + errores.map(e => `<li>${e}</li>`).join('') + '</ul>'
+    });
+    return;
+  }
+
+  const formData = $(this).serialize();
+
+  $.post('../controllers/guardar_evaluacion.php', formData)
+    .done(function () {
       Swal.fire({
-        icon: 'warning',
-        title: 'Faltan campos o contienen errores',
-        html: '<ul style="text-align:left;">' + errores.map(e => `<li>${e}</li>`).join('') + '</ul>'
-      });
-      return;
-    }
+        icon: 'success',
+        title: 'Evaluación guardada',
+        text: 'La evaluación técnica ha sido registrada correctamente.'
+      }).then(() => {
+        $('#modalEvaluacion').modal('hide');
+        $('#formEvaluacion')[0].reset();
 
-    this.submit();
-  });
+        // Actualizar estado en la tabla
+        const fila = $(`button.btn-evaluar[data-codigo="${codigo}"]`).closest('tr');
+        fila.find('td:nth-child(5)').text(decision); // Columna de estado
+
+        // Deshabilitar botón de evaluación
+        fila.find('.btn-evaluar').prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
+      });
+    })
+    .fail(function (xhr) {
+      Swal.fire('❌ Error', xhr.responseText || 'No se pudo guardar la evaluación.', 'error');
+    });
+});
+
+
 });
 </script>
 
