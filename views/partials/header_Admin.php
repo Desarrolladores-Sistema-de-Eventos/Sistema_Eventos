@@ -55,6 +55,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
           <li><a href="../views/dashboard_Usu_Adm.php"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
           <li><a href="../views/dashboard_Rep_Adm.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
           <li><a href="../views/configuracion_datos_base.php"><i class="fa fa-gear fa-3x"></i> Configuraciones</a></li>
+          <li><a href="../views/evaluacion_tecnica.php"><i class="fas fa-clipboard-check fa-3x"></i> Evaluación Técnica</a></li>
         <?php endif; ?>
 
         

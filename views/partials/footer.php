@@ -60,3 +60,4 @@
     </button>
   </div>
 </footer>
+<?php include(__DIR__ . '/../solicitud_usuario.php'); ?>
