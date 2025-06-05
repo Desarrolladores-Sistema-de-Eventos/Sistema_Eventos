@@ -1,3 +1,12 @@
+<?php
+require_once '../core/roles.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$rol = strtoupper($_SESSION['usuario']['ROL'] ?? '');
+$esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
+?>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,53 +19,72 @@
   <link href="../public/assets/css/custom.css" rel="stylesheet" />
   <link href="../public/assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 <body>
 <div id="wrapper">
-  <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+  <nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
-      <a class="navbar-brand" href="dashboard.php">Administrador</a> 
+      <a class="navbar-brand" href="#">Administrador</a>
     </div>
-    <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;">
-      Last access : 30 May 2014 &nbsp;
-      <a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
-    </div>
+    <div style="float: right; padding: 15px 50px 5px 50px;">
+    <span id="hora" style="color: white; font-size: 16px;"></span>
+    &nbsp;
+    <a href="../controllers/logout.php" class="btn btn-danger square-btn-adjust">Cerrar Sesión</a>
+   </div>
   </nav>
+
   <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
       <ul class="nav" id="main-menu">
-        <li><a href="#"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
-        <li><a href="#"><i class="fa fa-calendar fa-3x"></i> Eventos</a></li>
-        <li><a href="#"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
-        <li><a href="#"><i class="fa fa-edit fa-3x"></i> Inscripciones</a></li>
-        <li><a href="Reportes.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
-        <li><a href="configuracion_datos_base.php"><i class="fa fa-database fa-3x"></i> Configuración Base</a></li>
-        <li>
-          <a href="#"><i class="fa fa-gear fa-3x"></i> Configuraciones<span class="fa arrow"></span></a>
-          <ul class="nav nav-second-level">
-            <li>
-              <a href="#">Configurar Eventos <span class="fa arrow"></span></a>
-              <ul class="nav nav-third-level">
-                <li><a href="config_tipo_evento.php">Tipos de Evento</a></li>
-                <li><a href="config_modalidades.php">Modalidades</a></li>
-                <li><a href="config_categorias.php">Categorías</a></li>
-                <li><a href="config_requisitos.php">Requisitos</a></li>
-                <li><a href="#">Organizadores</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">Configurar Usuarios <span class="fa arrow"></span></a>
-              <ul class="nav nav-third-level">
-                <li><a href="config_usuarios_roles.php">Roles</a></li>
-                <li><a href="config_facultades.php">Facultades</a></li>
-                <li><a href="config_carreras.php">Carreras</a></li>
-              </ul>
-              
-            </li>
-          </ul>
 
-        </li>
+          <?php if ($esResponsable): ?> 
+          <li><a href="../views/dashboard_Pri_Res.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
+          <li><a href="../views/dashboard_Eve_Res.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
+          <li><a href="../views/dashboard_Ins_Res.php"><i class="fa fa-edit fa-3x"></i> Inscripciones</a></li>
+          <li><a href="../views/dashboard_NotasAsistencia_Res.php"><i class="fa fa-check-square-o fa-3x"></i> Notas/Asistencia</a></li>
+          <li><a href="../views/dashboard_Cer_Res.php"><i class="fa fa-certificate fa-3x"></i> Certificados</a></li>
+          <li><a href="../views/dashboard_Rep_Res.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
+          <?php endif; ?>
+
+      
+        <?php if ($rol === 'ADMIN'): ?>
+          <li><a href="../views/dashboard_Pri_Adm.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
+          <li><a href="../views/dashboard_Eve_Adm.php"><i class="fa fa-calendar fa-3x"></i>Eventos</a></li>
+          <li><a href="../views/dashboard_Usu_Adm.php"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
+          <li><a href="../views/dashboard_Rep_Adm.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
+          <li><a href="../views/configuracion_datos_base.php"><i class="fa fa-gear fa-3x"></i> Configuraciones</a></li>
+        <?php endif; ?>
+
+        
+        <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
+          <li><a href="../views/dashboard_Pri_Usu.php"><i class="fa fa-user fa-3x"></i> Perfil</a></li>
+          <li><a href="../views/dashboard_Eve_Usu.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
+          <li><a href="../views/dashboard_Cer_Usu.php"><i class="fa fa-certificate fa-3x"></i> Mis Certificados</a></li>
+        <?php endif; ?>
+
       </ul>
     </div>
   </nav>
+</div>
+<script>
+        function actualizarHora() {
+            const opciones = {
+                timeZone: "America/Guayaquil",
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            };
+            const ahora = new Date().toLocaleString("es-EC", opciones);
+            document.getElementById("hora").textContent = ahora;
+        }
+        setInterval(actualizarHora, 1000);
+        actualizarHora(); 
+</script>
+
+</body>
+</html>
