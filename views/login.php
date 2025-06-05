@@ -29,7 +29,7 @@
 <body>
 <div class="main-content">
 	<!-- Topbar Start -->
-	<div class="container-fluid py-2 border-bottom" style="background-color: #ffe5e5;">
+	<div class="container-fluid py-2 border-bottom" style="background-color:rgb(255, 255, 255);">
 		<div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
 			<div class="d-flex align-items-center mb-2 mb-lg-0">
 				<img src="../public/img/sello_UTA.jpg" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">

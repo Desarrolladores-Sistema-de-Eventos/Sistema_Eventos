@@ -10,14 +10,14 @@
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
-  --red: #dc3545;
+  --red: #7b1b25;
   --orange: #fd7e14;
   --yellow: #ffc107;
   --cyan: #17a2b8;
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #dc3545;
+  --primary: #7e0b17;
   --secondary: #f4faec;
   --info: #17a2b8;
   --warning: #ffc107;
@@ -6178,7 +6178,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #dc3545 !important;
+  background-color: #7b1b25 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -9348,7 +9348,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #dc3545 !important;
+  color: #7b1b25 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -9653,7 +9653,7 @@ h6,
 }
 
 .page-header {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/carousel-2.jpg), no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/carrusel.jpg), no-repeat center center;
   background-size: cover;
 }
 

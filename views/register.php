@@ -13,14 +13,14 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: url('../public/img/facultad.png') no-repeat center center fixed;
+            background-color: rgb(241, 241, 241);
             background-size: cover;
         }
         .main-content { flex: 1 0 auto; }
         .register-container {
             max-width: 700px;
             margin: 40px auto;
-            background: rgba(255,255,255,0.88);
+            background: rgb(255, 255, 255);
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             padding: 30px 40px;
@@ -30,12 +30,18 @@
             margin-bottom: 25px;
             color: #2d3436;
         }
+        .form-login, .form-register {
+    font-family: 'Poppins', Arial, sans-serif;
+}
+.form-title {
+    font-size: 1.8rem; 
+}
     </style>
 </head>
 <body>
 <div class="main-content">
     <!-- Topbar Start -->
-    <div class="container-fluid py-2 border-bottom" style="background-color: #ffe5e5;">
+    <div class="container-fluid py-2 border-bottom" style="background-color:rgb(253, 253, 253);">
         <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
             <div class="d-flex align-items-center mb-2 mb-lg-0">
                 <img src="../public/img/sello_UTA.jpg" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
