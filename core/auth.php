@@ -12,4 +12,22 @@ if (!isset($_SESSION['usuario'])) {
     }
     exit;
 }
+
+// Si se requiere un rol específico
+if (isset($rolRequerido) && !esRol($rolRequerido)) {
+   header("Location: ../views/404.php");
+    exit;
+}
+
+// Si se requieren varios roles permitidos
+if (isset($rolesPermitidos) && !esUnoDe($rolesPermitidos)) {
+    header("Location: ../views/404.php");
+    exit;
+}
+
+// Validación especial de responsable
+if (isset($requiereResponsable) && $requiereResponsable && !esResponsable()) {
+    header("Location: ../views/404.php");
+    exit;
+}
 ?>

@@ -1,4 +1,6 @@
 <?php include("partials/header_Admin.php"); ?>
+<?php include("../core/auth.php")?>
+
 
 <style>
   .titulo-catalogo {

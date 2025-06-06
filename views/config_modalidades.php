@@ -1,4 +1,5 @@
 <?php include("partials/header_Admin.php"); ?>
+<?php include("../core/auth.php")?>
 
 <div id="page-wrapper">
   <div id="page-inner">

@@ -1,5 +1,7 @@
 <?php include("partials/header_Admin.php"); ?>
-<?php include("../core/auth.php"); ?>
+<?php
+$rolRequerido = 'ADMIN';
+include("../core/auth.php"); ?>
 
 <style>
   .is-invalid {

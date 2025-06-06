@@ -26,7 +26,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
 <div id="wrapper">
   <nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Administrador</a>
+      <a class="navbar-brand" href="#">Dashboard</a>
     </div>
     <div style="float: right; padding: 15px 50px 5px 50px;">
     <span id="hora" style="color: white; font-size: 16px;"></span>
@@ -63,6 +63,8 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
           <li><a href="../views/dashboard_Pri_Usu.php"><i class="fa fa-user fa-3x"></i> Perfil</a></li>
           <li><a href="../views/dashboard_Eve_Usu.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
           <li><a href="../views/dashboard_Cer_Usu.php"><i class="fa fa-certificate fa-3x"></i> Mis Certificados</a></li>
+          <li><a href="../views/dashboard_Fac_Usu.php"><i class="fa fa-file-text-o fa-3x"></i> Mis Facturas</a></li>
+
         <?php endif; ?>
 
       </ul>
