@@ -6,8 +6,6 @@ include("../core/auth.php")?>
 
 <div id="page-wrapper">
   <div id="page-inner">
-    <p>Editar perfil</p>
+    <p>Mis facturas</p>
   </div>
 </div>
-
-<?php include("partials/footer_Admin.php"); ?>

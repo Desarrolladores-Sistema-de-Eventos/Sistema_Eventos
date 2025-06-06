@@ -1,14 +1,7 @@
-
-<?php
-
-session_start();
-$_SESSION['rol'] = 'admin';
-
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
-    echo "<h3 class='text-center text-danger mt-5'>Acceso denegado.</h3>";
-    exit;
-}
-?>
+<?php include("partials/header_Admin.php"); ?>
+<?php 
+$rolRequerido = 'ADMIN';
+include("../core/auth.php")?>
 
 <!DOCTYPE html>
 <html lang="es">
