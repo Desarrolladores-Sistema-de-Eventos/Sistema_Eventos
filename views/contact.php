@@ -89,36 +89,28 @@
                 <div class="contact-form bg-white shadow-sm rounded p-4">
                     <div id="success"></div>
                     <h4 class="mb-4 text-primary"><i class="fa fa-headset"></i> Envíanos tu consulta</h4>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                        <div class="form-row">
-                            <div class="control-group col-sm-6">
-                                <input type="text" class="form-control p-4" id="name" placeholder="Tu nombre"
-                                    required="required" data-validation-required-message="Por favor ingresa tu nombre" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group col-sm-6">
-                                <input type="email" class="form-control p-4" id="email" placeholder="Tu correo"
-                                    required="required" data-validation-required-message="Por favor ingresa tu correo" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <input type="text" class="form-control p-4" id="subject" placeholder="Asunto"
-                                required="required" data-validation-required-message="Por favor ingresa un asunto" />
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="control-group">
-                            <textarea class="form-control py-3 px-4" rows="5" id="message" placeholder="¿En qué podemos ayudarte?"
-                                required="required"
-                                data-validation-required-message="Por favor ingresa tu mensaje"></textarea>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">
-                                <i class="fa fa-paper-plane"></i> Enviar Mensaje
-                            </button>
-                        </div>
-                    </form>
+                    <form id="contactForm" method="POST">
+    <div class="form-row">
+        <div class="control-group col-sm-6">
+            <input type="text" class="form-control p-4" name="name" id="name" placeholder="Tu nombre" required>
+        </div>
+        <div class="control-group col-sm-6">
+            <input type="email" class="form-control p-4" name="email" id="email" placeholder="Tu correo" required>
+        </div>
+    </div>
+    <div class="control-group">
+        <input type="text" class="form-control p-4" name="subject" id="subject" placeholder="Asunto" required>
+    </div>
+    <div class="control-group">
+        <textarea class="form-control py-3 px-4" name="message" rows="5" id="message" placeholder="¿En qué podemos ayudarte?" required></textarea>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">
+            <i class="fa fa-paper-plane"></i> Enviar Mensaje
+        </button>
+    </div>
+</form>
+
                 </div>
             </div>
         </div>
@@ -149,6 +141,21 @@
 
     <!-- Template Javascript -->
     <script src="../public/js/main.js"></script>
+    <script>
+   document.getElementById('contactForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    await fetch('../controllers/ContactoController.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    this.reset(); 
+});
+
+</script>
+
 </body>
 
 </html>
