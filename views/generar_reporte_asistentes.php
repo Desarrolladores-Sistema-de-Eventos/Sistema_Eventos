@@ -103,7 +103,7 @@ $html .= '</ul>
 
 foreach ($asistentes as $a) {
     $html .= '<tr>
-        <td>' . htmlspecialchars($a['NOMBRE_COMPLETO']) . '</td>
+        <td>' . htmlspecialchars($a['NOMBREUNIDO']) . '</td>
         <td>' . htmlspecialchars($a['CORREO']) . '</td>
         <td>' . htmlspecialchars($a['FACULTAD']) . '</td>
         <td>' . htmlspecialchars($a['CARRERA']) . '</td>

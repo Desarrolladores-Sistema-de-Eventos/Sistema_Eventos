@@ -105,7 +105,7 @@ $html = '
 
 foreach ($certificados as $cert) {
     $html .= '<tr>';
-    $html .= '<td>' . htmlspecialchars($cert['NOMBRE_COMPLETO']) . '</td>';
+    $html .= '<td>' . htmlspecialchars($cert['NOMBREUNIDO']) . '</td>';
     $html .= '<td>' . htmlspecialchars($cert['CORREO']) . '</td>';
     $html .= '<td>' . htmlspecialchars($cert['TIPO_CERTIFICADO']) . '</td>';
     $html .= '<td>' . htmlspecialchars($cert['URL_CERTIFICADO']) . '</td>';

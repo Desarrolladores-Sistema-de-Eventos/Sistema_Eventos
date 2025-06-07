@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             <?php foreach ($certificados as $cert): ?>
                 <tr>
                     <td><?= htmlspecialchars($cert['NOMBRE_EVENTO']) ?></td>
-                    <td><?= htmlspecialchars($cert['NOMBRE_COMPLETO']) ?></td>
+                    <td><?= htmlspecialchars($cert['NOMBREUNIDO']) ?></td>
                     <td><?= htmlspecialchars($cert['CORREO']) ?></td>
                     <td><?= htmlspecialchars($cert['TIPO_CERTIFICADO']) ?></td>
                     <td><?= htmlspecialchars($cert['URL_CERTIFICADO']) ?></td>

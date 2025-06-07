@@ -107,7 +107,7 @@ $html .= '<div class="section-title">2. Pagos Pendientes</div>
     <tbody>';
 foreach ($pendientes as $p) {
     $html .= '<tr>';
-    $html .= '<td>' . htmlspecialchars($p['NOMBRE_COMPLETO']) . '</td>';
+    $html .= '<td>' . htmlspecialchars($p['NOMBREUNIDO']) . '</td>';
     $html .= '<td>' . htmlspecialchars($p['CORREO']) . '</td>';
     $html .= '<td>' . htmlspecialchars($p['FORMA_PAGO']) . '</td>';
     $html .= '<td>$' . number_format($p['MONTO'], 2) . '</td>';
@@ -125,7 +125,7 @@ $html .= '<div class="section-title">3. Comprobantes Subidos</div>
     <tbody>';
 foreach ($comprobantes as $c) {
     $html .= '<tr>';
-    $html .= '<td>' . htmlspecialchars($c['NOMBRE_COMPLETO']) . '</td>';
+    $html .= '<td>' . htmlspecialchars($c['NOMBREUNIDO']) . '</td>';
     $html .= '<td>' . htmlspecialchars($c['CORREO']) . '</td>';
     $html .= '<td>$' . number_format($c['MONTO'], 2) . '</td>';
     $html .= '<td>' . htmlspecialchars($c['COMPROBANTE_URL']) . '</td>';

@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                     </tr>
                     <?php foreach ($reporte['pendientes'] as $p): ?>
                         <tr>
-                            <td><?= htmlspecialchars($p['NOMBRE_COMPLETO']) ?></td>
+                            <td><?= htmlspecialchars($p['NOMBREUNIDO']) ?></td>
                             <td><?= htmlspecialchars($p['CORREO']) ?></td>
                             <td><?= htmlspecialchars($p['FORMA_PAGO']) ?></td>
                             <td>$<?= number_format($p['MONTO'], 2) ?></td>
@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                     </tr>
                     <?php foreach ($reporte['comprobantes'] as $c): ?>
                         <tr>
-                            <td><?= htmlspecialchars($c['NOMBRE_COMPLETO']) ?></td>
+                            <td><?= htmlspecialchars($c['NOMBREUNIDO']) ?></td>
                             <td><?= htmlspecialchars($c['CORREO']) ?></td>
                             <td>$<?= number_format($c['MONTO'], 2) ?></td>
                             <td><?= htmlspecialchars($c['COMPROBANTE_URL']) ?></td>
