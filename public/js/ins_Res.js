@@ -39,18 +39,18 @@ function cargarInscripciones(idEvento) {
         datos.forEach(i => {
           let facturaHtml = `<div class="celda-factura" id="factura-${i.INSCRIPCION_ID}">`;
 
-          if (i.FACTURA) {
+          // Mostrar botón solo si la inscripción está aceptada
+          if (i.CODIGOESTADOINSCRIPCION === 'ACE') {
             facturaHtml += `
-              <a href="../facturas_Comprobantes/${i.FACTURA}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver factura">
-              <i class="fa fa-eye"></i>
-              </a>
-              <button class="btn btn-warning btn-sm" onclick="mostrarCampoActualizar(${i.INSCRIPCION_ID})" title="Actualizar factura">
-              <i class="fa fa-rotate-right"></i>
+              <button class="btn btn-success btn-sm" onclick="verFacturaDinamica(${i.INSCRIPCION_ID})" title="Ver factura">
+                <i class="fa fa-file-pdf-o"></i> Ver Factura
               </button>
             `;
           } else {
             facturaHtml += `
-              <input type="file" onchange="subirFactura(this, ${i.INSCRIPCION_ID})" class="form-control form-control-sm" />
+              <button class="btn btn-secondary btn-sm" disabled title="Solo disponible si la inscripción está aceptada">
+                <i class="fa fa-file-pdf-o"></i> Ver Factura
+              </button>
             `;
           }
 
@@ -93,9 +93,22 @@ function cargarInscripciones(idEvento) {
     });
 }
 
+// Función para abrir la factura dinámica en una nueva pestaña
+function verFacturaDinamica(idInscripcion) {
+  window.open(`../views/factura.php?id=${idInscripcion}`, '_blank');
+}
+
 function actualizarEstadoInscripcion(estado, id) {
+  // Obtener el evento seleccionado para recargar la tabla
+  const idEvento = document.getElementById('eventoSeleccionado').value;
   axios.post('../controllers/InscripcionesController.php?option=estadoInscripcion', new URLSearchParams({ id, estado }))
-    .then(res => Swal.fire('Estado actualizado', '', res.data.tipo))
+    .then(res => {
+      Swal.fire('Estado actualizado', '', res.data.tipo);
+      // Recargar la tabla de inscripciones para reflejar el cambio
+      if (idEvento) {
+        cargarInscripciones(idEvento);
+      }
+    })
     .catch(() => Swal.fire('Error', 'No se pudo actualizar el estado', 'error'));
 }
 
@@ -121,126 +134,73 @@ function verRequisitosPagos(idInscripcion, nombreParticipante = '') {
       tbodyReq.innerHTML = '';
       tbodyPagos.innerHTML = '';
 
-    resReq.data.forEach(r => {
-  tbodyReq.innerHTML += `
-    <tr>
-      <td>${r.REQUISITO}</td>
-      <td id="requisito-${r.ARCHIVO_ID}">
-        ${r.ARCHIVO ? `
-        <a href="../facturas_Comprobantes/${r.ARCHIVO}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo">
-          <i class="fa fa-eye"></i>
-        </a>
-        <button class="btn btn-warning btn-sm" onclick="mostrarActualizarRequisito(${r.ARCHIVO_ID})" title="Actualizar archivo">
-          <i class="fa fa-undo"></i>
-        </button>
-        ` : `
-          <input type="file" onchange="subirRequisito(this, ${r.ARCHIVO_ID})" class="form-control form-control-sm" />
-        `}
-      </td>
-      <td>
-        <select onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)" class="form-control">
-          <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
-          <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
-          <option value="RECH" ${r.ESTADO === 'RECH' ? 'selected' : ''}>Rechazado</option>
-          <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
-        </select>
-      </td>
-    </tr>
-  `;
-});
+      resReq.data.forEach(r => {
+        tbodyReq.innerHTML += `
+          <tr>
+            <td>${r.REQUISITO}</td>
+            <td id="requisito-${r.ARCHIVO_ID}">
+              ${r.ARCHIVO ? `
+              <a href="../facturas_Comprobantes/${r.ARCHIVO}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo">
+                <i class="fa fa-eye"></i>
+              </a>
+              <button class="btn btn-warning btn-sm" onclick="mostrarActualizarRequisito(${r.ARCHIVO_ID})" title="Actualizar archivo">
+                <i class="fa fa-undo"></i>
+              </button>
+              ` : `
+                <input type="file" onchange="subirRequisito(this, ${r.ARCHIVO_ID})" class="form-control form-control-sm" />
+              `}
+            </td>
+            <td>
+              <select onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)" class="form-control">
+                <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
+                <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
+                <option value="RECH" ${r.ESTADO === 'RECH' ? 'selected' : ''}>Rechazado</option>
+                <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
+              </select>
+            </td>
+          </tr>
+        `;
+      });
       resPagos.data.forEach(p => {
-  tbodyPagos.innerHTML += `
-    <tr>
-      <td id="comprobante-${p.PAGO_ID}">
-        ${p.COMPROBANTE_URL ? `
-          <a href="../facturas_Comprobantes/${p.COMPROBANTE_URL}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver comprobante">
-            <i class="fa fa-eye"></i>
-          </a>
-          <button class="btn btn-warning btn-sm" onclick="mostrarActualizarComprobante(${p.PAGO_ID})" title="Actualizar comprobante">
-            <i class="fa fa-undo"></i>
-          </button>
-        ` : `
-          <input type="file" onchange="subirComprobantePago(this, ${p.PAGO_ID})" class="form-control form-control-sm" />
-        `}
-      </td>
-      <td>${p.FORMA_PAGO || 'Desconocida'}</td>
-      <td>
-        <select onchange="actualizarEstadoPago(this.value, ${p.PAGO_ID})" class="form-control">
-          <option value="PEN" ${p.CODIGOESTADOPAGO === 'PEN' ? 'selected' : ''}>Pendiente</option>
-          <option value="VAL" ${p.CODIGOESTADOPAGO === 'VAL' ? 'selected' : ''}>Validado</option>
-          <option value="RECH" ${p.CODIGOESTADOPAGO === 'RECH' ? 'selected' : ''}>Rechazado</option>
-          <option value="INV" ${p.CODIGOESTADOPAGO === 'INV' ? 'selected' : ''}>Inválido</option>
-        </select>
-      </td>
-      <td>${p.FECHA_PAGO || '-'}</td>
-    </tr>
-  `;
+        tbodyPagos.innerHTML += `
+          <tr>
+            <td id="comprobante-${p.PAGO_ID}">
+              ${p.COMPROBANTE_URL ? `
+                <a href="../facturas_Comprobantes/${p.COMPROBANTE_URL}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver comprobante">
+                  <i class="fa fa-eye"></i>
+                </a>
+                <button class="btn btn-warning btn-sm" onclick="mostrarActualizarComprobante(${p.PAGO_ID})" title="Actualizar comprobante">
+                  <i class="fa fa-undo"></i>
+                </button>
+              ` : `
+                <input type="file" onchange="subirComprobantePago(this, ${p.PAGO_ID})" class="form-control form-control-sm" />
+              `}
+            </td>
+            <td>${p.FORMA_PAGO || 'Desconocida'}</td>
+            <td>
+              <select onchange="actualizarEstadoPago(this.value, ${p.PAGO_ID})" class="form-control">
+                <option value="PEN" ${p.CODIGOESTADOPAGO === 'PEN' ? 'selected' : ''}>Pendiente</option>
+                <option value="VAL" ${p.CODIGOESTADOPAGO === 'VAL' ? 'selected' : ''}>Validado</option>
+                <option value="RECH" ${p.CODIGOESTADOPAGO === 'RECH' ? 'selected' : ''}>Rechazado</option>
+                <option value="INV" ${p.CODIGOESTADOPAGO === 'INV' ? 'selected' : ''}>Inválido</option>
+              </select>
+            </td>
+            <td>${p.FECHA_PAGO || '-'}</td>
+          </tr>
+        `;
       });
 
       $('#modalRequisitosPagos').modal('show');
     }));
 }
-function subirFactura(input, idInscripcion) {
-  const file = input.files[0];
-  if (!file) return;
 
-  const formData = new FormData();
-  formData.append('factura', file);
-  formData.append('id', idInscripcion);
-
-  axios.post('../controllers/InscripcionesController.php?option=subirFactura', formData)
-    .then(res => {
-      if (res.data.tipo === 'success') {
-        // ✅ Reemplazar el contenido del div con el nuevo estado (ver + actualizar)
-        const divFactura = document.getElementById(`factura-${idInscripcion}`);
-        divFactura.innerHTML = `
-          <a href="../facturas_Comprobantes/${res.data.nombreArchivo}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver factura">
-            <i class="fa fa-file-pdf-o"></i>
-          </a>
-          <button class="btn btn-warning btn-sm" onclick="mostrarCampoActualizar(${idInscripcion})" title="Actualizar factura">
-            <i class="fa fa-undo"></i>
-          </button>
-        `;
-      }
-
-      Swal.fire({
-        icon: res.data.tipo,
-        title: res.data.tipo === 'success' ? 'Éxito' : 'Error',
-        text: res.data.mensaje,
-        timer: 2500,
-        showConfirmButton: false
-      });
-    })
-    .catch(() => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo subir la factura',
-        timer: 2500,
-        showConfirmButton: false
-      });
-    });
-}
-
-
-function mostrarCampoActualizar(idInscripcion) {
-  const contenedor = document.getElementById(`factura-${idInscripcion}`);
+function mostrarActualizarRequisito(idArchivo) {
+  const contenedor = document.getElementById(`requisito-${idArchivo}`);
   contenedor.innerHTML = `
-    <input type="file" onchange="subirFactura(this, ${idInscripcion})" class="form-control form-control-sm" />
+    <input type="file" onchange="subirRequisito(this, ${idArchivo})" class="form-control form-control-sm" />
   `;
 }
-function mostrarCampoActualizar(idInscripcion) {
-  const contenedor = document.getElementById(`factura-${idInscripcion}`);
-  contenedor.innerHTML = `
-    <input type="file" onchange="subirFactura(this, ${idInscripcion})" class="form-control form-control-sm" />
-  `;
-}
-function mostrarCampoActualizar(idInscripcion) {
-  const contenedor = document.getElementById(`factura-${idInscripcion}`);
-  contenedor.innerHTML = `
-    <input type="file" onchange="subirFactura(this, ${idInscripcion})" class="form-control form-control-sm" />
-  `;
-}
+
 function subirRequisito(input, idArchivo) {
   const file = input.files[0];
   if (!file) return;
@@ -276,12 +236,6 @@ function subirRequisito(input, idArchivo) {
         showConfirmButton: false
       });
     });
-}
-function mostrarActualizarRequisito(idArchivo) {
-  const contenedor = document.getElementById(`requisito-${idArchivo}`);
-  contenedor.innerHTML = `
-    <input type="file" onchange="subirRequisito(this, ${idArchivo})" class="form-control form-control-sm" />
-  `;
 }
 
 function mostrarActualizarComprobante(idPago) {
@@ -330,4 +284,3 @@ function subirComprobantePago(input, idPago) {
       });
     });
 }
-

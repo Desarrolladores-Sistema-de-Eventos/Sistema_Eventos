@@ -45,7 +45,6 @@ function cargarMetricasTotales() {
     });
 }
 
-
 // === INSCRIPCIONES PENDIENTES ===
 function cargarInscripcionesPendientesResponsable() {
   const tbody = document.querySelector('#tabla-pendientes tbody');
@@ -53,22 +52,18 @@ function cargarInscripcionesPendientesResponsable() {
     $('#tabla-pendientes').DataTable().destroy();
   }
 
-  tbody.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
 
   axios.get('../controllers/InscripcionesController.php?option=listarPendientesResponsable')
     .then(res => {
       const data = res.data;
 
       if (!Array.isArray(data) || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5">No hay inscripciones pendientes.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4">No hay inscripciones pendientes.</td></tr>';
         return;
       }
 
       tbody.innerHTML = data.map(item => {
-        const facturaHtml = item.FACTURA
-          ? `<a href="../facturas/${item.FACTURA}" target="_blank">Ver factura</a>`
-          : `<input type="file" accept=".pdf,.jpg,.png" onchange="subirFactura(this.files[0], ${item.INSCRIPCION_ID})">`;
-
         return `
           <tr>
             <td>${item.NOMBRE_COMPLETO}</td>
@@ -80,7 +75,6 @@ function cargarInscripcionesPendientesResponsable() {
                 <option value="REC" ${item.CODIGOESTADOINSCRIPCION === 'REC' ? 'selected' : ''}>Rechazado</option>
               </select>
             </td>
-            <td>${facturaHtml}</td>
             <td class="text-center">
               <button class="btn btn-info btn-sm" onclick="verDetalleInscripcion(${item.INSCRIPCION_ID})">
                 <i class="fa fa-eye" style="color: black;"></i> Ver Detalle
@@ -98,10 +92,14 @@ function cargarInscripcionesPendientesResponsable() {
     })
     .catch(err => {
       console.error('❌ Error al cargar inscripciones pendientes:', err);
-      tbody.innerHTML = '<tr><td colspan="5">Error al cargar datos.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4">Error al cargar datos.</td></tr>';
     });
 }
 
+// Función para abrir la factura dinámica en una nueva pestaña
+function verFacturaDinamica(idInscripcion) {
+  window.open(`../views/factura.php?id=${idInscripcion}`, '_blank');
+}
 
 function actualizarEstadoInscripcion(estado, id) {
   axios.post('../controllers/InscripcionesController.php?option=estadoInscripcion', new URLSearchParams({ id, estado }))
@@ -117,24 +115,6 @@ function actualizarEstadoInscripcion(estado, id) {
       }
     })
     .catch(() => Swal.fire('Error', 'Ocurrió un problema al actualizar', 'error'));
-}
-
-function subirFactura(file, idInscripcion) {
-  if (!file) return;
-  const formData = new FormData();
-  formData.append('factura', file);
-  formData.append('id', idInscripcion);
-
-  axios.post('../controllers/InscripcionesController.php?option=subirFactura', formData)
-    .then(res => {
-      if (res.data.tipo === 'success') {
-        Swal.fire({ icon: 'success', title: 'Factura subida', timer: 1000, showConfirmButton: false });
-        cargarInscripcionesPendientesResponsable();
-      } else {
-        Swal.fire('Error', res.data.mensaje || 'No se pudo subir la factura', 'error');
-      }
-    })
-    .catch(() => Swal.fire('Error', 'Error en el servidor', 'error'));
 }
 
 // === GRÁFICOS ===
@@ -211,8 +191,6 @@ function cargarGraficoEventos() {
     });
 }
 
-
-
 function cargarGraficoCertificados() {
   const canvas = document.getElementById('graficoCertificados');
   if (!canvas) return;
@@ -288,7 +266,7 @@ function verDetalleInscripcion(idInscripcion) {
             <td>
               <select class="form-control" onchange="actualizarEstadoPago(${p.PAGO_ID}, this.value)">
                 <option value="PEN" ${p.CODIGOESTADOPAGO === 'PEN' ? 'selected' : ''}>Pendiente</option>
-                <option value="APR" ${p.CODIGOESTADOPAGO === 'APR' ? 'selected' : ''}>Aprobado</option>
+                <option value="VAL" ${p.CODIGOESTADOPAGO === 'VAL' ? 'selected' : ''}>Validado</option>
                 <option value="RECH" ${p.CODIGOESTADOPAGO === 'RECH' ? 'selected' : ''}>Rechazado</option>
                 <option value="INV" ${p.CODIGOESTADOPAGO === 'INV' ? 'selected' : ''}>Inválido</option>
               </select>
@@ -305,8 +283,6 @@ function verDetalleInscripcion(idInscripcion) {
       Swal.fire('Error', 'No se pudo cargar el detalle.', 'error');
     });
 }
-
-
 
 function validarArchivoRequisito(idArchivo, estado) {
   axios.post('../controllers/InscripcionesController.php?option=estadoRequisito', new URLSearchParams({ id: idArchivo, estado }))

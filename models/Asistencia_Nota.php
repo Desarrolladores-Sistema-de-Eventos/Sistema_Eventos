@@ -8,26 +8,26 @@ class Asistencia_Nota {
         $this->pdo = Conexion::getConexion();
     }
     
-    public function eventosPorResponsable($idUsuario) {
-        $stmt = $this->pdo->prepare("
-            SELECT 
-                e.SECUENCIAL,
-                e.TITULO,
-                e.FECHAINICIO,
-                e.FECHAFIN,
-                e.HORAS,
-                e.ESTADO,
-                te.NOMBRE AS TIPO,
-                (SELECT ie.URL_IMAGEN FROM imagen_evento ie WHERE ie.SECUENCIALEVENTO = e.SECUENCIAL AND ie.TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS IMAGEN
-            FROM evento e
-            INNER JOIN organizador_evento oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO
-            LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-            WHERE oe.SECUENCIALUSUARIO = ? AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
-            ORDER BY e.FECHAINICIO DESC
-        ");
-        $stmt->execute([$idUsuario]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+ public function eventosPorResponsable($idUsuario) {
+    $stmt = $this->pdo->prepare("
+        SELECT 
+            e.SECUENCIAL,
+            e.TITULO,
+            e.FECHAINICIO,
+            e.FECHAFIN,
+            e.HORAS,
+            e.ESTADO,
+            te.NOMBRE AS TIPO_EVENTO,
+            (SELECT ie.URL_IMAGEN FROM imagen_evento ie WHERE ie.SECUENCIALEVENTO = e.SECUENCIAL AND ie.TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS IMAGEN
+        FROM evento e
+        INNER JOIN organizador_evento oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO
+        LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+        WHERE oe.SECUENCIALUSUARIO = ? AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
+        ORDER BY e.FECHAINICIO DESC
+    ");
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     // 2. Listar inscritos aprobados de un evento
     public function getInscritosAceptadosEvento($idEvento) {
@@ -50,6 +50,7 @@ class Asistencia_Nota {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$idEvento]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
     }
     
     // 3. Guardar asistencia y nota de un inscrito, e intentar generar certificado
