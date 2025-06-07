@@ -1,51 +1,70 @@
 <?php include("partials/header_Admin.php"); ?>
+<?php include("../core/auth.php")?>
+
 
 <div id="page-wrapper">
   <div id="page-inner">
-  <h3 class="text-danger"><i class="fa fa-list-alt"></i> Gestión de Requisitos de Evento</h3>
-  <p class="text-muted">Define los requisitos que deben cumplir los participantes por evento.</p>
+    <h3 class="text-danger"><i class="fa fa-file-text"></i> Gestión de Requisitos de Evento</h3>
+    <p class="text-muted">Administra los requisitos disponibles para los eventos.</p>
 
-  <div class="mb-3">
-    <button class="btn btn-success"><i class="fa fa-plus"></i> Agregar Requisito</button>
-  </div>
+    <div class="mb-3">
+      <button class="btn btn-success" id="btnAgregarRequisito"><i class="fa fa-plus"></i> Agregar Requisito</button>
+    </div>
     <br>
-  <div class="table-responsive">
-    <table class="table table-dark table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>Evento</th>
-          <th>Descripción</th>
-          <th>Obligatorio</th>
-          <th style="width: 120px;">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Datos simulados -->
-        <tr>
-          <td>Congreso de Tecnología</td>
-          <td>Subir copia de cédula</td>
-          <td><span class="badge bg-danger">Sí</span></td>
-          <td>
-            <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-            <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-          </td>
-        </tr>
-        <tr>
-          <td>Taller de Emprendimiento</td>
-          <td>Formulario de inscripción firmado</td>
-          <td><span class="badge bg-secondary">No</span></td>
-          <td>
-            <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-            <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div>
+    <div class="table-responsive">
+      <table class="table table-dark table-bordered table-hover" id="tablaRequisitos">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th style="width: 120px;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se cargan los requisitos dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+    <div>
       <a href="configuracion_datos_base.php" class="btn btn-secondary mt-2"><i class="fa fa-arrow-left"></i> Volver a configuración</a>
     </div>
+  </div>
 </div>
+
+<!-- Modal Requisito -->
+<div class="modal fade" id="modalRequisito" tabindex="-1" role="dialog" aria-labelledby="modalRequisitoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="formRequisito">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalRequisitoLabel">Agregar Requisito</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="requisitoId" name="id">
+          <div class="form-group">
+            <label for="descripcionRequisito">Descripción</label>
+            <input type="text" class="form-control" id="descripcionRequisito" name="descripcion" maxlength="255" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnGuardarRequisito">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../public/js/requisitos.js"></script>
+
 <?php include("partials/footer_Admin.php"); ?>

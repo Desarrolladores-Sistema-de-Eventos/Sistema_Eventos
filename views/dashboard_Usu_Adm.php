@@ -1,5 +1,7 @@
 <?php include("partials/header_Admin.php");?>
-<?php include("../core/auth.php")?>
+<?php 
+$rolRequerido = 'ADMIN';
+include("../core/auth.php")?>
 
 <div id="page-wrapper">
   <div id="page-inner">
@@ -71,13 +73,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="codigorol">🧑‍🏫 Rol:</label>
-                                <select class="form-control" id="codigorol" name="codigorol" required>
+                                <select class="form-control" id="codigorol" name="codigorol"required >
                                     <option value="">Seleccione</option>
                                     <option value="EST">Estudiante</option>
                                     <option value="DOC">Docente</option>
                                     <option value="INV">Invitado</option>
                                     <option value="ADM">Administrador</option>
                                 </select>
+                                    <input type="hidden" id="codigorol_hidden" name="codigorol_hidden">
+
                             </div>
                             <div class="form-group">
                                 <label for="telefono">📱 Teléfono:</label>
@@ -134,8 +138,9 @@
             </div>
         </div>
 </div>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <!-- Scripts necesarios -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

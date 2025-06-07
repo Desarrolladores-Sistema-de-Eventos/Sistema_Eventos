@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Description</title>
+    <title>Eventos Académicos</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -32,7 +32,7 @@
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
             <h3 class="display-4 text-white text-uppercase">Eventos Académicos</h3>
             <div class="d-inline-flex text-white">
-                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                <p class="m-0 text-uppercase"><a class="text-white" href="#">Home</a></p>
                 <i class="fa fa-angle-double-right pt-1 px-3"></i>
                 <p class="m-0 text-uppercase">Eventos Académicos</p>
             </div>

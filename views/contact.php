@@ -29,66 +29,102 @@
 <body>
    
  <?php include('partials/header.php'); ?>
-    <!-- Header Start -->
-    <div class="container-fluid page-header">
-        <div class="container">
-            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-                <h3 class="display-4 text-white text-uppercase">Contacto</h3>
-                <div class="d-inline-flex text-white">
-                    <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
-                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
-                    <p class="m-0 text-uppercase">Contacto</p>
-                </div>
+ <!-- Header Start -->
+<div class="container-fluid page-header">
+    <div class="container">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+            <h3 class="display-4 text-white text-uppercase">Contacto</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Contacto</p>
             </div>
         </div>
     </div>
-    <!-- Header End -->
+</div>
+<!-- Header End -->
 
-    <!-- Contact Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Contact</h6>
-                <h1>Contact For Any Query</h1>
+    <!-- Contacto/Soporte Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Soporte y Ayuda</h6>
+            <h1 class="mb-4">¿Necesitas ayuda? Contáctanos</h1>
+            <p class="lead">Nuestro equipo de soporte está disponible para resolver tus dudas, ayudarte con el sistema y brindarte la mejor atención.</p>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-4 text-center mb-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <i class="fa fa-3x fa-envelope text-primary mb-3"></i>
+                        <h5 class="card-title">Correo de Soporte</h5>
+                        <p class="card-text mb-0">soporte@uta.edu.ec</p>
+                        <small class="text-muted">Respuesta en menos de 24h</small>
+                    </div>
+                </div>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="contact-form bg-white" style="padding: 30px;">
-                        <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                            <div class="form-row">
-                                <div class="control-group col-sm-6">
-                                    <input type="text" class="form-control p-4" id="name" placeholder="Your Name"
-                                        required="required" data-validation-required-message="Please enter your name" />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group col-sm-6">
-                                    <input type="email" class="form-control p-4" id="email" placeholder="Your Email"
-                                        required="required" data-validation-required-message="Please enter your email" />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <input type="text" class="form-control p-4" id="subject" placeholder="Subject"
-                                    required="required" data-validation-required-message="Please enter a subject" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <textarea class="form-control py-3 px-4" rows="5" id="message" placeholder="Message"
-                                    required="required"
-                                    data-validation-required-message="Please enter your message"></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">Send Message</button>
-                            </div>
-                        </form>
+            <div class="col-md-4 text-center mb-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <i class="fa fa-3x fa-phone-alt text-primary mb-3"></i>
+                        <h5 class="card-title">Llámanos</h5>
+                        <p class="card-text mb-0">+593 3 299-8000</p>
+                        <small class="text-muted">Lunes a Viernes, 8:00 - 17:00</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <i class="fa fa-3x fa-map-marker-alt text-primary mb-3"></i>
+                        <h5 class="card-title">Oficina de Soporte</h5>
+                        <p class="card-text mb-0">Av. Los Chasquis y Río Guayllabamba, Ambato, Ecuador</p>
+                        <small class="text-muted">Edificio Central, Planta Baja</small>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form bg-white shadow-sm rounded p-4">
+                    <div id="success"></div>
+                    <h4 class="mb-4 text-primary"><i class="fa fa-headset"></i> Envíanos tu consulta</h4>
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                        <div class="form-row">
+                            <div class="control-group col-sm-6">
+                                <input type="text" class="form-control p-4" id="name" placeholder="Tu nombre"
+                                    required="required" data-validation-required-message="Por favor ingresa tu nombre" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group col-sm-6">
+                                <input type="email" class="form-control p-4" id="email" placeholder="Tu correo"
+                                    required="required" data-validation-required-message="Por favor ingresa tu correo" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="text" class="form-control p-4" id="subject" placeholder="Asunto"
+                                required="required" data-validation-required-message="Por favor ingresa un asunto" />
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <textarea class="form-control py-3 px-4" rows="5" id="message" placeholder="¿En qué podemos ayudarte?"
+                                required="required"
+                                data-validation-required-message="Por favor ingresa tu mensaje"></textarea>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">
+                                <i class="fa fa-paper-plane"></i> Enviar Mensaje
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Contact End -->
+</div>
+<!-- Contacto/Soporte End -->
 
 
    <!-- Footer Start -->

@@ -26,7 +26,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
 <div id="wrapper">
   <nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Administrador</a>
+      <a class="navbar-brand" href="#">Dashboard</a>
     </div>
     <div style="float: right; padding: 15px 50px 5px 50px;">
     <span id="hora" style="color: white; font-size: 16px;"></span>
@@ -38,7 +38,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
   <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
       <ul class="nav" id="main-menu">
-        
+
           <?php if ($esResponsable): ?> 
           <li><a href="../views/dashboard_Pri_Res.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
           <li><a href="../views/dashboard_Eve_Res.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
@@ -55,6 +55,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
           <li><a href="../views/dashboard_Usu_Adm.php"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
           <li><a href="../views/dashboard_Rep_Adm.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
           <li><a href="../views/configuracion_datos_base.php"><i class="fa fa-gear fa-3x"></i> Configuraciones</a></li>
+          <li><a href="../views/evaluacion_tecnica.php"><i class="fas fa-clipboard-check fa-3x"></i> Evaluación Técnica</a></li>
         <?php endif; ?>
 
         
@@ -62,6 +63,8 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
           <li><a href="../views/dashboard_Pri_Usu.php"><i class="fa fa-user fa-3x"></i> Perfil</a></li>
           <li><a href="../views/dashboard_Eve_Usu.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
           <li><a href="../views/dashboard_Cer_Usu.php"><i class="fa fa-certificate fa-3x"></i> Mis Certificados</a></li>
+          <li><a href="../views/dashboard_Fac_Usu.php"><i class="fa fa-file-text-o fa-3x"></i> Mis Facturas</a></li>
+
         <?php endif; ?>
 
       </ul>

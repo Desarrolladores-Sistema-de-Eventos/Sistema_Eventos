@@ -1,23 +1,27 @@
 
 let tablaUsuarios;
-
 function inicializarTablaUsuarios() {
-    const mostrarInactivos = document.getElementById('mostrarInactivos')?.checked;
-
     if (tablaUsuarios) tablaUsuarios.destroy();
     tablaUsuarios = $('#tabla-usuarios').DataTable({
         ajax: {
             url: '../controllers/UsuarioController.php?option=listar',
             dataSrc: function (json) {
-                // Si el checkbox está marcado, muestra solo inactivos
+                // Lee el valor del checkbox cada vez que se filtra
+                const mostrarInactivos = document.getElementById('mostrarInactivos')?.checked;
                 if (mostrarInactivos) {
                     return json.filter(u => u.CODIGOESTADO === 'INACTIVO');
                 }
-                // Si no, muestra solo activos
                 return json.filter(u => u.CODIGOESTADO === 'ACTIVO');
             }
         },
         columns: [
+            // Si quieres mostrar la foto en la tabla, descomenta esto:
+            // {
+            //     data: 'FOTO_PERFIL',
+            //     render: function(data) {
+            //         return data ? `<img src=\"../public/img/${data}\" style=\"width:40px;height:40px;border-radius:50%;object-fit:cover;\">` : '';
+            //     }
+            // },
             { data: 'NOMBRES' },
             { data: 'APELLIDOS' },
             { data: 'TELEFONO' },
@@ -41,11 +45,8 @@ function inicializarTablaUsuarios() {
         }
     });
 }
-
 document.addEventListener('DOMContentLoaded', function () {
     inicializarTablaUsuarios();
-
-    // Manejar el checkbox para mostrar usuarios inactivos
     const chkInactivos = document.getElementById('mostrarInactivos');
     if (chkInactivos) {
         chkInactivos.addEventListener('change', function () {
@@ -56,10 +57,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const frm = document.getElementById('formUsuario');
     const btnSave = document.getElementById('btn-save-usuario');
     const idUsuario = document.getElementById('idUsuario');
+    const codigorol = document.getElementById('codigorol');
+    const codigorol_hidden = document.getElementById('codigorol_hidden');
+    const fotoPerfilActual = document.getElementById('foto_perfil_actual');
 
     frm.onsubmit = function (e) {
         e.preventDefault();
         const formData = new FormData(frm);
+        // Si el select está deshabilitado (edición), usa el valor del hidden
+        if (codigorol.disabled && codigorol_hidden) {
+            formData.set('codigorol', codigorol_hidden.value);
+        }
+        // Si hay foto actual y no se sube una nueva, envía el nombre de la foto actual
+        if (fotoPerfilActual && fotoPerfilActual.value && !frm.foto_perfil.value) {
+            formData.append('foto_perfil_actual', fotoPerfilActual.value);
+        }
         let url = '../controllers/UsuarioController.php?option=insertar';
         if (idUsuario.value !== '') {
             url = '../controllers/UsuarioController.php?option=editar';
@@ -70,9 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (res.data.success) {
                     Swal.fire('Éxito', 'Usuario guardado.', 'success');
                     $('#modalUsuario').modal('hide');
-                    tablaUsuarios.ajax.reload();
                     frm.reset();
                     btnSave.innerHTML = 'Guardar';
+                    codigorol.disabled = false;
+                    codigorol_hidden.value = '';
+                    if (fotoPerfilActual) fotoPerfilActual.value = '';
+                    tablaUsuarios.ajax.reload(null, false);
                 } else {
                     Swal.fire('Error', res.data.mensaje, 'error');
                 }
@@ -82,12 +97,18 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#modalUsuario').on('hidden.bs.modal', function () {
         frm.reset();
         btnSave.innerHTML = 'Guardar';
+        codigorol.disabled = false;
+        codigorol_hidden.value = '';
+        if (fotoPerfilActual) fotoPerfilActual.value = '';
     });
 
     document.getElementById('btn-nuevo-usuario').addEventListener('click', function () {
         frm.reset();
         idUsuario.value = '';
         btnSave.innerHTML = 'Guardar';
+        codigorol.disabled = false;
+        codigorol_hidden.value = '';
+        if (fotoPerfilActual) fotoPerfilActual.value = '';
         $('#modalUsuario').modal('show');
     });
 });
@@ -118,13 +139,20 @@ function editarUsuario(id) {
             document.getElementById('direccion').value = u.DIRECCION;
             document.getElementById('correo').value = u.CORREO;
             document.getElementById('codigorol').value = u.CODIGOROL;
+            document.getElementById('codigorol').disabled = true;
+            document.getElementById('codigorol_hidden').value = u.CODIGOROL;
             document.getElementById('estado').value = u.CODIGOESTADO;
             document.getElementById('es_interno').checked = u.ES_INTERNO == 1;
-            document.getElementById('contrasena').value = ''; 
+            document.getElementById('contrasena').value = '';
+            // Setea la foto actual en un input hidden
+            if (document.getElementById('foto_perfil_actual')) {
+                document.getElementById('foto_perfil_actual').value = u.FOTO_PERFIL || '';
+            }
             $('#modalUsuario').modal('show');
             document.getElementById('btn-save-usuario').innerHTML = 'Actualizar';
         })
         .catch(err => {
+            console.log(err.response ? err.response.data : err);
             Swal.fire('Error', 'No se pudo cargar el usuario.', 'error');
         });
 }
@@ -146,7 +174,7 @@ function eliminarUsuario(id) {
                 .then(res => {
                     if (res.data.success) {
                         Swal.fire('Eliminado', 'Usuario eliminado.', 'success');
-                        tablaUsuarios.ajax.reload();
+                        tablaUsuarios.ajax.reload(null, false);
                     } else {
                         Swal.fire('Error', res.data.mensaje, 'error');
                     }
@@ -172,7 +200,7 @@ function inactivarUsuario(id) {
                 .then(res => {
                     if (res.data.success) {
                         Swal.fire('Inactivado', 'Usuario inactivado.', 'success');
-                        tablaUsuarios.ajax.reload();
+                        tablaUsuarios.ajax.reload(null, false);
                     } else {
                         Swal.fire('Error', res.data.mensaje, 'error');
                     }
@@ -180,45 +208,3 @@ function inactivarUsuario(id) {
         }
     });
 }
-// ==== FORMULARIO ADMIN (insertar/editar) ====
-document.addEventListener('DOMContentLoaded', function () {
-    inicializarTablaUsuarios();
-
-    const frm = document.getElementById('formUsuario');
-    const btnSave = document.getElementById('btn-save-usuario');
-    const idUsuario = document.getElementById('idUsuario');
-
-    frm.onsubmit = function (e) {
-        e.preventDefault();
-        const formData = new FormData(frm);
-        let url = '../controllers/UsuarioController.php?option=insertar';
-        if (idUsuario.value !== '') {
-            url = '../controllers/UsuarioController.php?option=editar';
-            formData.append('id', idUsuario.value);
-        }
-        axios.post(url, formData)
-            .then(res => {
-                if (res.data.success) {
-                    Swal.fire('Éxito', 'Usuario guardado.', 'success');
-                    $('#modalUsuario').modal('hide');
-                    tablaUsuarios.ajax.reload();
-                    frm.reset();
-                    btnSave.innerHTML = 'Guardar';
-                } else {
-                    Swal.fire('Error', res.data.mensaje, 'error');
-                }
-            });
-    };
-
-    $('#modalUsuario').on('hidden.bs.modal', function () {
-        frm.reset();
-        btnSave.innerHTML = 'Guardar';
-    });
-
-    document.getElementById('btn-nuevo-usuario').addEventListener('click', function () {
-        frm.reset();
-        idUsuario.value = '';
-        btnSave.innerHTML = 'Guardar';
-        $('#modalUsuario').modal('show');
-    });
-});

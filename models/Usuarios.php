@@ -34,59 +34,46 @@ class Usuario {
         return $stmt->fetchColumn() > 0;
     }
 
-    public function insertar($nombres, $apellidos, $telefono, $direccion, $correo, $contrasena, $codigorol, $es_interno = 1) {
-        if ($this->correoExiste($correo)) {
-            return ['success' => false, 'mensaje' => 'El correo ya está registrado.'];
+    public function insertar($nombres, $apellidos, $telefono, $direccion, $correo, $contrasena, $codigorol, $es_interno = 1, $foto_perfil = null) {
+    if ($this->correoExiste($correo)) {
+        return ['success' => false, 'mensaje' => 'El correo ya está registrado.'];
+    }
+    
+    if ($codigorol === 'EST' || $codigorol === 'DOC') {
+        if (!preg_match('/@uta\\.edu\\.ec$/', $correo)) {
+            return ['success' => false, 'mensaje' => 'El correo debe ser institucional (@uta.edu.ec) para estudiantes y docentes.'];
         }
-        
-        if ($codigorol === 'EST' || $codigorol === 'DOC') {
-            if (!preg_match('/@uta\.edu\.ec$/', $correo)) {
-                return ['success' => false, 'mensaje' => 'El correo debe ser institucional (@uta.edu.ec) para estudiantes y docentes.'];
-            }
-        } elseif ($codigorol === 'INV') {
-            if (!preg_match('/@gmail\.com$/', $correo)) {
-                return ['success' => false, 'mensaje' => 'El correo debe ser @gmail.com para invitados.'];
-            }
+    } elseif ($codigorol === 'INV') {
+        if (!preg_match('/@gmail\\.com$/', $correo)) {
+            return ['success' => false, 'mensaje' => 'El correo debe ser @gmail.com para invitados.'];
         }
-        $hash = password_hash($contrasena, PASSWORD_DEFAULT);
-        $stmt = $this->pdo->prepare("INSERT INTO usuario (NOMBRES, APELLIDOS, TELEFONO, DIRECCION, CORREO, CONTRASENA, CODIGOROL, CODIGOESTADO, ES_INTERNO) VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVO', ?)");
-        $ok = $stmt->execute([$nombres, $apellidos, $telefono, $direccion, $correo, $hash, $codigorol, $es_interno]);
-        return $ok ? ['success' => true] : ['success' => false, 'mensaje' => 'Error al registrar usuario.'];
+    }
+    $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+    $stmt = $this->pdo->prepare("INSERT INTO usuario (NOMBRES, APELLIDOS, TELEFONO, DIRECCION, CORREO, CONTRASENA, CODIGOROL, CODIGOESTADO, ES_INTERNO, FOTO_PERFIL) VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVO', ?, ?)");
+    $ok = $stmt->execute([$nombres, $apellidos, $telefono, $direccion, $correo, $hash, $codigorol, $es_interno, $foto_perfil]);
+    return $ok ? ['success' => true] : ['success' => false, 'mensaje' => 'Error al registrar usuario.'];
+}
+public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasena = '', $foto_perfil = null) {
+    // Obtener la foto actual si no se sube una nueva
+    if ($foto_perfil === null) {
+        $stmtFoto = $this->pdo->prepare("SELECT FOTO_PERFIL FROM usuario WHERE SECUENCIAL=?");
+        $stmtFoto->execute([$id]);
+        $foto_perfil = $stmtFoto->fetchColumn();
     }
 
-    public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasena = '') {
-        // No permitir cambiar a un correo ya existente (excepto el propio)
-        $stmt = $this->pdo->prepare("SELECT SECUENCIAL FROM usuario WHERE CORREO = ? AND SECUENCIAL != ?");
-        $stmt->execute([$correo, $id]);
-        if ($stmt->fetch()) {
-            return ['success' => false, 'mensaje' => 'El correo ya está registrado por otro usuario.'];
-        }
-        // Validación de dominio de correo
-        if ($codigorol === 'EST' || $codigorol === 'DOC') {
-            if (!preg_match('/@uta\.edu\.ec$/', $correo)) {
-                return ['success' => false, 'mensaje' => 'El correo debe ser institucional (@uta.edu.ec) para estudiantes y docentes.'];
-            }
-        } elseif ($codigorol === 'INV') {
-            if (!preg_match('/@gmail\.com$/', $correo)) {
-                return ['success' => false, 'mensaje' => 'El correo debe ser @gmail.com para invitados.'];
-            }
-        }
-
-        // Si se proporciona una nueva contraseña, actualizarla encriptada
-        if (!empty($contrasena)) {
-            $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
-            $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, CONTRASENA=? WHERE SECUENCIAL=?";
-            $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasenaHash, $id];
-        } else {
-            $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=? WHERE SECUENCIAL=?";
-            $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $id];
-        }
-
-        $stmt = $this->pdo->prepare($sql);
-        $ok = $stmt->execute($params);
-        return $ok ? ['success' => true] : ['success' => false, 'mensaje' => 'Error al actualizar usuario.'];
+    if (!empty($contrasena)) {
+        $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
+        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, CONTRASENA=?, FOTO_PERFIL=? WHERE SECUENCIAL=?";
+        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasenaHash, $foto_perfil, $id];
+    } else {
+        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, FOTO_PERFIL=? WHERE SECUENCIAL=?";
+        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $foto_perfil, $id];
     }
 
+    $stmt = $this->pdo->prepare($sql);
+    $ok = $stmt->execute($params);
+    return $ok ? ['success' => true] : ['success' => false, 'mensaje' => 'Error al actualizar usuario.'];
+}
    public function eliminar($id) {
     try {
         // 1. Eliminar asistencia_nota relacionadas al usuario
