@@ -47,6 +47,7 @@ function inicializarTablaUsuarios() {
 }
 document.addEventListener('DOMContentLoaded', function () {
     inicializarTablaUsuarios();
+
     const chkInactivos = document.getElementById('mostrarInactivos');
     if (chkInactivos) {
         chkInactivos.addEventListener('change', function () {
@@ -55,78 +56,131 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const frm = document.getElementById('formUsuario');
-    const btnSave = document.getElementById('btn-save-usuario');
-    const idUsuario = document.getElementById('idUsuario');
-    const codigorol = document.getElementById('codigorol');
-    const codigorol_hidden = document.getElementById('codigorol_hidden');
-    const fotoPerfilActual = document.getElementById('foto_perfil_actual');
+    if (frm) {
+        const btnSave = document.getElementById('btn-save-usuario');
+        const idUsuario = document.getElementById('idUsuario');
+        const codigorol = document.getElementById('codigorol');
+        const codigorol_hidden = document.getElementById('codigorol_hidden');
+        const fotoPerfilActual = document.getElementById('foto_perfil_actual');
 
-    frm.onsubmit = function (e) {
+        frm.onsubmit = function (e) {
+            e.preventDefault();
+            const formData = new FormData(frm);
+
+            if (codigorol.disabled && codigorol_hidden) {
+                formData.set('codigorol', codigorol_hidden.value);
+            }
+
+            if (fotoPerfilActual && fotoPerfilActual.value && !frm.foto_perfil.value) {
+                formData.append('foto_perfil_actual', fotoPerfilActual.value);
+            }
+
+            let url = '../controllers/UsuarioController.php?option=insertar';
+            if (idUsuario.value !== '') {
+                url = '../controllers/UsuarioController.php?option=editar';
+                formData.append('id', idUsuario.value);
+            }
+
+            axios.post(url, formData)
+                .then(res => {
+                    if (res.data.success) {
+                        Swal.fire('Éxito', 'Usuario guardado.', 'success');
+                        $('#modalUsuario').modal('hide');
+                        frm.reset();
+                        btnSave.innerHTML = 'Guardar';
+                        codigorol.disabled = false;
+                        codigorol_hidden.value = '';
+                        if (fotoPerfilActual) fotoPerfilActual.value = '';
+                        tablaUsuarios.ajax.reload(null, false);
+                    } else {
+                        Swal.fire('Error', res.data.mensaje, 'error');
+                    }
+                });
+        };
+
+        $('#modalUsuario').on('hidden.bs.modal', function () {
+            frm.reset();
+            btnSave.innerHTML = 'Guardar';
+            codigorol.disabled = false;
+            codigorol_hidden.value = '';
+            if (fotoPerfilActual) fotoPerfilActual.value = '';
+        });
+
+        const btnNuevo = document.getElementById('btn-nuevo-usuario');
+        if (btnNuevo) {
+            btnNuevo.addEventListener('click', function () {
+                frm.reset();
+                idUsuario.value = '';
+                btnSave.innerHTML = 'Guardar';
+                codigorol.disabled = false;
+                codigorol_hidden.value = '';
+                if (fotoPerfilActual) fotoPerfilActual.value = '';
+                $('#modalUsuario').modal('show');
+            });
+        }
+    }
+});
+
+
+// ==== REGISTRO USUARIO ====
+document.addEventListener('DOMContentLoaded', function () {
+    const frmRegistro = document.getElementById('formRegistroUsuario');
+    if (!frmRegistro) return;
+
+    frmRegistro.onsubmit = function (e) {
         e.preventDefault();
-        const formData = new FormData(frm);
-        // Si el select está deshabilitado (edición), usa el valor del hidden
-        if (codigorol.disabled && codigorol_hidden) {
-            formData.set('codigorol', codigorol_hidden.value);
+        const formData = new FormData(frmRegistro);
+
+        const correo = formData.get('correo')?.trim().toLowerCase();
+        const telefono = formData.get('telefono')?.trim();
+        let es_interno = 0;
+
+        // 🔍 Validación del número ecuatoriano
+        if (!/^09[89]\d{7}$/.test(telefono)) {
+            Swal.fire('Teléfono inválido', 'Debe ser un número celular ecuatoriano válido (por ejemplo: 0991234567)', 'warning');
+            return;
         }
-        // Si hay foto actual y no se sube una nueva, envía el nombre de la foto actual
-        if (fotoPerfilActual && fotoPerfilActual.value && !frm.foto_perfil.value) {
-            formData.append('foto_perfil_actual', fotoPerfilActual.value);
+
+        
+        
+        // Detectar rol por el correo institucional
+        let codigorol = 'INV'; // invitado por defecto
+        if (/^[a-z]{2,}[0-9]{4}@uta\.edu\.ec$/.test(correo)) {
+            codigorol = 'EST';
+            es_interno = 1;
+        } else if (/^[a-z]+\.[a-z]+@uta\.edu\.ec$/.test(correo) || /@uta\.edu\.ec$/.test(correo)) {
+            codigorol = 'DOC';
+            es_interno = 1;
         }
-        let url = '../controllers/UsuarioController.php?option=insertar';
-        if (idUsuario.value !== '') {
-            url = '../controllers/UsuarioController.php?option=editar';
-            formData.append('id', idUsuario.value);
-        }
-        axios.post(url, formData)
+
+        formData.set('codigorol', codigorol);
+        formData.set('es_interno', es_interno);
+
+        axios.post('../controllers/UsuarioController.php?option=registrarUsuario', formData)
             .then(res => {
+                console.log(res.data);
                 if (res.data.success) {
-                    Swal.fire('Éxito', 'Usuario guardado.', 'success');
-                    $('#modalUsuario').modal('hide');
-                    frm.reset();
-                    btnSave.innerHTML = 'Guardar';
-                    codigorol.disabled = false;
-                    codigorol_hidden.value = '';
-                    if (fotoPerfilActual) fotoPerfilActual.value = '';
-                    tablaUsuarios.ajax.reload(null, false);
+                    Swal.fire({
+                    title: 'Registrado',
+                    text: 'Usuario registrado correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Ir al login'
+                }).then(() => {
+                    window.location.href = 'login.php';
+                });
                 } else {
-                    Swal.fire('Error', res.data.mensaje, 'error');
+                    Swal.fire('Error', res.data.mensaje || 'No se pudo registrar.', 'error');
                 }
+            })
+            .catch(err => {
+                console.error('Error en el registro:', err.response ? err.response.data : err);
+                Swal.fire('Error', 'Ocurrió un error inesperado en el registro.', 'error');
             });
     };
-
-    $('#modalUsuario').on('hidden.bs.modal', function () {
-        frm.reset();
-        btnSave.innerHTML = 'Guardar';
-        codigorol.disabled = false;
-        codigorol_hidden.value = '';
-        if (fotoPerfilActual) fotoPerfilActual.value = '';
-    });
-
-    document.getElementById('btn-nuevo-usuario').addEventListener('click', function () {
-        frm.reset();
-        idUsuario.value = '';
-        btnSave.innerHTML = 'Guardar';
-        codigorol.disabled = false;
-        codigorol_hidden.value = '';
-        if (fotoPerfilActual) fotoPerfilActual.value = '';
-        $('#modalUsuario').modal('show');
-    });
 });
 
-// ==== REGISTRO PÚBLICO DE USUARIO ====
-document.getElementById('formRegistroUsuario')?.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    axios.post('../controllers/UsuarioController.php?option=registrarUsuario', formData)
-        .then(res => {
-            if (res.data.success) {
-                Swal.fire('Registrado', 'Usuario registrado correctamente.', 'success');
-                this.reset();
-            } else {
-                Swal.fire('Error', res.data.mensaje, 'error');
-            }
-        });
-});
+// ==== FINISH REGISTRO USUARIO ====
+
 
 function editarUsuario(id) {
     axios.get(`../controllers/UsuarioController.php?option=get&id=${id}`)
@@ -208,3 +262,103 @@ function inactivarUsuario(id) {
         }
     });
 }
+
+// ==== VALIDACIÓN DE CONTRASEÑA ====
+// Muestra la barra de progreso de la contraseña
+document.addEventListener('DOMContentLoaded', function () {
+  const frmRegistro = document.getElementById('formRegistroUsuario');
+  if (!frmRegistro) return;
+
+  const inputContrasena = document.getElementById('contrasena');
+  const inputConfirmar = document.getElementById('confirmar_contrasena');
+  const bar = document.getElementById('password-strength-bar');
+  const text = document.getElementById('password-strength-text');
+
+  // Barra de fuerza de contraseña
+  inputContrasena.addEventListener('input', function () {
+    const input = this.value;
+    let strength = 0;
+
+    if (input.length >= 6) strength += 20;
+    if (/[A-Z]/.test(input)) strength += 20;
+    if (/[a-z]/.test(input)) strength += 20;
+    if (/[0-9]/.test(input)) strength += 20;
+    if (/[\W_]/.test(input)) strength += 20;
+
+    // Estilo visual
+    bar.style.width = strength + '%';
+    bar.setAttribute('aria-valuenow', strength);
+
+    if (strength < 40) {
+      bar.className = 'progress-bar bg-danger';
+      text.textContent = 'Débil';
+      text.className = 'text-danger';
+    } else if (strength < 80) {
+      bar.className = 'progress-bar bg-warning';
+      text.textContent = 'Aceptable';
+      text.className = 'text-warning';
+    } else {
+      bar.className = 'progress-bar bg-success';
+      text.textContent = 'Fuerte';
+      text.className = 'text-success';
+    }
+  });
+
+  // Envío del formulario
+  frmRegistro.onsubmit = function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(frmRegistro);
+    const contrasena = formData.get('contrasena');
+    const confirmar = formData.get('confirmar_contrasena');
+
+    if (contrasena !== confirmar) {
+      Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
+      return;
+    }
+
+    const telefono = formData.get('telefono');
+    if (!/^09[89]\d{7}$/.test(telefono)) {
+      Swal.fire('Teléfono inválido', 'Debe ser un número celular ecuatoriano válido.', 'warning');
+      return;
+    }
+
+    const correo = formData.get('correo')?.trim().toLowerCase();
+    let codigorol = 'INV';
+    let es_interno = 0;
+
+    if (/^[a-z]{2,}[0-9]{4}@uta\.edu\.ec$/.test(correo)) {
+      codigorol = 'EST';
+      es_interno = 1;
+    } else if (/^[a-z]+\.[a-z]+@uta\.edu\.ec$/.test(correo) || /@uta\.edu\.ec$/.test(correo)) {
+      codigorol = 'DOC';
+      es_interno = 1;
+    }
+
+    formData.set('codigorol', codigorol);
+    formData.set('es_interno', es_interno);
+
+    axios.post('../controllers/UsuarioController.php?option=registrarUsuario', formData)
+      .then(res => {
+        if (res.data.success) {
+          Swal.fire('Registrado', 'Usuario registrado correctamente.', 'success').then(() => {
+            window.location.href = 'login.php';
+          });
+          frmRegistro.reset();
+          bar.style.width = '0%';
+          bar.className = 'progress-bar';
+          text.textContent = '';
+        } else {
+          Swal.fire('Error', res.data.mensaje || 'No se pudo registrar.', 'error');
+        }
+      })
+      .catch(err => {
+        console.error('Error en el registro:', err.response ? err.response.data : err);
+        Swal.fire('Error', 'Ocurrió un error inesperado en el registro.', 'error');
+      });
+  };
+});
+// ==== FINISH VALIDACIÓN DE CONTRASEÑA ====
+
+
+
