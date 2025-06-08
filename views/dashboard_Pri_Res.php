@@ -56,7 +56,6 @@ include("../core/auth.php")?>
                     <th>Participante</th>
                     <th>Evento</th>
                     <th>Estado</th>
-                    <th>Factura</th>
                     <th>Detalles</th>
                   </tr>
                 </thead>

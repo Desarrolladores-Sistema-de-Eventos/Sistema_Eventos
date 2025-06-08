@@ -52,6 +52,9 @@ class EventosController
             case 'detalleEvento':
                 $this->detalleEvento();
                 break;
+                case 'eventosInscritoCurso':
+                $this->listarEventosInscritoCurso();
+                break;
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Acción no válida']);
         }
@@ -254,6 +257,26 @@ private function listarTarjetas()
     $eventos = $this->eventoModelo->getEventosConPortadaPorResponsable($this->idUsuario);
     $this->json($eventos);
 }
+
+
+private function listarEventosInscritoCurso()
+{
+    if (!$this->idUsuario) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Usuario no autenticado']);
+        return;
+    }
+
+    $eventos = $this->eventoModelo->getEventosEnCursoInscrito($this->idUsuario);
+
+    if (empty($eventos)) {
+        $this->json(['tipo' => 'info', 'mensaje' => 'No hay eventos en curso para el usuario.']);
+        return;
+    }
+
+    $this->json($eventos);
+}
+
+
 
 }
 

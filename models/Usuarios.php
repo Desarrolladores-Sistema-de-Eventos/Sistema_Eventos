@@ -142,16 +142,85 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
         $ok = $stmt->execute([$id]);
         return $ok ? ['success' => true] : ['success' => false, 'mensaje' => 'No se pudo inactivar el usuario.'];
     }
-
-    public function getById($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM usuario WHERE SECUENCIAL=?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
     public function listar() {
         $stmt = $this->pdo->query("SELECT * FROM usuario");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+   public function getById($id) {
+    $stmt = $this->pdo->prepare("
+        SELECT u.*, uc.SECUENCIALCARRERA
+        FROM usuario u
+        LEFT JOIN usuario_carrera uc ON u.SECUENCIAL = uc.SECUENCIALUSUARIO
+        WHERE u.SECUENCIAL = ?
+    ");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+ public function obtenerCarreras() {
+    $stmt = $this->pdo->query("SELECT SECUENCIAL, NOMBRE_CARRERA FROM carrera");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+  public function actualizarDatosPerfil(
+    $id,
+    $nombres,
+    $apellidos,
+    $cedula,
+    $fecha_nacimiento,
+    $telefono,
+    $direccion,
+    $fotoNombre = null,
+    $cedulaNombre = null,
+    $carreraId = null
+) {
+    try {
+    
+        // Actualizar tabla usuario
+        $update = $this->pdo->prepare("UPDATE usuario SET 
+            NOMBRES = ?, APELLIDOS = ?, CEDULA = ?, FECHA_NACIMIENTO = ?, 
+            TELEFONO = ?, DIRECCION = ?, FOTO_PERFIL = ?, URL_CEDULA = ?
+            WHERE SECUENCIAL = ?
+        ");
+
+        $ok = $update->execute([
+            $nombres,
+            $apellidos,
+            $cedula,
+            $fecha_nacimiento,
+            $telefono,
+            $direccion,
+            $fotoNombre,
+            $cedulaNombre,
+            $id
+        ]);
+
+        // Actualizar o insertar carrera
+        if ($carreraId) {
+            $check = $this->pdo->prepare("SELECT COUNT(*) FROM usuario_carrera WHERE SECUENCIALUSUARIO = ?");
+            $check->execute([$id]);
+            $exists = $check->fetchColumn();
+
+            if ($exists) {
+                $stmtCarrera = $this->pdo->prepare("UPDATE usuario_carrera SET SECUENCIALCARRERA = ? WHERE SECUENCIALUSUARIO = ?");
+                $stmtCarrera->execute([$carreraId, $id]);
+            } else {
+                $stmtCarrera = $this->pdo->prepare("INSERT INTO usuario_carrera (SECUENCIALUSUARIO, SECUENCIALCARRERA) VALUES (?, ?)");
+                $stmtCarrera->execute([$id, $carreraId]);
+            }
+        }
+
+        return $ok
+            ? ['success' => true, 'foto' => $fotoNombre, 'cedula' => $cedulaNombre]
+            : ['success' => false, 'mensaje' => 'No se pudo actualizar los datos.'];
+
+    } catch (PDOException $e) {
+        return ['success' => false, 'mensaje' => 'Error: ' . $e->getMessage()];
+    }
+}
+
 }
 ?>

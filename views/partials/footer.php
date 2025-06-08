@@ -20,12 +20,14 @@
 </div>
       <!-- Información -->
       <div class="col-md-4 mb-4">
-        <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">INFORMACIÓN</h5>
-        <p>Cuéntanos tus inquietudes o dudas.</p>
-        <button style="background:#880e4f; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold;">Solicitar Información – CTT</button>
-      </div>
-    </div>
-
+  <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">INFORMACIÓN</h5>
+  <p>Cuéntanos tus inquietudes o dudas.</p>
+  <a href="../views/contact.php">
+    <button style="background:#880e4f; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold;">
+      Solicitar Información – CTT
+    </button>
+  </a>
+</div>
     <div class="row" style="border-top:1px solid #e0e0e0; margin-top:20px; padding-top:10px;">
       <div class="col-md-8">
         <small>© Universidad Técnica de Ambato – Todos los derechos reservados</small>
@@ -45,4 +47,3 @@
     </button>
   </div>
 </footer>
-<?php include(__DIR__ . '/../solicitud_usuario.php'); ?>

@@ -284,9 +284,52 @@ public function actualizarArchivoRequisito($idArchivo, $nombreArchivo) {
 }
 
 public function actualizarComprobantePago($idPago, $nombreArchivo) {
-    $stmt = $this->pdo->prepare("UPDATE PAGO SET COMPROBANTE_URL = ?, CODIGOESTADOPAGO = 'PEN' WHERE SECUENCIAL = ?");
-    return $stmt->execute([$nombreArchivo, $idPago]);
+    // 1. Obtener el costo del evento desde el pago
+    $sql = "
+        SELECT e.COSTO
+        FROM pago p
+        INNER JOIN inscripcion i ON i.SECUENCIAL = p.SECUENCIALINSCRIPCION
+        INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        WHERE p.SECUENCIAL = ?
+    ";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idPago]);
+    $evento = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$evento) return false;
+
+    $monto = $evento['COSTO'];
+
+    // 2. Actualizar el pago con estado, comprobante y monto
+    $sqlUpdate = "
+        UPDATE pago
+        SET 
+            CODIGOESTADOPAGO = 'VAL',
+            COMPROBANTE_URL = ?,
+            MONTO = ?
+        WHERE SECUENCIAL = ?
+    ";
+    $stmtUpdate = $this->pdo->prepare($sqlUpdate);
+    return $stmtUpdate->execute([$nombreArchivo, $monto, $idPago]);
 }
+public function getInscripcionesPorUsuario($idUsuario) {
+    $sql = "
+        SELECT 
+            i.SECUENCIAL,
+            e.TITULO AS EVENTO,
+            i.FACTURA_URL,
+            i.CODIGOESTADOINSCRIPCION,
+            i.FECHAINSCRIPCION
+        FROM inscripcion i
+        INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        WHERE i.SECUENCIALUSUARIO = ?
+        ORDER BY i.FECHAINSCRIPCION DESC
+    ";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 
 }

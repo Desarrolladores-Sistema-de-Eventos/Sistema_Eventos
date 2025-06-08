@@ -1,7 +1,8 @@
 function cargarTarjetas() {
-  axios.get('../controllers/EventosController.php?option=listarTarjetas')
+    axios.get('../controllers/Asistencia_NotaController.php?option=eventosResponsable')
     .then(res => {
       const eventos = res.data;
+      console.log(eventos);
       let html = '';
       eventos.forEach(e => {
         html += `
@@ -11,13 +12,13 @@ function cargarTarjetas() {
               ${e.TITULO}
             </div>
             <div class="panel-body text-center" style="padding:10px;">
-              <img src="../${e.PORTADA || 'public/img/default.jpg'}" alt="Portada" style="width:95%;max-width:270px;height:150px;object-fit:cover;margin-bottom:8px;">
+              <img src="../${e.IMAGEN || 'public/img/default.jpg'}" alt="Portada" style="width:95%;max-width:270px;height:150px;object-fit:cover;margin-bottom:8px;">
               <p style="margin-bottom:4px; font-size:14px;"><b>Fecha:</b> ${e.FECHAINICIO}</p>
               <p style="margin-bottom:4px; font-size:14px;"><b>Horas:</b> ${e.HORAS}</p>
               <p style="margin-bottom:4px; font-size:14px;"><b>Estado:</b> ${e.ESTADO}</p>
             </div>
             <div class="panel-footer text-center" style="padding:6px;">
-              <button class="btn btn-success btn-sm" onclick="window.location.href='dashboard_Notas_Res.php?idEvento=${e.SECUENCIAL}&titulo=${encodeURIComponent(e.TITULO)}&fecha=${encodeURIComponent(e.FECHAINICIO)}&tipo=${encodeURIComponent(e.TIPO)}'">
+              <button class="btn btn-success btn-sm" onclick="window.location.href='dashboard_Notas_Res.php?idEvento=${e.SECUENCIAL}&titulo=${encodeURIComponent(e.TITULO)}&fecha=${encodeURIComponent(e.FECHAINICIO)}&tipo=${encodeURIComponent(e.TIPO_EVENTO)}'">
                 <i class="fa fa-edit"></i>
               </button>
             </div>
@@ -33,7 +34,7 @@ function cargarTarjetas() {
 function verInscritosEvento(idEvento, titulo, fecha, tipo) {
     axios.get('../controllers/Asistencia_NotaController.php?option=inscritosEvento&idEvento=' + idEvento)
         .then(res => {
-            tipo = res.data.length > 0 ? res.data[0].TIPO_EVENTO : '';
+            console.log(res); 
             document.getElementById('titulo-evento').textContent = titulo;
             document.getElementById('fecha-evento').textContent = fecha;
             document.getElementById('tipo-evento').textContent = tipo;
