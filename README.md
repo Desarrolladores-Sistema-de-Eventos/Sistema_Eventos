@@ -34,9 +34,11 @@ Este sistema nace como una solución académica y colaborativa para la gestión 
 - Interfaz moderna, responsiva y dinámica con Bootstrap y DataTables (idioma español).
 - Seguridad: autenticación, control de sesiones, validación de formularios y protección de rutas.
 - Gestión de usuarios con baja lógica (INACTIVO) y recuperación de cuentas.
+---
 
 📈 Evidencias de Desarrollo
 ![Vista principal del sistema](./public/img/Evidencia.png)
+---
 
 ## Tecnologías Utilizadas
 - **Lenguaje:** PHP, JavaScript
@@ -50,7 +52,7 @@ Este sistema nace como una solución académica y colaborativa para la gestión 
 
 ## Estructura del Proyecto
 
-```
+
 ├── .vscode/                # Configuración de VSCode
 ├── config/                 # Archivos de configuración (DB, constantes, etc.)
 ├── controllers/            # Controladores (MVC - lógica de control)
@@ -65,7 +67,6 @@ Este sistema nace como una solución académica y colaborativa para la gestión 
 
 ├── CONTRIBUTING.md         # Guía para colaboradores del proyecto
 └── README.md               # Descripción general del proyecto
-```
 
 ---
 
@@ -89,7 +90,8 @@ Este sistema nace como una solución académica y colaborativa para la gestión 
    ```
 
 2. **Configura la base de datos:**
- 
+ ---
+
 3. **Configura el entorno:**
    - Ajusta rutas y parámetros en los archivos de configuración según tu entorno local.
 4. **Inicia el servidor local:**
