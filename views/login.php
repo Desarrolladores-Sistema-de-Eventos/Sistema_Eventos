@@ -81,7 +81,7 @@
 							<div class="w-50 text-left">
 							</div>
 							<div class="w-50 text-md-right">
-								<a href="#">¿Olvidaste tu contraseña?</a>
+								<a href="../views/recuperar_contrasena.php">¿Olvidaste tu contraseña?</a>
 							</div>
 						</div>
 					</form>
