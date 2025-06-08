@@ -312,6 +312,24 @@ public function actualizarComprobantePago($idPago, $nombreArchivo) {
     $stmtUpdate = $this->pdo->prepare($sqlUpdate);
     return $stmtUpdate->execute([$nombreArchivo, $monto, $idPago]);
 }
+public function getInscripcionesPorUsuario($idUsuario) {
+    $sql = "
+        SELECT 
+            i.SECUENCIAL,
+            e.TITULO AS EVENTO,
+            i.FACTURA_URL,
+            i.CODIGOESTADOINSCRIPCION,
+            i.FECHAINSCRIPCION
+        FROM inscripcion i
+        INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        WHERE i.SECUENCIALUSUARIO = ?
+        ORDER BY i.FECHAINSCRIPCION DESC
+    ";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 
 }
