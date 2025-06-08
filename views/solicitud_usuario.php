@@ -1,4 +1,3 @@
-<?php include_once('partials/header.php'); ?>
 
 <style>
   #btn-flotante {
@@ -25,13 +24,13 @@
 
   .is-invalid {
     border: 1px solid red !important;
-    background-color: #ffe6e6;
+    background-color:rgb(10, 10, 10);
   }
 </style>
 
 <!-- Botón de solicitud flotante -->
 <button id="btn-flotante" class="btn" data-toggle="modal" data-target="#modalSolicitud" title="Solicitar un cambio">
-  <i class="fa fa-pencil-square"></i>
+  <i class="fa fa-headset"></i>
 </button>
 
 <!-- Modal de Solicitud -->
@@ -111,7 +110,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script>
   $('#formSolicitud').on('submit', function (e) {
@@ -202,4 +200,3 @@
   });
 </script>
 
-<?php include_once('partials/footer.php'); ?>

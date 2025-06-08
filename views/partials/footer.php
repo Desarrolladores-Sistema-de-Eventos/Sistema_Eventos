@@ -1,3 +1,4 @@
+    <?php include "../views/solicitud_usuario.php"?>
 <footer style="background: #B71C1C; color: #fff; padding: 30px 0 0 0; margin-top: 40px;">
   <div class="container">
     <div class="row">
@@ -39,6 +40,7 @@
         </small>
       </div>
     </div>
+
 
     <!-- Botón flotante -->
     <button onclick="window.scrollTo({top:0,behavior:'smooth'});"
