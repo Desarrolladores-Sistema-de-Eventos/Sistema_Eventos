@@ -24,6 +24,8 @@ class InscripcionesController {
                 $this->inscribirse(); break;
             case 'listarPorEvento':
                 $this->listarPorEvento(); break;
+             case 'listarPorUsuario':
+                $this->listarPorUsuario();break;
             case 'estadoInscripcion':
                 $this->estadoInscripcion(); break;
             case 'estadoPago':
@@ -288,6 +290,19 @@ private function estadoPago() {
         'mensaje' => $ok ? 'Estado actualizado' : 'No se pudo actualizar'
     ]);
 }
+
+ private function listarPorUsuario() {
+        try {
+            $data = $this->modelo->getInscripcionesPorUsuario($this->idUsuario);
+            $this->json($data);
+        } catch (Exception $e) {
+            $this->json([
+                'tipo' => 'error',
+                'mensaje' => 'Error al obtener inscripciones',
+                'debug' => $e->getMessage()
+            ]);
+        }
+    }
 
 }
 

@@ -31,27 +31,25 @@ class Certificado {
     }
 
     // Listar certificados por usuario (para usuario)
-    public function getCertificadosPorUsuario($idUsuario) {
-        $sql = "
-            SELECT 
-                c.SECUENCIAL,
-                e.TITULO AS EVENTO,
-                c.URL_CERTIFICADO,
-                c.FECHA_EMISION,
-                i.ESTADO_INSCRIPCION,
-                an.ASISTENCIA,
-                an.NOTA
-            FROM certificado c
-            INNER JOIN evento e ON c.SECUENCIALEVENTO = e.SECUENCIAL
-            INNER JOIN inscripcion i ON i.SECUENCIALUSUARIO = c.SECUENCIALUSUARIO AND i.SECUENCIALEVENTO = c.SECUENCIALEVENTO
-            INNER JOIN asistencia_nota an ON an.INSCRIPCION_ID = i.SECUENCIAL
-            WHERE c.SECUENCIALUSUARIO = ?
-            ORDER BY c.FECHA_EMISION DESC
-        ";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$idUsuario]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+   public function getCertificadosPorUsuario($idUsuario) {
+    $sql = "
+        SELECT 
+            c.SECUENCIAL,
+            e.TITULO AS EVENTO,
+            u.CORREO,
+            c.URL_CERTIFICADO,
+            c.FECHA_EMISION
+        FROM certificado c
+        INNER JOIN evento e ON c.SECUENCIALEVENTO = e.SECUENCIAL
+        INNER JOIN usuario u ON c.SECUENCIALUSUARIO = u.SECUENCIAL
+        WHERE c.SECUENCIALUSUARIO = ?
+        ORDER BY c.FECHA_EMISION DESC
+    ";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     // Crear certificado
     public function crearCertificado($idUsuario, $idEvento, $urlCertificado = null) {

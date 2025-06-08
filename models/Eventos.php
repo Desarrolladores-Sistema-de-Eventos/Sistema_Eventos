@@ -306,5 +306,32 @@ public function getEventoDetallePublico($idEvento) {
 
     return $evento;
 }
+public function getEventosEnCursoInscrito($idUsuario) {
+    $sql = "
+        SELECT 
+            e.SECUENCIAL,
+            e.TITULO,
+            e.FECHAINICIO,
+            e.FECHAFIN,
+            e.ESTADO,
+            (SELECT URL_IMAGEN 
+             FROM imagen_evento 
+             WHERE SECUENCIALEVENTO = e.SECUENCIAL 
+               AND TIPO_IMAGEN = 'PORTADA' 
+             LIMIT 1) AS PORTADA
+        FROM evento e
+        INNER JOIN inscripcion i ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        WHERE i.SECUENCIALUSUARIO = ?
+          AND CURDATE() BETWEEN e.FECHAINICIO AND e.FECHAFIN
+          AND e.ESTADO = 'DISPONIBLE'
+        ORDER BY e.FECHAINICIO DESC
+    ";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
 
 }
