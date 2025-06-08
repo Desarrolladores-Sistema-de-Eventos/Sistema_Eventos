@@ -1,26 +1,29 @@
 # Sistema de Gestión de Cursos y Eventos Académicos - FISEI
 Sistema web desarrollado para la gestión integral de eventos académicos (cursos, congresos, webinars, conferencias, socializaciones, etc.) en la Facultad de Ingeniería en Sistemas, Electrónica e Industrial (FISEI) de la Universidad Técnica de Ambato. Permite administrar eventos, gestionar inscripciones, generar reportes y certificados, con un sistema robusto de roles y control de acceso.
 ## Tabla de Contenidos
-1. [Introducción](#introducción-general)
+1. [Introducción](#introducción)
 2. [Funcionalidades Principales](#funcionalidades-principales)
 3. [Tecnologías Utilizadas](#tecnologías-utilizadas)
 4. [Estructura del Proyecto](#estructura-del-proyecto)
-5. [Pre-requisitos](#pre-requisitos)
+5. [Requisitos Previos](#requisitos-previos)
 6. [Instalación](#instalación)
 7. [Uso y Ejemplo de Flujo](#uso-y-ejemplo-de-flujo)
 8. [Despliegue](#despliegue)
 9. [Colaboración y Git Flow](#colaboración-y-git-flow)
-10. [Equipo de Desarrollo](#autores)
+10. [Equipo de Desarrollo](#equipo-de-desarrollo)
 11. [Licencia](#licencia)
 12. [Agradecimientos](#agradecimientos)
 
 ---
 
-## 📝 Introducción
-Este sistema nace como una solución académica y colaborativa para la gestión eficiente de eventos y cursos en FISEI. El objetivo es digitalizar y automatizar procesos como la inscripción, control de asistencia, gestión de pagos y generación de certificados, aplicando buenas prácticas de desarrollo, control de versiones y trabajo en equipo.
+
+## Introducción
+
+- Este sistema nace como una solución académica y colaborativa para la gestión eficiente de eventos y cursos en FISEI. El objetivo es digitalizar y automatizar procesos como la inscripción, control de asistencia, gestión de pagos y generación de certificados, aplicando buenas prácticas de desarrollo, control de versiones y trabajo en equipo.
+
 ---
 
-## 🚀 Funcionalidades Principales
+## Funcionalidades Principales
 
 - Gestión completa (CRUD) de eventos académicos: cursos, congresos, webinars, conferencias y socializaciones.
 - Administración de organizadores y participantes con control de roles: Administrador, Responsable y Participante.
@@ -53,24 +56,24 @@ Este sistema nace como una solución académica y colaborativa para la gestión 
 ## Estructura del Proyecto
 
 
-├── .vscode/                # Configuración de VSCode
-├── config/                 # Archivos de configuración (DB, constantes, etc.)
-├── controllers/            # Controladores (MVC - lógica de control)
-├── core/                   # Núcleo del sistema (helpers, enrutador, clases base)
-├── models/                 # Modelos (MVC - acceso a datos, lógica de negocio)
-├── public/                 # Recursos públicos (CSS, JS, imágenes)
-    ├── vendor/                 # Dependencias externas (Composer)
-        ├── auth.php                # Lógica de autenticación
-├── views/                  # Vistas (MVC - interfaz de usuario)
-│   └── partials/           # Fragmentos reutilizables (headers, footers, etc.)
-├── .gitignore              # Archivos/carpetas ignoradas por Git
+├── .vscode/                  Configuración de VSCode
+├── config/                   Archivos de configuración (DB, constantes, etc.)
+├── controllers/              Controladores (MVC - lógica de control)
+├── core/                     Núcleo del sistema (helpers, enrutador, clases base)
+├── models/                   Modelos (MVC - acceso a datos, lógica de negocio)
+├── public/                   Recursos públicos (CSS, JS, imágenes)
+    ├── vendor/                   Dependencias externas (Composer)
+        ├── auth.php                  Lógica de autenticación
+├── views/                    Vistas (MVC - interfaz de usuario)
+│   └── partials/             Fragmentos reutilizables (headers, footers, etc.)
+├── .gitignore                Archivos/carpetas ignoradas por Git
 
-├── CONTRIBUTING.md         # Guía para colaboradores del proyecto
-└── README.md               # Descripción general del proyecto
+├── CONTRIBUTING.md           Guía para colaboradores del proyecto
+└── README.md                 Descripción general del proyecto
 
 ---
 
-## ⚙️ Requisitos Previos
+## Requisitos Previos
 - PHP 8.x
 - MySQL Server
 - Composer
@@ -151,7 +154,7 @@ Este proyecto utiliza **Git Flow** para la gestión de ramas. Para colaborar:
 
 ---
 
-## 👥 Equipo de Desarrollo
+## Equipo de Desarrollo
 
 - Cristian Jurado
 - Josue Llumitasig
