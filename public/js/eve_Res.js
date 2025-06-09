@@ -59,9 +59,12 @@ function edit(id) {
 
       document.getElementById('notaAprobacion').value = e.NOTAAPROBACION;
       document.getElementById('costo').value = e.COSTO;
+      document.getElementById('capacidad').value = e.CAPACIDAD;
+
 
       document.getElementById('publicoDestino').value = e.ES_SOLO_INTERNOS == 1 ? 'internos' : 'externos';
       document.getElementById('esPagado').checked = e.ES_PAGADO == 1;
+      toggleCosto();
 
       document.getElementById('estado').value = e.ESTADO;
       document.getElementById('idEvento').value = e.SECUENCIAL;
@@ -170,7 +173,7 @@ function cargarSelects() {
 function llenarSelect(id, opciones) {
   const select = document.getElementById(id);
   if (!select) return;
-  
+
   const isMultiple = select.hasAttribute('multiple');
   select.innerHTML = isMultiple ? '' : '<option value="">Seleccione</option>';
 
@@ -201,9 +204,51 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnSave = document.querySelector('#btn-save');
   const idEvento = document.querySelector('#idEvento');
 
+  const chkPagado = document.getElementById('esPagado');
+  const inputCosto = document.getElementById('costo');
+  const divCosto = document.getElementById('grupoCosto');
+  console.log('grupoCosto cargado:', divCosto);
+
+
+  function toggleCosto() {
+    
+    if (chkPagado.checked) {
+      divCosto.style.display = 'block';
+       inputCosto.disabled = false;
+      if (inputCosto.value == 0) inputCosto.value = '';
+    } else {
+      inputCosto.disabled = true;
+      inputCosto.value = 0;
+      divCosto.style.display = 'none';
+    }
+  }
+
+  chkPagado.addEventListener('change', toggleCosto);
+  toggleCosto();
+
+
   // === ENVÍO DEL FORMULARIO ===
   frm.onsubmit = function (e) {
     e.preventDefault();
+    const hoy = new Date().toISOString().split("T")[0];
+    const fechaInicio = document.getElementById('fechaInicio').value;
+    const fechaFin = document.getElementById('fechaFin').value;
+    const capacidad = parseInt(document.getElementById('capacidad').value, 10);
+
+    if (fechaInicio < hoy) {
+      Swal.fire('Error', 'La fecha de inicio no puede ser anterior a hoy.', 'error');
+      return;
+    }
+    if (fechaFin && fechaFin < fechaInicio) {
+      Swal.fire('Error', 'La fecha de fin no puede ser anterior a la de inicio.', 'error');
+      return;
+    }
+
+    if (!capacidad || capacidad <= 0) {
+      Swal.fire('Error', 'La capacidad debe ser mayor que cero.', 'error');
+      return;
+    }
+
     const formData = new FormData(frm);
 
     // Adjuntar archivos de portada y galería si existen
@@ -255,11 +300,12 @@ document.addEventListener('DOMContentLoaded', function () {
         Swal.fire('Error', 'No se pudo guardar el evento. Intenta nuevamente.', 'error');
       });
   };
- 
+
   // ✅ LIMPIEZA DESPUÉS DE CERRAR EL MODAL
   $('#modalEvento').on('hidden.bs.modal', function () {
     frm.reset();
     btnSave.innerHTML = 'Guardar';
+    toggleCosto();
     tablaEventos.ajax.reload();
   });
 
@@ -268,6 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
     frm.reset();
     idEvento.value = '';
     btnSave.innerHTML = 'Guardar';
+     toggleCosto();
     $('#modalEvento').modal('show');
   });
 });

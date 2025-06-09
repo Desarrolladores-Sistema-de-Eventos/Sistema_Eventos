@@ -52,7 +52,7 @@ class EventosController
             case 'detalleEvento':
                 $this->detalleEvento();
                 break;
-                case 'eventosInscritoCurso':
+            case 'eventosInscritoCurso':
                 $this->listarEventosInscritoCurso();
                 break;
             default:
@@ -88,149 +88,203 @@ class EventosController
         $this->json($evento);
     }
 
-private function guardar()
-{
-    $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'categoria', 'tipoEvento', 'carrera', 'estado'];
-    foreach ($required as $campo) {
-        if (empty($_POST[$campo])) {
-            $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
-            return;
-        }
-    }
-
-    try {
-        // Procesar archivo de portada
-        $urlPortada = null;
-        if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
-            $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
-            $rutaDestino = '../public/img/' . $nombreArchivo;
-            if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-                $urlPortada = 'public/img/eventos/' . $nombreArchivo;
+    private function guardar()
+    {
+        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'categoria', 'tipoEvento', 'carrera', 'estado', 'capacidad'];
+        foreach ($required as $campo) {
+            if (empty($_POST[$campo])) {
+                $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
+                return;
             }
         }
 
-        // Procesar archivo de galería
-        $urlGaleria = null;
-        if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
-            $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
-            $rutaDestino = '../public/img/' . $nombreArchivo;
-            if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-                $urlGaleria = 'public/img/' . $nombreArchivo;
+
+        try {
+            // Procesar archivo de portada
+            $urlPortada = null;
+            if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
+                $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
+                $rutaDestino = '../public/img/' . $nombreArchivo;
+                if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
+                    $urlPortada = 'public/img/eventos/' . $nombreArchivo;
+                }
             }
-        }
 
-        $idEvento = $this->eventoModelo->crearEvento(
-            $_POST['titulo'],
-            $_POST['descripcion'],
-            $_POST['horas'],
-            $_POST['fechaInicio'],
-            $_POST['fechaFin'],
-            $_POST['modalidad'],
-            $_POST['notaAprobacion'],
-            $_POST['costo'] ?? 0,
-            $_POST['publicoDestino'],
-            isset($_POST['esPagado']) ? 1 : 0,
-            $_POST['categoria'],
-            $_POST['tipoEvento'],
-            $_POST['carrera'],
-            $_POST['estado'],
-            $this->idUsuario,
-            $urlPortada,
-            $urlGaleria
-        );
-
-        $requisitosSeleccionados = $_POST['requisitos'] ?? [];
-
-        if (!empty($requisitosSeleccionados)) {
-            require_once '../models/Requisitos.php';
-            $reqModel = new Requisitos();
-            $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
-        }
-
-        $this->json(['tipo' => 'success', 'mensaje' => 'Evento creado']);
-    } catch (Exception $e) {
-        $this->json([
-            'tipo' => 'error',
-            'mensaje' => 'Error al crear evento',
-            'debug' => $e->getMessage()
-        ]);
-    }
-}
-
-private function actualizar()
-{
-    $idEvento = $_POST['idEvento'] ?? null;
-    if (!$idEvento) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'ID del evento requerido.']);
-        return;
-    }
-
-    try {
-        // Procesar archivo de portada
-        $urlPortada = null;
-        if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
-            $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
-            $rutaDestino = '../public/img/' . $nombreArchivo;
-            if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-                $urlPortada = 'public/img/' . $nombreArchivo;
+            // Procesar archivo de galería
+            $urlGaleria = null;
+            if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
+                $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
+                $rutaDestino = '../public/img/' . $nombreArchivo;
+                if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
+                    $urlGaleria = 'public/img/' . $nombreArchivo;
+                }
             }
-        }
+            $fechaInicio = $_POST['fechaInicio'];
+            $fechaFin = $_POST['fechaFin'];
+            $hoy = date('Y-m-d');
 
-        // Procesar archivo de galería
-        $urlGaleria = null;
-        if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
-            $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
-            $rutaDestino = '../public/img/' . $nombreArchivo;
-            if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-                $urlGaleria = 'public/img/' . $nombreArchivo;
+            if ($fechaInicio < $hoy) {
+                $this->json(['tipo' => 'error', 'mensaje' => 'La fecha de inicio no puede ser anterior a hoy.']);
+                return;
             }
-        }
 
-        $resultado = $this->eventoModelo->actualizarEvento(
-            $_POST['titulo'],
-            $_POST['descripcion'],
-            $_POST['horas'],
-            $_POST['fechaInicio'],
-            $_POST['fechaFin'],
-            $_POST['modalidad'],
-            $_POST['notaAprobacion'],
-            $_POST['costo'] ?? 0,
-            $_POST['publicoDestino'],
-            isset($_POST['esPagado']) ? 1 : 0,
-            $_POST['categoria'],
-            $_POST['tipoEvento'],
-            $_POST['carrera'],
-            $_POST['estado'],
-            $idEvento,
-            $this->idUsuario,
-            $urlPortada,
-            $urlGaleria
-        );
+            if (!empty($fechaFin) && $fechaFin < $fechaInicio) {
+                $this->json(['tipo' => 'error', 'mensaje' => 'La fecha de fin no puede ser anterior a la de inicio.']);
+                return;
+            }
+            
+            
 
-        if ($resultado) {
+            $esPagado = isset($_POST['esPagado']) ? 1 : 0;
+            $costo = $esPagado ? ($_POST['costo'] ?? 0) : 0;
+            
+            $capacidad = $_POST['capacidad'] ?? 0;
+            if ($capacidad <= 0) {
+    $this->json(['tipo' => 'error', 'mensaje' => 'La capacidad debe ser mayor que cero.']);
+    return;
+           }
+
+
+
+            $idEvento = $this->eventoModelo->crearEvento(
+                $_POST['titulo'],
+                $_POST['descripcion'],
+                $_POST['horas'],
+                $_POST['fechaInicio'],
+                $_POST['fechaFin'],
+                $_POST['modalidad'],
+                $_POST['notaAprobacion'],
+                $costo,
+                $_POST['publicoDestino'],
+                $esPagado,
+                $_POST['categoria'],
+                $_POST['tipoEvento'],
+                $_POST['carrera'],
+                $_POST['estado'],
+                $this->idUsuario,
+                $urlPortada,
+                $urlGaleria,
+                $capacidad
+            );
+
             $requisitosSeleccionados = $_POST['requisitos'] ?? [];
 
-            require_once '../models/Requisitos.php';
-            $reqModel = new Requisitos();
-
-            $reqModel->eliminarPorEvento($idEvento);
-
             if (!empty($requisitosSeleccionados)) {
+                require_once '../models/Requisitos.php';
+                $reqModel = new Requisitos();
                 $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
             }
 
-            $this->json(['tipo' => 'success', 'mensaje' => 'Evento actualizado']);
-        } else {
-            $this->json(['tipo' => 'error', 'mensaje' => 'No tienes permisos para actualizar este evento']);
+            $this->json(['tipo' => 'success', 'mensaje' => 'Evento creado']);
+        } catch (Exception $e) {
+            $this->json([
+                'tipo' => 'error',
+                'mensaje' => 'Error al crear evento',
+                'debug' => $e->getMessage()
+            ]);
         }
-    } catch (Exception $e) {
-        $this->json([
-            'tipo' => 'error',
-            'mensaje' => 'Error al actualizar evento',
-            'debug' => $e->getMessage()
-        ]);
     }
-}
+
+
+
+    private function actualizar()
+    {
+        $idEvento = $_POST['idEvento'] ?? null;
+        if (!$idEvento) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'ID del evento requerido.']);
+            return;
+        }
+
+        try {
+            // Procesar archivo de portada
+            $urlPortada = null;
+            if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
+                $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
+                $rutaDestino = '../public/img/' . $nombreArchivo;
+                if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
+                    $urlPortada = 'public/img/' . $nombreArchivo;
+                }
+            }
+
+            // Procesar archivo de galería
+            $urlGaleria = null;
+            if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
+                $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
+                $rutaDestino = '../public/img/' . $nombreArchivo;
+                if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
+                    $urlGaleria = 'public/img/' . $nombreArchivo;
+                }
+            }
+
+            $fechaInicio = $_POST['fechaInicio'];
+            $fechaFin = $_POST['fechaFin'];
+            $hoy = date('Y-m-d');
+
+            if ($fechaInicio < $hoy) {
+                $this->json(['tipo' => 'error', 'mensaje' => 'La fecha de inicio no puede ser anterior a hoy.']);
+                return;
+            }
+
+            if (!empty($fechaFin) && $fechaFin < $fechaInicio) {
+                $this->json(['tipo' => 'error', 'mensaje' => 'La fecha de fin no puede ser anterior a la de inicio.']);
+                return;
+            }
+
+            $esPagado = isset($_POST['esPagado']) ? 1 : 0;
+            $costo = $esPagado ? ($_POST['costo'] ?? 0) : 0;
+
+            $capacidad = $_POST['capacidad'] ?? 0;
+            if ($capacidad <= 0) {
+                $this->json(['tipo' => 'error', 'mensaje' => 'La capacidad debe ser mayor que cero.']);
+                return;
+            }
+
+            $resultado = $this->eventoModelo->actualizarEvento(
+                $_POST['titulo'],
+                $_POST['descripcion'],
+                $_POST['horas'],
+                $_POST['fechaInicio'],
+                $_POST['fechaFin'],
+                $_POST['modalidad'],
+                $_POST['notaAprobacion'],
+                $costo,
+                $_POST['publicoDestino'],
+                $esPagado,
+                $_POST['categoria'],
+                $_POST['tipoEvento'],
+                $_POST['carrera'],
+                $_POST['estado'],
+                $idEvento,
+                $this->idUsuario,
+                $urlPortada,
+                $urlGaleria,
+                $capacidad
+            );
+
+            if ($resultado) {
+                $requisitosSeleccionados = $_POST['requisitos'] ?? [];
+
+                require_once '../models/Requisitos.php';
+                $reqModel = new Requisitos();
+
+                $reqModel->eliminarPorEvento($idEvento);
+
+                if (!empty($requisitosSeleccionados)) {
+                    $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
+                }
+
+                $this->json(['tipo' => 'success', 'mensaje' => 'Evento actualizado']);
+            } else {
+                $this->json(['tipo' => 'error', 'mensaje' => 'No tienes permisos para actualizar este evento']);
+            }
+        } catch (Exception $e) {
+            $this->json([
+                'tipo' => 'error',
+                'mensaje' => 'Error al actualizar evento',
+                'debug' => $e->getMessage()
+            ]);
+        }
+    }
 
     private function cancelar()
     {
@@ -252,29 +306,29 @@ private function actualizar()
         echo json_encode($data);
     }
 
-private function listarTarjetas()
-{
-    $eventos = $this->eventoModelo->getEventosConPortadaPorResponsable($this->idUsuario);
-    $this->json($eventos);
-}
-
-
-private function listarEventosInscritoCurso()
-{
-    if (!$this->idUsuario) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Usuario no autenticado']);
-        return;
+    private function listarTarjetas()
+    {
+        $eventos = $this->eventoModelo->getEventosConPortadaPorResponsable($this->idUsuario);
+        $this->json($eventos);
     }
 
-    $eventos = $this->eventoModelo->getEventosEnCursoInscrito($this->idUsuario);
 
-    if (empty($eventos)) {
-        $this->json(['tipo' => 'info', 'mensaje' => 'No hay eventos en curso para el usuario.']);
-        return;
+    private function listarEventosInscritoCurso()
+    {
+        if (!$this->idUsuario) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Usuario no autenticado']);
+            return;
+        }
+
+        $eventos = $this->eventoModelo->getEventosEnCursoInscrito($this->idUsuario);
+
+        if (empty($eventos)) {
+            $this->json(['tipo' => 'info', 'mensaje' => 'No hay eventos en curso para el usuario.']);
+            return;
+        }
+
+        $this->json($eventos);
     }
-
-    $this->json($eventos);
-}
 
 
 

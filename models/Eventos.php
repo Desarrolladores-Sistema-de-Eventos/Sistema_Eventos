@@ -145,20 +145,20 @@ public function getEventosConPortadaPorResponsable($idUsuario) {
 public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaFin, $modalidad,
                             $notaAprobacion, $costo, $publicoDestino, $esPagado,
                             $categoria, $tipo, $carrera, $estado, $idUsuario,
-                            $urlPortada, $urlGaleria) // galería es solo una imagen
+                            $urlPortada, $urlGaleria, $capacidad) // galería es solo una imagen
 {
     $sql = "INSERT INTO evento (
         TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, 
         CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, 
         ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, 
-        SECUENCIALCARRERA, ESTADO
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
+        SECUENCIALCARRERA, ESTADO, CAPACIDAD
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
 
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([
         $titulo, $descripcion, $horas, $fechaInicio, $fechaFin, 
         $modalidad, $notaAprobacion, $costo, $publicoDestino, 
-        $esPagado, $categoria, $tipo, $carrera, $estado 
+        $esPagado, $categoria, $tipo, $carrera, $estado, $capacidad
     ]);
 
     $idEvento = $this->pdo->lastInsertId();
@@ -187,7 +187,7 @@ public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaF
 public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaFin, $modalidad,
                                  $notaAprobacion, $costo, $publicoDestino, $esPagado,
                                  $categoria, $tipo, $carrera, $estado, $idEvento, $idUsuario,
-                                 $urlPortada, $urlGaleria) // galería es solo una imagen
+                                 $urlPortada, $urlGaleria, $capacidad) // galería es solo una imagen
 {
     // Verificar si el usuario es responsable del evento
     $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM organizador_evento 
@@ -213,7 +213,8 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
                 SECUENCIALCATEGORIA = ?, 
                 CODIGOTIPOEVENTO = ?, 
                 SECUENCIALCARRERA = ?, 
-                ESTADO = ?
+                ESTADO = ?, 
+                CAPACIDAD = ?
             WHERE SECUENCIAL = ?";
 
     $stmt = $this->pdo->prepare($sql);
@@ -221,7 +222,7 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
         $titulo, $descripcion, $horas, $fechaInicio, $fechaFin,
         $modalidad, $notaAprobacion, $costo, $publicoDestino,
         $esPagado, $categoria, $tipo, $carrera,
-        $estado, $idEvento
+        $estado, $capacidad, $idEvento
     ]);
 
     // Actualizar imagen de portada si se recibe una nueva
