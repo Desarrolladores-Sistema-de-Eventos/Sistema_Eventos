@@ -60,39 +60,88 @@ class EventoController {
         $this->json($evento);
     }
 
-    private function crear() {
-        if ($this->rol !== 'ADM') {
-            $this->json(['success' => false, 'mensaje' => 'No autorizado']);
-            return;
-        }
-        $data = $_POST;
-        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
-        
-        foreach ($required as $campo) {
-            if (!isset($data[$campo]) || $data[$campo] === '') {
-                $this->json(['success' => false, 'mensaje' => "El campo $campo es obligatorio"]);
-                return;
-            }
-        }
-
-        $idEvento = $this->eventoModelo->crear($data);
-        $this->json($idEvento ? ['success' => true, 'id' => $idEvento] : ['success' => false, 'mensaje' => 'No se pudo crear el evento']);
+   private function crear() {
+    if ($this->rol !== 'ADM') {
+        $this->json(['success' => false, 'mensaje' => 'No autorizado']);
+        return;
     }
 
-    private function editar() {
-        if ($this->rol !== 'ADM') {
-            $this->json(['success' => false, 'mensaje' => 'No autorizado']);
+    $data = $_POST;
+
+    // Validar campos requeridos
+    $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
+    foreach ($required as $campo) {
+        if (!isset($data[$campo]) || $data[$campo] === '') {
+            $this->json(['success' => false, 'mensaje' => "El campo $campo es obligatorio"]);
             return;
         }
-        $id = $_POST['id'] ?? null;
-        if (!$id) {
-            $this->json(['success' => false, 'mensaje' => 'ID requerido']);
-            return;
-        }
-        $data = $_POST;
-        $ok = $this->eventoModelo->editar($id, $data);
-        $this->json($ok ? ['success' => true] : ['success' => false, 'mensaje' => 'No se pudo actualizar el evento']);
     }
+
+    // Procesar imagen de portada
+    $data['urlPortada'] = null;
+    if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
+        $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
+        $rutaDestino = '../public/img/' . $nombreArchivo;
+        if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
+            $data['urlPortada'] = 'public/img/' . $nombreArchivo;
+        }
+    }
+
+    // Procesar imagen de galería
+    $data['urlGaleria'] = null;
+    if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
+        $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
+        $rutaDestino = '../public/img/' . $nombreArchivo;
+        if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
+            $data['urlGaleria'] = 'public/img/' . $nombreArchivo;
+        }
+    }
+
+    $data['estado'] = 'DISPONIBLE';
+
+    $idEvento = $this->eventoModelo->crear($data);
+    $this->json($idEvento ? ['success' => true, 'id' => $idEvento] : ['success' => false, 'mensaje' => 'No se pudo crear el evento']);
+}
+
+private function editar() {
+    if ($this->rol !== 'ADM') {
+        $this->json(['success' => false, 'mensaje' => 'No autorizado']);
+        return;
+    }
+
+    $id = $_POST['id'] ?? null;
+    if (!$id) {
+        $this->json(['success' => false, 'mensaje' => 'ID requerido']);
+        return;
+    }
+
+    $data = $_POST;
+
+    // Procesar imagen de portada
+    $data['urlPortada'] = null;
+    if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
+        $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
+        $rutaDestino = '../public/img/' . $nombreArchivo;
+        if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
+            $data['urlPortada'] = 'public/img/' . $nombreArchivo;
+        }
+    }
+
+    // Procesar imagen de galería
+    $data['urlGaleria'] = null;
+    if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
+        $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
+        $rutaDestino = '../public/img/' . $nombreArchivo;
+        if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
+            $data['urlGaleria'] = 'public/img/' . $nombreArchivo;
+        }
+    }
+
+    $ok = $this->eventoModelo->editar($id, $data);
+    $this->json($ok ? ['success' => true] : ['success' => false, 'mensaje' => 'No se pudo actualizar el evento']);
+}
+
+   
 
     private function eliminar() {
     if ($this->rol !== 'ADM') {

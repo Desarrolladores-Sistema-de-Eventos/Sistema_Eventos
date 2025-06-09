@@ -1,5 +1,28 @@
-// ==== TABLA EVENTOS RESPONSABLE ====
+// ================= FUNCIONES GLOBALES =================
+
 let tablaEventos;
+
+function toggleCosto() {
+  const chkPagado = document.getElementById('esPagado');
+  const inputCosto = document.getElementById('costo');
+  const divCosto = document.getElementById('grupoCosto');
+
+  if (!chkPagado || !inputCosto || !divCosto) {
+    console.warn('❗ Elementos del costo no encontrados.');
+    return;
+  }
+
+  if (chkPagado.checked) {
+    divCosto.style.display = 'block';
+    inputCosto.disabled = false;
+    if (inputCosto.value == 0) inputCosto.value = '';
+  } else {
+    inputCosto.disabled = true;
+    inputCosto.value = 0;
+    divCosto.style.display = 'none';
+  }
+}
+
 function inicializarTablaEventos() {
   const incluirCancelados = document.getElementById('mostrarCancelados')?.checked;
   localStorage.setItem('verCancelados', incluirCancelados ? '1' : '0');
@@ -11,13 +34,8 @@ function inicializarTablaEventos() {
       url: '../controllers/EventosController.php?option=listarResponsable',
       dataSrc: function (json) {
         if (incluirCancelados) {
-          // Mostrar solo eventos CANCELADOS o CERRADOS
-          return json.filter(e => {
-            const estado = (e.ESTADO || '').trim().toUpperCase();
-            return estado === 'CANCELADO' || estado === 'CERRADO';
-          });
+          return json.filter(e => ['CANCELADO', 'CERRADO'].includes((e.ESTADO || '').trim().toUpperCase()));
         }
-        // Mostrar solo eventos DISPONIBLES
         return json.filter(e => (e.ESTADO || '').trim().toUpperCase() === 'DISPONIBLE');
       }
     },
@@ -32,68 +50,107 @@ function inicializarTablaEventos() {
       { data: 'ESTADO' },
       { data: 'accion' }
     ],
-    language: {
-      url: '../public/js/es-ES.json'
-    },
+    language: { url: '../public/js/es-ES.json' },
     order: [[2, 'desc']]
   });
 }
 
-// ==== EDITAR ====
 function edit(id) {
+  if (!id) {
+    Swal.fire('Error', 'ID de evento no válido.', 'error');
+    return;
+  }
+
   axios.get(`../controllers/EventosController.php?option=edit&id=${id}`)
     .then(res => {
       const e = res.data;
+
+      if (e.tipo === 'error') {
+        Swal.fire('Error', e.mensaje, 'error');
+        return;
+      }
+
       console.log('🧪 Evento recibido:', e);
 
+      // Asignar valores
       document.getElementById('titulo').value = e.TITULO;
       document.getElementById('descripcion').value = e.DESCRIPCION;
       document.getElementById('horas').value = e.HORAS;
       document.getElementById('fechaInicio').value = e.FECHAINICIO;
       document.getElementById('fechaFin').value = e.FECHAFIN;
-
       document.getElementById('modalidad').value = e.CODIGOMODALIDAD;
       document.getElementById('tipoEvento').value = e.CODIGOTIPOEVENTO;
       document.getElementById('carrera').value = e.SECUENCIALCARRERA;
       document.getElementById('categoria').value = e.SECUENCIALCATEGORIA;
-
       document.getElementById('notaAprobacion').value = e.NOTAAPROBACION;
       document.getElementById('costo').value = e.COSTO;
       document.getElementById('capacidad').value = e.CAPACIDAD;
-
-
       document.getElementById('publicoDestino').value = e.ES_SOLO_INTERNOS == 1 ? 'internos' : 'externos';
       document.getElementById('esPagado').checked = e.ES_PAGADO == 1;
-      toggleCosto();
-
       document.getElementById('estado').value = e.ESTADO;
       document.getElementById('idEvento').value = e.SECUENCIAL;
 
-      // No se puede precargar archivos en input type="file" por seguridad
+      toggleCosto();
 
-      document.getElementById('btn-save').innerHTML = 'Actualizar';
-      $('#modalEvento').modal('show');
       if (Array.isArray(e.REQUISITOS)) {
         e.REQUISITOS.map(String).forEach(id => {
           const checkbox = document.querySelector(`#req_${id}`);
           if (checkbox) checkbox.checked = true;
         });
       }
+
+      document.getElementById('btn-save').innerHTML = 'Actualizar';
+      $('#modalEvento').modal('show');
     })
     .catch(err => {
       console.error('Error al cargar evento para edición:', err);
-      Swal.fire('Error', 'No se pudo cargar el evento.', 'error');
+      const mensaje = err?.response?.data?.mensaje || 'No se pudo cargar el evento.';
+      Swal.fire('Error', mensaje, 'error');
     });
+}
+
+function eliminar(id) {
+  if (!id) {
+    Swal.fire('Error', 'ID no válido.', 'error');
+    return;
+  }
+
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'El evento será marcado como CANCELADO.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, cancelar',
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6'
+  }).then(result => {
+    if (result.isConfirmed) {
+      axios.get(`../controllers/EventosController.php?option=delete&id=${id}`)
+        .then(res => {
+          const info = res.data;
+          if (info.tipo === 'success') {
+            Swal.fire('Cancelado', info.mensaje, 'success');
+            tablaEventos.ajax.reload();
+          } else {
+            Swal.fire('Error', info.mensaje || 'No se pudo cancelar el evento.', 'error');
+          }
+        })
+        .catch(err => {
+          console.error('Error al cancelar:', err);
+          Swal.fire('Error', 'Ocurrió un error al cancelar el evento.', 'error');
+        });
+    }
+  });
 }
 
 function llenarCheckboxesRequisitos(requisitos) {
   const contenedor = document.getElementById('listaRequisitos');
   if (!contenedor) return;
-  contenedor.innerHTML = ''; // Limpiar contenido previo
+  contenedor.innerHTML = '';
 
   requisitos.forEach(req => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'form-check';
+    const div = document.createElement('div');
+    div.className = 'form-check';
 
     const input = document.createElement('input');
     input.type = 'checkbox';
@@ -107,51 +164,12 @@ function llenarCheckboxesRequisitos(requisitos) {
     label.htmlFor = input.id;
     label.textContent = req.text;
 
-    wrapper.appendChild(input);
-    wrapper.appendChild(label);
-    contenedor.appendChild(wrapper);
-  });
-}
-// ==== CANCELAR (Soft Delete) ====
-function eliminar(id) {
-  console.log('🗑️ Cancelando evento con ID:', id);
-
-  if (!id) {
-    Swal.fire('Error', 'ID del evento no válido.', 'error');
-    return;
-  }
-
-  Swal.fire({
-    title: '¿Estás seguro?',
-    text: "El evento será marcado como CANCELADO.",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Sí, cancelar'
-  }).then(result => {
-    if (result.isConfirmed) {
-      axios.get(`../controllers/EventosController.php?option=delete&id=${id}`)
-        .then(res => {
-          const info = res.data;
-          console.log('🧾 Respuesta del backend:', info);
-
-          if (info.tipo === 'success') {
-            Swal.fire('Cancelado', info.mensaje, 'success');
-            tablaEventos.ajax.reload();
-          } else {
-            Swal.fire('Error', info.mensaje || 'No se pudo cancelar el evento.', 'error');
-          }
-        })
-        .catch(err => {
-          console.error('❌ Error al cancelar:', err);
-          Swal.fire('Error', 'Ocurrió un error al cancelar el evento.', 'error');
-        });
-    }
+    div.appendChild(input);
+    div.appendChild(label);
+    contenedor.appendChild(div);
   });
 }
 
-// ==== CARGAR SELECTS ====
 function cargarSelects() {
   axios.get('../controllers/SelectsController.php')
     .then(res => {
@@ -162,10 +180,9 @@ function cargarSelects() {
       llenarSelect('categoria', data.categorias);
       llenarSelect('estado', data.estados);
       llenarCheckboxesRequisitos(data.requisitos);
-
     })
     .catch(err => {
-      console.error('❌ Error cargando selects', err);
+      console.error('❌ Error cargando selects:', err);
       Swal.fire('Error', 'No se pudieron cargar los datos del formulario.', 'error');
     });
 }
@@ -173,7 +190,6 @@ function cargarSelects() {
 function llenarSelect(id, opciones) {
   const select = document.getElementById(id);
   if (!select) return;
-
   const isMultiple = select.hasAttribute('multiple');
   select.innerHTML = isMultiple ? '' : '<option value="">Seleccione</option>';
 
@@ -185,60 +201,39 @@ function llenarSelect(id, opciones) {
   });
 }
 
-//----------------------------------------------------------------------------
-// ==== DOM READY ====
+// ================= INICIALIZACIÓN =================
+
 document.addEventListener('DOMContentLoaded', function () {
-  const verCancelados = localStorage.getItem('verCancelados') === '1';
-  const chk = document.getElementById('mostrarCancelados');
-  if (chk) chk.checked = verCancelados;
+  const chkMostrarCancelados = document.getElementById('mostrarCancelados');
+  if (chkMostrarCancelados) {
+    chkMostrarCancelados.checked = localStorage.getItem('verCancelados') === '1';
+    chkMostrarCancelados.addEventListener('change', inicializarTablaEventos);
+  }
 
   inicializarTablaEventos();
   cargarSelects();
 
-  if (chk) {
-    chk.addEventListener('change', () => inicializarTablaEventos());
-  }
-
   const frm = document.querySelector('#formEvento');
-  const btnNuevo = document.querySelector('#btn-nuevo');
-  const btnSave = document.querySelector('#btn-save');
-  const idEvento = document.querySelector('#idEvento');
+  const btnSave = document.getElementById('btn-save');
+  const idEvento = document.getElementById('idEvento');
+  const btnNuevo = document.getElementById('btn-nuevo');
 
-  const chkPagado = document.getElementById('esPagado');
-  const inputCosto = document.getElementById('costo');
-  const divCosto = document.getElementById('grupoCosto');
-  console.log('grupoCosto cargado:', divCosto);
-
-
-  function toggleCosto() {
-    
-    if (chkPagado.checked) {
-      divCosto.style.display = 'block';
-       inputCosto.disabled = false;
-      if (inputCosto.value == 0) inputCosto.value = '';
-    } else {
-      inputCosto.disabled = true;
-      inputCosto.value = 0;
-      divCosto.style.display = 'none';
-    }
-  }
-
-  chkPagado.addEventListener('change', toggleCosto);
+  document.getElementById('esPagado')?.addEventListener('change', toggleCosto);
   toggleCosto();
 
-
-  // === ENVÍO DEL FORMULARIO ===
   frm.onsubmit = function (e) {
     e.preventDefault();
+
     const hoy = new Date().toISOString().split("T")[0];
-    const fechaInicio = document.getElementById('fechaInicio').value;
-    const fechaFin = document.getElementById('fechaFin').value;
-    const capacidad = parseInt(document.getElementById('capacidad').value, 10);
+    const fechaInicio = frm.fechaInicio.value;
+    const fechaFin = frm.fechaFin.value;
+    const capacidad = parseInt(frm.capacidad.value, 10);
 
     if (fechaInicio < hoy) {
       Swal.fire('Error', 'La fecha de inicio no puede ser anterior a hoy.', 'error');
       return;
     }
+
     if (fechaFin && fechaFin < fechaInicio) {
       Swal.fire('Error', 'La fecha de fin no puede ser anterior a la de inicio.', 'error');
       return;
@@ -251,70 +246,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const formData = new FormData(frm);
 
-    // Adjuntar archivos de portada y galería si existen
-    const portadaInput = document.getElementById('urlPortada');
-    const galeriaInput = document.getElementById('urlGaleria');
-    if (portadaInput && portadaInput.files.length > 0) {
-      formData.set('urlPortada', portadaInput.files[0]);
-    }
-    if (galeriaInput && galeriaInput.files.length > 0) {
-      formData.set('urlGaleria', galeriaInput.files[0]);
-    }
+    const portada = frm.urlPortada?.files[0];
+    const galeria = frm.urlGaleria?.files[0];
+    if (portada) formData.set('urlPortada', portada);
+    if (galeria) formData.set('urlGaleria', galeria);
 
-    let url = '../controllers/EventosController.php?option=save';
-    if (idEvento.value !== '') {
-      url = '../controllers/EventosController.php?option=update';
-    }
+    const url = idEvento.value ? '../controllers/EventosController.php?option=update' : '../controllers/EventosController.php?option=save';
 
-    axios.post(url, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(res => {
         const info = res.data;
-        console.log('📬 Respuesta del servidor:', info);
-
         if (info?.tipo === 'success') {
-          Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: info.mensaje,
-            timer: 1500,
-            showConfirmButton: false
-          }).then(() => {
-            // 🧼 Cerrar modal y limpiar backdrop
+          Swal.fire({ icon: 'success', title: '¡Éxito!', text: info.mensaje, timer: 1500, showConfirmButton: false }).then(() => {
             $('#modalEvento').modal('hide');
             $('.modal-backdrop').remove();
-            $('body').removeClass('modal-open');
-            $('body').css('padding-right', '');
-
+            $('body').removeClass('modal-open').css('padding-right', '');
             frm.reset();
             btnSave.innerHTML = 'Guardar';
             tablaEventos.ajax.reload();
           });
         } else {
-          Swal.fire('Error', info?.mensaje || 'Ocurrió un error al guardar el evento.', 'error');
+          Swal.fire('Error', info?.mensaje || 'Ocurrió un error al guardar.', 'error');
         }
       })
       .catch(err => {
         console.error('❌ Error inesperado:', err);
-        Swal.fire('Error', 'No se pudo guardar el evento. Intenta nuevamente.', 'error');
+        Swal.fire('Error', 'No se pudo guardar el evento.', 'error');
       });
   };
 
-  // ✅ LIMPIEZA DESPUÉS DE CERRAR EL MODAL
-  $('#modalEvento').on('hidden.bs.modal', function () {
+  $('#modalEvento').on('hidden.bs.modal', () => {
     frm.reset();
     btnSave.innerHTML = 'Guardar';
     toggleCosto();
     tablaEventos.ajax.reload();
   });
 
-  // === BOTÓN NUEVO EVENTO ===
-  btnNuevo.addEventListener('click', function () {
+  btnNuevo?.addEventListener('click', () => {
     frm.reset();
     idEvento.value = '';
     btnSave.innerHTML = 'Guardar';
-     toggleCosto();
+    toggleCosto();
     $('#modalEvento').modal('show');
   });
 });
