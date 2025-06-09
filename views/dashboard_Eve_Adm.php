@@ -47,7 +47,9 @@ include("../core/auth.php")?>
             <div class="modal-content">
 
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="modalEventoLabel"><i class="fa fa-edit"></i> Crear/Editar Evento</h4>
               </div>
               <div class="modal-body">
@@ -114,10 +116,17 @@ include("../core/auth.php")?>
         <label for="notaAprobacion"><i class="fa fa-check-circle"></i> Nota mínima de aprobación</label>
         <input type="number" class="form-control" id="notaAprobacion" name="notaAprobacion" min="0" step="0.1">
       </div>
+
       <div class="col-md-6">
         <label for="costo"><i class="fa fa-dollar"></i> Costo ($)</label>
-        <input type="number" class="form-control" id="costo" name="costo" min="0" step="0.01">
+        <input type="number" class="form-control" id="costo" name="costo" min="0" step="0.01" value="0" readonly>
       </div>
+    </div><br>
+
+    <!-- Capacidad -->
+    <div class="form-group">
+      <label for="capacidad"><i class="fa fa-users"></i> Capacidad del Evento</label>
+      <input type="number" class="form-control" id="capacidad" name="capacidad" min="1" step="1" required>
     </div><br>
 
    <!-- Carrera -->
@@ -148,13 +157,14 @@ include("../core/auth.php")?>
   </div>
 </div>
 <br>
+
 <!-- Público destino -->
 <div class="form-group">
   <label for="publicoDestino"><i class="fa fa-users"></i> ¿Quiénes pueden inscribirse?</label>
-  <select id="publicoDestino" name="publicoDestino" class="form-control" required>
-    <option value="internos">Internos</option>
-    <option value="externos">Externos</option>
-  </select>
+    <select id="esSoloInternos" name="esSoloInternos" class="form-control" required>
+      <option value="1">Internos</option>
+      <option value="0">Externos</option>
+    </select>
 </div>
 
     <!-- Certificado -->
@@ -171,12 +181,8 @@ include("../core/auth.php")?>
   <div id="listaRequisitos" class="form-check">
   </div>
 </div>
-    <!-- Estado -->
-    <div class="form-group">
-      <label for="estado"><i class="fa fa-flag"></i> Estado del Evento</label>
-      <select id="estado" name="estado" class="form-control" required></select>
-    </div><br>
-    <!-- Imagen de Portada -->
+
+<!-- Imagen de Portada -->
 <div class="form-group">
   <label for="urlPortada"><i class="fa fa-image"></i> Imagen de Portada</label>
   <input type="file" class="form-control" id="urlPortada" name="urlPortada" accept="image/*">
