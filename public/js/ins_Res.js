@@ -140,7 +140,7 @@ function verRequisitosPagos(idInscripcion, nombreParticipante = '') {
             <td>${r.REQUISITO}</td>
             <td id="requisito-${r.ARCHIVO_ID}">
               ${r.ARCHIVO ? `
-              <a href="../facturas_Comprobantes/${r.ARCHIVO}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo">
+              <a href="../documents/${r.ARCHIVO}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo">
                 <i class="fa fa-eye"></i>
               </a>
               <button class="btn btn-warning btn-sm" onclick="mostrarActualizarRequisito(${r.ARCHIVO_ID})" title="Actualizar archivo">
@@ -166,7 +166,7 @@ function verRequisitosPagos(idInscripcion, nombreParticipante = '') {
           <tr>
             <td id="comprobante-${p.PAGO_ID}">
               ${p.COMPROBANTE_URL ? `
-                <a href="../facturas_Comprobantes/${p.COMPROBANTE_URL}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver comprobante">
+                <a href="../documents/${p.COMPROBANTE_URL}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver comprobante">
                   <i class="fa fa-eye"></i>
                 </a>
                 <button class="btn btn-warning btn-sm" onclick="mostrarActualizarComprobante(${p.PAGO_ID})" title="Actualizar comprobante">
@@ -214,7 +214,7 @@ function subirRequisito(input, idArchivo) {
       if (res.data.tipo === 'success') {
         const div = document.getElementById(`requisito-${idArchivo}`);
         div.innerHTML = `
-          <a href="../facturas_Comprobantes/${res.data.nombreArchivo}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo"><i class="fa fa-eye"></i></a>
+          <a href="../documents/${res.data.nombreArchivo}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo"><i class="fa fa-eye"></i></a>
           <button class="btn btn-warning btn-sm" onclick="mostrarActualizarRequisito(${idArchivo})" title="Actualizar archivo"><i class="fa fa-undo"></i></button>
         `;
       }
@@ -258,7 +258,7 @@ function subirComprobantePago(input, idPago) {
       if (res.data.tipo === 'success') {
         const div = document.getElementById(`comprobante-${idPago}`);
         div.innerHTML = `
-          <a href="../facturas_Comprobantes/${res.data.nombreArchivo}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver comprobante">
+          <a href="../documents/${res.data.nombreArchivo}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver comprobante">
             <i class="fa fa-eye"></i>
           </a>
           <button class="btn btn-warning btn-sm" onclick="mostrarActualizarComprobante(${idPago})" title="Actualizar comprobante">

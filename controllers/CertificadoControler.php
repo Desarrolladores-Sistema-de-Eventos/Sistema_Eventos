@@ -140,7 +140,7 @@ private function subirCertificado()
     $idEvento = $_POST['idEvento'];
 
     $nombreArchivo = 'certificado_' . $idUsuario . '_' . $idEvento . '_' . time() . '.pdf';
-    $rutaDestino = '../facturas_Comprobantes/' . $nombreArchivo;
+    $rutaDestino = '../documents/' . $nombreArchivo;
 
     if (move_uploaded_file($file['tmp_name'], $rutaDestino)) {
         $certExistente = $this->certificadoModelo->buscarCertificadoPorUsuarioEvento($idUsuario, $idEvento);

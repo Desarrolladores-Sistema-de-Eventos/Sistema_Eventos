@@ -19,7 +19,7 @@ function listarCertificadosPorEvento(idEvento) {
                         <td>${row.EVENTO}</td>
                         <td>${row.NOMBRES} ${row.APELLIDOS}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="generarCertificadoPDFySubir(${row.SECUENCIAL}, '../facturas_Comprobantes/plantilla_Certificado.jpg')">
+                            <button class="btn btn-primary btn-sm" onclick="generarCertificadoPDFySubir(${row.SECUENCIAL}, '../public/img/plantilla.png')">
                                 <i class="fa fa-magic" style="color: #000;"></i> <span style="color: #000;">Generar PDF</span>
                             </button>
                             <button class="btn btn-info btn-sm" onclick="verCertificado('${row.URL_CERTIFICADO}')">
@@ -77,7 +77,7 @@ function listarCertificadosPorUsuario(idUsuario) {
 }
 
 function verCertificado(url) {
-    window.open('../facturas_Comprobantes/' + url, '_blank');
+    window.open('../documents/' + url, '_blank');
 }
 
 function editarCertificado(idCertificado) {
@@ -147,7 +147,7 @@ function cargarImagenBase64(url) {
             canvas.height = img.height;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0);
-            resolve(canvas.toDataURL("image/jpg"));
+            resolve(canvas.toDataURL("image/png"));
         };
         img.src = url;
     });
@@ -168,7 +168,7 @@ async function subirCertificadoPDF(pdfBlob, idUsuario, idEvento) {
 
     // Si el backend devuelve la URL del certificado, ábrelo automáticamente
    // if (response.data.url_certificado) {
-      //  window.open('../facturas_Comprobantes/' + response.data.url_certificado, '_blank');
+      //  window.open('../documents/' + response.data.url_certificado, '_blank');
    // }
 }
 // Cargar eventos del responsable al cargar la página
