@@ -1,4 +1,3 @@
-
 let tablaUsuarios;
 function inicializarTablaUsuarios() {
     if (tablaUsuarios) tablaUsuarios.destroy();
@@ -6,12 +5,13 @@ function inicializarTablaUsuarios() {
         ajax: {
             url: '../controllers/UsuarioController.php?option=listar',
             dataSrc: function (json) {
-                // Lee el valor del checkbox cada vez que se filtra
-                const mostrarInactivos = document.getElementById('mostrarInactivos')?.checked;
+                // Ocultar administradores
+                let mostrarInactivos = document.getElementById('mostrarInactivos')?.checked;
+                let filtrados = json.filter(u => u.CODIGOROL !== 'ADM');
                 if (mostrarInactivos) {
-                    return json.filter(u => u.CODIGOESTADO === 'INACTIVO');
+                    return filtrados.filter(u => u.CODIGOESTADO === 'INACTIVO');
                 }
-                return json.filter(u => u.CODIGOESTADO === 'ACTIVO');
+                return filtrados.filter(u => u.CODIGOESTADO === 'ACTIVO');
             }
         },
         columns: [
@@ -24,6 +24,7 @@ function inicializarTablaUsuarios() {
             // },
             { data: 'NOMBRES' },
             { data: 'APELLIDOS' },
+            { data: 'CEDULA' },
             { data: 'TELEFONO' },
             { data: 'DIRECCION' },
             { data: 'CORREO' },
@@ -362,5 +363,36 @@ document.addEventListener('DOMContentLoaded', function () {
         Swal.fire('Error', 'Ocurrió un error inesperado en el registro.', 'error');
       });
   };
+});
+
+// Validaciones en el formulario de usuario (modal)
+document.getElementById('formUsuario')?.addEventListener('submit', function(e) {
+    const cedula = document.getElementById('cedula')?.value.trim();
+    const telefono = document.getElementById('telefono')?.value.trim();
+    const fechaNac = document.getElementById('fecha_nacimiento')?.value;
+    const cedulaPDF = document.getElementById('cedula_pdf')?.files[0];
+    let errores = [];
+    if (cedula && !/^\d{10}$/.test(cedula)) {
+        errores.push('La cédula debe tener 10 dígitos numéricos.');
+    }
+    if (telefono && !/^09[89]\d{7}$/.test(telefono)) {
+        errores.push('El teléfono debe ser un celular ecuatoriano válido (ej: 0991234567).');
+    }
+    if (fechaNac) {
+        const hoy = new Date();
+        const fnac = new Date(fechaNac);
+        const edad = hoy.getFullYear() - fnac.getFullYear();
+        if (edad < 18 || (edad === 18 && hoy < new Date(fnac.setFullYear(fnac.getFullYear() + 18)))) {
+            errores.push('El usuario debe ser mayor de 18 años.');
+        }
+    }
+    if (cedulaPDF && cedulaPDF.type !== 'application/pdf') {
+        errores.push('El archivo de cédula debe ser PDF.');
+    }
+    if (errores.length > 0) {
+        e.preventDefault();
+        Swal.fire('Error', errores.join('<br>'), 'error');
+        return false;
+    }
 });
 // ==== FINISH VALIDACIÓN DE CONTRASEÑA ====
