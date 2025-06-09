@@ -41,6 +41,7 @@ include("../core/auth.php")?>
           </table>
         </div>
         
+        
 <!-- Modal -->
         <div class="modal fade" id="modalEvento" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">

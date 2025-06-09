@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../models/EventosAdmin.php';
-
 header('Content-Type: application/json');
 
 class EventoController {
