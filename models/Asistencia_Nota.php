@@ -77,7 +77,7 @@ class Asistencia_Nota {
         }
 
         // Intentar generar certificado si corresponde
-        require_once __DIR__ . '/Certificados.php';
+        require_once  '../models/Certificados.php';
         $certificadoModel = new Certificado();
         $certificado = $certificadoModel->generarSiCorresponde($idInscripcion);
 
