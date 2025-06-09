@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../models/EventosAdmin.php';
-
 header('Content-Type: application/json');
 
 class EventoController {
@@ -23,6 +22,7 @@ class EventoController {
                 $this->get();
                 break;
             case 'crear':
+                $data['estado'] = 'DISPONIBLE'; 
                 $this->crear();
                 break;
             case 'editar':
@@ -66,13 +66,15 @@ class EventoController {
             return;
         }
         $data = $_POST;
-        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'costo', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'estado', 'responsable', 'organizador'];
+        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
+        
         foreach ($required as $campo) {
-            if (empty($data[$campo])) {
+            if (!isset($data[$campo]) || $data[$campo] === '') {
                 $this->json(['success' => false, 'mensaje' => "El campo $campo es obligatorio"]);
                 return;
             }
         }
+
         $idEvento = $this->eventoModelo->crear($data);
         $this->json($idEvento ? ['success' => true, 'id' => $idEvento] : ['success' => false, 'mensaje' => 'No se pudo crear el evento']);
     }

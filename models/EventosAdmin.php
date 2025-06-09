@@ -31,14 +31,15 @@ class Evento {
     }
 
     public function crear($data) {
-        $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, SECUENCIALCARRERA, ESTADO)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, SECUENCIALCARRERA, ESTADO, CAPACIDAD)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
         $ok = $stmt->execute([
             $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
             $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
-            $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado']
+            $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['capacidad']
         ]);
+
         if (!$ok) return false;
         $idEvento = $this->pdo->lastInsertId();
 
