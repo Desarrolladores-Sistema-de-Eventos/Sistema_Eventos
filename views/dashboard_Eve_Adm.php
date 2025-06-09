@@ -41,7 +41,7 @@ include("../core/auth.php")?>
           </table>
         </div>
         
-        
+
 <!-- Modal -->
         <div class="modal fade" id="modalEvento" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">
@@ -205,13 +205,14 @@ include("../core/auth.php")?>
 </div>
 
 <!-- Footer del modal -->
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  </div>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- Fin modal -->
+
+<!-- Fin modal -->
          
 
       </div>
