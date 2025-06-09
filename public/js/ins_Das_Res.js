@@ -238,7 +238,7 @@ function verDetalleInscripcion(idInscripcion) {
         tbodyReq.innerHTML += `
           <tr>
             <td>${r.REQUISITO}</td>
-            <td><a href="../archivos/${r.ARCHIVO}" target="_blank">Ver archivo</a></td>
+            <td><a href="../documents/${r.ARCHIVO}" target="_blank">Ver archivo</a></td>
             <td>
               <select class="form-control" onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)">
                 <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
@@ -261,7 +261,7 @@ function verDetalleInscripcion(idInscripcion) {
       pagos.forEach(p => {
         tbodyPagos.innerHTML += `
           <tr>
-            <td><a href="../comprobantes/${p.COMPROBANTE_URL}" target="_blank">Ver comprobante</a></td>
+            <td><a href="../documents/${p.COMPROBANTE_URL}" target="_blank">Ver comprobante</a></td>
             <td>${p.FORMA_PAGO || 'Desconocida'}</td>
             <td>
               <select class="form-control" onchange="actualizarEstadoPago(${p.PAGO_ID}, this.value)">

@@ -48,6 +48,12 @@
 		</div>
 	</div>
 	<!-- Topbar End -->
+	<div class="container mt-3" style="display: block;">
+	<a href="../public" class="btn btn-secondary" style="display: inline-block; color: #660000">
+		<i class="fa fa-arrow-left"></i> Regresar
+	</a>
+</div>
+
 
 	<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
 		<div class="col-md-7 col-lg-5">
@@ -92,7 +98,8 @@
 		</div>
 	</div>
 </div>
-<script type="module" src="../public/js/login.js"></script>
+
+<script src="../public/js/login.js"></script>
 <!-- JS (orden importa) -->
 <script src="../public/js/jquery.min.js"></script>
 <script src="../public/js/popper.js"></script>
@@ -101,5 +108,7 @@
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+<?php include('partials/footer.php'); ?>
+
 
 

@@ -30,42 +30,79 @@ class Evento {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function crear($data) {
-        $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, SECUENCIALCARRERA, ESTADO, CAPACIDAD)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->pdo->prepare($sql);
-        $ok = $stmt->execute([
-            $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
-            $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
-            $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['capacidad']
-        ]);
+ public function crear($data) {
+    $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, SECUENCIALCARRERA, ESTADO, CAPACIDAD)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $this->pdo->prepare($sql);
+    $ok = $stmt->execute([
+        $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
+        $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
+        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['capacidad']
+    ]);
 
-        if (!$ok) return false;
-        $idEvento = $this->pdo->lastInsertId();
+    if (!$ok) return false;
 
-        // Insertar responsable y organizador
-        $this->asignarOrganizador($idEvento, $data['responsable'], 'RESPONSABLE');
-        $this->asignarOrganizador($idEvento, $data['organizador'], 'ORGANIZADOR');
-        return $idEvento;
+    $idEvento = $this->pdo->lastInsertId();
+
+    $this->asignarOrganizador($idEvento, $data['responsable'], 'RESPONSABLE');
+    $this->asignarOrganizador($idEvento, $data['organizador'], 'ORGANIZADOR');
+
+    // ✅ Definir variables
+    $urlPortada = $data['urlPortada'] ?? null;
+    $urlGaleria = $data['urlGaleria'] ?? null;
+
+    if ($urlPortada) {
+        $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'PORTADA')");
+        $imgStmt->execute([$idEvento, $urlPortada]);
     }
 
-    public function editar($id, $data) {
-        $sql = "UPDATE evento SET TITULO=?, DESCRIPCION=?, HORAS=?, FECHAINICIO=?, FECHAFIN=?, CODIGOMODALIDAD=?, NOTAAPROBACION=?, COSTO=?, ES_SOLO_INTERNOS=?, ES_PAGADO=?, SECUENCIALCATEGORIA=?, CODIGOTIPOEVENTO=?, SECUENCIALCARRERA=?, ESTADO=?
-                WHERE SECUENCIAL=?";
-        $stmt = $this->pdo->prepare($sql);
-        $ok = $stmt->execute([
-            $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
-            $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
-            $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $id
-        ]);
-        if (!$ok) return false;
-
-        // Actualizar responsable y organizador
-        $this->actualizarOrganizador($id, $data['responsable'], 'RESPONSABLE');
-        $this->actualizarOrganizador($id, $data['organizador'], 'ORGANIZADOR');
-        return true;
+    if ($urlGaleria) {
+        $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')");
+        $imgStmt->execute([$idEvento, $urlGaleria]);
     }
 
+    return $idEvento;
+}
+
+public function editar($id, $data) {
+    $sql = "UPDATE evento SET TITULO=?, DESCRIPCION=?, HORAS=?, FECHAINICIO=?, FECHAFIN=?, CODIGOMODALIDAD=?, NOTAAPROBACION=?, COSTO=?, ES_SOLO_INTERNOS=?, ES_PAGADO=?, SECUENCIALCATEGORIA=?, CODIGOTIPOEVENTO=?, SECUENCIALCARRERA=?, ESTADO=?
+            WHERE SECUENCIAL=?";
+    $stmt = $this->pdo->prepare($sql);
+    $ok = $stmt->execute([
+        $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
+        $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
+        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $id
+    ]);
+
+    if (!$ok) return false;
+
+    $this->actualizarOrganizador($id, $data['responsable'], 'RESPONSABLE');
+    $this->actualizarOrganizador($id, $data['organizador'], 'ORGANIZADOR');
+
+    // ✅ Definir variables
+    $urlPortada = $data['urlPortada'] ?? null;
+    $urlGaleria = $data['urlGaleria'] ?? null;
+
+    if ($urlPortada) {
+        $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'PORTADA'")
+                  ->execute([$id]);
+
+        $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'PORTADA')")
+                  ->execute([$id, $urlPortada]);
+    }
+
+    if ($urlGaleria) {
+        $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'GALERIA'")
+                  ->execute([$id]);
+
+        $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')")
+                  ->execute([$id, $urlGaleria]);
+    }
+
+    return true;
+}
+
+   
   public function eliminar($id) {
     try {
         // 1. Eliminar archivo_requisito relacionados a inscripciones de este evento
@@ -179,5 +216,6 @@ public function getEstados() {
         ['value' => 'CANCELADO', 'text' => 'Cancelado']
     ];
 }
+
 }
 ?>

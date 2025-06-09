@@ -103,7 +103,7 @@ public function registrarInscripcion()
         if (isset($_FILES[$campo]) && $_FILES[$campo]['error'] === UPLOAD_ERR_OK) {
             $archivo = $_FILES[$campo];
             $nombre = uniqid("requisito_") . "_" . basename($archivo['name']);
-            $ruta = "../facturas_Comprobantes/$nombre";
+            $ruta = "../documents/$nombre";
             if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
                 $requisitosArchivos[$idReq] = $nombre;
             }
@@ -115,7 +115,7 @@ public function registrarInscripcion()
     if (isset($_FILES['comprobante_pago']) && $_FILES['comprobante_pago']['error'] === UPLOAD_ERR_OK) {
         $archivo = $_FILES['comprobante_pago'];
         $nombre = uniqid("comprobante_") . "_" . basename($archivo['name']);
-        $ruta = "../facturas_Comprobantes/$nombre";
+        $ruta = "../documents/$nombre";
         if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
             $comprobanteRuta = $nombre;
         }
@@ -192,7 +192,7 @@ if ($ok === true) {
                 $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
                 $rutaDestino = '../public/img/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-                    $urlPortada = 'public/img/eventos/' . $nombreArchivo;
+                    $urlPortada = 'public/img/' . $nombreArchivo;
                 }
             }
 

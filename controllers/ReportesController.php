@@ -85,7 +85,8 @@ private function generarPDF($tipo, $idEvento) {
         $fechaEvento  = $eventoInfo['FECHAINICIO'] ?? '---';
 
         $responsable  = $_SESSION['usuario']['NOMBRES'] . ' ' . $_SESSION['usuario']['APELLIDOS'];
-        $fechaHoy     = date('d/m/Y H:i');
+        date_default_timezone_set('America/Guayaquil');
+        $fechaHoy = date('d/m/Y H:i');
         $tituloPDF    = "Reporte de " . ucfirst($tipo);
 
         $detalle = in_array($tipo, ['financiero', 'general']) ? $datos['detalle'] : $datos;
@@ -123,8 +124,8 @@ private function generarPDF($tipo, $idEvento) {
         $pdf->AddPage();
         $pdf->SetFont('Arial', '', 11);
 
-        if (file_exists('../public/img/sello_UTA.jpg')) {
-            $pdf->Image('../public/img/sello_UTA.jpg', 10, 10, 30);
+        if (file_exists('../public/img/factura_logo.png')) {
+            $pdf->Image('../public/img/factura_logo.png', 10, 10, 30);
         }
 
         $pdf->SetXY(50, 10);

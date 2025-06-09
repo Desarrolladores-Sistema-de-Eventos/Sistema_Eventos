@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (ev.ORGANIZADOR) {
                 setText('nombreOrganizador', `${ev.ORGANIZADOR.NOMBRES} ${ev.ORGANIZADOR.APELLIDOS}`);
                 setText('correoOrganizador', ev.ORGANIZADOR.CORREO);
-                setSrc('fotoOrganizador', '../facturas_Comprobantes/' + (ev.ORGANIZADOR.FOTO_PERFIL || 'public/img/blog-3.jpg'));
+                setSrc('fotoOrganizador', '../public/img/' + (ev.ORGANIZADOR.FOTO_PERFIL || 'public/img/blog-3.jpg'));
             }
 
             // Redirigir al formulario de inscripción
