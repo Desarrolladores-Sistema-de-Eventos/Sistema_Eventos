@@ -59,15 +59,29 @@ class UsuarioController {
             $this->json(['success' => false, 'mensaje' => 'No autorizado']);
             return;
         }
-        $required = ['nombres', 'apellidos', 'telefono', 'correo', 'contrasena', 'codigorol'];
+        $required = ['nombres', 'apellidos', 'telefono', 'correo', 'contrasena', 'codigorol', 'cedula', 'fecha_nacimiento'];
         foreach ($required as $campo) {
             if (empty($_POST[$campo])) {
                 $this->json(['success' => false, 'mensaje' => "El campo '$campo' es obligatorio."]);
                 return;
             }
         }
+        // Validar cédula
+        if (!preg_match('/^\d{10}$/', $_POST['cedula'])) {
+            $this->json(['success' => false, 'mensaje' => 'La cédula debe tener 10 dígitos numéricos.']);
+            return;
+        }
+        // Validar fecha de nacimiento (mayor de 18 años)
+        $fechaNacimiento = new DateTime($_POST['fecha_nacimiento']);
+        $hoy = new DateTime();
+        $edad = $hoy->diff($fechaNacimiento)->y;
+        if ($edad < 18) {
+            $this->json(['success' => false, 'mensaje' => 'El usuario debe ser mayor de 18 años.']);
+            return;
+        }
         try {
             $foto_perfil = $this->procesarFotoPerfil();
+            $cedula_pdf = $this->procesarCedulaPDF();
             $resp = $this->usuarioModelo->insertar(
                 $_POST['nombres'],
                 $_POST['apellidos'],
@@ -77,7 +91,10 @@ class UsuarioController {
                 $_POST['contrasena'],
                 $_POST['codigorol'],
                 $_POST['es_interno'] ?? 1,
-                $foto_perfil
+                $foto_perfil,
+                $_POST['cedula'],
+                $_POST['fecha_nacimiento'],
+                $cedula_pdf
             );
             $this->json($resp);
         } catch (Exception $e) {
@@ -95,18 +112,30 @@ class UsuarioController {
             $this->json(['success' => false, 'mensaje' => 'No autorizado']);
             return;
         }
-        $required = ['id', 'nombres', 'apellidos', 'telefono', 'correo', 'codigorol', 'estado'];
+        $required = ['id', 'nombres', 'apellidos', 'telefono', 'correo', 'codigorol', 'estado', 'cedula', 'fecha_nacimiento'];
         foreach ($required as $campo) {
             if (empty($_POST[$campo])) {
                 $this->json(['success' => false, 'mensaje' => "El campo '$campo' es obligatorio."]);
                 return;
             }
         }
+        if (!preg_match('/^\d{10}$/', $_POST['cedula'])) {
+            $this->json(['success' => false, 'mensaje' => 'La cédula debe tener 10 dígitos numéricos.']);
+            return;
+        }
+        $fechaNacimiento = new DateTime($_POST['fecha_nacimiento']);
+        $hoy = new DateTime();
+        $edad = $hoy->diff($fechaNacimiento)->y;
+        if ($edad < 18) {
+            $this->json(['success' => false, 'mensaje' => 'El usuario debe ser mayor de 18 años.']);
+            return;
+        }
         try {
             $foto_perfil = $this->procesarFotoPerfil();
             if (!$foto_perfil && isset($_POST['foto_perfil_actual'])) {
                 $foto_perfil = $_POST['foto_perfil_actual'];
             }
+            $cedula_pdf = $this->procesarCedulaPDF();
             $contrasena = isset($_POST['contrasena']) ? $_POST['contrasena'] : '';
             $resp = $this->usuarioModelo->editar(
                 $_POST['id'],
@@ -119,7 +148,10 @@ class UsuarioController {
                 $_POST['estado'],
                 $_POST['es_interno'] ?? 1,
                 $contrasena,
-                $foto_perfil
+                $foto_perfil,
+                $_POST['cedula'],
+                $_POST['fecha_nacimiento'],
+                $cedula_pdf
             );
             $this->json($resp);
         } catch (Exception $e) {
