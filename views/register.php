@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../public/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
   <style>
@@ -21,60 +22,45 @@
       background-size: cover;
     }
 
-    .topbar {
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 999;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(5px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
+  
     .main-content {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding-top: 120px; /* espacio para topbar */
+      padding-top: 40px; /* espacio para topbar */
       padding-bottom: 40px;
       min-height: 100vh;
     }
 
+
+    
+
     .register-container {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(253, 253, 253, 0.49);
       border-radius: 20px;
       padding: 40px;
       width: 100%;
       max-width: 750px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.87);
     }
 
     .form-title {
       text-align: center;
-      color: #fff;
+      color: rgba(0, 0, 0, 0.5);
       font-weight: bold;
       margin-bottom: 30px;
     }
 
     .form-label {
-      color: #f1f1f1;
+      color:rgb(0, 0, 0);
       font-weight: 500;
     }
 
-    .form-label i {
-      width: 18px;
-      text-align: center;
-      margin-right: 8px;
-    }
-
-    .form-control {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 10px;
-    }
+ 
+   
 
     button[type="submit"] {
       background-color: #660000;
@@ -91,22 +77,26 @@
 
 <body>
 
-  <!-- ✅ Topbar fuera del main-content -->
-  <div class="topbar py-3">
-    <div class="container d-flex flex-wrap justify-content-between align-items-center">
-      <div class="d-flex align-items-center mb-2 mb-lg-0">
-        <img src="../public/img/sello_UTA.jpg" alt="Logo Facultad" style="height: 80px; margin-right: 15px;">
-        <div>
-          <h6 class="mb-0 text-uppercase fw-bold text-light">FACULTAD DE INGENIERÍA EN</h6>
-          <h5 class="mb-0 fw-bold text-light">SISTEMAS, ELECTRÓNICA E INDUSTRIAL</h5>
-          <span class="badge bg-danger">CTT - TALLERES TECNOLÓGICOS</span>
-        </div>
-      </div>
-      <div class="d-flex align-items-center">
-        <i class="fa-solid fa-graduation-cap text-white fa-2x me-2"></i>
-      </div>
-    </div>
-  </div>
+  	<!-- Topbar Start -->
+	<div class="container-fluid py-2 border-bottom" style="background-color:rgb(255, 255, 255);">
+		<div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
+			<div class="d-flex align-items-center mb-2 mb-lg-0">
+				<img src="../public/img/sello_UTA.jpg" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
+				<div>
+					<h6 class="mb-0 text-uppercase font-weight-bold" style="color: #660000;">FACULTAD DE INGENIERÍA EN</h6>
+					<h5 class="mb-0 font-weight-bold" style="color: #660000;">SISTEMAS, ELECTRÓNICA E INDUSTRIAL</h5>
+					<span class="badge badge-danger">CTT - TALLERES TECNOLÓGICOS</span>
+				</div>
+			</div>
+			<div class="d-flex align-items-center">
+				<div class="text-center mx-3">
+					<i class="fa fa-graduation-cap text-danger fa-2x"></i>
+					<div><a href="#" class="text-dark font-weight-bold"></a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Topbar End -->
 
   <!-- ✅ Formulario -->
   <div class="main-content">
@@ -170,7 +160,6 @@
               <input type="password" class="form-control" id="confirmar_contrasena" name="confirmar_contrasena" required minlength="6" maxlength="255">
             </div>
 
-            <input type="hidden" id="codigorol" name="codigorol" value="invitado">
           </div>
         </div>
 
@@ -194,5 +183,5 @@
   <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../public/js/usuario.js"></script>
-</body>
-</html>
+<?php include('partials/footer.php'); ?>
+

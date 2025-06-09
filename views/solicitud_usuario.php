@@ -30,7 +30,7 @@
 
 <!-- Botón de solicitud flotante -->
 <button id="btn-flotante" class="btn" data-toggle="modal" data-target="#modalSolicitud" title="Solicitar un cambio">
-  <i class="fa fa-headset"></i>
+  <i class="fa fa-question-circle"></i>
 </button>
 
 <!-- Modal de Solicitud -->

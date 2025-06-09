@@ -114,20 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// ==== REGISTRO PÚBLICO DE USUARIO ====
-document.getElementById('formRegistroUsuario')?.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    axios.post('../controllers/UsuarioController.php?option=registrarUsuario', formData)
-        .then(res => {
-            if (res.data.success) {
-                Swal.fire('Registrado', 'Usuario registrado correctamente.', 'success');
-                this.reset();
-            } else {
-                Swal.fire('Error', res.data.mensaje, 'error');
-            }
-        });
-});
+
 
 function editarUsuario(id) {
     axios.get(`../controllers/UsuarioController.php?option=get&id=${id}`)
@@ -211,28 +198,66 @@ function inactivarUsuario(id) {
 }
 
 // ==== REGISTRO USUARIO ====
+
 document.addEventListener('DOMContentLoaded', function () {
     const frmRegistro = document.getElementById('formRegistroUsuario');
+    const inputContrasena = document.getElementById('contrasena');
+    const inputConfirmar = document.getElementById('confirmar_contrasena');
+    const bar = document.getElementById('password-strength-bar');
+    const text = document.getElementById('password-strength-text');
+
     if (!frmRegistro) return;
+
+    inputContrasena.addEventListener('input', function () {
+        const input = this.value;
+        let strength = 0;
+
+        if (input.length >= 6) strength += 20;
+        if (/[A-Z]/.test(input)) strength += 20;
+        if (/[a-z]/.test(input)) strength += 20;
+        if (/[0-9]/.test(input)) strength += 20;
+        if (/\W|_/.test(input)) strength += 20;
+
+        bar.style.width = strength + '%';
+        bar.setAttribute('aria-valuenow', strength);
+
+        if (strength < 40) {
+            bar.className = 'progress-bar bg-danger';
+            text.textContent = 'Débil';
+            text.className = 'text-danger';
+        } else if (strength < 80) {
+            bar.className = 'progress-bar bg-warning';
+            text.textContent = 'Aceptable';
+            text.className = 'text-warning';
+        } else {
+            bar.className = 'progress-bar bg-success';
+            text.textContent = 'Fuerte';
+            text.className = 'text-success';
+        }
+    });
 
     frmRegistro.onsubmit = function (e) {
         e.preventDefault();
-        const formData = new FormData(frmRegistro);
 
+        const formData = new FormData(frmRegistro);
         const correo = formData.get('correo')?.trim().toLowerCase();
         const telefono = formData.get('telefono')?.trim();
-        let es_interno = 0;
+        const contrasena = formData.get('contrasena');
+        const confirmar = formData.get('confirmar_contrasena');
 
-        // 🔍 Validación del número ecuatoriano
-        if (!/^09[89]\d{7}$/.test(telefono)) {
-            Swal.fire('Teléfono inválido', 'Debe ser un número celular ecuatoriano válido (por ejemplo: 0991234567)', 'warning');
+        if (contrasena !== confirmar) {
+            Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
             return;
         }
 
-        
-        
-        // Detectar rol por el correo institucional
-        let codigorol = 'INV'; // invitado por defecto
+        if (!/^09[89]\d{7}$/.test(telefono)) {
+            Swal.fire('Teléfono inválido', 'Debe ser un número celular ecuatoriano válido.', 'warning');
+            return;
+        }
+
+        let codigorol = 'INV';
+        let es_interno = 0;
+
         if (/^[a-z]{2,}[0-9]{4}@uta\.edu\.ec$/.test(correo)) {
             codigorol = 'EST';
             es_interno = 1;
@@ -246,16 +271,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         axios.post('../controllers/UsuarioController.php?option=registrarUsuario', formData)
             .then(res => {
-                console.log(res.data);
                 if (res.data.success) {
                     Swal.fire({
-                    title: 'Registrado',
-                    text: 'Usuario registrado correctamente.',
-                    icon: 'success',
-                    confirmButtonText: 'Ir al login'
-                }).then(() => {
-                    window.location.href = 'login.php';
-                });
+                        title: 'Registrado',
+                        text: 'Usuario registrado correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Ir al login'
+                    }).then(() => {
+                        frmRegistro.reset();
+                        //bar.style.width = '0%';
+                        //bar.className = 'progress-bar';
+                        //text.textContent = '';
+                        window.location.href = 'login.php';
+                    });
                 } else {
                     Swal.fire('Error', res.data.mensaje || 'No se pudo registrar.', 'error');
                 }
@@ -266,133 +294,3 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     };
 });
-
-// ==== FINISH REGISTRO USUARIO ====
-
-// ==== VALIDACIÓN DE CONTRASEÑA ====
-// Muestra la barra de progreso de la contraseña
-document.addEventListener('DOMContentLoaded', function () {
-  const frmRegistro = document.getElementById('formRegistroUsuario');
-  if (!frmRegistro) return;
-
-  const inputContrasena = document.getElementById('contrasena');
-  const inputConfirmar = document.getElementById('confirmar_contrasena');
-  const bar = document.getElementById('password-strength-bar');
-  const text = document.getElementById('password-strength-text');
-
-  // Barra de fuerza de contraseña
-  inputContrasena.addEventListener('input', function () {
-    const input = this.value;
-    let strength = 0;
-
-    if (input.length >= 6) strength += 20;
-    if (/[A-Z]/.test(input)) strength += 20;
-    if (/[a-z]/.test(input)) strength += 20;
-    if (/[0-9]/.test(input)) strength += 20;
-    if (/[\W_]/.test(input)) strength += 20;
-
-    // Estilo visual
-    bar.style.width = strength + '%';
-    bar.setAttribute('aria-valuenow', strength);
-
-    if (strength < 40) {
-      bar.className = 'progress-bar bg-danger';
-      text.textContent = 'Débil';
-      text.className = 'text-danger';
-    } else if (strength < 80) {
-      bar.className = 'progress-bar bg-warning';
-      text.textContent = 'Aceptable';
-      text.className = 'text-warning';
-    } else {
-      bar.className = 'progress-bar bg-success';
-      text.textContent = 'Fuerte';
-      text.className = 'text-success';
-    }
-  });
-
-  // Envío del formulario
-  frmRegistro.onsubmit = function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(frmRegistro);
-    const contrasena = formData.get('contrasena');
-    const confirmar = formData.get('confirmar_contrasena');
-
-    if (contrasena !== confirmar) {
-      Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
-      return;
-    }
-
-    const telefono = formData.get('telefono');
-    if (!/^09[89]\d{7}$/.test(telefono)) {
-      Swal.fire('Teléfono inválido', 'Debe ser un número celular ecuatoriano válido.', 'warning');
-      return;
-    }
-
-    const correo = formData.get('correo')?.trim().toLowerCase();
-    let codigorol = 'INV';
-    let es_interno = 0;
-
-    if (/^[a-z]{2,}[0-9]{4}@uta\.edu\.ec$/.test(correo)) {
-      codigorol = 'EST';
-      es_interno = 1;
-    } else if (/^[a-z]+\.[a-z]+@uta\.edu\.ec$/.test(correo) || /@uta\.edu\.ec$/.test(correo)) {
-      codigorol = 'DOC';
-      es_interno = 1;
-    }
-
-    formData.set('codigorol', codigorol);
-    formData.set('es_interno', es_interno);
-
-    axios.post('../controllers/UsuarioController.php?option=registrarUsuario', formData)
-      .then(res => {
-        if (res.data.success) {
-          Swal.fire('Registrado', 'Usuario registrado correctamente.', 'success').then(() => {
-            window.location.href = 'login.php';
-          });
-          frmRegistro.reset();
-          bar.style.width = '0%';
-          bar.className = 'progress-bar';
-          text.textContent = '';
-        } else {
-          Swal.fire('Error', res.data.mensaje || 'No se pudo registrar.', 'error');
-        }
-      })
-      .catch(err => {
-        console.error('Error en el registro:', err.response ? err.response.data : err);
-        Swal.fire('Error', 'Ocurrió un error inesperado en el registro.', 'error');
-      });
-  };
-});
-
-// Validaciones en el formulario de usuario (modal)
-document.getElementById('formUsuario')?.addEventListener('submit', function(e) {
-    const cedula = document.getElementById('cedula')?.value.trim();
-    const telefono = document.getElementById('telefono')?.value.trim();
-    const fechaNac = document.getElementById('fecha_nacimiento')?.value;
-    const cedulaPDF = document.getElementById('cedula_pdf')?.files[0];
-    let errores = [];
-    if (cedula && !/^\d{10}$/.test(cedula)) {
-        errores.push('La cédula debe tener 10 dígitos numéricos.');
-    }
-    if (telefono && !/^09[89]\d{7}$/.test(telefono)) {
-        errores.push('El teléfono debe ser un celular ecuatoriano válido (ej: 0991234567).');
-    }
-    if (fechaNac) {
-        const hoy = new Date();
-        const fnac = new Date(fechaNac);
-        const edad = hoy.getFullYear() - fnac.getFullYear();
-        if (edad < 18 || (edad === 18 && hoy < new Date(fnac.setFullYear(fnac.getFullYear() + 18)))) {
-            errores.push('El usuario debe ser mayor de 18 años.');
-        }
-    }
-    if (cedulaPDF && cedulaPDF.type !== 'application/pdf') {
-        errores.push('El archivo de cédula debe ser PDF.');
-    }
-    if (errores.length > 0) {
-        e.preventDefault();
-        Swal.fire('Error', errores.join('<br>'), 'error');
-        return false;
-    }
-});
-// ==== FINISH VALIDACIÓN DE CONTRASEÑA ====
