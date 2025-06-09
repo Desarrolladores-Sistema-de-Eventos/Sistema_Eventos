@@ -33,12 +33,25 @@ class Usuario {
         $stmt->execute([$correo]);
         return $stmt->fetchColumn() > 0;
     }
+    public function cedulaExiste($cedula, $excluirId = null) {
+        $sql = "SELECT COUNT(*) FROM usuario WHERE CEDULA = ?";
+        $params = [$cedula];
+        if ($excluirId) {
+            $sql .= " AND SECUENCIAL != ?";
+            $params[] = $excluirId;
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchColumn() > 0;
+    }
 
-    public function insertar($nombres, $apellidos, $telefono, $direccion, $correo, $contrasena, $codigorol, $es_interno = 1, $foto_perfil = null) {
+    public function insertar($nombres, $apellidos, $telefono, $direccion, $correo, $contrasena, $codigorol, $es_interno = 1, $foto_perfil = null, $cedula = '', $fecha_nacimiento = '', $url_cedula = null) {
     if ($this->correoExiste($correo)) {
         return ['success' => false, 'mensaje' => 'El correo ya está registrado.'];
     }
-    
+    if ($cedula && $this->cedulaExiste($cedula)) {
+        return ['success' => false, 'mensaje' => 'La cédula ya está registrada.'];
+    }
     if ($codigorol === 'EST' || $codigorol === 'DOC') {
         if (!preg_match('/@uta\\.edu\\.ec$/', $correo)) {
             return ['success' => false, 'mensaje' => 'El correo debe ser institucional (@uta.edu.ec) para estudiantes y docentes.'];
@@ -49,11 +62,14 @@ class Usuario {
         }
     }
     $hash = password_hash($contrasena, PASSWORD_DEFAULT);
-    $stmt = $this->pdo->prepare("INSERT INTO usuario (NOMBRES, APELLIDOS, TELEFONO, DIRECCION, CORREO, CONTRASENA, CODIGOROL, CODIGOESTADO, ES_INTERNO, FOTO_PERFIL) VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVO', ?, ?)");
-    $ok = $stmt->execute([$nombres, $apellidos, $telefono, $direccion, $correo, $hash, $codigorol, $es_interno, $foto_perfil]);
+    $stmt = $this->pdo->prepare("INSERT INTO usuario (NOMBRES, APELLIDOS, TELEFONO, DIRECCION, CORREO, CONTRASENA, CODIGOROL, CODIGOESTADO, ES_INTERNO, FOTO_PERFIL, CEDULA, FECHA_NACIMIENTO, URL_CEDULA) VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVO', ?, ?, ?, ?, ?)");
+    $ok = $stmt->execute([$nombres, $apellidos, $telefono, $direccion, $correo, $hash, $codigorol, $es_interno, $foto_perfil, $cedula, $fecha_nacimiento, $url_cedula]);
     return $ok ? ['success' => true] : ['success' => false, 'mensaje' => 'Error al registrar usuario.'];
 }
-public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasena = '', $foto_perfil = null) {
+public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasena = '', $foto_perfil = null, $cedula = '', $fecha_nacimiento = '', $url_cedula = null) {
+    if ($cedula && $this->cedulaExiste($cedula, $id)) {
+        return ['success' => false, 'mensaje' => 'La cédula ya está registrada.'];
+    }
     // Obtener la foto actual si no se sube una nueva
     if ($foto_perfil === null) {
         $stmtFoto = $this->pdo->prepare("SELECT FOTO_PERFIL FROM usuario WHERE SECUENCIAL=?");
@@ -63,11 +79,11 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
 
     if (!empty($contrasena)) {
         $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
-        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, CONTRASENA=?, FOTO_PERFIL=? WHERE SECUENCIAL=?";
-        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasenaHash, $foto_perfil, $id];
+        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, CONTRASENA=?, FOTO_PERFIL=?, CEDULA=?, FECHA_NACIMIENTO=?, URL_CEDULA=? WHERE SECUENCIAL=?";
+        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasenaHash, $foto_perfil, $cedula, $fecha_nacimiento, $url_cedula, $id];
     } else {
-        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, FOTO_PERFIL=? WHERE SECUENCIAL=?";
-        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $foto_perfil, $id];
+        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, FOTO_PERFIL=?, CEDULA=?, FECHA_NACIMIENTO=?, URL_CEDULA=? WHERE SECUENCIAL=?";
+        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $foto_perfil, $cedula, $fecha_nacimiento, $url_cedula, $id];
     }
 
     $stmt = $this->pdo->prepare($sql);
