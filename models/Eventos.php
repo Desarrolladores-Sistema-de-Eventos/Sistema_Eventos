@@ -331,6 +331,106 @@ public function getEventosEnCursoInscrito($idUsuario) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function validarDisponibilidadInscripcion($idEvento, $idUsuario) {
+    $stmt = $this->pdo->prepare("SELECT FECHAFIN, CAPACIDAD FROM evento WHERE SECUENCIAL = ?");
+    $stmt->execute([$idEvento]);
+    $evento = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$evento) {
+        return ['disponible' => false, 'mensaje' => 'Evento no encontrado.'];
+    }
+
+    $fechaActual = new DateTime();
+    $fechaFin = new DateTime($evento['FECHAFIN']);
+
+    if ($fechaActual > $fechaFin) {
+        return ['disponible' => false, 'mensaje' => 'El evento ya ha finalizado.'];
+    }
+
+    if (!is_null($evento['CAPACIDAD'])) {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM inscripcion WHERE SECUENCIALEVENTO = ?");
+        $stmt->execute([$idEvento]);
+        $inscritos = $stmt->fetchColumn();
+
+        if ($inscritos >= $evento['CAPACIDAD']) {
+            return ['disponible' => false, 'mensaje' => 'Cupos agotados.'];
+        }
+    }
+
+    // NUEVA VALIDACIÓN: Verificar si ya está inscrito
+    $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM inscripcion WHERE SECUENCIALEVENTO = ? AND SECUENCIALUSUARIO = ?");
+    $stmt->execute([$idEvento, $idUsuario]);
+    $yaInscrito = $stmt->fetchColumn() > 0;
+
+    if ($yaInscrito) {
+        return ['disponible' => false, 'mensaje' => 'Ya estás inscrito en este evento.'];
+    }
+
+    return ['disponible' => true, 'mensaje' => 'Inscripción permitida.'];
+}
+
+ 
+
+public function registrarInscripcion($idUsuario, $idEvento, $monto, $formaPago, $esPagado, $archivosRequisitos, $archivoPago)
+{
+    try {
+        $this->pdo->beginTransaction();
+
+        // 1. Insertar en inscripcion (CODIGOESTADOINSCRIPCION = 'PEN', FACTURA_URL = comprobante si aplica)
+        $stmt = $this->pdo->prepare("
+            INSERT INTO inscripcion (
+                SECUENCIALUSUARIO, 
+                SECUENCIALEVENTO, 
+                FECHAINSCRIPCION, 
+                FACTURA_URL, 
+                CODIGOESTADOINSCRIPCION
+            ) VALUES (?, ?, NOW(), ?, 'PEN')
+        ");
+        $stmt->execute([$idUsuario, $idEvento, $archivoPago]);
+        $idInscripcion = $this->pdo->lastInsertId();
+
+        // 2. Insertar archivos en archivo_requisito (CODIGOESTADOVALIDACION = 'PEN')
+        foreach ($archivosRequisitos as $idRequisito => $rutaArchivo) {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO archivo_requisito (
+                    SECUENCIALINSCRIPCION, 
+                    SECUENCIALREQUISITO, 
+                    URLARCHIVO, 
+                    CODIGOESTADOVALIDACION
+                ) VALUES (?, ?, ?, 'PEN')
+            ");
+            $stmt->execute([$idInscripcion, $idRequisito, $rutaArchivo]);
+        }
+
+        // 3. Insertar pago si corresponde (CODIGOESTADOPAGO = 'PEN')
+        if ($esPagado && $archivoPago) {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO pago (
+                    SECUENCIALINSCRIPCION, 
+                    CODIGOFORMADEPAGO, 
+                    COMPROBANTE_URL, 
+                    CODIGOESTADOPAGO, 
+                    FECHA_PAGO,
+                    MONTO
+                ) VALUES (?, ?, ?, 'PEN', NOW(), ?)
+            ");
+            $stmt->execute([$idInscripcion, $formaPago, $archivoPago, $monto]);
+        }
+
+        $this->pdo->commit();
+        return true;
+    } catch (Exception $e) {
+        $this->pdo->rollBack();
+        echo json_encode([
+        'tipo' => 'error',
+        'mensaje' => $e->getMessage() ,
+        'debug' => $e->getMessage() // 👈 esto mostrará el error en el frontend (¡solo mientras pruebas!)
+    ]);
+    exit; 
+    }
+}
+
+
 
 
 

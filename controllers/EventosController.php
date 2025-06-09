@@ -55,10 +55,96 @@ class EventosController
                 case 'eventosInscritoCurso':
                 $this->listarEventosInscritoCurso();
                 break;
+            case 'validarInscripcion':
+                $this->validarInscripcion();
+                break;
+            case 'registrarInscripcion':
+                $this->registrarInscripcion();
+                break;
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Acción no válida']);
         }
     }
+ private function validarInscripcion()
+{
+    $idEvento = $_GET['id'] ?? null;
+
+    if (!$idEvento) {
+        $this->json(['disponible' => false, 'mensaje' => 'ID del evento no proporcionado.']);
+        return;
+    }
+
+    $resultado = $this->eventoModelo->validarDisponibilidadInscripcion($idEvento, $this->idUsuario);
+    $this->json($resultado);
+}
+public function registrarInscripcion()
+{
+    if (!$this->idUsuario) {
+        echo json_encode(['tipo' => 'error', 'mensaje' => 'Usuario no autenticado']);
+        return;
+    }
+
+    $idEvento = $_POST['id_evento'] ?? null;
+    $formaPago = $_POST['forma_pago'] ?? null;
+    $monto = $_POST['monto'] ?? 0;
+    $esPagado = filter_var($_POST['es_pagado'] ?? false, FILTER_VALIDATE_BOOLEAN);
+
+    if (!$idEvento) {
+        echo json_encode(['tipo' => 'error', 'mensaje' => 'ID de evento faltante']);
+        return;
+    }
+
+    // Procesar requisitos
+    $requisitos = json_decode($_POST['requisitos'] ?? '[]', true);
+    $requisitosArchivos = [];
+
+    foreach ($requisitos as $idReq) {
+        $campo = "requisito_$idReq";
+        if (isset($_FILES[$campo]) && $_FILES[$campo]['error'] === UPLOAD_ERR_OK) {
+            $archivo = $_FILES[$campo];
+            $nombre = uniqid("requisito_") . "_" . basename($archivo['name']);
+            $ruta = "../facturas_Comprobantes/$nombre";
+            if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
+                $requisitosArchivos[$idReq] = $nombre;
+            }
+        }
+    }
+
+    // Procesar comprobante de pago
+    $comprobanteRuta = null;
+    if (isset($_FILES['comprobante_pago']) && $_FILES['comprobante_pago']['error'] === UPLOAD_ERR_OK) {
+        $archivo = $_FILES['comprobante_pago'];
+        $nombre = uniqid("comprobante_") . "_" . basename($archivo['name']);
+        $ruta = "../facturas_Comprobantes/$nombre";
+        if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
+            $comprobanteRuta = $nombre;
+        }
+    }
+
+    $ok = $this->eventoModelo->registrarInscripcion(
+        $this->idUsuario,
+        $idEvento,
+        $monto,
+        $formaPago,
+        $esPagado,
+        $requisitosArchivos,
+        $comprobanteRuta
+    );
+
+    
+// Si el modelo ya imprimió un error con json_encode (debug), no hacemos nada más
+if ($ok === true) {
+    echo json_encode([
+        'tipo' => 'success',
+        'mensaje' => 'Inscripción registrada exitosamente'
+    ]);
+} elseif ($ok === false) {
+    echo json_encode([
+        'tipo' => 'error',
+        'mensaje' => 'Error al registrar la inscripción'
+    ]);
+}
+}
 
     private function listarResponsable()
     {

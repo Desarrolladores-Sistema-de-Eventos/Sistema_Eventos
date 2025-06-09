@@ -28,11 +28,25 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Dashboard</a>
     </div>
-    <div style="float: right; padding: 15px 50px 5px 50px;">
+    
+ <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 50px 5px 50px;">
+  <!-- Izquierda: botón de regresar solo para ciertos roles -->
+  <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
+    <a href="../views/Eventos_Views.php" style="color: white; text-decoration: none; font-size: 16px;">
+      <i class="fa fa-arrow-left"></i> Regresar a Eventos
+    </a>
+  <?php else: ?>
+    <div></div> <!-- Espacio vacío para mantener el layout -->
+  <?php endif; ?>
+
+  <!-- Derecha: hora y botón de cerrar sesión -->
+  <div style="display: flex; align-items: center; gap: 10px;">
     <span id="hora" style="color: white; font-size: 16px;"></span>
-    &nbsp;
     <a href="../controllers/logout.php" class="btn btn-danger square-btn-adjust">Cerrar Sesión</a>
-   </div>
+  </div>
+</div>
+
+
   </nav>
 
   <nav class="navbar-default navbar-side" role="navigation">

@@ -1,6 +1,8 @@
 <?php
 session_start();
+
 require_once '../models/Usuarios.php';
+
 
 header('Content-Type: application/json');
 
@@ -48,10 +50,20 @@ class UsuarioController {
             case 'listarCarrera':
                 $this->listarCarreras();
                 break;
+            case 'miPerfil':
+                $this->miPerfil();
+                break;
             default:
                 $this->json(['success' => false, 'mensaje' => 'Acción no válida']);
         }
     }
+    private function miPerfil() {
+    if (!isset($_SESSION['usuario'])) {
+        echo json_encode(['error' => 'No autenticado']);
+        return;
+    }
+    echo json_encode($_SESSION['usuario']);
+}
 
     // Guardar (insertar) usuario
     private function guardar() {

@@ -30,7 +30,7 @@ if ($esResponsable) {
         case 'ESTUDIANTE':
         case 'DOCENTE':
         case 'INVITADO':
-            include '../views/dashboard_Pri_Usu.php';
+            include '../views/Eventos_Views.php';
             break;
         default:
             echo "<h1>Acceso denegado</h1>";

@@ -329,6 +329,11 @@ public function getInscripcionesPorUsuario($idUsuario) {
     $stmt->execute([$idUsuario]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+public function estaInscrito($idUsuario, $idEvento) {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM inscripcion WHERE SECUENCIALUSUARIO = ? AND SECUENCIALEVENTO = ? AND CODIGOESTADOINSCRIPCION != 'CANCELADO'");
+        $stmt->execute([$idUsuario, $idEvento]);
+        return $stmt->fetchColumn() > 0; // fetchColumn(0) obtiene el valor de la primera columna
+    }
 
 
 
