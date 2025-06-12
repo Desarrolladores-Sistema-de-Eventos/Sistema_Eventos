@@ -1,8 +1,7 @@
 <?php
-// Incluimos las clases directamente desde la carpeta src manual
-require_once '../vendor/PHPMailer-master/src/PHPMailer.php';
-require_once '../vendor/PHPMailer-master/src/SMTP.php';
-require_once '../vendor/PHPMailer-master/src/Exception.php';
+// controllers/ContactoController.php
+
+require_once '../vendor/autoload.php'; // autoload de Composer
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -33,32 +32,21 @@ class ContactoController
         $mail = new PHPMailer(true);
 
         try {
-            // Debug opcional para pruebas
-            // $mail->SMTPDebug = 2;
-            // $mail->Debugoutput = 'html';
-
-            // Configuración del servidor SMTP de Gmail
+            // Configuración SMTP
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'dennisquisaguanomolina@gmail.com';  // Tu correo Gmail
-            $mail->Password = 'iswddolapmjfxdjp';                  // Tu contraseña de aplicación
+            $mail->Username   = 'dennisquisaguanomolina@gmail.com';
+            $mail->Password   = 'iswddolapmjfxdjp'; // ¡esto debe ir en un archivo .env o config externo!
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
 
-            // Remitente (debe coincidir con el correo autenticado)
             $mail->setFrom('dennisquisaguanomolina@gmail.com', 'Formulario de Contacto');
-
-            // Responder a (correo del usuario que llena el formulario)
             $mail->addReplyTo($correo, $nombre);
 
-            // Destinatario real
             $mail->addAddress('jllumitasig2280@uta.edu.ec', 'Soporte UTA');
-             $mail->addAddress('dennisquisaguanomolina@gmail.com', 'Soporte UTA');
-            // Puedes agregar más destinatarios para pruebas:
-            // $mail->addAddress('tugmail@gmail.com');
+            $mail->addAddress('dennisquisaguanomolina@gmail.com', 'Soporte UTA');
 
-            // Contenido
             $mail->isHTML(true);
             $mail->Subject = "Consulta: $asunto";
             $mail->Body    = "
