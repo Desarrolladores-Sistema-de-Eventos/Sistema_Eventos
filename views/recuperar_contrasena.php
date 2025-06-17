@@ -213,7 +213,7 @@ async function enviarSolicitud() {
     enviarBtn.disabled = true;
 
     try {
-        const res = await fetch('../config/SolicitaRecuperaController.php', {
+        const res = await fetch('../controllers/SolicitaRecuperaController.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ correo })
