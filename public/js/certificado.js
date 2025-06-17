@@ -100,42 +100,55 @@ function generarCertificadoPDFySubir(idCertificado, urlFondo) {
                 Swal.fire('Error', res.data.mensaje || 'No se pudo obtener los datos', 'error');
                 return;
             }
-            const cert = res.data;
 
+            const cert = res.data;
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({
                 orientation: "landscape",
                 unit: "px",
                 format: [842, 595]
             });
+
             const fondo = await cargarImagenBase64(urlFondo);
-            doc.addImage(fondo, 'JPG', 0, 0, 842, 595);
+            doc.addImage(fondo, 'PNG', 0, 0, 842, 595);
+
+            // Bajamos todo 40px
+            const offsetY = 40;
+
+            doc.setFont("times", "italic");
+            doc.setFontSize(48);
+            doc.setTextColor("#8B0000");
+            doc.text("CERTIFICADO", 421, 230 + offsetY, { align: "center" });
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(20);
+            doc.setTextColor("#000");
+            doc.text("Otorgado a:", 421, 250 + offsetY, { align: "center" });
 
             doc.setFont("helvetica", "bold");
             doc.setFontSize(28);
-            doc.setTextColor("#b71c1c");
-            doc.text("CERTIFICADO", 421, 120, { align: "center" });
-
-            doc.setFontSize(22);
-            doc.setTextColor("#000");
-            doc.text("Otorgado a:", 180, 200);
-            doc.setFontSize(26);
             doc.setTextColor("#0d47a1");
-            doc.text(cert.NOMBRES + ' ' + cert.APELLIDOS, 350, 200);
+            doc.text(cert.NOMBRES + ' ' + cert.APELLIDOS, 421, 270 + offsetY, { align: "center" });
 
-            doc.setFontSize(16);
-            doc.setTextColor("#000");
-            doc.text(`Por su participación en el evento:`, 180, 250);
+            doc.setFont("helvetica", "normal");
             doc.setFontSize(18);
-            doc.text(cert.EVENTO || cert.TITULO, 180, 275);
-            doc.setFontSize(14);
-            doc.text(`Ambato, ${cert.FECHA_EMISION || (new Date()).toLocaleDateString()}`, 180, 310);
-            const pdfBlob = doc.output('blob');
+            doc.setTextColor("#000");
+            doc.text("Por su participación en el evento:", 421, 300 + offsetY, { align: "center" });
 
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(20);
+            doc.text(cert.EVENTO || cert.TITULO, 421, 330 + offsetY, { align: "center" });
+
+            doc.setFont("helvetica", "italic");
+            doc.setFontSize(14);
+            doc.text(`Ambato, ${cert.FECHA_EMISION || (new Date()).toLocaleDateString()}`, 421, 370 + offsetY, { align: "center" });
+
+            const pdfBlob = doc.output('blob');
             await subirCertificadoPDF(pdfBlob, cert.SECUENCIALUSUARIO, cert.SECUENCIALEVENTO);
             listarCertificadosPorEvento(cert.SECUENCIALEVENTO);
         });
 }
+
 
 function cargarImagenBase64(url) {
     return new Promise((resolve) => {

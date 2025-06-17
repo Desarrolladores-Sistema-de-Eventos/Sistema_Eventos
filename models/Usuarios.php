@@ -237,6 +237,33 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
         return ['success' => false, 'mensaje' => 'Error: ' . $e->getMessage()];
     }
 }
+// ================= RECUPERACIÓN DE CONTRASEÑA =================
+public static function buscarPorCorreo($correo) {
+    $db = Conexion::getConexion();
+    $stmt = $db->prepare("SELECT * FROM usuario WHERE CORREO = ? LIMIT 1");
+    $stmt->execute([$correo]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public static function guardarTokenRecuperacion($id, $token, $expiracion) {
+    $db = Conexion::getConexion();
+    $stmt = $db->prepare("UPDATE usuario SET token_recupera=?, token_expiracion=? WHERE SECUENCIAL=?");
+    return $stmt->execute([$token, $expiracion, $id]);
+}
+
+public static function buscarPorTokenRecuperacion($token) {
+    $db = Conexion::getConexion();
+    $stmt = $db->prepare("SELECT * FROM usuario WHERE token_recupera=? AND token_expiracion > NOW() LIMIT 1");
+    $stmt->execute([$token]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public static function actualizarContrasenaYLimpiarToken($id, $nuevaContrasena) {
+    $db = Conexion::getConexion();
+    $hash = password_hash($nuevaContrasena, PASSWORD_DEFAULT); // Aquí se encripta
+    $stmt = $db->prepare("UPDATE usuario SET CONTRASENA=?, token_recupera=NULL, token_expiracion=NULL WHERE SECUENCIAL=?");
+    return $stmt->execute([$hash, $id]);
+}
 
 }
 ?>

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             className: 'text-center',
             render: function (data) {
               return data
-                ? `<a href="../facturas_Comprobantes/${data}" target="_blank" class="btn btn-danger btn-sm">
+                ? `<a href="../documents/${data}" target="_blank" class="btn btn-danger btn-sm">
                      <i class="fa fa-certificate"></i> <small>Ver</small>
                    </a>`
                 : '<span style="color:gray">Sin archivo</span>';
