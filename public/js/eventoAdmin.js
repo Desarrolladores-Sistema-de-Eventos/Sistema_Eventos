@@ -1,5 +1,19 @@
 let tablaEventos;
 
+// Alerta institucional reutilizable
+function mostrarAlertaUTA(titulo, texto = '', tipo = 'info') {
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+        customClass: {
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel'
+        }
+    });
+}
+
 function inicializarTablaEventos() {
     const mostrarCancelados = document.getElementById('mostrarCancelados')?.checked;
 
@@ -124,9 +138,13 @@ function eliminarEvento(id) {
         text: 'Viola la integridad referencial. Si lo eliminas, se eliminarán todos los registros relacionados.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, eliminar'
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel'
+        }
     }).then(result => {
         if (result.isConfirmed) {
             let formData = new FormData();
@@ -134,10 +152,10 @@ function eliminarEvento(id) {
             axios.post('../controllers/EventosAdminController.php?option=eliminar', formData)
                 .then(res => {
                     if (res.data.success) {
-                        Swal.fire('Eliminado', 'Evento eliminado correctamente.', 'success');
+                        mostrarAlertaUTA('Eliminado', 'Evento eliminado correctamente.', 'success');
                         tablaEventos.ajax.reload();
                     } else {
-                        Swal.fire('Error', res.data.mensaje, 'error');
+                        mostrarAlertaUTA('Error', res.data.mensaje, 'error');
                     }
                 });
         }
@@ -150,9 +168,13 @@ function cancelarEvento(id) {
         text: 'El evento será marcado como CANCELADO.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#f39c12',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, cancelar'
+        confirmButtonText: 'Sí, cancelar',
+        cancelButtonText: 'No',
+        customClass: {
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel'
+        }
     }).then(result => {
         if (result.isConfirmed) {
             let formData = new FormData();
@@ -160,10 +182,10 @@ function cancelarEvento(id) {
             axios.post('../controllers/EventosAdminController.php?option=cancelar', formData)
                 .then(res => {
                     if (res.data.success) {
-                        Swal.fire('Cancelado', 'Evento cancelado.', 'success');
+                        mostrarAlertaUTA('Cancelado', 'Evento cancelado.', 'success');
                         tablaEventos.ajax.reload();
                     } else {
-                        Swal.fire('Error', res.data.mensaje, 'error');
+                        mostrarAlertaUTA('Error', res.data.mensaje, 'error');
                     }
                 });
         }
@@ -213,25 +235,25 @@ document.addEventListener('DOMContentLoaded', function () {
             const costo = parseFloat(costoInput.value);
             const esPagado = esPagadoCheckbox.checked;
 
-            if (titulo.length < 3) return Swal.fire('Error', 'El título debe tener al menos 3 caracteres.', 'error');
-            if (descripcion.length < 10) return Swal.fire('Error', 'La descripción debe tener al menos 10 caracteres.', 'error');
-            if (isNaN(horas) || horas <= 0) return Swal.fire('Error', 'Las horas deben ser mayores a 0.', 'error');
-            if (isNaN(capacidad) || capacidad <= 0) return Swal.fire('Error', 'La capacidad debe ser positiva.', 'error');
-            if (!isNaN(notaAprobacion) && (notaAprobacion < 0 || notaAprobacion > 100)) return Swal.fire('Error', 'Nota fuera de rango.', 'error');
-            if (fechaInicio < hoy) return Swal.fire('Error', 'Fecha de inicio inválida.', 'error');
-            if (fechaFin && fechaFin < fechaInicio) return Swal.fire('Error', 'Fecha fin menor a inicio.', 'error');
-            if (esPagado && (isNaN(costo) || costo <= 0)) return Swal.fire('Error', 'Costo requerido para eventos pagados.', 'error');
+            if (titulo.length < 3) return mostrarAlertaUTA('Error', 'El título debe tener al menos 3 caracteres.', 'error');
+            if (descripcion.length < 10) return mostrarAlertaUTA('Error', 'La descripción debe tener al menos 10 caracteres.', 'error');
+            if (isNaN(horas) || horas <= 0) return mostrarAlertaUTA('Error', 'Las horas deben ser mayores a 0.', 'error');
+            if (isNaN(capacidad) || capacidad <= 0) return mostrarAlertaUTA('Error', 'La capacidad debe ser positiva.', 'error');
+            if (!isNaN(notaAprobacion) && (notaAprobacion < 0 || notaAprobacion > 100)) return mostrarAlertaUTA('Error', 'Nota fuera de rango.', 'error');
+            if (fechaInicio < hoy) return mostrarAlertaUTA('Error', 'Fecha de inicio inválida.', 'error');
+            if (fechaFin && fechaFin < fechaInicio) return mostrarAlertaUTA('Error', 'Fecha fin menor a inicio.', 'error');
+            if (esPagado && (isNaN(costo) || costo <= 0)) return mostrarAlertaUTA('Error', 'Costo requerido para eventos pagados.', 'error');
 
             const selects = ['carrera', 'tipoEvento', 'modalidad', 'categoria', 'responsable', 'organizador'];
             for (const id of selects) {
                 const val = document.getElementById(id).value;
-                if (!val) return Swal.fire('Error', `Debe seleccionar ${id}`, 'error');
+                if (!val) return mostrarAlertaUTA('Error', `Debe seleccionar ${id}`, 'error');
             }
 
             const formData = new FormData(frm);
             formData.set('esPagado', esPagado ? 1 : 0);
             formData.set('costo', esPagado ? costoInput.value : '0');
-            formData.set('estado', 'DISPONIBLE'); // se fuerza el estado
+            formData.set('estado', 'DISPONIBLE');
             let url = '../controllers/EventosAdminController.php?option=crear';
             if (idEvento.value !== '') {
                 url = '../controllers/EventosAdminController.php?option=editar';
@@ -241,13 +263,13 @@ document.addEventListener('DOMContentLoaded', function () {
             axios.post(url, formData)
                 .then(res => {
                     if (res.data.success) {
-                        Swal.fire('Éxito', 'Evento guardado.', 'success');
+                        mostrarAlertaUTA('Éxito', 'Evento guardado.', 'success');
                         $('#modalEvento').modal('hide');
                         tablaEventos.ajax.reload();
                         frm.reset();
                         btnSave.innerHTML = 'Guardar';
                     } else {
-                        Swal.fire('Error', res.data.mensaje, 'error');
+                        mostrarAlertaUTA('Error', res.data.mensaje, 'error');
                     }
                 });
         };
@@ -270,4 +292,3 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#modalEvento').modal('show');
     });
 });
-

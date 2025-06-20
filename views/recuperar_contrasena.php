@@ -4,161 +4,169 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Recuperar Contraseña</title>
-<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../public/css/style.css">
-    <style>
+  <meta charset="UTF-8">
+  <title>Recuperar Contraseña</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Fuentes e íconos -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../public/css/style.css">
+
+  <style>
     html, body {
-        height: 100%;
-        font-family: 'Lato', Arial, sans-serif;
-        background: #f7f7f7;
+      height: 100%;
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      background-color: #f4f4f4;
     }
-    body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+
     .main-content {
-        flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 15px;
+      min-height: 100vh;
     }
-    footer {
-        flex-shrink: 0;
-    }
+
     .recuperar-container {
-        max-width: 420px;
-        margin: 60px auto;
-        background: #fff;
-        padding: 36px 32px 32px 32px;
-        border-radius: 14px;
-        box-shadow: 0 6px 32px rgba(183,28,28,0.10), 0 1.5px 6px rgba(0,0,0,0.04);
-        border-top: 6px solid #B71C1C;
-        position: relative;
-        transition: box-shadow 0.2s;
+      background-color: #fff;
+      border: 2px solid #8B0000;
+      border-top: 6px solid #8B0000;
+      border-radius: 14px;
+      padding: 35px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: fadeInDown 0.5s ease;
     }
-    .recuperar-container h2 {
-        text-align: center;
-        font-size: 26px;
-        margin-bottom: 28px;
-        color: #B71C1C;
-        font-weight: 700;
-        letter-spacing: 1px;
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
+    .form-title {
+      text-align: center;
+      color: #8B0000;
+      font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
     .form-group {
-        margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-    label {
-        display: block;
-        margin-bottom: .5rem;
-        font-weight: 600;
-        color: #B71C1C;
-        letter-spacing: 0.5px;
+
+    .form-label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #111;
+      display: block;
     }
+
     .form-control {
-        width: 100%;
-        padding: 12px 14px;
-        font-size: 16px;
-        border: 1.5px solid #B71C1C;
-        border-radius: 6px;
-        outline: none;
-        background: #fafafa;
-        transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 16px;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      background: #fafafa;
+      transition: border-color 0.3s;
     }
+
     .form-control:focus {
-        border-color: #880e4f;
-        box-shadow: 0 0 0 0.15rem rgba(183,28,28,0.10);
-        background: #fff;
+      border-color: #8B0000;
+      box-shadow: 0 0 0 0.15rem rgba(139, 0, 0, 0.25);
+      background-color: #fff;
+      outline: none;
     }
+
     .btn-submit {
-        width: 100%;
-        background: linear-gradient(90deg, #B71C1C 60%, #880e4f 100%);
-        color: #fff;
-        padding: 13px 0;
-        border: none;
-        border-radius: 6px;
-        font-size: 17px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(183,28,28,0.08);
-        transition: background 0.2s, box-shadow 0.2s;
+      width: 100%;
+      background-color: #8B0000;
+      color: #fff;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    .btn-submit:hover, .btn-submit:focus {
-        background: linear-gradient(90deg, #880e4f 60%, #B71C1C 100%);
-        box-shadow: 0 4px 16px rgba(183,28,28,0.13);
+
+    .btn-submit:hover {
+      background-color: #600000;
     }
+
     .msg {
-        margin-top: 18px;
-        font-size: 15.5px;
-        text-align: center;
-        min-height: 32px;
+      margin-top: 18px;
+      font-size: 15px;
+      text-align: center;
+      min-height: 32px;
     }
+
     .msg button {
-        margin-top: 12px;
-        background: linear-gradient(90deg, #B71C1C 60%, #880e4f 100%);
-        color: #fff;
-        padding: 9px 22px;
-        border: none;
-        border-radius: 6px;
-        font-size: 15.5px;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 1.5px 6px rgba(183,28,28,0.10);
-        transition: background 0.2s, box-shadow 0.2s;
+      margin-top: 12px;
+      background-color: #8B0000;
+      color: #fff;
+      padding: 9px 22px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
     }
-    .msg button:hover, .msg button:focus {
-        background: linear-gradient(90deg, #880e4f 60%, #B71C1C 100%);
-        box-shadow: 0 3px 12px rgba(183,28,28,0.13);
+
+    .msg button:hover {
+      background-color: #600000;
     }
-    @media (max-width: 600px) {
-        .recuperar-container {
-            padding: 18px 6vw 22px 6vw;
-            margin: 30px 0;
-        }
-        .recuperar-container h2 {
-            font-size: 20px;
-        }
-    }
-</style>
+  </style>
 </head>
 <body>
-    <div class="main-content">
 
-    <!-- Topbar Start -->
-	<div class="container-fluid py-2 border-bottom" style="background-color:rgb(255, 255, 255);">
-		<div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
-			<div class="d-flex align-items-center mb-2 mb-lg-0">
-				<img src="../public/img/sello_UTA.jpg" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
-				<div>
-					<h6 class="mb-0 text-uppercase font-weight-bold" style="color: #660000;">FACULTAD DE INGENIERÍA EN</h6>
-					<h5 class="mb-0 font-weight-bold" style="color: #660000;">SISTEMAS, ELECTRÓNICA E INDUSTRIAL</h5>
-					<span class="badge badge-danger">CTT - TALLERES TECNOLÓGICOS</span>
-				</div>
-			</div>
-			<div class="d-flex align-items-center">
-				<div class="text-center mx-3">
-					<i class="fa fa-graduation-cap text-danger fa-2x"></i>
-					<div><a href="#" class="text-dark font-weight-bold"></a></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Topbar End -->
-<div class="recuperar-container">
-    <h2>Recuperar Contraseña</h2>
-    <form id="recuperarForm" method="post">
-        <div class="form-group">
-            <label for="correo">Correo electrónico</label>
-            <input type="email" name="correo" id="correo" class="form-control" placeholder="Ej: ejemplo@uta.edu.ec" required>
-        </div>
-        <div class="form-group">
-            <button type="submit" id="enviarBtn" class="btn-submit">Enviar enlace</button>
-        </div>
-        <div class="msg" id="msg"></div>
-    </form>
+<!-- Banner institucional -->
+<div class="banner-uta">
+  <img src="../public/img/header.png" alt="Banner UTA" style="width: 100%; height: auto; display: block;">
 </div>
 
+<!-- Contenido -->
+<div class="main-content">
+  <div class="recuperar-container">
+    <div class="text-center mb-3">
+      <i class="fas fa-unlock-alt" style="font-size: 40px; color: #8B0000;"></i>
+    </div>
+    <h2 class="form-title d-flex align-items-center justify-content-center gap-2">
+      <i class="fas fa-envelope-open-text" style="color: #8B0000;"></i>
+      Recuperar Contraseña
+    </h2>
+
+    <form id="recuperarForm" method="post">
+      <div class="form-group">
+        <label for="correo" class="form-label">
+          <i class="fas fa-envelope"></i> Correo institucional
+        </label>
+        <input type="email" name="correo" id="correo" class="form-control" placeholder="ejemplo@uta.edu.ec" required>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" id="enviarBtn" class="btn-submit">
+          <i class="fas fa-paper-plane"></i> Enviar enlace
+        </button>
+      </div>
+
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+</div>
+
+<!-- JS para recuperación -->
 <script>
 const form = document.getElementById('recuperarForm');
 const enviarBtn = document.getElementById('enviarBtn');
@@ -166,142 +174,98 @@ const msg = document.getElementById('msg');
 let timerInterval, timerTimeout;
 let intentoReenvio = false;
 
-// Inicia el temporizador y oculta el botón
 function startCountdown() {
-    let seconds = 120;
-    enviarBtn.style.display = 'none';
-    msg.style.color = 'green';
-    msg.textContent = `Revisa tu correo para el enlace de recuperación. (02:00)`;
+  let seconds = 120;
+  enviarBtn.style.display = 'none';
+  msg.style.color = 'green';
+  msg.textContent = `Revisa tu correo para el enlace de recuperación. (02:00)`;
 
-    timerInterval = setInterval(() => {
-        seconds--;
-        const min = String(Math.floor(seconds / 60)).padStart(2, '0');
-        const sec = String(seconds % 60).padStart(2, '0');
-        msg.textContent = `Revisa tu correo para el enlace de recuperación. (${min}:${sec})`;
-        if (seconds <= 0) clearInterval(timerInterval);
-    }, 1000);
+  timerInterval = setInterval(() => {
+    seconds--;
+    const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const sec = String(seconds % 60).padStart(2, '0');
+    msg.textContent = `Revisa tu correo para el enlace de recuperación. (${min}:${sec})`;
+    if (seconds <= 0) clearInterval(timerInterval);
+  }, 1000);
 
-    timerTimeout = setTimeout(() => {
-        clearInterval(timerInterval);
-        msg.style.color = 'red';
-        msg.innerHTML = `
-            No has recibido el correo. ¿Quieres intentarlo de nuevo?<br>
-            <button id="reenviarBtn">Volver a enviar</button>
-        `;
-        const reenviarBtn = document.getElementById('reenviarBtn');
-        reenviarBtn.addEventListener('click', function() {
-            msg.textContent = '';
-            enviarBtn.textContent = 'Volver a enviar';
-            enviarBtn.style.display = 'none'; // Oculta el botón principal hasta que termine el reenvío
-            intentoReenvio = true;
-            enviarSolicitud(); // Hace lo mismo que el botón principal
-        });
-    }, 120000);
+  timerTimeout = setTimeout(() => {
+    clearInterval(timerInterval);
+    msg.style.color = 'red';
+    msg.innerHTML = `
+      No has recibido el correo. ¿Quieres intentarlo de nuevo?<br>
+      <button id="reenviarBtn">Volver a enviar</button>
+    `;
+    const reenviarBtn = document.getElementById('reenviarBtn');
+    reenviarBtn.addEventListener('click', function () {
+      msg.textContent = '';
+      enviarBtn.textContent = 'Volver a enviar';
+      enviarBtn.style.display = 'none';
+      intentoReenvio = true;
+      enviarSolicitud();
+    });
+  }, 120000);
 }
 
-// Envía la solicitud y gestiona el flujo
 async function enviarSolicitud() {
-    const correo = form.correo.value.trim();
+  const correo = form.correo.value.trim();
 
-    if (!(correo.endsWith('@uta.edu.ec') || correo.endsWith('@gmail.com'))) {
-        msg.style.color = 'red';
-        msg.textContent = 'Solo se permiten correos @uta.edu.ec o @gmail.com';
-        return;
-    }
+  if (!(correo.endsWith('@uta.edu.ec') || correo.endsWith('@gmail.com'))) {
+    msg.style.color = 'red';
+    msg.textContent = 'Solo se permiten correos @uta.edu.ec o @gmail.com';
+    return;
+  }
 
-    msg.textContent = '';
-    enviarBtn.disabled = true;
+  msg.textContent = '';
+  enviarBtn.disabled = true;
+
+  try {
+    const res = await fetch('../controllers/SolicitaRecuperaController.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo })
+    });
+
+    const text = await res.text();
+    let json;
 
     try {
-        const res = await fetch('../controllers/SolicitaRecuperaController.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ correo })
-        });
-
-        const text = await res.text();
-        let json;
-
-        try {
-            json = JSON.parse(text);
-        } catch {
-            msg.style.color = 'red';
-            msg.textContent = 'Respuesta inválida del servidor.';
-            enviarBtn.disabled = false;
-            return;
-        }
-
-        if (json.ok) {
-            startCountdown();
-        } else {
-            msg.style.color = 'red';
-            msg.textContent = json.error || 'No se pudo enviar el enlace.';
-            enviarBtn.disabled = false;
-        }
-    } catch (error) {
-        msg.style.color = 'red';
-        msg.textContent = 'Error de red o del servidor.';
-        enviarBtn.disabled = false;
+      json = JSON.parse(text);
+    } catch {
+      msg.style.color = 'red';
+      msg.textContent = 'Respuesta inválida del servidor.';
+      enviarBtn.disabled = false;
+      return;
     }
+
+    if (json.ok) {
+      startCountdown();
+    } else {
+      msg.style.color = 'red';
+      msg.textContent = json.error || 'No se pudo enviar el enlace.';
+      enviarBtn.disabled = false;
+    }
+  } catch (error) {
+    msg.style.color = 'red';
+    msg.textContent = 'Error de red o del servidor.';
+    enviarBtn.disabled = false;
+  }
 }
 
-// Evento de envío del formulario
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    intentoReenvio = false;
-    enviarSolicitud();
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  intentoReenvio = false;
+  enviarSolicitud();
 });
 </script>
+
+<!-- JS extra -->
+<script src="../public/js/jquery.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="module" src="../public/js/login.js"></script>
- <script src="../public/mail/jqBootstrapValidation.min.js"></script>
-    <script src="../public/mail/contact.js"></script>
+<script src="../public/mail/jqBootstrapValidation.min.js"></script>
+<script src="../public/mail/contact.js"></script>
 
-<footer style="background: #B71C1C; color: #fff; padding: 30px 0 0 0; margin-top: 40px;">
-  <div class="container">
-    <div class="row">
-      <!-- Contacto -->
-      <div class="col-md-4 mb-4">
-        <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">CONTACTO</h5>
-        <ul style="list-style:none; padding-left:0; line-height:1.8;">
-          <li><i class="fa fa-envelope"></i> ctt.fisei@uta.edu.ec</li>
-          <li><i class="fa fa-clock-o"></i> Lun-Vie: 08:00 - 18:00</li>
-          <li><i class="fa fa-phone"></i>(03)3700090</li>
-          <li><i class="fa fa-desktop"></i> <a href="#" style="color:#ffc107;">Plataforma Educativa</a></li>
-        </ul>
-      </div>
-     <div class="col-md-4 mb-4">
-    <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">UBICACIÓN</h5>
-    <ul style="list-style:none; padding-left:0; line-height:1.8;">
-        <li><i class="fa fa-map-marker"></i> Av. Los Chasquis y Río Guayllabamba</li>
-        <li><i class="fa fa-map"></i> <a href="https://maps.app.goo.gl/3Gffknn2nbLt13g47" target="_blank" style="color:#fff; text-decoration:underline;">Ver en Google Maps</a></li>
-    </ul>
-</div>
-      <!-- Información -->
-      <div class="col-md-4 mb-4">
-        <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">INFORMACIÓN</h5>
-        <p>Cuéntanos tus inquietudes o dudas.</p>
-        <button style="background:#880e4f; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold;">Solicitar Información – CTT</button>
-      </div>
-    </div>
-
-    <div class="row" style="border-top:1px solid #e0e0e0; margin-top:20px; padding-top:10px;">
-      <div class="col-md-8">
-        <small>© Universidad Técnica de Ambato – Todos los derechos reservados</small>
-      </div>
-      <div class="col-md-4 text-right">
-        <small>
-          <a href="#" style="color:#fff; margin-right:15px;">Autores</a>
-          <a href="#" style="color:#fff;">FAQ</a>
-        </small>
-      </div>
-    </div>
-
-    <!-- Botón flotante -->
-    <button onclick="window.scrollTo({top:0,behavior:'smooth'});"
-      style="position:fixed; bottom:20px; right:30px; background:#880e4f; color:#fff; border:none; border-radius:6px; width:40px; height:40px; font-size:22px; z-index:999;">
-      <i class="fa fa-angle-up"></i>
-    </button>
-  </div>
-</footer>
+<?php include('partials/footer.php'); ?>
 </body>
 </html>
