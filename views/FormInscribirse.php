@@ -81,6 +81,32 @@ session_start();
             color: #155724;
             border: 1px solid #c3e6cb;
         }
+        /* Estilo personalizado para SweetAlert UTA */
+.swal2-popup {
+  border-left: 6px solid #8B0000 !important;
+  border-right: 6px solid #8B0000 !important;
+  border-radius: 10px !important;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.swal2-title {
+  font-weight: bold;
+  color: #8B0000;
+}
+
+.swal2-image {
+  margin-top: 10px;
+  max-width: 80px;
+}
+
+.swal2-confirm {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+  font-weight: bold;
+}
+
     </style>
 </head>
 <body>

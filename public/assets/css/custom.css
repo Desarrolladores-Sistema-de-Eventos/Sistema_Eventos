@@ -12,6 +12,78 @@
 /*==============================================
     GENERAL  STYLES    
     =============================================*/
+/* Cambia el fondo de todos los botones de acción (editar, eliminar, ver) a negro */
+
+/* === CUADRO GENERAL DE ALERTA === */
+.swal2-popup {
+  border-left: 6px solid #8B0000 !important;
+  border-right: 6px solid #8B0000 !important;
+  border-radius: 10px !important;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* === TÍTULO DE LA ALERTA === */
+.swal2-title {
+  font-weight: bold;
+  color: #8B0000;
+}
+
+/* === BOTONES DE CONFIRMACIÓN Y CANCELACIÓN === */
+.swal2-confirm, .swal2-cancel {
+  background-color: #1a1919 !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+  font-weight: bold;
+}
+
+/* === ÍCONO SUCCESS (check) EN NEGRO === */
+.swal2-icon.swal2-success {
+  border-color: #141414 !important;
+  color: #0f0f0f !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 4px solid #161616 !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #131212 !important;
+}
+
+/* === ÍCONO ERROR (x) EN NEGRO === */
+.swal2-icon.swal2-error {
+  border-color: #111111 !important;
+  color: #111111 !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: #000 !important;
+}
+
+/* === ÍCONO WARNING (⚠️) EN NEGRO === */
+.swal2-icon.swal2-warning {
+  border-color: #111111 !important;
+  color: #141414 !important;
+}
+
+/* === ÍCONO INFO (i) EN NEGRO === */
+.swal2-icon.swal2-info {
+  border-color: #1a1919 !important;
+  color: #252525 !important;
+}
+
+/* === ÍCONO QUESTION (?) EN NEGRO === */
+.swal2-icon.swal2-question {
+  border-color: #181818 !important;
+  color: #161616 !important;
+}
+
+.swal2-image {
+  margin-top: 10px;
+  max-width: 80px;
+}
+
 
     html, body {
     height: 100%;
@@ -43,7 +115,7 @@
 
 #page-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: none; 
     height: 100%;
     min-height: 80vh;
     overflow-y: auto;
@@ -88,7 +160,7 @@
     border:1px solid #f3f3f3;
 }
 h2 {
-    color: #f00;
+    color: rgb(214, 42, 42);
 }
 h4 {
     padding-top:10px;
@@ -150,7 +222,7 @@ background-color: #A95DF0;
 color: #fff;
 }
   .bg-color-red {
-background-color: #DB0630;
+background-color: #aa0d2d;
 color: #fff;
 }
   .bg-color-brown {
@@ -251,10 +323,11 @@ max-height:170px;
 max-width:170px;
 }
 
+
 .navbar-cls-top .navbar-brand {
-	color: #fff;
-background: #C90000;
-width: 260px;
+color: #fff;
+background:  rgb(178, 22, 26);
+width: 200px;
 text-align: center;
 height: 60px;
 font-size: 30px;
@@ -358,7 +431,7 @@ font-weight: 700;
 }
 .navbar-cls-top .navbar-brand:hover {
 
-background: #C90000;
+background: rgb(178, 22, 26);
 color:#fff;
 
 }
@@ -416,7 +489,7 @@ line-height: 1.428571429;
  
  @media(min-width:768px) {
     #page-wrapper {
-        margin: 0 0 0 260px;
+        margin: 0 0 0 200px;
         padding: 15px 30px;
         min-height: 100vh;
         overflow-y: auto;
@@ -426,7 +499,7 @@ line-height: 1.428571429;
     .navbar-side {
         z-index: 1;
         position: absolute;
-        width: 260px;
+        width: 200px;
     }
 
    .navbar {

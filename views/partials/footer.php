@@ -1,5 +1,5 @@
     <?php include "../views/solicitud_usuario.php"?>
-<footer style="background: #B71C1C; color: #fff; padding: 30px 0 0 0; margin-top: 40px;">
+<footer style="background:rgb(121, 7, 7); color: #fff; padding: 30px 0 0 0; margin-top: 40px;">
   <div class="container">
     <div class="row">
       <!-- Contacto -->
@@ -9,7 +9,7 @@
           <li><i class="fa fa-envelope"></i> ctt.fisei@uta.edu.ec</li>
           <li><i class="fa fa-clock-o"></i> Lun-Vie: 08:00 - 18:00</li>
           <li><i class="fa fa-phone"></i>(03)3700090</li>
-          <li><i class="fa fa-desktop"></i> <a href="#" style="color:#ffc107;">Plataforma Educativa</a></li>
+          <li><i class="fa fa-desktop"></i> <a href="#" style="color:rgb(253, 251, 251);;">Plataforma Educativa</a></li>
         </ul>
       </div>
      <div class="col-md-4 mb-4">
@@ -24,7 +24,7 @@
   <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">INFORMACIÓN</h5>
   <p>Cuéntanos tus inquietudes o dudas.</p>
   <a href="../views/contact.php">
-    <button style="background:#880e4f; color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold;">
+    <button style="background:rgb(5, 5, 5); color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold;">
       Solicitar Información – CTT
     </button>
   </a>
@@ -44,7 +44,7 @@
 
     <!-- Botón flotante -->
     <button onclick="window.scrollTo({top:0,behavior:'smooth'});"
-      style="position:fixed; bottom:20px; right:30px; background:#880e4f; color:#fff; border:none; border-radius:6px; width:40px; height:40px; font-size:22px; z-index:999;">
+      style="position:fixed; bottom:20px; right:30px; background: rgb(97, 5, 5); color:#fff; border:none; border-radius:6px; width:40px; height:40px; font-size:22px; z-index:999;">
       <i class="fa fa-angle-up"></i>
     </button>
   </div>
