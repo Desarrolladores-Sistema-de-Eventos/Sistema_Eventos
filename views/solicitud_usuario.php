@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #d9534f;
+    background-color:rgb(133, 37, 34);
     color: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   }

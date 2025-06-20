@@ -1,4 +1,17 @@
-// inscribirse.js
+// Función reutilizable con diseño personalizado UTA
+function mostrarAlertaUTA(titulo, mensaje, tipo = 'info') {
+    Swal.fire({
+        title: titulo,
+        text: mensaje,
+        imageUrl: '../public/img/sweet.png',
+        imageAlt: 'Icono UTA',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm'
+        }
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     const params = new URLSearchParams(window.location.search);
@@ -6,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let eventoActual = null;
 
     if (!idEvento) {
-        Swal.fire('Error', 'Evento no especificado', 'error');
+        mostrarAlertaUTA('Error', 'Evento no especificado', 'error');
         return;
     }
 
@@ -61,12 +74,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .catch(err => {
                     console.error('Error al obtener usuario', err);
-                    Swal.fire('Error', 'No se pudo cargar los datos del usuario.', 'error');
+                    mostrarAlertaUTA('Error', 'No se pudo cargar los datos del usuario.', 'error');
                 });
         })
         .catch(err => {
             console.error('Error al cargar el evento:', err);
-            Swal.fire('Error', 'No se pudo cargar la información del evento.', 'error');
+            mostrarAlertaUTA('Error', 'No se pudo cargar la información del evento.', 'error');
         });
 
     // 3. Enviar inscripción
@@ -74,25 +87,24 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
 
         if (!eventoActual || !eventoActual.REQUISITOS_ID) {
-            Swal.fire('Error', 'Datos del evento incompletos.', 'error');
+            mostrarAlertaUTA('Error', 'Datos del evento incompletos.', 'error');
             return;
         }
 
         axios.get(`../controllers/EventosController.php?option=validarInscripcion&id=${idEvento}`)
             .then(response => {
                 if (!response.data.disponible) {
-                    Swal.fire('Atención', response.data.mensaje, 'warning');
+                    mostrarAlertaUTA('Atención', response.data.mensaje, 'warning');
                     return;
                 }
 
                 const formData = new FormData();
                 formData.append('id_evento', idEvento);
-                formData.append('es_pagado', parseInt(eventoActual.ES_PAGADO)); // ✅ 1 o 0
+                formData.append('es_pagado', parseInt(eventoActual.ES_PAGADO));
                 formData.append('monto', eventoActual.COSTO || 0);
                 formData.append('forma_pago', document.getElementById('tipoPago').value || '');
                 formData.append('requisitos', JSON.stringify(eventoActual.REQUISITOS_ID));
 
-                // Adjuntar archivos de requisitos
                 eventoActual.REQUISITOS_ID.forEach(id => {
                     const input = document.getElementById(`archivoRequisito_${id}`);
                     if (input && input.files[0]) {
@@ -100,19 +112,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-                // Adjuntar comprobante de pago si aplica
                 const comprobante = document.getElementById('archivoPago');
                 if (comprobante && comprobante.files[0]) {
                     formData.append('comprobante_pago', comprobante.files[0]);
                 }
 
-                // Enviar al servidor
                 axios.post('../controllers/EventosController.php?option=registrarInscripcion', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then(res => {
                     Swal.fire({
-                        icon: res.data.tipo,
-                        title: res.data.mensaje
+                        title: res.data.mensaje,
+                        imageUrl: '../public/img/sweet.png',
+                        imageAlt: 'Icono UTA',
+                        confirmButtonText: 'Aceptar',
+                        customClass: {
+                            popup: 'swal2-popup',
+                            confirmButton: 'swal2-confirm'
+                        }
                     }).then(() => {
                         if (res.data.tipo === 'success') {
                             window.location.href = '../index.php';
@@ -120,12 +136,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }).catch(error => {
                     console.error('Error al registrar inscripción:', error);
-                    Swal.fire('Error', 'No se pudo registrar la inscripción.', 'error');
+                    mostrarAlertaUTA('Error', 'No se pudo registrar la inscripción.', 'error');
                 });
             })
             .catch(err => {
                 console.error('Error al validar disponibilidad:', err);
-                Swal.fire('Error', 'No se pudo validar la disponibilidad.', 'error');
+                mostrarAlertaUTA('Error', 'No se pudo validar la disponibilidad.', 'error');
             });
     });
 });

@@ -2,6 +2,21 @@
 
 let tablaEventos;
 
+// Función reutilizable con diseño personalizado UTA
+function mostrarAlertaUTA(titulo, mensaje, tipo = 'info') {
+  Swal.fire({
+    title: titulo,
+    text: mensaje,
+    imageUrl: '../public/img/sweet.png',
+    imageAlt: 'Icono UTA',
+    confirmButtonText: 'Aceptar',
+    customClass: {
+      popup: 'swal2-popup',
+      confirmButton: 'swal2-confirm'
+    }
+  });
+}
+
 function toggleCosto() {
   const chkPagado = document.getElementById('esPagado');
   const inputCosto = document.getElementById('costo');
@@ -57,7 +72,7 @@ function inicializarTablaEventos() {
 
 function edit(id) {
   if (!id) {
-    Swal.fire('Error', 'ID de evento no válido.', 'error');
+    mostrarAlertaUTA('Error', 'ID de evento no válido.', 'error');
     return;
   }
 
@@ -66,7 +81,7 @@ function edit(id) {
       const e = res.data;
 
       if (e.tipo === 'error') {
-        Swal.fire('Error', e.mensaje, 'error');
+        mostrarAlertaUTA('Error', e.mensaje, 'error');
         return;
       }
 
@@ -105,13 +120,13 @@ function edit(id) {
     .catch(err => {
       console.error('Error al cargar evento para edición:', err);
       const mensaje = err?.response?.data?.mensaje || 'No se pudo cargar el evento.';
-      Swal.fire('Error', mensaje, 'error');
+      mostrarAlertaUTA('Error', mensaje, 'error');
     });
 }
 
 function eliminar(id) {
   if (!id) {
-    Swal.fire('Error', 'ID no válido.', 'error');
+    mostrarAlertaUTA('Error', 'ID no válido.', 'error');
     return;
   }
 
@@ -121,23 +136,27 @@ function eliminar(id) {
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Sí, cancelar',
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6'
+    cancelButtonText: 'No',
+    customClass: {
+      popup: 'swal2-popup',
+      confirmButton: 'swal2-confirm',
+      cancelButton: 'swal2-confirm'
+    }
   }).then(result => {
     if (result.isConfirmed) {
       axios.get(`../controllers/EventosController.php?option=delete&id=${id}`)
         .then(res => {
           const info = res.data;
           if (info.tipo === 'success') {
-            Swal.fire('Cancelado', info.mensaje, 'success');
+            mostrarAlertaUTA('Cancelado', info.mensaje, 'success');
             tablaEventos.ajax.reload();
           } else {
-            Swal.fire('Error', info.mensaje || 'No se pudo cancelar el evento.', 'error');
+            mostrarAlertaUTA('Error', info.mensaje || 'No se pudo cancelar el evento.', 'error');
           }
         })
         .catch(err => {
           console.error('Error al cancelar:', err);
-          Swal.fire('Error', 'Ocurrió un error al cancelar el evento.', 'error');
+          mostrarAlertaUTA('Error', 'Ocurrió un error al cancelar el evento.', 'error');
         });
     }
   });
@@ -183,7 +202,7 @@ function cargarSelects() {
     })
     .catch(err => {
       console.error('❌ Error cargando selects:', err);
-      Swal.fire('Error', 'No se pudieron cargar los datos del formulario.', 'error');
+      mostrarAlertaUTA('Error', 'No se pudieron cargar los datos del formulario.', 'error');
     });
 }
 
@@ -230,17 +249,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const capacidad = parseInt(frm.capacidad.value, 10);
 
     if (fechaInicio < hoy) {
-      Swal.fire('Error', 'La fecha de inicio no puede ser anterior a hoy.', 'error');
+      mostrarAlertaUTA('Error', 'La fecha de inicio no puede ser anterior a hoy.', 'error');
       return;
     }
 
     if (fechaFin && fechaFin < fechaInicio) {
-      Swal.fire('Error', 'La fecha de fin no puede ser anterior a la de inicio.', 'error');
+      mostrarAlertaUTA('Error', 'La fecha de fin no puede ser anterior a la de inicio.', 'error');
       return;
     }
 
     if (!capacidad || capacidad <= 0) {
-      Swal.fire('Error', 'La capacidad debe ser mayor que cero.', 'error');
+      mostrarAlertaUTA('Error', 'La capacidad debe ser mayor que cero.', 'error');
       return;
     }
 
@@ -257,7 +276,16 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(res => {
         const info = res.data;
         if (info?.tipo === 'success') {
-          Swal.fire({ icon: 'success', title: '¡Éxito!', text: info.mensaje, timer: 1500, showConfirmButton: false }).then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: info.mensaje,
+            timer: 1500,
+            showConfirmButton: false,
+            customClass: {
+              popup: 'swal2-popup'
+            }
+          }).then(() => {
             $('#modalEvento').modal('hide');
             $('.modal-backdrop').remove();
             $('body').removeClass('modal-open').css('padding-right', '');
@@ -266,12 +294,12 @@ document.addEventListener('DOMContentLoaded', function () {
             tablaEventos.ajax.reload();
           });
         } else {
-          Swal.fire('Error', info?.mensaje || 'Ocurrió un error al guardar.', 'error');
+          mostrarAlertaUTA('Error', info?.mensaje || 'Ocurrió un error al guardar.', 'error');
         }
       })
       .catch(err => {
         console.error('❌ Error inesperado:', err);
-        Swal.fire('Error', 'No se pudo guardar el evento.', 'error');
+        mostrarAlertaUTA('Error', 'No se pudo guardar el evento.', 'error');
       });
   };
 
