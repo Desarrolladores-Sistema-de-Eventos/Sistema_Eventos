@@ -24,6 +24,191 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../public/css/style.css" rel="stylesheet">
+    
+    <style>
+    /* Estilos para el carrusel de eventos destacados */
+    .eventos-carousel {
+        position: relative;
+        padding: 0 20px;
+        margin: 0 auto;
+    }
+    
+    .eventos-carousel .owl-stage-outer {
+        overflow: hidden;
+    }
+    
+    .evento-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin: 15px;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .evento-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .evento-imagen {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .evento-imagen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .evento-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .evento-imagen:hover .evento-overlay {
+        opacity: 1;
+    }
+    
+    .evento-imagen:hover img {
+        transform: scale(1.1);
+    }
+    
+    .btn-ver-mas {
+        background: #dc3545;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid #dc3545;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .btn-ver-mas:hover {
+        background: white;
+        color: #dc3545;
+        text-decoration: none;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    }
+    
+    .evento-contenido {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .evento-tipo {
+        background: #dc3545;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        align-self: flex-start;
+        margin-bottom: 10px;
+    }
+    
+    .evento-titulo {
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+    
+    .evento-descripcion {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        flex: 1;
+        margin-bottom: 15px;
+    }
+    
+    .evento-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+    }
+    
+    .evento-info small {
+        color: #999;
+        display: block;
+        margin-bottom: 2px;
+    }
+    
+    .evento-precio {
+        color: #dc3545;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    
+    /* Puntos indicadores */
+    .eventos-carousel .owl-dots {
+        text-align: center;
+        margin-top: 30px;
+    }
+    
+    .eventos-carousel .owl-dots .owl-dot {
+        display: inline-block;
+        margin: 0 5px;
+    }
+    
+    .eventos-carousel .owl-dots .owl-dot span {
+        width: 12px;
+        height: 12px;
+        background: #ddd;
+        border-radius: 50%;
+        display: block;
+        transition: all 0.3s ease;
+    }
+    
+    .eventos-carousel .owl-dots .owl-dot.active span,
+    .eventos-carousel .owl-dots .owl-dot:hover span {
+        background: #dc3545;
+        transform: scale(1.3);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .evento-card {
+            height: auto;
+            margin: 10px 5px;
+        }
+        
+        .eventos-carousel {
+            padding: 0 15px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .eventos-carousel {
+            padding: 0 10px;
+        }
+    }
+    </style>
 </head>
 
 <body>
@@ -90,6 +275,67 @@
         </div>
     </div>
     <!-- About End -->
+
+    <!-- Eventos Destacados Start -->
+    <div class="container-fluid py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">DESTACADOS</h6>
+                <h1>Eventos Más Populares</h1>
+            </div>
+            
+            <?php
+            require_once '../controllers/EventosDestacadosController.php';
+            
+            $controller = new EventosDestacadosController();
+            $eventos = $controller->obtenerEventosDestacados();
+            
+            
+            if (count($eventos) > 0) {
+            ?>
+            <div class="owl-carousel owl-theme eventos-carousel">
+                <?php foreach ($eventos as $evento) {
+                    $fecha = date('d/m/Y', strtotime($evento['FECHAINICIO']));
+                    $precio = $evento['COSTO'] > 0 ? '$' . number_format($evento['COSTO'], 2) : 'GRATIS';
+                    $descripcion = strlen($evento['DESCRIPCION']) > 100 ? 
+                                  substr($evento['DESCRIPCION'], 0, 100) . '...' : 
+                                  $evento['DESCRIPCION'];
+                ?>
+                <div class="item">
+                    <div class="evento-card">
+                        <?php if ($evento['PORTADA']) { ?>
+                        <div class="evento-imagen">
+                            <img src="../documents/<?= $evento['PORTADA'] ?>" alt="<?= htmlspecialchars($evento['TITULO']) ?>">
+                            <div class="evento-overlay">
+                                <a href="../public/index.php?view=login" class="btn-ver-mas">Ver más</a>
+                            </div>
+                        </div>
+                        <?php } ?>
+                        
+                        <div class="evento-contenido">
+                            <span class="evento-tipo"><?= htmlspecialchars($evento['TIPO_EVENTO']) ?></span>
+                            <h3 class="evento-titulo"><?= htmlspecialchars($evento['TITULO']) ?></h3>
+                            <p class="evento-descripcion"><?= htmlspecialchars($descripcion) ?></p>
+                            <div class="evento-footer">
+                                <div class="evento-info">
+                                    <small><i class="fa fa-calendar"></i> <?= $fecha ?></small><br>
+                                    <small><i class="fa fa-clock"></i> <?= $evento['HORAS'] ?> horas</small>
+                                </div>
+                                <div class="evento-precio"><?= $precio ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+            <?php } else { ?>
+            <div class="text-center">
+                <p class="text-muted">No hay eventos destacados disponibles.</p>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+    <!-- Eventos Destacados End -->
 
     <!-- Feature Start -->
  <div class="container-fluid pb-5">
@@ -166,6 +412,9 @@
 
     <!-- Template Javascript -->
     <script src="../public/js/main.js"></script>
+    
+    <!-- Eventos Destacados Javascript -->
+    <script src="../public/js/eventos-destacados.js"></script>
 </body>
 
 </html>
