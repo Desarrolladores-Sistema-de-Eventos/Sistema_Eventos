@@ -177,6 +177,16 @@ include("../core/auth.php")?>
         </label>
       </div>
     </div><br>
+
+    <!-- Evento Destacado -->
+    <div class="form-group">
+      <label for="esDestacado"><i class="fa fa-star"></i> ¿Es un evento destacado?</label>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="esDestacado" name="esDestacado"> Sí
+        </label>
+      </div>
+    </div><br>
     <div class="form-group">
   <label for="requisitos">Requisitos del evento</label>
   <div id="listaRequisitos" class="form-check">
