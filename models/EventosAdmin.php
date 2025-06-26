@@ -31,13 +31,13 @@ class Evento {
     }
 
  public function crear($data) {
-    $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, SECUENCIALCARRERA, ESTADO, CAPACIDAD)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, SECUENCIALCARRERA, ESTADO, CAPACIDAD, ES_DESTACADO)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $this->pdo->prepare($sql);
     $ok = $stmt->execute([
         $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
         $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
-        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['capacidad']
+        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['capacidad'], $data['esDestacado'] ?? 0
     ]);
 
     if (!$ok) return false;
@@ -65,13 +65,13 @@ class Evento {
 }
 
 public function editar($id, $data) {
-    $sql = "UPDATE evento SET TITULO=?, DESCRIPCION=?, HORAS=?, FECHAINICIO=?, FECHAFIN=?, CODIGOMODALIDAD=?, NOTAAPROBACION=?, COSTO=?, ES_SOLO_INTERNOS=?, ES_PAGADO=?, SECUENCIALCATEGORIA=?, CODIGOTIPOEVENTO=?, SECUENCIALCARRERA=?, ESTADO=?
+    $sql = "UPDATE evento SET TITULO=?, DESCRIPCION=?, HORAS=?, FECHAINICIO=?, FECHAFIN=?, CODIGOMODALIDAD=?, NOTAAPROBACION=?, COSTO=?, ES_SOLO_INTERNOS=?, ES_PAGADO=?, SECUENCIALCATEGORIA=?, CODIGOTIPOEVENTO=?, SECUENCIALCARRERA=?, ESTADO=?, ES_DESTACADO=?
             WHERE SECUENCIAL=?";
     $stmt = $this->pdo->prepare($sql);
     $ok = $stmt->execute([
         $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
         $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
-        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $id
+        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['esDestacado'] ?? 0, $id
     ]);
 
     if (!$ok) return false;
