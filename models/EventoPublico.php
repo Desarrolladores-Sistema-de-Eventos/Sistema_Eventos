@@ -338,4 +338,27 @@ public function getEventoDetalleCompleto($idEvento) {
     return $evento;
 }
 
+    /**
+     * Obtener eventos destacados con imagen para mostrar en el carrusel
+     */
+    public function obtenerEventosDestacados($limit = 10) {
+        $sql = "SELECT DISTINCT e.SECUENCIAL, e.TITULO, e.DESCRIPCION, e.FECHAINICIO, e.COSTO, e.HORAS,
+                       t.NOMBRE AS TIPO_EVENTO,
+                       (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
+                FROM evento e
+                LEFT JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
+                WHERE e.ESTADO = 'DISPONIBLE' 
+                AND e.ES_DESTACADO = 1
+                AND EXISTS (SELECT 1 FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA')
+                GROUP BY e.SECUENCIAL
+                ORDER BY e.FECHAINICIO ASC
+                LIMIT :limit";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

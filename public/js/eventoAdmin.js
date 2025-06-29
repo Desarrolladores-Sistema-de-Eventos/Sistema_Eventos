@@ -116,6 +116,7 @@ function editarEvento(id) {
             document.getElementById('capacidad').value = e.CAPACIDAD;
             document.getElementById('esSoloInternos').value = e.ES_SOLO_INTERNOS;
             document.getElementById('esPagado').checked = e.ES_PAGADO == 1;
+            document.getElementById('esDestacado').checked = e.ES_DESTACADO == 1;
             document.getElementById('responsable').value = e.RESPONSABLE || '';
             document.getElementById('organizador').value = e.ORGANIZADOR || '';
 
@@ -234,6 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const hoy = new Date().toISOString().split('T')[0];
             const costo = parseFloat(costoInput.value);
             const esPagado = esPagadoCheckbox.checked;
+            const esDestacado = document.getElementById('esDestacado').checked;
 
             if (titulo.length < 3) return mostrarAlertaUTA('Error', 'El título debe tener al menos 3 caracteres.', 'error');
             if (descripcion.length < 10) return mostrarAlertaUTA('Error', 'La descripción debe tener al menos 10 caracteres.', 'error');
@@ -252,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const formData = new FormData(frm);
             formData.set('esPagado', esPagado ? 1 : 0);
+            formData.set('esDestacado', esDestacado ? 1 : 0);
             formData.set('costo', esPagado ? costoInput.value : '0');
             formData.set('estado', 'DISPONIBLE');
             let url = '../controllers/EventosAdminController.php?option=crear';
