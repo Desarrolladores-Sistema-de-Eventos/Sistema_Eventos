@@ -1,7 +1,5 @@
 <?php
-// Asegúrate de que esta página maneje la sesión y la autenticación si es necesario
 session_start();
-// Si necesitas incluir algún archivo de configuración o seguridad aquí, hazlo.
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +10,8 @@ session_start();
     <title>Inscripción al Evento - UTA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="../public/css/style.css" rel="stylesheet">
+
     <style>
         body {
             background-color: #f0f2f5;
@@ -81,35 +81,49 @@ session_start();
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        /* Estilo personalizado para SweetAlert UTA */
-.swal2-popup {
-  border-left: 6px solid #8B0000 !important;
-  border-right: 6px solid #8B0000 !important;
-  border-radius: 10px !important;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.swal2-title {
-  font-weight: bold;
-  color: #8B0000;
-}
-
-.swal2-image {
-  margin-top: 10px;
-  max-width: 80px;
-}
-
-.swal2-confirm {
-  background-color: #000 !important;
-  color: #fff !important;
-  border-radius: 5px !important;
-  padding: 10px 20px !important;
-  font-weight: bold;
-}
-
+        .swal2-popup {
+            border-left: 6px solid #8B0000 !important;
+            border-right: 6px solid #8B0000 !important;
+            border-radius: 10px !important;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .swal2-title {
+            font-weight: bold;
+            color: #8B0000;
+        }
+        .swal2-confirm {
+            background-color: #000 !important;
+            color: #fff !important;
+            border-radius: 5px !important;
+            padding: 10px 20px !important;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+   <!-- Topbar -->
+    <div class="container-fluid bg-white py-2 border-bottom">
+        <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
+            <div class="d-flex align-items-center mb-2 mb-lg-0">
+                <img src="../public/img/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
+                <div>
+                    <h6 class="mb-0 text-uppercase font-weight-bold" style="color: #660000;">UNIVERSIDAD</h6>
+                    <h5 class="mb-0 font-weight-bold" style="color: #660000;">TÉCNICA DE AMBATO</h5>
+                    <span class="badge" style="background-color:rgb(126, 9, 9); color: white;">CAMPUS-HUACHI</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="text-center d-flex flex-column flex-md-row align-items-center mx-3">
+                    <i class="fas fa-user-circle text-danger fa-2x mb-2 mb-md-0 mr-md-2"></i>
+                    <div class="d-flex flex-column flex-md-row gap-2">
+                        <a href="../views/dashboard_Pri_Usu.php" class="btn btn-outline-dark btn-sm mx-1">Dashboard</a>
+                        <a href="../controllers/logout.php" class="btn btn-outline-danger btn-sm mx-1">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <div class="container my-5">
     <div class="card shadow-lg form-card">
         <div class="card-body p-4 p-md-5">
@@ -117,12 +131,10 @@ session_start();
                 <i class="fas fa-edit me-2"></i> Formulario de Inscripción
             </h2>
 
-            <div id="mensajeValidacion" class="message-box" style="display: none;">
-                </div>
-            <div id="yaInscritoInfo" class="message-box info" style="display: none;">
-                </div>
+            <div id="mensajeValidacion" class="message-box" style="display: none;"></div>
+            <div id="yaInscritoInfo" class="message-box info" style="display: none;"></div>
 
-            <form id="formInscripcion" enctype="multipart/form-data">
+            <form id="formInscripcion">
                 <input type="hidden" id="idEvento" name="idEvento">
 
                 <div class="text-center mb-4">
@@ -134,7 +146,7 @@ session_start();
                     <div class="col-md-6">
                         <label for="nombreUsuario" class="form-label">Nombre Completo</label>
                         <input type="text" class="form-control form-control-lg" id="nombreUsuario" disabled>
-                        </div>
+                    </div>
                     <div class="col-md-6">
                         <label for="cedulaUsuario" class="form-label">Cédula</label>
                         <input type="text" class="form-control form-control-lg" id="cedulaUsuario" disabled>
@@ -166,12 +178,11 @@ session_start();
                         <label class="form-label">Modalidad</label>
                         <input type="text" class="form-control form-control-lg" id="modalidadEvento" disabled>
                     </div>
-                     <div class="col-md-4">
+                    <div class="col-md-4">
                         <label class="form-label">Estado del Evento</label>
                         <input type="text" class="form-control form-control-lg" id="estadoEvento" disabled>
                     </div>
                 </div>
-
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label class="form-label">Fecha de Inicio</label>
@@ -183,32 +194,28 @@ session_start();
                     </div>
                 </div>
 
-                <div id="cuposInfo" class="message-box info mb-4" style="display: none;">
-                    </div>
-
-
                 <h4 class="section-title"><i class="fas fa-clipboard-list me-2"></i> Requisitos del Evento</h4>
                 <div class="requirements-box p-3 mb-4">
-                    <ul id="requisitosList" class="list-unstyled mb-0">
+                    <ul id="requisitosList" class="list-group mb-0">
                         <li>Cargando requisitos...</li>
                     </ul>
                 </div>
-
-                <h4 class="section-title"><i class="fas fa-money-check-alt me-2"></i> Comprobante de Pago</h4>
-                <div class="mb-4">
-                    <label for="tipoPago" class="form-label">Tipo de Pago</label>
-                    <select id="tipoPago" name="forma_pago" class="form-control" required>
-  <option value="EFEC">Efectivo</option>
-  <option value="PYP">PayPal</option>
-  <option value="TARJ">Tarjeta de Crédito</option>
-  <option value="TRANS">Transferencia</option>
-</select>
-
-                </div>
-                <div class="mb-4">
-                    <label for="archivoPago" class="form-label">Subir Comprobante</label>
-                    <input type="file" class="form-control form-control-lg" name="archivoPago" id="archivoPago" accept=".pdf,.jpg,.jpeg,.png">
-                </div>
+                
+<!-- NUEVA SECCIÓN DE PAGO AÑADIDA AQUÍ -->
+<h4 class="section-title"><i class="fas fa-university me-2"></i> Información de Pago</h4>
+<div class="requirements-box p-4 mb-4">
+    <p class="mb-3"><strong>Por favor realice el depósito a la siguiente cuenta:</strong></p>
+    <ul class="list-unstyled">
+        <li><i class="fas fa-building me-2 text-danger"></i><strong>Banco:</strong> Banco del Austro</li>
+        <li><i class="fas fa-hashtag me-2 text-danger"></i><strong>Número de Cuenta:</strong> 012345678900</li>
+        <li><i class="fas fa-user-tie me-2 text-danger"></i><strong>Nombre del Titular:</strong> Universidad Técnica de Ambato</li>
+        <li><i class="fas fa-money-check-alt me-2 text-danger"></i><strong>Tipo de Cuenta:</strong> Corriente</li>
+        <li><i class="fas fa-id-card me-2 text-danger"></i><strong>RUC:</strong> 0690001234001</li>
+    </ul>
+    <div class="alert alert-info mt-3" role="alert">
+         Una vez realizado el depósito, deberá subir el comprobante de pago en la sección de inscripciones desde su panel de usuario
+    </div>
+</div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3">
                     <button type="submit" class="btn btn-uta btn-lg" id="btnInscribirse">
@@ -224,7 +231,10 @@ session_start();
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../public/js/inscribirse.js"></script>
+<?php include('partials/footer.php'); ?>
+
 </body>
 </html>

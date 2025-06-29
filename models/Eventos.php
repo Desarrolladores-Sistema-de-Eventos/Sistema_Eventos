@@ -37,6 +37,7 @@ class Evento {
             LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
             WHERE oe.SECUENCIALUSUARIO = ?
               AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
+              AND e.ESTADO IN ('DISPONIBLE', 'EN CURSO', 'FINALIZADO', 'CANCELADO')
             ORDER BY e.FECHAINICIO DESC
         ";
         $stmt = $this->pdo->prepare($sql);
@@ -54,6 +55,7 @@ public function getEventosPublicos($filtros = []) {
                 e.HORAS,
                 e.COSTO,
                 e.ESTADO,
+                e.CAPACIDAD,
                 me.NOMBRE AS MODALIDAD,
                 te.NOMBRE AS TIPO,
                 ca.NOMBRE_CARRERA AS CARRERA,
@@ -315,22 +317,28 @@ public function getEventosEnCursoInscrito($idUsuario) {
             e.FECHAINICIO,
             e.FECHAFIN,
             e.ESTADO,
-            (SELECT URL_IMAGEN 
-             FROM imagen_evento 
-             WHERE SECUENCIALEVENTO = e.SECUENCIAL 
-               AND TIPO_IMAGEN = 'PORTADA' 
-             LIMIT 1) AS PORTADA
+            e.CONTENIDO,
+            t.NOMBRE AS TIPO_EVENTO,
+            (
+                SELECT URL_IMAGEN 
+                FROM imagen_evento 
+                WHERE SECUENCIALEVENTO = e.SECUENCIAL 
+                  AND TIPO_IMAGEN = 'PORTADA' 
+                LIMIT 1
+            ) AS PORTADA
         FROM evento e
         INNER JOIN inscripcion i ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        INNER JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
         WHERE i.SECUENCIALUSUARIO = ?
-          AND CURDATE() BETWEEN e.FECHAINICIO AND e.FECHAFIN
-          AND e.ESTADO = 'DISPONIBLE'
+          AND i.CODIGOESTADOINSCRIPCION = 'ACE'
+          AND e.ESTADO IN ('DISPONIBLE', 'EN CURSO', 'FINALIZADO')
         ORDER BY e.FECHAINICIO DESC
     ";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([$idUsuario]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 public function validarDisponibilidadInscripcion($idEvento, $idUsuario) {
     $stmt = $this->pdo->prepare("SELECT FECHAFIN, CAPACIDAD FROM evento WHERE SECUENCIAL = ?");
@@ -430,6 +438,175 @@ public function registrarInscripcion($idUsuario, $idEvento, $monto, $formaPago, 
     exit; 
     }
 }
+
+public function registrarInscripcionBasica($idUsuario, $idEvento)
+{
+    // 1. Insertar inscripción
+    $stmt = $this->pdo->prepare("
+        INSERT INTO inscripcion (SECUENCIALUSUARIO, SECUENCIALEVENTO, FECHAINSCRIPCION, CODIGOESTADOINSCRIPCION)
+        VALUES (?, ?, NOW(), 'PEN')
+    ");
+    $stmt->execute([$idUsuario, $idEvento]);
+
+    // 2. Obtener ID de la inscripción recién creada
+    $idInscripcion = $this->pdo->lastInsertId();
+
+    // ✅ 3. Obtener requisitos del evento (sin JOIN)
+    $stmt = $this->pdo->prepare("
+        SELECT SECUENCIAL, DESCRIPCION 
+        FROM requisito_evento 
+        WHERE SECUENCIALEVENTO = ?
+    ");
+    $stmt->execute([$idEvento]);
+    $requisitosEvento = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // 4. Obtener los documentos del usuario
+    require_once '../models/Usuarios.php';
+    $usuarioModel = new Usuario();
+    $usuario = $usuarioModel->getById2($idUsuario); // debe contener URL_CEDULA y URL_MATRICULA
+
+    // 5. Registrar archivos ya existentes en la tabla archivo_requisito
+    foreach ($requisitosEvento as $req) {
+        $descripcion = strtolower($req['DESCRIPCION']);
+        $idRequisito = $req['SECUENCIAL'];
+
+        $archivoExistente = null;
+
+        if (str_contains($descripcion, 'cédula') && !empty($usuario['URL_CEDULA'])) {
+            $archivoExistente = $usuario['URL_CEDULA'];
+        } elseif (str_contains($descripcion, 'matrícula') && !empty($usuario['URL_MATRICULA'])) {
+            $archivoExistente = $usuario['URL_MATRICULA'];
+        }
+
+        if ($archivoExistente) {
+            $stmtArchivo = $this->pdo->prepare("
+                INSERT INTO archivo_requisito (
+                    SECUENCIALINSCRIPCION, 
+                    SECUENCIALREQUISITO, 
+                    URLARCHIVO, 
+                    CODIGOESTADOVALIDACION
+                ) VALUES (?, ?, ?, 'PEN')
+            ");
+            $stmtArchivo->execute([$idInscripcion, $idRequisito, $archivoExistente]);
+        }
+    }
+
+    return true;
+}
+
+public function actualizarArchivosInscripcion($idInscripcion, $archivosRequisitos, $esPagado, $formaPago, $monto, $comprobanteNombre)
+{
+    try {
+        $this->pdo->beginTransaction();
+
+        // Guardar o actualizar archivos de requisitos
+        foreach ($archivosRequisitos as $idRequisito => $archivoNombre) {
+            // Verificar si ya existe
+            $stmtCheck = $this->pdo->prepare("
+                SELECT COUNT(*) AS total 
+                FROM archivo_requisito 
+                WHERE SECUENCIALINSCRIPCION = ? AND SECUENCIALREQUISITO = ?
+            ");
+            $stmtCheck->execute([$idInscripcion, $idRequisito]);
+            $existe = $stmtCheck->fetchColumn();
+
+            if ($existe > 0) {
+                // Actualizar
+                $stmtUpdate = $this->pdo->prepare("
+                    UPDATE archivo_requisito 
+                    SET URLARCHIVO = ?, CODIGOESTADOVALIDACION = 'PEN' 
+                    WHERE SECUENCIALINSCRIPCION = ? AND SECUENCIALREQUISITO = ?
+                ");
+                $stmtUpdate->execute([$archivoNombre, $idInscripcion, $idRequisito]);
+            } else {
+                // Insertar
+                $stmtInsert = $this->pdo->prepare("
+                    INSERT INTO archivo_requisito 
+                    (SECUENCIALINSCRIPCION, SECUENCIALREQUISITO, URLARCHIVO, CODIGOESTADOVALIDACION) 
+                    VALUES (?, ?, ?, 'PEN')
+                ");
+                $stmtInsert->execute([$idInscripcion, $idRequisito, $archivoNombre]);
+            }
+        }
+
+        // Procesar comprobante de pago
+        if ($esPagado && $comprobanteNombre) {
+            // Verificar si ya existe pago
+            $stmtCheckPago = $this->pdo->prepare("
+                SELECT COUNT(*) AS total FROM pago WHERE SECUENCIALINSCRIPCION = ?
+            ");
+            $stmtCheckPago->execute([$idInscripcion]);
+            $existePago = $stmtCheckPago->fetchColumn();
+
+            if ($existePago > 0) {
+                // Update pago
+                $stmtPago = $this->pdo->prepare("
+                    UPDATE pago 
+                    SET CODIGOFORMADEPAGO = ?, COMPROBANTE_URL = ?, MONTO = ?, FECHA_PAGO = NOW(), CODIGOESTADOPAGO = 'PEN' 
+                    WHERE SECUENCIALINSCRIPCION = ?
+                ");
+                $stmtPago->execute([$formaPago, $comprobanteNombre, $monto, $idInscripcion]);
+            } else {
+                // Insert pago
+                $stmtPago = $this->pdo->prepare("
+                    INSERT INTO pago 
+                    (SECUENCIALINSCRIPCION, CODIGOFORMADEPAGO, COMPROBANTE_URL, MONTO, FECHA_PAGO, CODIGOESTADOPAGO) 
+                    VALUES (?, ?, ?, ?, NOW(), 'PEN')
+                ");
+                $stmtPago->execute([$idInscripcion, $formaPago, $comprobanteNombre, $monto]);
+            }
+        }
+
+        $this->pdo->commit();
+        return true;
+
+    } catch (Exception $e) {
+    $this->pdo->rollBack();
+    $this->ultimoError = $e->getMessage(); // ← Captura el mensaje
+    error_log("Error actualizando inscripción: " . $e->getMessage());
+    return false;
+}
+}
+
+public function getRequisitosPorEvento($idEvento)
+{
+    $stmt = $this->pdo->prepare("SELECT r.SECUENCIAL, r.DESCRIPCION FROM requisito_evento re
+                                 INNER JOIN requisito r ON re.SECUENCIALREQUISITO = r.SECUENCIAL
+                                 WHERE re.SECUENCIALEVENTO = ?");
+    $stmt->execute([$idEvento]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+public function getRequisitosEventoDetallado($idEvento)
+{
+    $sql = "SELECT SECUENCIAL, DESCRIPCION 
+            FROM requisito_evento 
+            WHERE SECUENCIALEVENTO = ?";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idEvento]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+public function getArchivoRequisito($idUsuario, $idRequisito, $idEvento)
+{
+    $sql = "SELECT ar.URLARCHIVO 
+            FROM archivo_requisito ar
+            JOIN inscripcion i ON i.SECUENCIAL = ar.SECUENCIALINSCRIPCION
+            WHERE ar.SECUENCIALREQUISITO = ?
+              AND i.SECUENCIALUSUARIO = ?
+              AND i.SECUENCIALEVENTO = ?
+            LIMIT 1";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idRequisito, $idUsuario, $idEvento]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+public function getComprobantePago($idInscripcion)
+{
+    $stmt = $this->pdo->prepare("SELECT COMPROBANTE_URL FROM pago WHERE SECUENCIALINSCRIPCION = ?");
+    $stmt->execute([$idInscripcion]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+
 
 
 

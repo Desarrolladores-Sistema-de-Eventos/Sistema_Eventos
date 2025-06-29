@@ -1,126 +1,181 @@
 <?php include("partials/header_Admin.php"); ?>
 <?php 
 $rolesPermitidos = ['DOCENTE', 'ESTUDIANTE', 'INVITADO'];
-include("../core/auth.php")?>
-
+include("../core/auth.php"); 
+?>
 
 <div id="page-wrapper">
   <div id="page-inner">
-  <div class="inscripciones-wrapper">
-  <h2 class="titulo-inscripcion">📥 INSCRIPCIONES</h2>
+    <div class="inscripciones-wrapper">
+      <h2 class="titulo-inscripcion">INSCRIPCIONES</h2>
 
+      <table id="tablaInscripciones" class="table table-bordered" style="width: 100%;">
 
-  <table id="tablaInscripciones" class="table table-bordered table-striped" style="width: 100%; text-align: center;">
-  <thead>
-    <tr>
-      <th>Orden</th>
-      <th>Curso</th>
-      <th>Factura</th>
-      <th>Estado Inscripción</th>
-      <th>Fecha Inscripción</th>
-    </tr>
-  </thead>
-</table>
+        <thead>
+          <tr>
+            <th>Curso</th>
+            <th>Factura</th>
+            <th>Estado Inscripción</th>
+            <th>Fecha Inscripción</th>
+            <th>Documentos</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
 
-</div>
+    <!-- ✅ Modal Subida Requisitos -->
+    <div class="modal fade" id="modalRequisitos" tabindex="-1" role="dialog" aria-labelledby="modalRequisitosLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <form id="formRequisitos" enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header" style="background:#c0392b;color:white;">
+              <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+              <h4 class="modal-title" id="modalRequisitosLabel">Subir Documentos del Evento</h4>
+            </div>
+            <div class="modal-body">
+
+              <!-- Hidden Inputs -->
+              <input type="hidden" name="id_inscripcion" id="inputIdInscripcion">
+              <input type="hidden" name="id_evento" id="inputIdEvento">
+              <input type="hidden" name="es_pagado" id="inputEsPagado">
+
+              <!-- Contenedor de requisitos -->
+               <label>Requisitos del Evento: </label>
+              <div id="contenedorRequisitos">
+                <p class="text-muted">Cargando requisitos...</p>
+              </div>
+
+              <hr>
+
+              <!-- Grupo de pago (visible solo si es pagado) -->
+               <!-- Grupo de pago -->
+<div id="grupoPago" style="display: none;">
+  <div class="form-group">
+    <label>Forma de pago</label>
+    <select class="form-control" name="forma_pago" id="inputFormaPago">
+      <option value="">Seleccione...</option>
+      <option value="TRANS">Transferencia</option>
+      <option value="EFEC">Efectivo</option>
+    </select>
+  </div>
+<hr/>
+
+  <!-- Si ya existe comprobante -->
+  <div class="form-group">
+    <label>Comprobante de pago</label>
+
+    <div id="wrapperComprobantePago" style="display: none;">
+      <a id="linkComprobante" href="#" target="_blank" class="nombre-archivo text-success mr-2"></a>
+      <button type="button" id="btnCambiarComprobante" class="btn btn-sm btn-outline-primary">Cambiar</button>
+      <input type="file" name="comprobante_pago" id="inputComprobante" class="form-control-file mt-2" style="display:none;" accept=".pdf,.jpg,.jpeg,.png">
+    </div>
+
+    <!-- Si no existe comprobante -->
+    <div id="wrapperNuevoComprobante" style="display: none;">
+      <input type="file" name="comprobante_pago" class="form-control-file" accept=".pdf,.jpg,.jpeg,.png">
+    </div>
   </div>
 </div>
+
+  
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <style>
-.inscripciones-wrapper {
+/* Colores base */
+body {
+  background-color: #fff;
+  color: #000;
   font-family: Arial, sans-serif;
-  padding: 20px;
 }
 
+/* Encabezado */
 .titulo-inscripcion {
   text-align: center;
-  font-size: 20px;
+  color:rgb(0, 0, 0);
+  font-weight: bold;
+  font-size: 24px;
   margin-bottom: 15px;
 }
 
-.acciones-inscripcion {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  justify-content: center;
-}
-
-.btn-inscribir {
-  background-color: #e74c3c;
+/* Tabla */
+#tablaInscripciones th {
+  background-color:rgb(180, 34, 34);
   color: white;
-  padding: 8px 16px;
-  border: none;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
+  text-align: center;
 }
-
-.btn-anular {
-  background-color: #2ecc71;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.tabla-inscripciones {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.tabla-inscripciones th,
-.tabla-inscripciones td {
-  border: 1px solid #ccc;
-  padding: 10px;
+#tablaInscripciones td {
+  color: #000;
   text-align: center;
   vertical-align: middle;
 }
 
-.tabla-inscripciones th {
-  background-color: #f9f9f9;
+/* Botón de subir */
+.btn-dark {
+  background-color: #000;
+  color: #fff;
+  border: none;
+}
+.btn-dark:hover {
+  background-color:rgb(56, 54, 54);
+  color: #fff;
 }
 
-.btn-ver-factura {
-  background-color: #3498db;
-  color: white;
-  text-decoration: none;
-  padding: 5px 10px;
-  font-size: 13px;
-  border-radius: 5px;
-  display: inline-block;
+/* Botones del modal */
+.modal-footer .btn-success {
+  background-color: #c0392b;
+  border: none;
+}
+.modal-footer .btn-success:hover {
+  background-color: #a93226;
+}
+.modal-footer .btn-default:hover {
+  background-color: #ddd;
 }
 
-.btn-ver-factura:hover {
-  background-color: #2980b9;
+/* Buscador y selector */
+.dataTables_filter input,
+.dataTables_length select {
+  border: 1px solid #c0392b;
+  border-radius: 4px;
 }
 
-.progreso.verde {
-  background-color: #2ecc71;
-  color: white;
-  padding: 3px 10px;
-  border-radius: 15px;
-  font-weight: bold;
+/* Forzar botón activo (Bootstrap 3 usa <li class="active"><a>...) */
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+  background-color: #c0392b !important;
+  border-color: #c0392b !important;
+  color: white !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-.estado-completo {
-  color: green;
-  font-weight: bold;
+.dataTables_length label,
+.dataTables_length select {
+  font-size: 14px !important;
 }
+
+
 </style>
 
- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="../public/js/misInscripciones.js"></script>
 
 <?php include("partials/footer_Admin.php"); ?>

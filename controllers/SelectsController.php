@@ -15,10 +15,13 @@ echo json_encode([
     'tipos'       => cargar('tipo_evento', 'CODIGO', 'NOMBRE'),
     'carreras'    => cargar('carrera', 'SECUENCIAL', 'NOMBRE_CARRERA'),
     'categorias'  => cargar('categoria_evento', 'SECUENCIAL', 'NOMBRE'),
-    'estados'     => [
-        ['value' => 'DISPONIBLE', 'text' => 'Disponible'],
-        ['value' => 'CERRADO', 'text' => 'Cerrado'],
-        ['value' => 'CANCELADO', 'text' => 'Cancelado']
+    'estados' => [
+    ['value' => 'DISPONIBLE', 'text' => 'Disponible'],
+    ['value' => 'EN CURSO', 'text' => 'En curso'],
+    ['value' => 'FINALIZADO', 'text' => 'Finalizado'],
+    ['value' => 'CERRADO', 'text' => 'Cerrado'],
+    ['value' => 'CANCELADO', 'text' => 'Cancelado']
+
     ],
     'requisitos'  => cargar('requisito_evento', 'SECUENCIAL', 'DESCRIPCION')
 ]);

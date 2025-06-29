@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once '../models/Certificados.php';
 
@@ -46,9 +47,24 @@ class CertificadoController
             case 'subirCertificado':
                 $this->subirCertificado();
                 break;
+            case 'emitidosPorEvento':
+                $this->emitidosPorEvento();
+                break;
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Acción no válida']);
         }
+    }
+
+    private function emitidosPorEvento()
+    {
+        $idEvento = $_GET['idEvento'] ?? null;
+        if (!$idEvento) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'ID del evento requerido']);
+            return;
+        }
+
+        $certificados = $this->certificadoModelo->getCertificadosEmitidos($idEvento);
+        $this->json(['tipo' => 'success', 'data' => $certificados]);
     }
 
     private function listarPorEvento()
@@ -109,55 +125,97 @@ class CertificadoController
         $this->json($data);
     }
 
-    private function json($data)
+    private function datosParaGenerar()
     {
-        echo json_encode($data);
+        $idCertificado = $_GET['idCertificado'] ?? null;
+        if (!$idCertificado) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'ID de certificado requerido.']);
+            return;
+        }
+        $data = $this->certificadoModelo->getCertificado($idCertificado);
+        if (!$data) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Certificado no encontrado.']);
+            return;
+        }
+        $this->json($data);
     }
-private function datosParaGenerar()
-{
-    $idCertificado = $_GET['idCertificado'] ?? null;
-    if (!$idCertificado) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'ID de certificado requerido.']);
-        return;
-    }
-    $data = $this->certificadoModelo->getCertificado($idCertificado);
-    if (!$data) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Certificado no encontrado.']);
-        return;
-    }
-    // Puedes enriquecer con más datos si lo necesitas
-    $this->json($data);
-}
+
+
 private function subirCertificado()
 {
-    if (!isset($_FILES['certificado']) || !isset($_POST['idUsuario']) || !isset($_POST['idEvento'])) {
+    $base64 = $_POST['base64'] ?? null;
+    $idUsuario = $_POST['idUsuario'] ?? null;
+    $idEvento = $_POST['idEvento'] ?? null;
+
+    if (!$base64 || !$idUsuario || !$idEvento) {
         $this->json(['tipo' => 'error', 'mensaje' => 'Datos incompletos para subir certificado.']);
         return;
     }
 
-    $file = $_FILES['certificado'];
-    $idUsuario = $_POST['idUsuario'];
-    $idEvento = $_POST['idEvento'];
+    // Validar existencia de usuario y evento antes de continuar
+    if (!$this->certificadoModelo->usuarioYEventoExisten($idUsuario, $idEvento)) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Usuario o evento no existe.']);
+        return;
+    }
 
-    $nombreArchivo = 'certificado_' . $idUsuario . '_' . $idEvento . '_' . time() . '.pdf';
-    $rutaDestino = '../documents/' . $nombreArchivo;
+    $pdfData = base64_decode($base64);
+    if (!$pdfData || strlen($pdfData) < 1000) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Base64 inválido o PDF demasiado pequeño']);
+        return;
+    }
 
-    if (move_uploaded_file($file['tmp_name'], $rutaDestino)) {
+    $nombreArchivo = 'certificado_' . intval($idUsuario) . '_' . intval($idEvento) . '_' . time() . '.pdf';
+    $directorio = '../documents/';
+    $rutaDestino = $directorio . $nombreArchivo;
+
+    if (!is_dir($directorio) || !is_writable($directorio)) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Directorio de destino no disponible o no escribible']);
+        return;
+    }
+
+    $guardado = @file_put_contents($rutaDestino, $pdfData);
+    if ($guardado === false) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'No se pudo guardar el archivo PDF']);
+        return;
+    }
+
+    try {
         $certExistente = $this->certificadoModelo->buscarCertificadoPorUsuarioEvento($idUsuario, $idEvento);
+
         if ($certExistente) {
-            $ok = $this->certificadoModelo->editarCertificado($certExistente['SECUENCIAL'], $nombreArchivo);
+            $resultado = $this->certificadoModelo->editarCertificado($certExistente['SECUENCIAL'], $nombreArchivo);
         } else {
-            $ok = $this->certificadoModelo->crearCertificado($idUsuario, $idEvento, $nombreArchivo);
+            $resultado = $this->certificadoModelo->crearCertificado($idUsuario, $idEvento, $nombreArchivo);
         }
+
+        // Si $resultado es un array, úsalo directamente
+        if (is_array($resultado)) {
+            $success = $resultado['success'];
+            $mensaje = $resultado['mensaje'];
+        } else {
+            $success = $resultado;
+            $mensaje = $resultado ? 'Certificado guardado correctamente' : 'Error al guardar en la base de datos';
+        }
+
         $this->json([
-            'tipo' => $ok ? 'success' : 'error',
-            'mensaje' => $ok ? 'Certificado subido y guardado' : 'Error al guardar en BD',
-            'url_certificado' => $ok ? $nombreArchivo : null
+            'tipo' => $success ? 'success' : 'error',
+            'mensaje' => $mensaje,
+            'url_certificado' => $success ? $nombreArchivo : null
         ]);
-    } else {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al subir el archivo']);
+    } catch (Exception $e) {
+        if (file_exists($rutaDestino)) {
+            unlink($rutaDestino);
+        }
+        $this->json(['tipo' => 'error', 'mensaje' => 'Excepción al guardar: ' . $e->getMessage()]);
     }
 }
+
+
+
+    private function json($data)
+    {
+        echo json_encode($data);
+    }
 }
 
 // Instancia y ejecución

@@ -38,35 +38,90 @@ function toggleCosto() {
   }
 }
 
-function inicializarTablaEventos() {
-  const incluirCancelados = document.getElementById('mostrarCancelados')?.checked;
-  localStorage.setItem('verCancelados', incluirCancelados ? '1' : '0');
 
-  if (tablaEventos) tablaEventos.destroy();
+// Nueva función para renderizar tablas por estado en tabs
+function renderTablasPorEstado(eventos) {
+  // Usar claves consistentes con los ids de los contenedores
+  const estados = {
+    'DISPONIBLE': [],
+    'CURSO': [],
+    'FINALIZADO': [],
+    'CANCELADO': []
+  };
 
-  tablaEventos = $('#tabla-eventos').DataTable({
-    ajax: {
-      url: '../controllers/EventosController.php?option=listarResponsable',
-      dataSrc: function (json) {
-        if (incluirCancelados) {
-          return json.filter(e => ['CANCELADO', 'CERRADO'].includes((e.ESTADO || '').trim().toUpperCase()));
-        }
-        return json.filter(e => (e.ESTADO || '').trim().toUpperCase() === 'DISPONIBLE');
-      }
-    },
-    columns: [
-      { data: 'TITULO' },
-      { data: 'TIPO' },
-      { data: 'FECHAINICIO' },
-      { data: 'FECHAFIN' },
-      { data: 'MODALIDAD' },
-      { data: 'HORAS' },
-      { data: 'COSTO' },
-      { data: 'ESTADO' },
-      { data: 'accion' }
-    ],
-    language: { url: '../public/js/es-ES.json' },
-    order: [[2, 'desc']]
+  eventos.forEach(e => {
+    let estado = (e.ESTADO || '').toString().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim().toUpperCase();
+    if (estado === 'EN CURSO' || estado === 'ENCURSO' || estado === 'EN_CURSO') estado = 'CURSO';
+    if (estados[estado]) estados[estado].push(e);
+  });
+
+  Object.keys(estados).forEach(estado => {
+    let id = 'tabla-' + estado.toLowerCase();
+    const contenedor = document.getElementById(id);
+    if (contenedor) {
+      contenedor.innerHTML = generarTablaHTML(estados[estado]);
+    }
+  });
+}
+
+function generarTablaHTML(data) {
+  if (!data.length) return '<div class="alert alert-info">No hay eventos en este estado.</div>';
+  let html = `<table id="tabla-eventos" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Tipo</th>
+        <th>Inicio</th>
+        <th>Finalización</th>
+        <th>Modalidad</th>
+        <th>Horas</th>
+        <th>Costo</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${data.map(e => {
+        let acciones = e.accion || '';
+        acciones = acciones.replace(/btn-danger/g, 'btn-primary');
+        return `
+        <tr>
+          <td>${e.TITULO}</td>
+          <td>${e.TIPO}</td>
+          <td>${e.FECHAINICIO}</td>
+          <td>${e.FECHAFIN}</td>
+          <td>${e.MODALIDAD}</td>
+          <td>${e.HORAS}</td>
+          <td>${e.COSTO}</td>
+          <td>${e.ESTADO}</td>
+          <td>${acciones}</td>
+        </tr>
+        `;
+      }).join('')}
+    </tbody>
+  </table>`;
+  // Inicializar DataTable con español y responsive
+  setTimeout(() => {
+    if (window.$ && window.$.fn.DataTable && document.getElementById('tabla-eventos')) {
+      window.$('#tabla-eventos').DataTable({
+        language: {
+          url: '../public/js/es-ES.json'
+        },
+        lengthChange: true,
+        responsive: true
+      });
+    }
+  }, 10);
+  return html;
+}
+
+function cargarEventosPorEstado() {
+  $.ajax({
+    url: '../controllers/EventosController.php?option=listarResponsable',
+    dataType: 'json',
+    success: function (data) {
+      renderTablasPorEstado(data);
+    }
   });
 }
 
@@ -223,13 +278,7 @@ function llenarSelect(id, opciones) {
 // ================= INICIALIZACIÓN =================
 
 document.addEventListener('DOMContentLoaded', function () {
-  const chkMostrarCancelados = document.getElementById('mostrarCancelados');
-  if (chkMostrarCancelados) {
-    chkMostrarCancelados.checked = localStorage.getItem('verCancelados') === '1';
-    chkMostrarCancelados.addEventListener('change', inicializarTablaEventos);
-  }
-
-  inicializarTablaEventos();
+  cargarEventosPorEstado();
   cargarSelects();
 
   const frm = document.querySelector('#formEvento');

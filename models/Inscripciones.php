@@ -187,7 +187,8 @@ public function detalleInscripcion($idInscripcion, $idResponsable) {
             e.TITULO AS EVENTO,
             i.FECHAINSCRIPCION,
             i.CODIGOESTADOINSCRIPCION,
-            i.FACTURA_URL AS FACTURA
+            i.FACTURA_URL AS FACTURA,
+            e.ES_PAGADO
         FROM inscripcion i
         JOIN usuario u ON u.SECUENCIAL = i.SECUENCIALUSUARIO
         JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
@@ -316,10 +317,12 @@ public function getInscripcionesPorUsuario($idUsuario) {
     $sql = "
         SELECT 
             i.SECUENCIAL,
+            i.SECUENCIALEVENTO,
             e.TITULO AS EVENTO,
             i.FACTURA_URL,
             i.CODIGOESTADOINSCRIPCION,
-            i.FECHAINSCRIPCION
+            i.FECHAINSCRIPCION,
+            e.ES_PAGADO
         FROM inscripcion i
         INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
         WHERE i.SECUENCIALUSUARIO = ?
@@ -334,7 +337,54 @@ public function estaInscrito($idUsuario, $idEvento) {
         $stmt->execute([$idUsuario, $idEvento]);
         return $stmt->fetchColumn() > 0; // fetchColumn(0) obtiene el valor de la primera columna
     }
+public function validarYActualizarEstadoInscripcion($idInscripcion) {
+    // Verificar que todos los requisitos estén validados
+    $sqlReq = "SELECT COUNT(*) FROM archivo_requisito WHERE SECUENCIALINSCRIPCION = ? AND CODIGOESTADOVALIDACION != 'VAL'";
+    $stmtReq = $this->pdo->prepare($sqlReq);
+    $stmtReq->execute([$idInscripcion]);
+    $faltanReq = $stmtReq->fetchColumn();
 
+    // Consultar si el evento es pagado
+    $sqlEsPagado = "SELECT e.ES_PAGADO
+                    FROM inscripcion i
+                    INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+                    WHERE i.SECUENCIAL = ?";
+    $stmtEsPagado = $this->pdo->prepare($sqlEsPagado);
+    $stmtEsPagado->execute([$idInscripcion]);
+    $esPagado = $stmtEsPagado->fetchColumn();
 
+    $faltanPagos = 0;
+    if ($esPagado == 1) {
+        // Si es pagado, verificar que todos los pagos estén validados
+        $sqlPago = "SELECT COUNT(*) FROM pago WHERE SECUENCIALINSCRIPCION = ? AND CODIGOESTADOPAGO != 'VAL'";
+        $stmtPago = $this->pdo->prepare($sqlPago);
+        $stmtPago->execute([$idInscripcion]);
+        $faltanPagos = $stmtPago->fetchColumn();
+    }
 
+    if ($faltanReq == 0 && ($esPagado == 0 || $faltanPagos == 0)) {
+        // Actualizar estado de inscripción a ACE
+        $sqlUpd = "UPDATE inscripcion SET CODIGOESTADOINSCRIPCION = 'ACE' WHERE SECUENCIAL = ?";
+        $stmtUpd = $this->pdo->prepare($sqlUpd);
+        $stmtUpd->execute([$idInscripcion]);
+        return true;
+    }
+    return false;
+}
+public function obtenerIdInscripcionPorArchivo($idArchivo) {
+    $stmt = $this->pdo->prepare("SELECT SECUENCIALINSCRIPCION FROM archivo_requisito WHERE SECUENCIAL = ?");
+    $stmt->execute([$idArchivo]);
+    return $stmt->fetchColumn();
+}
+
+public function obtenerIdInscripcionPorPago($idPago) {
+    $stmt = $this->pdo->prepare("SELECT SECUENCIALINSCRIPCION FROM pago WHERE SECUENCIAL = ?");
+    $stmt->execute([$idPago]);
+    return $stmt->fetchColumn();
+}
+public function esEventoPagadoPorInscripcion($idInscripcion) {
+    $stmt = $this->pdo->prepare("SELECT e.ES_PAGADO FROM inscripcion i INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO WHERE i.SECUENCIAL = ?");
+    $stmt->execute([$idInscripcion]);
+    return $stmt->fetchColumn();
+}
 }
