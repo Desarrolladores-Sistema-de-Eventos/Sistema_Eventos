@@ -177,13 +177,14 @@
 
 <div class="container-fluid bg-white py-2 border-bottom topbar-section">
     <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
-        <div class="d-flex align-items-center mb-2 mb-lg-0 logo-container">
-            <img src="../public/img/sello_UTA.jpg" alt="Logo Facultad" class="img-fluid">
-            <div class="faculty-info">
-                <h6>FACULTAD DE INGENIERÍA EN</h6>
-                <h5>SISTEMAS, ELECTRÓNICA E INDUSTRIAL</h5>
-                <span class="badge badge-danger">CTT - TALLERES TECNOLÓGICOS</span>
-            </div>
+
+        <div class="d-flex align-items-center mb-2 mb-lg-0">
+          <img src="../public/img/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
+          <div>
+            <h6 class="mb-0 text-uppercase font-weight-bold" style="color: #660000;">UNIVERSIDAD</h6>
+            <h5 class="mb-0 font-weight-bold" style="color: #660000;">TÉCNICA DE AMBATO</h5>
+			<span class="badge" style="background-color:rgb(126, 9, 9); color: white;">CAMPUS-HUACHI</span>
+          </div>
         </div>
         <div class="d-flex align-items-center user-actions">
             <i class="fas fa-user-circle"></i>

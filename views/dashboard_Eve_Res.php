@@ -7,40 +7,38 @@ include("../core/auth.php")
 <div id="page-wrapper">
   <div id="page-inner">
     <div class="row">
-      <div class="col-md-12">
-        <h2><i class="fa fa-calendar"></i> Gestión de Eventos</h2>
+      <div class="col-md-12 d-flex justify-content-between align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="margin-bottom: 0;"><i class="fa fa-calendar"></i> Gestión de Eventos</h2>
+        <button class="btn btn-primary mb-3" id="btn-nuevo" data-toggle="modal" data-target="#modalEvento" style="margin-bottom: 0;">
+          <i class="fa fa-plus-square-o"></i> Nuevo
+        </button>
       </div>
     </div>
-    <hr />
+     <div class="titulo-linea"></div>
+    
     <div class="panel panel-default">
       <div class="panel-heading"><i class="fa fa-list"></i> Lista de Eventos</div>
       <div class="panel-body">
-        <button class="btn btn-primary mb-3" id="btn-nuevo" data-toggle="modal" data-target="#modalEvento">
-          <i class="fa fa-plus"></i> Nuevo Evento
-        </button>
-        <div class="form-check mb-2">
-          <label class="form-check-label">
-            <input type="checkbox" id="mostrarCancelados" class="form-check-input"> Mostrar eventos cancelados
-          </label>
-        </div>
-        <br><br>
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped" id="tabla-eventos">
-            <thead class="thead-dark">
-              <tr>
-                <th>TÍTULO</th>
-                <th>TIPO</th>
-                <th>INICIO</th>
-                <th>FINALIZACIÓN</th>
-                <th>MODALIDAD</th>
-                <th>HORAS</th>
-                <th>COSTO</th>
-                <th>ESTADO</th>
-                <th>ACCIONES</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+        <!-- Botón Nuevo movido arriba -->
+        <ul class="nav nav-tabs" id="tabsEstados">
+          <li class="active"><a data-toggle="tab" href="#tab-disponible">Disponible</a></li>
+          <li><a data-toggle="tab" href="#tab-curso">En Curso</a></li>
+          <li><a data-toggle="tab" href="#tab-finalizado">Finalizado</a></li>
+          <li><a data-toggle="tab" href="#tab-cancelado">Cancelado</a></li>
+        </ul>
+        <div class="tab-content" style="background: #fff; padding: 20px;">
+          <div id="tab-disponible" class="tab-pane fade in active">
+            <div id="tabla-disponible"></div>
+          </div>
+          <div id="tab-curso" class="tab-pane fade">
+            <div id="tabla-curso"></div>
+          </div>
+          <div id="tab-finalizado" class="tab-pane fade">
+            <div id="tabla-finalizado"></div>
+          </div>
+          <div id="tab-cancelado" class="tab-pane fade">
+            <div id="tabla-cancelado"></div>
+          </div>
         </div>
 
         <!-- Modal -->
@@ -205,6 +203,172 @@ include("../core/auth.php")
     </div>
   </div>
 </div>
+<style>
+  body {
+    background-color: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
+  }
+  .alert-info {
+  background-color: #ffd6d6 !important; /* Rojo claro */
+  color: #222 !important;               /* Letra negra */
+  border-color: #ffb3b3 !important;     /* Borde rojo suave */
+}
+
+  .panel-heading {
+    background: rgb(27, 26, 26) !important;
+    color: #fff !important;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom: 2px solid #7b2020;
+     font-weight: normal;
+     font-size: 14px;
+
+  }
+   h2 {
+    font-size: 24px;
+    color: rgb(23, 23, 23);
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  
+
+  .panel-heading {
+    background:rgb(185, 51, 51);
+    color: #fff;
+    
+  }
+ select.form-control {
+    border: 1.5px solid #9b2e2e;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #f9fafb;
+    color: #222;
+    transition: border-color 0.2s;
+  }
+   th.nombre-columna, td.nombre-columna {
+  max-width: 100px;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Botón PDF estilo claro con icono */
+.btn-primary {
+  background: #f3f3f3;
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: none;
+  transition: background 0.2s;
+  font-weight: normal;
+  font-size: 14px;
+
+}
+.btn-primary:hover {
+  background: #e0e0e0;
+  color: #b32d2d;
+}
+
+.btn-secundary {
+  background: #f3f3f3;
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: none;
+  transition: background 0.2s;
+}
+.btn-secundary:hover {
+  background: #e0e0e0;
+  color: #b32d2d;
+}
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+  background-color: #c0392b !important;
+  border-color: #c0392b !important;
+  color: white !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+thead {
+  background-color: rgb(180, 34, 34);
+  color: white;
+  font-size: 14px;
+  font-weight: normal;
+}
+.table {
+  width: 100% !important;
+  max-width: 90vw !important;
+  margin: 0 auto;
+}
+.table th, .table td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table th {
+  background-color: rgb(180, 34, 34);
+  color: #fff;
+  font-weight: normal;
+}
+h4 {
+  font-size: 14px;
+  
+}
+label{
+  font-weight: normal;
+  font-size: 14px;
+}
+p{
+  font-size: 14px;
+  font-weight: normal;
+}
+hr{
+  border-top: 2px solid #9b2e2e;
+  opacity: 1;
+}
+.dataTables_length label,
+.dataTables_length select {
+  font-size: 14px !important;
+}
+ .titulo-linea {
+    border-bottom: 2px solid rgb(185, 51, 51);
+    margin-top: 6px;
+    margin-bottom: 20px;
+  }
+  /* Tabs UTA institucional */
+.nav-tabs > li > a {
+  color: #222 !important; /* Negro para inactivos */
+}
+.nav-tabs > li > a:hover {
+  background: #c0392b !important;
+  color: #fff !important;
+}
+
+</style>
 <!-- Scripts necesarios -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

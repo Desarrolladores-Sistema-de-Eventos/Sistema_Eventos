@@ -10,29 +10,33 @@ class EventoPublico {
     }
 
     public function obtenerEventosDisponibles($page = 1, $limit = 6) {
-        $offset = ($page - 1) * $limit;
-        $sql = "SELECT 
-                    e.SECUENCIAL,
-                    e.TITULO,
-                    e.COSTO,
-                    t.NOMBRE AS TIPO_EVENTO,
-                    e.HORAS,
-                    e.ESTADO,
-                    (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
-                FROM evento e
-                INNER JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
-                WHERE e.ESTADO = 'DISPONIBLE'
-                LIMIT :limit OFFSET :offset";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-        $stmt->execute();
-        $eventos = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $eventos[] = $row;
-        }
-        return $eventos;
+    $offset = ($page - 1) * $limit;
+    $sql = "SELECT 
+                e.SECUENCIAL,
+                e.TITULO,
+                e.COSTO,
+                e.CAPACIDAD,
+                t.NOMBRE AS TIPO_EVENTO,
+                e.HORAS,
+                e.ESTADO,
+                (SELECT COUNT(*) FROM inscripcion i WHERE i.SECUENCIALEVENTO = e.SECUENCIAL) AS INSCRITOS,
+                (e.CAPACIDAD - (SELECT COUNT(*) FROM inscripcion i WHERE i.SECUENCIALEVENTO = e.SECUENCIAL)) AS DISPONIBLES,
+                (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
+            FROM evento e
+            INNER JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
+            WHERE e.ESTADO = 'DISPONIBLE'
+            LIMIT :limit OFFSET :offset";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $eventos = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $eventos[] = $row;
     }
+    return $eventos;
+}
+
 
     public function contarEventosDisponibles() {
         $sql = "SELECT COUNT(*) as total FROM evento WHERE ESTADO = 'DISPONIBLE'";
@@ -53,6 +57,7 @@ class EventoPublico {
                     e.NOTAAPROBACION,
                     e.COSTO,
                     e.ESTADO,
+                    e.CAPACIDAD,
                     me.NOMBRE AS MODALIDAD,
                     te.NOMBRE AS TIPO,
                     ca.NOMBRE_CARRERA AS CARRERA,
@@ -116,22 +121,28 @@ public function buscarEventos($keyword) {
                 e.SECUENCIAL,
                 e.TITULO,
                 e.COSTO,
+                e.CAPACIDAD,
                 t.NOMBRE AS TIPO_EVENTO,
                 e.HORAS,
                 e.ESTADO,
+                (SELECT COUNT(*) FROM inscripcion i WHERE i.SECUENCIALEVENTO = e.SECUENCIAL) AS INSCRITOS,
+                (e.CAPACIDAD - (SELECT COUNT(*) FROM inscripcion i WHERE i.SECUENCIALEVENTO = e.SECUENCIAL)) AS DISPONIBLES,
                 (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
             FROM evento e
             INNER JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
             WHERE e.ESTADO = 'DISPONIBLE' AND (e.TITULO LIKE ? OR e.DESCRIPCION LIKE ?)";
+    
     $stmt = $this->pdo->prepare($sql);
     $like = "%$keyword%";
     $stmt->execute([$like, $like]);
+    
     $eventos = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $eventos[] = $row;
     }
     return $eventos;
 }
+
 
 public function eventosRecientes($limite = 3) {
     $sql = "SELECT 
@@ -187,9 +198,12 @@ public function filtrarEventos($filtros = [], $page = 1, $limit = 6) {
                 e.SECUENCIAL,
                 e.TITULO,
                 e.COSTO,
+                e.CAPACIDAD,
                 t.NOMBRE AS TIPO_EVENTO,
                 e.HORAS,
                 e.ESTADO,
+                (SELECT COUNT(*) FROM inscripcion i WHERE i.SECUENCIALEVENTO = e.SECUENCIAL) AS INSCRITOS,
+                (e.CAPACIDAD - (SELECT COUNT(*) FROM inscripcion i WHERE i.SECUENCIALEVENTO = e.SECUENCIAL)) AS DISPONIBLES,
                 (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
             FROM evento e
             INNER JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
@@ -210,6 +224,7 @@ public function filtrarEventos($filtros = [], $page = 1, $limit = 6) {
     }
     return $eventos;
 }
+
 
 public function contarEventosFiltrados($filtros = []) {
     $where = [];
@@ -279,10 +294,12 @@ public function getEventoDetalleCompleto($idEvento) {
                 ca.NOMBRE_CARRERA AS CARRERA,
                 e.TITULO,
                 e.DESCRIPCION,
+                e.CONTENIDO,
                 e.FECHAINICIO,
                 e.FECHAFIN,
                 e.HORAS,
                 e.COSTO,
+                e.CAPACIDAD,
                 e.NOTAAPROBACION,
                 e.ES_SOLO_INTERNOS
             FROM evento e

@@ -58,9 +58,21 @@ class EventosController
             case 'validarInscripcion':
                 $this->validarInscripcion();
                 break;
-            case 'registrarInscripcion':
-                $this->registrarInscripcion();
-                break;
+            case 'registrarInscripcionIncompleta':
+                $this->registrarInscripcionIncompleta(); 
+                break; 
+            case 'requisitosUsuarioEvento': 
+                $this->requisitosUsuarioEvento(); 
+                break; 
+            case 'actualizarInscripcion':
+    $this->actualizarInscripcion();
+    break;
+    case 'comprobantePago':
+  $this->obtenerComprobantePago();
+  break;
+
+
+
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Acción no válida']);
         }
@@ -77,6 +89,82 @@ class EventosController
     $resultado = $this->eventoModelo->validarDisponibilidadInscripcion($idEvento, $this->idUsuario);
     $this->json($resultado);
 }
+private function obtenerComprobantePago()
+{
+    $idInscripcion = $_GET['idInscripcion'] ?? null;
+    if (!$idInscripcion) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'ID de inscripción no proporcionado.']);
+        return;
+    }
+
+    $comprobante = $this->eventoModelo->getComprobantePago($idInscripcion); // Asegúrate de tener esto en el modelo
+    if ($comprobante) {
+        $this->json(['comprobante' => $comprobante['COMPROBANTE_URL']]);
+    } else {
+        $this->json(['comprobante' => null]);
+    }
+}
+
+
+private function actualizarInscripcion()
+{
+    $idInscripcion = $_POST['id_inscripcion'] ?? null;
+    $idEvento = $_POST['id_evento'] ?? null;
+    $formaPago = $_POST['forma_pago'] ?? null;
+    $monto = $_POST['monto'] ?? 0;
+    $esPagado = $_POST['es_pagado'] ?? 0;
+
+    // Validación mínima
+    if (!$idInscripcion || !$idEvento) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Datos incompletos.']);
+        return;
+    }
+
+    // Procesar archivos de requisitos
+    $requisitos = json_decode($_POST['requisitos'] ?? '[]', true);
+    $archivosSubidos = [];
+
+    foreach ($requisitos as $idReq) {
+        $campo = "requisito_$idReq";
+        if (isset($_FILES[$campo]) && $_FILES[$campo]['error'] === UPLOAD_ERR_OK) {
+            $archivo = $_FILES[$campo];
+            $nombreArchivo = uniqid("req_") . '_' . basename($archivo['name']);
+            $ruta = "../documents/$nombreArchivo";
+            if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
+                $archivosSubidos[$idReq] = $nombreArchivo;
+            }
+        }
+    }
+
+    // Procesar comprobante de pago
+    $nombreComprobante = null;
+    if ($esPagado && isset($_FILES['comprobante_pago']) && $_FILES['comprobante_pago']['error'] === UPLOAD_ERR_OK) {
+        $archivo = $_FILES['comprobante_pago'];
+        $nombreComprobante = uniqid("comprobante_") . '_' . basename($archivo['name']);
+        $ruta = "../documents/$nombreComprobante";
+        move_uploaded_file($archivo['tmp_name'], $ruta);
+    }
+
+    // Llama al modelo para actualizar
+    $ok = $this->eventoModelo->actualizarArchivosInscripcion(
+        $idInscripcion,
+        $archivosSubidos,
+        $esPagado,
+        $formaPago,
+        $monto,
+        $nombreComprobante
+    );
+
+    if ($ok) {
+        $this->json(['tipo' => 'success', 'mensaje' => 'Le llegará una notificación cuando su inscripción haya sido aprobada']);
+    } else {
+        $this->json([
+    'tipo' => 'error',
+    'mensaje' => $this->eventoModelo->ultimoError ?: 'No se pudo actualizar la inscripción.'
+]);
+    }
+}
+
 public function registrarInscripcion()
 {
     if (!$this->idUsuario) {
@@ -415,6 +503,102 @@ if ($ok === true) {
 
         $this->json($eventos);
     }
+    private function registrarInscripcionIncompleta()
+{
+    if (!$this->idUsuario) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Usuario no autenticado']);
+        return;
+    }
+
+    $idEvento = $_POST['id_evento'] ?? null;
+
+    if (!$idEvento) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'ID del evento faltante']);
+        return;
+    }
+
+    // Verificar si ya está inscrito
+    $verifica = $this->eventoModelo->validarDisponibilidadInscripcion($idEvento, $this->idUsuario);
+    if (!$verifica['disponible']) {
+        $this->json(['tipo' => 'error', 'mensaje' => $verifica['mensaje']]);
+        return;
+    }
+
+    try {
+        // Este método ahora también guarda automáticamente los archivos ya existentes (cédula, matrícula)
+        $ok = $this->eventoModelo->registrarInscripcionBasica($this->idUsuario, $idEvento);
+
+        if ($ok) {
+            $this->json([
+                'tipo' => 'success',
+                'mensaje' => 'Inscripción registrada exitosamente.'
+            ]);
+        } else {
+            $this->json([
+                'tipo' => 'error',
+                'mensaje' => 'Error al registrar la inscripción.'
+            ]);
+        }
+    } catch (Exception $e) {
+        $this->json([
+            'tipo' => 'error',
+            'mensaje' => 'Error inesperado al registrar la inscripción.',
+            'debug' => $e->getMessage()
+        ]);
+    }
+}
+
+private function requisitosUsuarioEvento()
+{
+    $idEvento = $_GET['idEvento'] ?? null;
+    if (!$idEvento || !$this->idUsuario) {
+        $this->json([]);
+        return;
+    }
+
+    $requisitos = $this->eventoModelo->getRequisitosEventoDetallado($idEvento);
+    if (!is_array($requisitos)) {
+        $this->json([]);
+        return;
+    }
+
+    require_once '../models/Usuarios.php';
+    $usuarioModelo = new Usuario();
+    $usuario = $usuarioModelo->getById2($this->idUsuario);
+
+    $resultado = [];
+
+    foreach ($requisitos as $req) {
+    $cumple = false;
+    $archivo = null;
+
+    $nombre = strtolower($req['DESCRIPCION']);
+
+    if (str_contains($nombre, 'cédula') && !empty($usuario['URL_CEDULA'])) {
+        $cumple = true;
+        $archivo = basename($usuario['URL_CEDULA']);
+    } elseif (str_contains($nombre, 'matrícula') && !empty($usuario['URL_MATRICULA'])) {
+        $cumple = true;
+        $archivo = basename($usuario['URL_MATRICULA']);
+    } else {
+        $archivoData = $this->eventoModelo->getArchivoRequisito($this->idUsuario, $req['SECUENCIAL'], $idEvento);
+        if ($archivoData) {
+            $cumple = true;
+            $archivo = $archivoData['URLARCHIVO'];
+        }
+    }
+
+    $resultado[] = [
+        'id' => $req['SECUENCIAL'],
+        'descripcion' => $req['DESCRIPCION'],
+        'cumplido' => $cumple,
+        'archivo' => $archivo
+    ];
+}
+
+
+    $this->json($resultado);
+}
 
 
 

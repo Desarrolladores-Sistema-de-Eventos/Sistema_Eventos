@@ -56,6 +56,10 @@ class InscripcionesController {
                 $this->subirFactura(); break;
             case 'subirComprobantePago':
                 $this->subirComprobantePago(); break;
+            case 'verComprobante':
+                $this->verComprobante();
+                break;
+
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Opción inválida']);
         }
@@ -73,6 +77,20 @@ class InscripcionesController {
             'mensaje' => $ok ? 'Inscripción exitosa' : 'Error'
         ]);
     }
+    private function verComprobante()
+{
+    $id = $_GET['idInscripcion'] ?? null;
+    if (!$id) {
+        echo json_encode([]);
+        return;
+    }
+
+    $stmt = $this->eventoModelo->pdo->prepare("SELECT COMPROBANTE_URL FROM pago WHERE SECUENCIALINSCRIPCION = ?");
+    $stmt->execute([$id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo json_encode(['archivo' => $row['COMPROBANTE_URL'] ?? null]);
+}
+
 
 
     private function listarPorEvento() {
@@ -110,20 +128,29 @@ class InscripcionesController {
         $data = $this->modelo->listarArchivosRequisitosPorEvento($idEvento);
         $this->json($data);
     }
-
     private function estadoRequisito() {
-        $idArchivo = $_POST['id'] ?? null;
-        $estado = $_POST['estado'] ?? null;
-        $validos = ['PEN', 'VAL', 'RECH', 'INV'];
+    $idArchivo = $_POST['id'] ?? null;
+    $estado = $_POST['estado'] ?? null;
+    $validos = ['PEN', 'VAL', 'RECH', 'INV'];
 
-        if (!$idArchivo || !in_array($estado, $validos)) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'Datos inválidos']);
-            return;
-        }
-
-        $ok = $this->modelo->actualizarEstadoArchivoRequisito($idArchivo, $estado);
-        $this->json(['tipo' => $ok ? 'success' : 'error']);
+    if (!$idArchivo || !in_array($estado, $validos)) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Datos inválidos']);
+        return;
     }
+
+    $ok = $this->modelo->actualizarEstadoArchivoRequisito($idArchivo, $estado);
+
+    // Usar el modelo para obtener el id de inscripción
+    $idInscripcion = $this->modelo->obtenerIdInscripcionPorArchivo($idArchivo);
+
+    if ($idInscripcion) {
+        $this->modelo->validarYActualizarEstadoInscripcion($idInscripcion);
+    }
+
+    $this->json(['tipo' => $ok ? 'success' : 'error']);
+}
+
+    
     
     private function json($data) {
         echo json_encode($data);
@@ -166,7 +193,11 @@ private function requisitosPorInscripcion() {
         return $this->json([]);
     }
     $data = $this->modelo->requisitosPorInscripcion($id);
-    $this->json($data);
+    $esPagado = $this->modelo->esEventoPagadoPorInscripcion($id); // Debes crear este método en el modelo
+    $this->json([
+        'requisitos' => $data,
+        'esPagado' => $esPagado
+    ]);
 }
 private function contarInscritos() {
     $data = $this->modelo->contarInscritos();
@@ -276,7 +307,7 @@ private function subirComprobantePago() {
 private function estadoPago() {
     $id = $_POST['id'] ?? null;
     $estado = $_POST['estado'] ?? null;
-    $aprobador = $this->idUsuario; // Usa el idUsuario del constructor
+    $aprobador = $this->idUsuario;
 
     if (!$id || !$estado || !$aprobador) {
         return $this->json([
@@ -285,6 +316,14 @@ private function estadoPago() {
         ]);
     }
     $ok = $this->modelo->actualizarEstadoPago($id, $estado, $aprobador);
+
+    // Usar el modelo para obtener el id de inscripción
+    $idInscripcion = $this->modelo->obtenerIdInscripcionPorPago($id);
+
+    if ($idInscripcion) {
+        $this->modelo->validarYActualizarEstadoInscripcion($idInscripcion);
+    }
+
     return $this->json([
         'tipo' => $ok ? 'success' : 'error',
         'mensaje' => $ok ? 'Estado actualizado' : 'No se pudo actualizar'

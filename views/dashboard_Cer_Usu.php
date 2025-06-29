@@ -7,13 +7,12 @@ include("../core/auth.php")?>
   <div id="page-inner">
     
     <div class="certificados-wrapper">
-      <h2 class="titulo-cert">📄 CERTIFICADOS</h2>
+      <h2 class="titulo-cert">CERTIFICADOS</h2>
 
     
-     <table id="tablaCertificados" class="display" style="width:100%">
+     <table id="tablaCertificados">
   <thead>
     <tr>
-      <th>Orden</th>
       <th>Curso</th>
       <th>Correo</th>
       <th>Certificado</th>
@@ -30,91 +29,166 @@ include("../core/auth.php")?>
 </div>
 
 <style>
-.certificados-wrapper {
-  padding: 20px;
+body {
+  background-color: #fff;
+  color: #000;
   font-family: Arial, sans-serif;
 }
-#tablaCertificados td,
-#tablaCertificados th {
-  text-align: center;
-  vertical-align: middle;
+
+:root {
+  --uta-rojo: #c0392b;
+  --uta-negro: #000;
+  --uta-blanco: #fff;
+  --azul-profesional: #0066cc;
 }
 
-
+/* Título */
 .titulo-cert {
-  font-size: 20px;
+  font-size: 26px;
   text-align: center;
-  margin-bottom: 20px;
+  color: var(--uta-negro);
+  font-weight: bold;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-.tabla-certificados {
+/* Tabla */
+#tablaCertificados {
   width: 100%;
   border-collapse: collapse;
+  font-size: 15px;
+  background-color: var(--uta-blanco);
+  border: 1px solid #ddd;
+}
+
+#tablaCertificados thead {
+  background-color: rgb(180, 34, 34);
+  color: white;
+}
+#tablaCertificados th,
+#tablaCertificados td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  background-color::rgb(180, 34, 34); 
   font-size: 14px;
 }
 
-.tabla-certificados th,
-.tabla-certificados td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  vertical-align: middle;
-  text-align: center;
-}
 
-.tabla-certificados th {
-  background: #f3f3f3;
-  font-weight: bold;
-}
-
-.btn-factura {
+/* Badge tipo certificado */
+.badge {
   display: inline-block;
-  text-decoration: none;
-  padding: 6px 10px;
+  padding: 6px 14px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   color: #fff;
+  background-color: var(--azul-profesional);
 }
 
-.btn-factura.pdf {
-  background: #d9534f;
+
+
+.btn-certificado i {
+  margin-right: 5px;
 }
 
-.btn-factura.pdf span {
-  display: block;
-  font-size: 10px;
+/* Paginador personalizado */
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+  background-color: #c0392b !important;
+  border-color: #c0392b !important;
+  color: white !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-.btn-factura.xml {
-  background: #f0ad4e;
+
+/* Filtro y cantidad de registros */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+#tablaCertificados tbody td {
+  background-color: #fff !important;
 }
 
-.badge {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
-  display: inline-block;
+  .btn-primary {
+    background: #9b2e2e;
+    border: none;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover {
+    background: #7b2020;
+  }
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+  background-color: #c0392b !important;
+  border-color: #c0392b !important;
+  color: white !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+thead {
+  background-color: rgb(180, 34, 34);
   color: white;
+  font-size: 14px;
+  font-weight: normal;
+}
+  th {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    background-color: rgb(180, 34, 34); 
+    font-size: 14px;
+    font-weight: normal;
+  }
+td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  background-color::rgb(180, 34, 34); 
+  font-size: 14px;
+}
+h4 {
+  font-size: 14px;
+  
+}
+label{
+  font-weight: normal;
+  font-size: 16px;
+}
+p{
+  font-size: 14px;
+  font-weight: normal;
+}
+.dataTables_length label,
+.dataTables_length select {
+  font-size: 14px !important;
 }
 
-.badge.blue {
-  background: #17a2b8;
-}
-
-.badge.orange {
-  background: #f36f21;
-}
-
-@media screen and (max-width: 768px) {
-  .tabla-certificados {
-    font-size: 12px;
+/* Responsive */
+@media (max-width: 768px) {
+  #tablaCertificados {
+    font-size: 13px;
   }
 
-  .btn-factura {
-    padding: 4px 8px;
+  .titulo-cert {
+    font-size: 20px;
   }
 }
+
+
 </style>
 
 <!-- Scripts necesarios -->
