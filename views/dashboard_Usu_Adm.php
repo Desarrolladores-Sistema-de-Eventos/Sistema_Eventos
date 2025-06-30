@@ -29,6 +29,7 @@ include("../core/auth.php")?>
               <tr>
                 <th>NOMBRES</th>
                 <th>APELLIDOS</th>
+                <th>CÉDULA</th>
                 <th>TELÉFONO</th>
                 <th>DIRECCIÓN</th>
                 <th>CORREO</th>
@@ -92,11 +93,25 @@ include("../core/auth.php")?>
                                 <input type="text" class="form-control" id="direccion" name="direccion">
                             </div>
                             <div class="form-group">
+                                  <div class="form-group">
+                                <label for="fecha_nacimiento">🎂 Fecha de Nacimiento:</label>
+                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required max="<?php echo date('Y-m-d'); ?>">
+                            </div>
                                 <label for="es_interno">🏢 Es Interno:</label>
                                 <select class="form-control" id="es_interno" name="es_interno" required>
                                     <option value="1">Sí</option>
                                     <option value="0">No</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cedula">🆔 Cédula:</label>
+                                <input type="text" class="form-control" id="cedula" name="cedula" required pattern="^\d{10}$" maxlength="10" title="Ingrese 10 dígitos numéricos">
+                            </div>
+                          
+                            <div class="form-group">
+                                <label for="cedula_pdf">📄 Cédula (PDF):</label>
+                                <input type="file" class="form-control-file" id="cedula_pdf" name="cedula_pdf" accept="application/pdf">
+                                <small class="form-text text-muted">Solo PDF. Opcional en edición si ya existe.</small>
                             </div>
                             <div class="form-group">
                                 <label for="foto_perfil">🖼️ Foto de Perfil:</label>
@@ -110,6 +125,7 @@ include("../core/auth.php")?>
                                     <option value="BLOQUEADO">Bloqueado</option>
                                 </select>
                             </div>
+                            
                             <button type="submit" class="btn btn-primary" id="btn-save-usuario">💾 Guardar usuario</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">❌ Cancelar</button>
                         </form>
@@ -147,4 +163,15 @@ include("../core/auth.php")?>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="../public/js/usuario.js"></script>
+<script>
+document.getElementById('cedula_pdf')?.addEventListener('change', function() {
+    if (this.files.length > 0) {
+        const file = this.files[0];
+        if (file.type !== 'application/pdf') {
+            Swal.fire('Archivo inválido', 'Solo se permite subir archivos PDF para la cédula.', 'warning');
+            this.value = '';
+        }
+    }
+});
+</script>
 <?php include("partials/footer_Admin.php"); ?>

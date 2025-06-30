@@ -1,4 +1,3 @@
-console.log("✅ main.js cargado");
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log("🧪 DOM completamente cargado");
@@ -63,26 +62,39 @@ function cargarInscripcionesPendientesResponsable() {
         return;
       }
 
-      tbody.innerHTML = data.map(item => {
-        return `
-          <tr>
-            <td>${item.NOMBRE_COMPLETO}</td>
-            <td>${item.EVENTO}</td>
-            <td>
-              <select onchange="actualizarEstadoInscripcion(this.value, ${item.INSCRIPCION_ID})" class="form-control">
-                <option value="PEN" ${item.CODIGOESTADOINSCRIPCION === 'PEN' ? 'selected' : ''}>Pendiente</option>
-                <option value="ACE" ${item.CODIGOESTADOINSCRIPCION === 'ACE' ? 'selected' : ''}>Aceptado</option>
-                <option value="REC" ${item.CODIGOESTADOINSCRIPCION === 'REC' ? 'selected' : ''}>Rechazado</option>
-              </select>
-            </td>
-            <td class="text-center">
-              <button class="btn btn-info btn-sm" onclick="verDetalleInscripcion(${item.INSCRIPCION_ID})">
-                <i class="fa fa-eye" style="color: black;"></i> Ver Detalle
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
+
+  tbody.innerHTML = data.map(item => {
+    // Badge de estado
+    let estadoHtml = '';
+    switch (item.CODIGOESTADOINSCRIPCION) {
+      case 'ACE':
+        estadoHtml = '<span class="badge" style="background: #0066cc;">Aceptado</span>';
+        break;
+      case 'PEN':
+        estadoHtml = '<span class="badge" style="background: #ffc107; color: #212529;">Pendiente</span>';
+        break;
+      case 'REC':
+        estadoHtml = '<span class="badge" style="background: #dc3545;">Rechazado</span>';
+        break;
+      case 'ANU':
+        estadoHtml = '<span class="badge" style="background: #6c757d;">Anulado</span>';
+        break;
+      default:
+        estadoHtml = '<span class="badge" style="background: #adb5bd;">Desconocido</span>';
+    }
+    return `
+      <tr>
+        <td>${item.NOMBRE_COMPLETO}</td>
+        <td>${item.EVENTO}</td>
+        <td>${estadoHtml}</td>
+        <td class="text-center">
+          <button class="btn btn-outline-dark btn-sm" style="background: #222; border-color: #222; color: #fff;" onclick="verDetalleInscripcion(${item.INSCRIPCION_ID})">
+            <i class="fa fa-check" style="color: #fff;"></i> Validar
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
 
       // Re-inicializar
       $('#tabla-pendientes').DataTable({
@@ -118,6 +130,16 @@ function actualizarEstadoInscripcion(estado, id) {
 }
 
 // === GRÁFICOS ===
+
+// Paleta institucional UTA: rojo, negro, blanco
+const utaColors = {
+  rojo: 'rgb(180, 34, 34)',
+  negro: '#222',
+  blanco: '#fff',
+  gris: '#f4f4f4'
+};
+
+// === GRÁFICOS ===
 let graficoEstadosChart = null; // Variable global para el gráfico
 
 function cargarGraficoEstados() {
@@ -128,24 +150,37 @@ function cargarGraficoEstados() {
     .then(res => {
       const estados = res.data;
 
-      // ✅ Destruir el gráfico anterior si existe
       if (graficoEstadosChart) {
         graficoEstadosChart.destroy();
       }
 
-      // ✅ Crear nuevo gráfico
+      // Paleta para los estados (rojo, negro, blanco)
+      const coloresEstados = [
+        utaColors.rojo,
+        utaColors.negro,
+        utaColors.blanco
+      ];
+
       graficoEstadosChart = new Chart(canvas.getContext('2d'), {
         type: 'doughnut',
         data: {
           labels: estados.map(e => e.CODIGOESTADOINSCRIPCION),
           datasets: [{
             data: estados.map(e => parseInt(e.total)),
-            backgroundColor: ['#f39c12', '#27ae60', '#e74c3c', '#8e44ad']
+            backgroundColor: coloresEstados,
+            borderColor: utaColors.negro,
+            borderWidth: 2
           }]
         },
         options: {
           plugins: {
-            title: { display: true, text: 'Estados de Inscripción' }
+            title: { display: true,  },
+            legend: {
+              labels: {
+                color: utaColors.negro,
+                font: { weight: 'bold' }
+              }
+            }
           }
         }
       });
@@ -162,11 +197,22 @@ function cargarGraficoEventos() {
     .then(res => {
       const eventos = res.data;
 
+      // Paleta institucional para eventos
+      const coloresEventos = [
+        utaColors.rojo,
+        utaColors.negro,
+        utaColors.blanco,
+        '#bdbdbd', // gris claro extra si hay más eventos
+        '#ededed'
+      ];
+
       const data = {
         labels: eventos.map(e => e.TITULO),
         datasets: [{
           data: eventos.map(e => parseInt(e.total)),
-          backgroundColor: ['#3498db', '#9b59b6', '#2ecc71', '#e67e22', '#e74c3c']
+          backgroundColor: coloresEventos.slice(0, eventos.length),
+          borderColor: utaColors.negro,
+          borderWidth: 2
         }]
       };
 
@@ -182,8 +228,13 @@ function cargarGraficoEventos() {
           responsive: true,
           plugins: {
             title: {
-              display: true,
-              text: 'Inscripciones por Evento'
+              display: true
+            },
+            legend: {
+              labels: {
+                color: utaColors.negro,
+                font: { weight: 'bold' }
+              }
             }
           }
         }
@@ -206,13 +257,34 @@ function cargarGraficoCertificados() {
             label: 'Certificados emitidos',
             data: eventos.map(e => parseInt(e.total)),
             fill: true,
-            borderColor: '#3498db',
-            backgroundColor: 'rgba(52, 152, 219, 0.2)'
+            borderColor: utaColors.rojo,
+            backgroundColor: 'rgba(155,46,46,0.15)',
+            pointBackgroundColor: utaColors.negro,
+            pointBorderColor: utaColors.rojo
           }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              labels: {
+                color: utaColors.negro,
+                font: { weight: 'bold' }
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: utaColors.negro }
+            },
+            y: {
+              ticks: { color: utaColors.negro }
+            }
+          }
         }
       });
     });
 }
+
 
 // === Mostrar detalle de inscripción ===
 function verDetalleInscripcion(idInscripcion) {
@@ -238,7 +310,7 @@ function verDetalleInscripcion(idInscripcion) {
         tbodyReq.innerHTML += `
           <tr>
             <td>${r.REQUISITO}</td>
-            <td><a href="../archivos/${r.ARCHIVO}" target="_blank">Ver archivo</a></td>
+            <td><a href="../documents/${r.ARCHIVO}" target="_blank">Ver archivo</a></td>
             <td>
               <select class="form-control" onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)">
                 <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
@@ -251,30 +323,51 @@ function verDetalleInscripcion(idInscripcion) {
         `;
       });
 
-      // === Mostrar pagos ===
-      const pagosRes = await axios.get(`../controllers/InscripcionesController.php?option=pagosPorInscripcion&id=${idInscripcion}`);
-      const pagos = pagosRes.data || [];
-
-      const tbodyPagos = document.querySelector('#tabla-pagos-detalle tbody');
-      tbodyPagos.innerHTML = '';
-
-      pagos.forEach(p => {
-        tbodyPagos.innerHTML += `
-          <tr>
-            <td><a href="../comprobantes/${p.COMPROBANTE_URL}" target="_blank">Ver comprobante</a></td>
-            <td>${p.FORMA_PAGO || 'Desconocida'}</td>
-            <td>
-              <select class="form-control" onchange="actualizarEstadoPago(${p.PAGO_ID}, this.value)">
-                <option value="PEN" ${p.CODIGOESTADOPAGO === 'PEN' ? 'selected' : ''}>Pendiente</option>
-                <option value="VAL" ${p.CODIGOESTADOPAGO === 'VAL' ? 'selected' : ''}>Validado</option>
-                <option value="RECH" ${p.CODIGOESTADOPAGO === 'RECH' ? 'selected' : ''}>Rechazado</option>
-                <option value="INV" ${p.CODIGOESTADOPAGO === 'INV' ? 'selected' : ''}>Inválido</option>
-              </select>
-            </td>
-            <td>${p.FECHA_PAGO || '-'}</td>
-          </tr>
-        `;
-      });
+      // === Mostrar pagos solo si el evento es pagado ===
+      // Se asume que en data.inscripcion existe una propiedad ES_PAGADO (booleano o 1/0)
+      // Acepta 1, '1', true, 'true', pero SOLO si es exactamente 1 o '1' (como en la base de datos)
+      const esPagado = data.inscripcion.ES_PAGADO == 1 || data.inscripcion.ES_PAGADO === '1';
+      const grupoPagos = document.getElementById('grupo-pagos-registrados');
+      const tablaPagos = document.getElementById('tabla-pagos-detalle');
+      let mensajeGratis = document.getElementById('mensaje-evento-gratis');
+      if (!mensajeGratis) {
+        mensajeGratis = document.createElement('div');
+        mensajeGratis.id = 'mensaje-evento-gratis';
+        mensajeGratis.style = 'color: #222; font-weight: bold; margin-bottom: 12px;';
+        mensajeGratis.innerText = 'Este evento es gratuito. No requiere pagos.';
+        if (grupoPagos && grupoPagos.parentNode) {
+          grupoPagos.parentNode.insertBefore(mensajeGratis, grupoPagos);
+        }
+      }
+      if (esPagado) {
+        if (grupoPagos) grupoPagos.style.display = '';
+        if (mensajeGratis) mensajeGratis.style.display = 'none';
+        const pagosRes = await axios.get(`../controllers/InscripcionesController.php?option=pagosPorInscripcion&id=${idInscripcion}`);
+        const pagos = pagosRes.data || [];
+        const tbodyPagos = tablaPagos.querySelector('tbody');
+        tbodyPagos.innerHTML = '';
+        pagos.forEach(p => {
+          tbodyPagos.innerHTML += `
+            <tr>
+              <td><a href="../documents/${p.COMPROBANTE_URL}" target="_blank">Ver comprobante</a></td>
+              <td>${p.FORMA_PAGO || 'Desconocida'}</td>
+              <td>
+                <select class="form-control" onchange="actualizarEstadoPago(${p.PAGO_ID}, this.value)">
+                  <option value="PEN" ${p.CODIGOESTADOPAGO === 'PEN' ? 'selected' : ''}>Pendiente</option>
+                  <option value="VAL" ${p.CODIGOESTADOPAGO === 'VAL' ? 'selected' : ''}>Validado</option>
+                  <option value="RECH" ${p.CODIGOESTADOPAGO === 'RECH' ? 'selected' : ''}>Rechazado</option>
+                  <option value="INV" ${p.CODIGOESTADOPAGO === 'INV' ? 'selected' : ''}>Inválido</option>
+                </select>
+              </td>
+              <td>${p.FECHA_PAGO || '-'}</td>
+            </tr>
+          `;
+        });
+      } else {
+        // Ocultar grupo de pagos y mostrar mensaje si el evento es gratuito
+        if (grupoPagos) grupoPagos.style.display = 'none';
+        if (mensajeGratis) mensajeGratis.style.display = '';
+      }
 
       // Mostrar modal
       $('#modalDetalleInscripcion').modal('show');
@@ -289,11 +382,44 @@ function validarArchivoRequisito(idArchivo, estado) {
     .then(res => {
       if (res.data.tipo === 'success') {
         Swal.fire({ icon: 'success', title: 'Requisito actualizado', timer: 1000, showConfirmButton: false });
+        // Lógica para autoaceptar inscripción si todo está validado
+        setTimeout(() => {
+          validarAutoAceptacion();
+        }, 500);
       } else {
         Swal.fire('Error', 'No se pudo actualizar el requisito', 'error');
       }
     })
     .catch(() => Swal.fire('Error', 'Ocurrió un problema con el servidor', 'error'));
+}
+
+// Lógica para autoaceptar inscripción si todos los requisitos y pagos están validados
+function validarAutoAceptacion() {
+  const idInscripcion = document.getElementById('detalleIdInscripcion')?.value;
+  if (!idInscripcion) return;
+
+  // Obtener estados de requisitos
+  const requisitos = Array.from(document.querySelectorAll('#tabla-requisitos-detalle select'));
+  const todosRequisitosValidados = requisitos.length > 0 && requisitos.every(sel => sel.value === 'VAL');
+
+  // Obtener estados de pagos (si existen filas)
+  const pagosSelects = Array.from(document.querySelectorAll('#tabla-pagos-detalle select'));
+  const todosPagosValidados = pagosSelects.length === 0 || pagosSelects.every(sel => sel.value === 'VAL');
+
+  if (todosRequisitosValidados && todosPagosValidados) {
+    // Cambiar estado de inscripción a Aceptado
+    axios.post('../controllers/InscripcionesController.php?option=estadoInscripcion', new URLSearchParams({ id: idInscripcion, estado: 'ACE' }))
+      .then(res => {
+        if (res.data.tipo === 'success') {
+          Swal.fire({ icon: 'success', title: 'Inscripción aceptada automáticamente', timer: 1200, showConfirmButton: false });
+          $('#modalDetalleInscripcion').modal('hide');
+          cargarInscripcionesPendientesResponsable();
+          cargarMetricasTotales();
+          cargarGraficoEstados();
+          cargarGraficoEventos();
+        }
+      });
+  }
 }
 
 document.getElementById('formDetalleInscripcion').addEventListener('submit', function (e) {

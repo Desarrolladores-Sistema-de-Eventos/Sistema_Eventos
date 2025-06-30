@@ -12,50 +12,143 @@
 /*==============================================
     GENERAL  STYLES    
     =============================================*/
+/* Cambia el fondo de todos los botones de acción (editar, eliminar, ver) a negro */
+
+/* === CUADRO GENERAL DE ALERTA === */
+.swal2-popup {
+  border-left: 6px solid #8B0000 !important;
+  border-right: 6px solid #8B0000 !important;
+  border-radius: 10px !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* === TÍTULO DE LA ALERTA === */
+.swal2-title {
+  font-weight: bold;
+  color: #8B0000;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+
+}
+
+/* === BOTONES DE CONFIRMACIÓN Y CANCELACIÓN === */
+.swal2-confirm, .swal2-cancel {
+  background-color: #1a1919 !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* === ÍCONO SUCCESS (check) EN NEGRO === */
+.swal2-icon.swal2-success {
+  border-color: #141414 !important;
+  color: #0f0f0f !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 4px solid #161616 !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #131212 !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* === ÍCONO ERROR (x) EN NEGRO === */
+.swal2-icon.swal2-error {
+  border-color: #111111 !important;
+  color: #111111 !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: #000 !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* === ÍCONO WARNING (⚠️) EN NEGRO === */
+.swal2-icon.swal2-warning {
+  border-color: #111111 !important;
+  color: #141414 !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* === ÍCONO INFO (i) EN NEGRO === */
+.swal2-icon.swal2-info {
+  border-color: #1a1919 !important;
+  color: #252525 !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* === ÍCONO QUESTION (?) EN NEGRO === */
+.swal2-icon.swal2-question {
+  border-color: #181818 !important;
+  color: #161616 !important;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.swal2-image {
+  margin-top: 10px;
+  max-width: 80px;
+}
+
 
     html, body {
     height: 100%;
 }
     body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: Arial, sans-serif;
     overflow: hidden;
+
   
 }
 
  #wrapper {
     width: 100%;
     background:#202020;
-    overflow-x: auto;
-   
-    
+    overflow-x: auto;   
 }
 
 #page-wrapper {
     padding: 2rem 1rem;
     min-height: 100vh;
     height: 100%;
-    background: #F3F3F3;
+    background-color: #fcfbe7;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
     justify-content: flex-start;
-}
+    
 
+}
 #page-inner {
     width: 100%;
-    max-width: 1200px;
-    height: 100%;
-    min-height: 80vh;
-    overflow-y: auto;
-    overflow-x: hidden;
+    height: auto;
+    min-height: 85vh;
+    margin: 2rem auto;
     padding: 2rem 1.5rem;
     background-color: #fff;
-    border-radius: 16px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     flex: 1 1 auto;
-    margin: 2rem 0;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @media (max-width: 900px) {
@@ -88,7 +181,7 @@
     border:1px solid #f3f3f3;
 }
 h2 {
-    color: #f00;
+    color: rgb(214, 42, 42);
 }
 h4 {
     padding-top:10px;
@@ -150,7 +243,7 @@ background-color: #A95DF0;
 color: #fff;
 }
   .bg-color-red {
-background-color: #DB0630;
+background-color: #aa0d2d;
 color: #fff;
 }
   .bg-color-brown {
@@ -251,10 +344,11 @@ max-height:170px;
 max-width:170px;
 }
 
+
 .navbar-cls-top .navbar-brand {
-	color: #fff;
-background: #C90000;
-width: 260px;
+color: #fff;
+background:  rgb(178, 22, 26);
+width: 200px;
 text-align: center;
 height: 60px;
 font-size: 30px;
@@ -358,7 +452,7 @@ font-weight: 700;
 }
 .navbar-cls-top .navbar-brand:hover {
 
-background: #C90000;
+background: rgb(178, 22, 26);
 color:#fff;
 
 }
@@ -416,7 +510,7 @@ line-height: 1.428571429;
  
  @media(min-width:768px) {
     #page-wrapper {
-        margin: 0 0 0 260px;
+        margin: 0 0 0 200px;
         padding: 15px 30px;
         min-height: 100vh;
         overflow-y: auto;
@@ -426,7 +520,7 @@ line-height: 1.428571429;
     .navbar-side {
         z-index: 1;
         position: absolute;
-        width: 260px;
+        width: 200px;
     }
 
    .navbar {

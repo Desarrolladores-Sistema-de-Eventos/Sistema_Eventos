@@ -10,14 +10,14 @@
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
-  --red: #7b1b25;
+  --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
   --cyan: #17a2b8;
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #7e0b17;
+  --primary: #dc3545;
   --secondary: #f4faec;
   --info: #17a2b8;
   --warning: #ffc107;
@@ -31,6 +31,116 @@
   --font-family-sans-serif: "Poppins", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
+
+
+/* === CUADRO GENERAL DE ALERTA === */
+.swal2-popup {
+  border-left: 6px solid #8B0000 !important;
+  border-right: 6px solid #8B0000 !important;
+  border-radius: 10px !important;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* === TÍTULO DE LA ALERTA === */
+.swal2-title {
+  font-weight: bold;
+  color: #8B0000;
+}
+
+/* === BOTONES DE CONFIRMACIÓN Y CANCELACIÓN === */
+.swal2-confirm, .swal2-cancel {
+  background-color: #1a1919 !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+  font-weight: bold;
+}
+
+/* === ÍCONO SUCCESS (check) EN NEGRO === */
+.swal2-icon.swal2-success {
+  border-color: #141414 !important;
+  color: #0f0f0f !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 4px solid #161616 !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #131212 !important;
+}
+
+/* === ÍCONO ERROR (x) EN NEGRO === */
+.swal2-icon.swal2-error {
+  border-color: #111111 !important;
+  color: #111111 !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: #000 !important;
+}
+
+/* === ÍCONO WARNING (⚠️) EN NEGRO === */
+.swal2-icon.swal2-warning {
+  border-color: #111111 !important;
+  color: #141414 !important;
+}
+
+/* === ÍCONO INFO (i) EN NEGRO === */
+.swal2-icon.swal2-info {
+  border-color: #1a1919 !important;
+  color: #252525 !important;
+}
+
+/* === ÍCONO QUESTION (?) EN NEGRO === */
+.swal2-icon.swal2-question {
+  border-color: #181818 !important;
+  color: #161616 !important;
+}
+
+.swal2-image {
+  margin-top: 10px;
+  max-width: 80px;
+}
+
+/* === COLORES UTA PERSONALIZADOS === */
+:root {
+  --uta-rojo: #920c1a;
+}
+
+/* Botón principal */
+.btn-primary {
+  background-color: var(--uta-rojo) !important;
+  border-color: var(--uta-rojo) !important;
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #5c0911 !important; /* tono más oscuro al pasar el mouse */
+  border-color: #5c0911 !important;
+}
+
+/* Textos personalizados */
+.text-uta {
+  color: var(--uta-rojo) !important;
+}
+
+/* Fondo personalizado */
+.bg-uta {
+  background-color: var(--uta-rojo) !important;
+  color: white;
+}
+
+/* Links con estilo UTA */
+a {
+  color: var(--uta-rojo);
+}
+a:hover {
+  color: #5c0911;
+  text-decoration: underline;
+}
+
+
 
 *,
 *::before,
@@ -145,7 +255,8 @@ body {
   line-height: 1.5;
   color: #656565;
   text-align: left;
-  background-color: #F3F3F3;
+  background-color: #fcfbe7 !important;
+
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -6178,7 +6289,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #7b1b25 !important;
+  background-color: #dc3545 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -9348,7 +9459,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #7b1b25 !important;
+  color: #dc3545 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -9499,6 +9610,8 @@ a.text-dark:hover, a.text-dark:focus {
   }
   body {
     min-width: 992px !important;
+    background-color: #fcfbe7 !important;
+
   }
   .container {
     min-width: 992px !important;
@@ -9653,7 +9766,7 @@ h6,
 }
 
 .page-header {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/carrusel.jpg), no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/carousel-2.jpg), no-repeat center center;
   background-size: cover;
 }
 
@@ -9858,4 +9971,102 @@ h6,
 }
 .bg-primary {
     background-color: #dc3545 !important;
+}
+/* Botones del menú */
+#btnMenu .btn {
+  margin-right: 12px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease;
+}
+
+#btnMenu .btn:hover {
+  background-color: var(--primary);
+  color: var(--light);
+  border-color: var(--primary);
+}
+
+/* Contenedores filtros */
+#filtersContainer input,
+#filtersContainer select {
+  display: inline-block;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  max-width: 200px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  padding: 8px 10px;
+  transition: border-color 0.3s ease;
+}
+
+#filtersContainer input:focus,
+#filtersContainer select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 5px var(--primary);
+  outline: none;
+}
+
+/* Botón Buscar */
+#btnSearch {
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 10px 25px;
+  border-radius: 8px;
+}
+
+/* Subtítulos con línea separadora */
+#contentEstadisticas h5,
+#contentUsuarios h4,
+#contentTablas h4,
+#contentEstudiantes h4 {
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid var(--primary);
+}
+
+/* Tarjetas estilo */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  margin-bottom: 25px;
+  padding: 20px;
+  background: var(--light);
+}
+
+/* Tabla resumen estilo */
+#tablaResumen {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--dark);
+}
+
+#tablaResumen thead th {
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+#tablaResumen tbody tr:hover {
+  background-color: var(--secondary);
+}
+
+/* Tabla estudiantes */
+#contentEstudiantes table {
+  font-size: 0.95rem;
+  color: var(--dark);
+}
+
+#contentEstudiantes table thead th {
+  background-color: var(--primary);
+  color: var(--light);
+  font-weight: 700;
+}
+
+#contentEstudiantes table tbody tr:hover {
+  background-color: var(--secondary);
 }

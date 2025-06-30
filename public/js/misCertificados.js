@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
           url: '../public/js/es-ES.json'
         },
         columns: [
-          { data: 'SECUENCIAL', title: 'Orden', className: 'text-center' },
           { data: 'EVENTO', title: 'Evento', className: 'text-center' },
           {
             data: 'CORREO',
@@ -33,21 +32,30 @@ document.addEventListener('DOMContentLoaded', function () {
             className: 'text-center',
             render: function (data) {
               return data
-                ? `<a href="../facturas_Comprobantes/${data}" target="_blank" class="btn btn-danger btn-sm">
-                     <i class="fa fa-certificate"></i> <small>Ver</small>
+                ? `<a href="../documents/${data}" target="_blank" class="btn btn-dark btn-sm" style="background:#222; color:#fff; font-size:12px; font-weight:600; padding:4px 10px; border-radius:6px; display:inline-block; min-width:120px;">
+                     <i class="fa fa-eye" style="color:#fff; font-size:13px; font-weight:normal;"></i> <span style="font-size:12px; font-weight:600;">Ver Certificado</span>
                    </a>`
                 : '<span style="color:gray">Sin archivo</span>';
             }
           },
-          {
-            data: 'ESTADO_INSCRIPCION',
-            title: 'Tipo',
-            className: 'text-center',
-            render: function (estado) {
-              const tipo = estado === 'ACE' ? 'Aprobación' : 'Participación';
-              return `<span class="label label-info">${tipo}</span>`;
-            }
-          },
+          
+            {
+  data: 'TIPO_CERTIFICADO',
+  title: 'Tipo',
+  className: 'text-center',
+  render: function (tipo) {
+    if (!tipo) {
+      return '<span style="color:gray;">No asignado</span>';
+    }
+
+    const color = tipo === 'Aprobación' ? '#000' : '#000'; 
+
+    return `<span style="background-color:${color}; color:#fff; padding:4px 10px; border-radius:4px; font-weight:600; font-size:12px;">
+      ${tipo}
+    </span>`;
+  }
+}
+,
           {
             data: 'FECHA_EMISION',
             title: 'Fecha Registro',

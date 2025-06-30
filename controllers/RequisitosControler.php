@@ -40,7 +40,7 @@ class RequisitosController {
 
         $ext = pathinfo($archivo['name'], PATHINFO_EXTENSION);
         $nombreArchivo = uniqid('requisito_') . "." . $ext;
-        $ruta = "../facturas_Comprobantes/" . $nombreArchivo;
+        $ruta = "../documents/" . $nombreArchivo;
 
         if (!move_uploaded_file($archivo['tmp_name'], $ruta)) {
             return $this->json(['tipo' => 'error', 'mensaje' => 'No se pudo guardar archivo']);

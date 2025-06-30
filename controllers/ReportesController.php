@@ -51,21 +51,47 @@ class ReportesController {
     }
 
     private function generarReporte($tipo, $idEvento) {
-    try {
-        $datos = $this->obtenerDatos($tipo, $idEvento);
+        try {
+            $datos = $this->obtenerDatos($tipo, $idEvento);
 
-        if (in_array($tipo, ['financiero', 'general'])) {
-            $this->json([
-                'detalle' => $datos['detalle'],
-                'totalRecaudado' => number_format($datos['totalRecaudado'], 2, '.', '')
-            ]);
-        } else {
-            $this->json($datos);
+            // Obtener tipo_evento desde la base de datos
+            $eventoInfo = $this->modelo->getEventoBasico($idEvento);
+            $tipoEvento = $eventoInfo['TIPO_EVENTO'] ?? null;
+
+            // Si el tipo es asistencia y el evento NO es curso, normaliza el campo porcentaje_asistencia
+            if ($tipo === 'asistencia' && strtolower($tipoEvento) !== 'curso' && is_array($datos) && isset($datos[0])) {
+                foreach ($datos as &$fila) {
+                    // Si existe el campo PORCENTAJE_ASISTENCIA, lo renombramos a porcentaje_asistencia
+                    if (isset($fila['PORCENTAJE_ASISTENCIA'])) {
+                        $fila['porcentaje_asistencia'] = $fila['PORCENTAJE_ASISTENCIA'];
+                    }
+                    // Si el campo tiene otro nombre, puedes agregar más condiciones aquí
+                }
+                unset($fila); // buena práctica
+            }
+
+            if (in_array($tipo, ['financiero', 'general'])) {
+                $this->json([
+                    'detalle' => $datos['detalle'],
+                    'totalRecaudado' => number_format($datos['totalRecaudado'], 2, '.', ''),
+                    'tipo_evento' => $tipoEvento,
+                    'eventoInfo' => $eventoInfo // aquí va ES_PAGADO
+                ]);
+            } else {
+                // Si $datos es un array de detalle, lo envolvemos para agregar tipo_evento
+                if (is_array($datos) && isset($datos[0])) {
+                    $this->json([
+                        'detalle' => $datos,
+                        'tipo_evento' => $tipoEvento
+                    ]);
+                } else {
+                    $this->json($datos);
+                }
+            }
+        } catch (Exception $e) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Error al generar el reporte: ' . $e->getMessage()]);
         }
-    } catch (Exception $e) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al generar el reporte: ' . $e->getMessage()]);
     }
-}
 
 private function generarPDF($tipo, $idEvento) {
     try {
@@ -85,7 +111,8 @@ private function generarPDF($tipo, $idEvento) {
         $fechaEvento  = $eventoInfo['FECHAINICIO'] ?? '---';
 
         $responsable  = $_SESSION['usuario']['NOMBRES'] . ' ' . $_SESSION['usuario']['APELLIDOS'];
-        $fechaHoy     = date('d/m/Y H:i');
+        date_default_timezone_set('America/Guayaquil');
+        $fechaHoy = date('d/m/Y H:i');
         $tituloPDF    = "Reporte de " . ucfirst($tipo);
 
         $detalle = in_array($tipo, ['financiero', 'general']) ? $datos['detalle'] : $datos;
@@ -123,8 +150,8 @@ private function generarPDF($tipo, $idEvento) {
         $pdf->AddPage();
         $pdf->SetFont('Arial', '', 11);
 
-        if (file_exists('../public/img/sello_UTA.jpg')) {
-            $pdf->Image('../public/img/sello_UTA.jpg', 10, 10, 30);
+        if (file_exists('../public/img/factura_logo.png')) {
+            $pdf->Image('../public/img/factura_logo.png', 10, 10, 30);
         }
 
         $pdf->SetXY(50, 10);

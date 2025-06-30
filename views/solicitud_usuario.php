@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #d9534f;
+    background-color:rgb(133, 37, 34);
     color: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   }
@@ -30,7 +30,7 @@
 
 <!-- Botón de solicitud flotante -->
 <button id="btn-flotante" class="btn" data-toggle="modal" data-target="#modalSolicitud" title="Solicitar un cambio">
-  <i class="fa fa-headset"></i>
+  <i class="fa fa-question-circle"></i>
 </button>
 
 <!-- Modal de Solicitud -->

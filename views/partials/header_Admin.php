@@ -25,14 +25,30 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
 <body>
 <div id="wrapper">
   <nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Dashboard</a>
-    </div>
-    <div style="float: right; padding: 15px 50px 5px 50px;">
+   <div class="navbar-header">
+  <a class="navbar-brand" href="#" style="padding: 0; display: flex; align-items: center; height: 60px;">
+    <img src="../public/img/logo_UTA.png" alt="UTA Logo" style="height: 100%; width: 100%; object-fit: contain; padding: 0 8px;">
+  </a>
+</div>
+    
+ <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 50px 5px 50px;">
+  <!-- Izquierda: botón de regresar solo para ciertos roles -->
+  <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
+    <a href="../views/Eventos_Views.php" style="color: white; text-decoration: none; font-size: 16px;">
+      <i class="fa fa-arrow-left"></i> Regresar a Home
+    </a>
+  <?php else: ?>
+    <div></div> <!-- Espacio vacío para mantener el layout -->
+  <?php endif; ?>
+
+  <!-- Derecha: hora y botón de cerrar sesión -->
+  <div style="display: flex; align-items: center; gap: 10px;">
     <span id="hora" style="color: white; font-size: 16px;"></span>
-    &nbsp;
     <a href="../controllers/logout.php" class="btn btn-danger square-btn-adjust">Cerrar Sesión</a>
-   </div>
+  </div>
+</div>
+
+
   </nav>
 
   <nav class="navbar-default navbar-side" role="navigation">
@@ -41,8 +57,8 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
 
           <?php if ($esResponsable): ?> 
           <li><a href="../views/dashboard_Pri_Res.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
-          <li><a href="../views/dashboard_Eve_Res.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
-          <li><a href="../views/dashboard_Ins_Res.php"><i class="fa fa-edit fa-3x"></i> Inscripciones</a></li>
+          <li><a href="../views/dashboard_Eve_Res.php"><i class="fa fa-calendar fa-3x"></i> Gestión Eventos</a></li>
+          <li><a href="../views/dashboard_Ins_Res.php"><i class="fa fa-users fa-3x"></i> Inscripciones</a></li>
           <li><a href="../views/dashboard_NotasAsistencia_Res.php"><i class="fa fa-check-square-o fa-3x"></i> Notas/Asistencia</a></li>
           <li><a href="../views/dashboard_Cer_Res.php"><i class="fa fa-certificate fa-3x"></i> Certificados</a></li>
           <li><a href="../views/dashboard_Rep_Res.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
@@ -61,9 +77,9 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
         
         <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
           <li><a href="../views/dashboard_Pri_Usu.php"><i class="fa fa-user fa-3x"></i> Perfil</a></li>
+          <li><a href="../views/dashboard_Fac_Usu.php"><i class="fa fa-file-text-o fa-3x"></i> Mis Inscripciones</a></li>
           <li><a href="../views/dashboard_Eve_Usu.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
           <li><a href="../views/dashboard_Cer_Usu.php"><i class="fa fa-certificate fa-3x"></i> Mis Certificados</a></li>
-          <li><a href="../views/dashboard_Fac_Usu.php"><i class="fa fa-file-text-o fa-3x"></i> Mis Facturas</a></li>
 
         <?php endif; ?>
 

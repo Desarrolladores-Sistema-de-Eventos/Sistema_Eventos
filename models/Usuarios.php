@@ -33,12 +33,25 @@ class Usuario {
         $stmt->execute([$correo]);
         return $stmt->fetchColumn() > 0;
     }
+    public function cedulaExiste($cedula, $excluirId = null) {
+        $sql = "SELECT COUNT(*) FROM usuario WHERE CEDULA = ?";
+        $params = [$cedula];
+        if ($excluirId) {
+            $sql .= " AND SECUENCIAL != ?";
+            $params[] = $excluirId;
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchColumn() > 0;
+    }
 
-    public function insertar($nombres, $apellidos, $telefono, $direccion, $correo, $contrasena, $codigorol, $es_interno = 1, $foto_perfil = null) {
+    public function insertar($nombres, $apellidos, $telefono, $direccion, $correo, $contrasena, $codigorol, $es_interno = 1, $foto_perfil = null, $cedula = '', $fecha_nacimiento = '', $url_cedula = null) {
     if ($this->correoExiste($correo)) {
         return ['success' => false, 'mensaje' => 'El correo ya está registrado.'];
     }
-    
+    if ($cedula && $this->cedulaExiste($cedula)) {
+        return ['success' => false, 'mensaje' => 'La cédula ya está registrada.'];
+    }
     if ($codigorol === 'EST' || $codigorol === 'DOC') {
         if (!preg_match('/@uta\\.edu\\.ec$/', $correo)) {
             return ['success' => false, 'mensaje' => 'El correo debe ser institucional (@uta.edu.ec) para estudiantes y docentes.'];
@@ -49,11 +62,14 @@ class Usuario {
         }
     }
     $hash = password_hash($contrasena, PASSWORD_DEFAULT);
-    $stmt = $this->pdo->prepare("INSERT INTO usuario (NOMBRES, APELLIDOS, TELEFONO, DIRECCION, CORREO, CONTRASENA, CODIGOROL, CODIGOESTADO, ES_INTERNO, FOTO_PERFIL) VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVO', ?, ?)");
-    $ok = $stmt->execute([$nombres, $apellidos, $telefono, $direccion, $correo, $hash, $codigorol, $es_interno, $foto_perfil]);
+    $stmt = $this->pdo->prepare("INSERT INTO usuario (NOMBRES, APELLIDOS, TELEFONO, DIRECCION, CORREO, CONTRASENA, CODIGOROL, CODIGOESTADO, ES_INTERNO, FOTO_PERFIL, CEDULA, FECHA_NACIMIENTO, URL_CEDULA) VALUES (?, ?, ?, ?, ?, ?, ?, 'ACTIVO', ?, ?, ?, ?, ?)");
+    $ok = $stmt->execute([$nombres, $apellidos, $telefono, $direccion, $correo, $hash, $codigorol, $es_interno, $foto_perfil, $cedula, $fecha_nacimiento, $url_cedula]);
     return $ok ? ['success' => true] : ['success' => false, 'mensaje' => 'Error al registrar usuario.'];
 }
-public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasena = '', $foto_perfil = null) {
+public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasena = '', $foto_perfil = null, $cedula = '', $fecha_nacimiento = '', $url_cedula = null) {
+    if ($cedula && $this->cedulaExiste($cedula, $id)) {
+        return ['success' => false, 'mensaje' => 'La cédula ya está registrada.'];
+    }
     // Obtener la foto actual si no se sube una nueva
     if ($foto_perfil === null) {
         $stmtFoto = $this->pdo->prepare("SELECT FOTO_PERFIL FROM usuario WHERE SECUENCIAL=?");
@@ -63,11 +79,11 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
 
     if (!empty($contrasena)) {
         $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
-        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, CONTRASENA=?, FOTO_PERFIL=? WHERE SECUENCIAL=?";
-        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasenaHash, $foto_perfil, $id];
+        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, CONTRASENA=?, FOTO_PERFIL=?, CEDULA=?, FECHA_NACIMIENTO=?, URL_CEDULA=? WHERE SECUENCIAL=?";
+        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $contrasenaHash, $foto_perfil, $cedula, $fecha_nacimiento, $url_cedula, $id];
     } else {
-        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, FOTO_PERFIL=? WHERE SECUENCIAL=?";
-        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $foto_perfil, $id];
+        $sql = "UPDATE usuario SET NOMBRES=?, APELLIDOS=?, TELEFONO=?, DIRECCION=?, CORREO=?, CODIGOROL=?, CODIGOESTADO=?, ES_INTERNO=?, FOTO_PERFIL=?, CEDULA=?, FECHA_NACIMIENTO=?, URL_CEDULA=? WHERE SECUENCIAL=?";
+        $params = [$nombres, $apellidos, $telefono, $direccion, $correo, $codigorol, $estado, $es_interno, $foto_perfil, $cedula, $fecha_nacimiento, $url_cedula, $id];
     }
 
     $stmt = $this->pdo->prepare($sql);
@@ -163,6 +179,18 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function getById2($id)
+{
+    $stmt = Conexion::getConexion()->prepare("SELECT * FROM usuario WHERE SECUENCIAL = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+public function getArchivosUsuario($idUsuario) {
+    $stmt = $this->pdo->prepare("SELECT URL_CEDULA, URL_MATRICULA FROM usuario WHERE SECUENCIAL = ?");
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
 
   public function actualizarDatosPerfil(
@@ -175,18 +203,25 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
     $direccion,
     $fotoNombre = null,
     $cedulaNombre = null,
-    $carreraId = null
+    $carreraId = null,
+    $matriculaNombre = null // Nuevo parámetro
 ) {
     try {
-    
         // Actualizar tabla usuario
-        $update = $this->pdo->prepare("UPDATE usuario SET 
-            NOMBRES = ?, APELLIDOS = ?, CEDULA = ?, FECHA_NACIMIENTO = ?, 
-            TELEFONO = ?, DIRECCION = ?, FOTO_PERFIL = ?, URL_CEDULA = ?
-            WHERE SECUENCIAL = ?
-        ");
+        $sql = "UPDATE usuario SET 
+            NOMBRES = ?, 
+            APELLIDOS = ?, 
+            CEDULA = ?, 
+            FECHA_NACIMIENTO = ?, 
+            TELEFONO = ?, 
+            DIRECCION = ?, 
+            FOTO_PERFIL = ?, 
+            URL_CEDULA = ?, 
+            URL_MATRICULA = ? 
+            WHERE SECUENCIAL = ?";
 
-        $ok = $update->execute([
+        $stmt = $this->pdo->prepare($sql);
+        $ok = $stmt->execute([
             $nombres,
             $apellidos,
             $cedula,
@@ -195,10 +230,11 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
             $direccion,
             $fotoNombre,
             $cedulaNombre,
+            $matriculaNombre, // Nuevo valor
             $id
         ]);
 
-        // Actualizar o insertar carrera
+        // Insertar o actualizar carrera
         if ($carreraId) {
             $check = $this->pdo->prepare("SELECT COUNT(*) FROM usuario_carrera WHERE SECUENCIALUSUARIO = ?");
             $check->execute([$id]);
@@ -214,12 +250,40 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
         }
 
         return $ok
-            ? ['success' => true, 'foto' => $fotoNombre, 'cedula' => $cedulaNombre]
+            ? ['success' => true, 'foto' => $fotoNombre, 'cedula' => $cedulaNombre, 'matricula' => $matriculaNombre]
             : ['success' => false, 'mensaje' => 'No se pudo actualizar los datos.'];
 
     } catch (PDOException $e) {
         return ['success' => false, 'mensaje' => 'Error: ' . $e->getMessage()];
     }
+}
+
+// ================= RECUPERACIÓN DE CONTRASEÑA =================
+public static function buscarPorCorreo($correo) {
+    $db = Conexion::getConexion();
+    $stmt = $db->prepare("SELECT * FROM usuario WHERE CORREO = ? LIMIT 1");
+    $stmt->execute([$correo]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public static function guardarTokenRecuperacion($id, $token, $expiracion) {
+    $db = Conexion::getConexion();
+    $stmt = $db->prepare("UPDATE usuario SET token_recupera=?, token_expiracion=? WHERE SECUENCIAL=?");
+    return $stmt->execute([$token, $expiracion, $id]);
+}
+
+public static function buscarPorTokenRecuperacion($token) {
+    $db = Conexion::getConexion();
+    $stmt = $db->prepare("SELECT * FROM usuario WHERE token_recupera=? AND token_expiracion > NOW() LIMIT 1");
+    $stmt->execute([$token]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public static function actualizarContrasenaYLimpiarToken($id, $nuevaContrasena) {
+    $db = Conexion::getConexion();
+    $hash = password_hash($nuevaContrasena, PASSWORD_DEFAULT); // Aquí se encripta
+    $stmt = $db->prepare("UPDATE usuario SET CONTRASENA=?, token_recupera=NULL, token_expiracion=NULL WHERE SECUENCIAL=?");
+    return $stmt->execute([$hash, $id]);
 }
 
 }
