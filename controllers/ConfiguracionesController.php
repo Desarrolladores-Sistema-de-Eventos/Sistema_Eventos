@@ -70,50 +70,93 @@ class ConfiguracionesController
         }
     }
 
-    // ================= FACULTAD =================
-    private function listarFacultades() {
-        $data = $this->configuracionesModelo->obtenerFacultades();
-        $this->json($data);
-    }
-    private function guardarFacultad() {
-        $required = ['nombre', 'mision', 'vision', 'ubicacion'];
-        foreach ($required as $campo) {
-            if (empty($_POST[$campo])) {
-                $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
-                return;
-            }
-        }
-        try {
-            $id = $this->configuracionesModelo->crearFacultad(
-                $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion']
-            );
-            $this->json(['tipo' => 'success', 'mensaje' => 'Facultad creada', 'id' => $id]);
-        } catch (Exception $e) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'Error al crear facultad', 'debug' => $e->getMessage()]);
+// ================= FACULTAD =================
+private function listarFacultades() {
+    $data = $this->configuracionesModelo->obtenerFacultades();
+    $this->json($data);
+}
+
+private function guardarFacultad() {
+    $required = ['nombre', 'mision', 'vision', 'ubicacion'];
+    foreach ($required as $campo) {
+        if (empty($_POST[$campo])) {
+            $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
+            return;
         }
     }
-    private function actualizarFacultad() {
-        $id = $_POST['id'] ?? null;
-        if (!$id) { $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']); return; }
-        try {
-            $ok = $this->configuracionesModelo->actualizarFacultad(
-                $id, $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion']
-            );
-            $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad actualizada' : 'No se pudo actualizar']);
-        } catch (Exception $e) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'Error al actualizar facultad', 'debug' => $e->getMessage()]);
-        }
+
+    $sigla = $_POST['sigla'] ?? null;
+    $about = $_POST['about'] ?? null;
+    $urlLogo = $_FILES['urlLogo'] ?? null;
+    $urlPortada = $_FILES['urlPortada'] ?? null;
+
+    $rutaLogo = $urlLogo && $urlLogo['tmp_name'] ? $this->guardarArchivo($urlLogo) : null;
+    $rutaPortada = $urlPortada && $urlPortada['tmp_name'] ? $this->guardarArchivo($urlPortada) : null;
+
+    try {
+        $id = $this->configuracionesModelo->crearFacultad(
+            $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion'],
+            $sigla, $about, $rutaLogo, $rutaPortada
+        );
+        $this->json(['tipo' => 'success', 'mensaje' => 'Facultad creada', 'id' => $id]);
+    } catch (Exception $e) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Error al crear facultad', 'debug' => $e->getMessage()]);
     }
-    private function eliminarFacultad() {
-        $id = $_POST['id'] ?? null;
-        if (!$id) { $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']); return; }
-        try {
-            $ok = $this->configuracionesModelo->eliminarFacultad($id);
-            $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad eliminada' : 'No se pudo eliminar']);
-        } catch (Exception $e) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'Error al eliminar facultad', 'debug' => $e->getMessage()]);
-        }
+}
+
+private function actualizarFacultad() {
+    $id = $_POST['id'] ?? null;
+    if (!$id) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']);
+        return;
     }
+
+    $sigla = $_POST['sigla'] ?? null;
+    $about = $_POST['about'] ?? null;
+    $rutaLogo = $_POST['urlLogo'] ?? null;     // En edición, ya viene como ruta
+    $rutaPortada = $_POST['urlPortada'] ?? null;
+
+    try {
+        $ok = $this->configuracionesModelo->actualizarFacultad(
+            $id, $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion'],
+            $sigla, $about, $rutaLogo, $rutaPortada
+        );
+        $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad actualizada' : 'No se pudo actualizar']);
+    } catch (Exception $e) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Error al actualizar facultad', 'debug' => $e->getMessage()]);
+    }
+}
+
+private function eliminarFacultad() {
+    $id = $_POST['id'] ?? null;
+    if (!$id) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']);
+        return;
+    }
+
+    try {
+        $ok = $this->configuracionesModelo->eliminarFacultad($id);
+        $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad eliminada' : 'No se pudo eliminar']);
+    } catch (Exception $e) {
+        $this->json(['tipo' => 'error', 'mensaje' => 'Error al eliminar facultad', 'debug' => $e->getMessage()]);
+    }
+}
+
+private function guardarArchivo($archivo) {
+    $directorio = '../uploads/';
+    if (!file_exists($directorio)) {
+        mkdir($directorio, 0777, true);
+    }
+
+    $nombreArchivo = uniqid() . '_' . basename($archivo['name']);
+    $rutaDestino = $directorio . $nombreArchivo;
+
+    if (move_uploaded_file($archivo['tmp_name'], $rutaDestino)) {
+        return $rutaDestino;
+    }
+
+    return null;
+}
 
     // ================= CARRERA =================
     private function listarCarreras() {

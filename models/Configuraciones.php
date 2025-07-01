@@ -8,28 +8,45 @@ class Configuraciones {
         $this->pdo = Conexion::getConexion();
     }
 
-    // ================= FACULTAD =================
-    public function crearFacultad($nombre, $mision, $vision, $ubicacion) {
-        $sql = "INSERT INTO facultad (NOMBRE, MISION, VISION, UBICACION) VALUES (?, ?, ?, ?)";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$nombre, $mision, $vision, $ubicacion]);
-        return $this->pdo->lastInsertId();
-    }
-    public function obtenerFacultades() {
-        $sql = "SELECT * FROM facultad";
-        $stmt = $this->pdo->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public function actualizarFacultad($id, $nombre, $mision, $vision, $ubicacion) {
-        $sql = "UPDATE facultad SET NOMBRE = ?, MISION = ?, VISION = ?, UBICACION = ? WHERE SECUENCIAL = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$nombre, $mision, $vision, $ubicacion, $id]);
-    }
-    public function eliminarFacultad($id) {
-        $sql = "DELETE FROM facultad WHERE SECUENCIAL = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$id]);
-    }
+// ================= FACULTAD =================
+public function crearFacultad($nombre, $mision, $vision, $ubicacion, $sigla, $about, $urlLogo, $urlPortada) {
+    $sql = "INSERT INTO facultad (NOMBRE, MISION, VISION, UBICACION, SIGLA, ABOUT, URL_LOGO, URL_PORTADA)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$nombre, $mision, $vision, $ubicacion, $sigla, $about, $urlLogo, $urlPortada]);
+    return $this->pdo->lastInsertId();
+}
+
+
+public function obtenerFacultades() {
+    $sql = "SELECT * FROM facultad";
+    $stmt = $this->pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function actualizarFacultad($id, $nombre, $mision, $vision, $ubicacion, $sigla, $about, $urlLogo, $urlPortada) {
+    $sql = "UPDATE facultad SET 
+                NOMBRE = ?, 
+                MISION = ?, 
+                VISION = ?, 
+                UBICACION = ?, 
+                SIGLA = ?, 
+                ABOUT = ?, 
+                URL_LOGO = ?, 
+                URL_PORTADA = ?
+            WHERE SECUENCIAL = ?";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute([$nombre, $mision, $vision, $ubicacion, $sigla, $about, $urlLogo, $urlPortada, $id]);
+}
+
+
+
+public function eliminarFacultad($id) {
+    $sql = "DELETE FROM facultad WHERE SECUENCIAL = ?";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute([$id]);
+}
+
 
     // ================= CARRERA =================
     public function crearCarrera($nombre, $idFacultad) {

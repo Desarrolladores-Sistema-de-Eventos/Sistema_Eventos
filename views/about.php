@@ -8,6 +8,68 @@
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
+    <style>
+    /* Colores UTA */
+:root {
+    --uta-rojo: #ae0c22;
+    --uta-negro: #1a1a1a;
+    --uta-gris: #f5f5f5;
+    --uta-blanco: #ffffff;
+}
+
+/* Página Nosotros */
+.page-header {
+    background-color: var(--uta-rojo);
+    color: var(--uta-blanco);
+}
+
+.page-header .display-4 {
+    font-weight: 700;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+.page-header a {
+    color: var(--uta-blanco);
+    text-decoration: underline;
+}
+
+.about-text {
+    background-color: var(--uta-blanco);
+    border-left: 6px solid var(--uta-rojo);
+    border-radius: 10px;
+}
+
+.card {
+    border: none;
+    border-left: 4px solid var(--uta-rojo);
+    background-color: var(--uta-gris);
+}
+
+.card h5 {
+    font-weight: 600;
+    color: var(--uta-rojo);
+}
+
+.card i {
+    margin-right: 8px;
+    color: var(--uta-rojo);
+}
+
+/* FISEI Title Section */
+.text-primary {
+    color: var(--uta-rojo) !important;
+}
+
+.back-to-top {
+    background-color: var(--uta-rojo);
+    border: none;
+}
+
+.back-to-top:hover {
+    background-color: #8e0b1c;
+}
+    </style>
+    
     <!-- Favicon -->
     <link href="../public/img/favicon.ico" rel="icon">
 
@@ -84,6 +146,19 @@
     </div>
 </div>
 
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">UTA</h6>
+                <h1>Facultad de Ingeniería en Sistemas, Electrónica e Industrial</h1>
+            </div>
+            <div class="row"  id="autoridades-row" >
+                
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+    <script src="../public/js/autoridades.js"></script>
 
     <!-- Footer Start -->
      <script src="../public/js/fisei.js"></script>
@@ -111,3 +186,4 @@
 </body>
 
 </html>
+
