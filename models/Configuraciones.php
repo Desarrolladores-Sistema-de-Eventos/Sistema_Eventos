@@ -49,22 +49,31 @@ public function eliminarFacultad($id) {
 
 
     // ================= CARRERA =================
-    public function crearCarrera($nombre, $idFacultad) {
-        $sql = "INSERT INTO carrera (NOMBRE_CARRERA, SECUENCIALFACULTAD) VALUES (?, ?)";
+    public function crearCarrera($nombre, $idFacultad, $imagen = null) {
+        $sql = "INSERT INTO carrera (NOMBRE_CARRERA, SECUENCIALFACULTAD, IMAGEN) VALUES (?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$nombre, $idFacultad]);
+        $stmt->execute([$nombre, $idFacultad, $imagen]);
         return $this->pdo->lastInsertId();
     }
+
     public function obtenerCarreras() {
         $sql = "SELECT * FROM carrera";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function actualizarCarrera($id, $nombre, $idFacultad) {
-        $sql = "UPDATE carrera SET NOMBRE_CARRERA = ?, SECUENCIALFACULTAD = ? WHERE SECUENCIAL = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$nombre, $idFacultad, $id]);
+
+    public function actualizarCarrera($id, $nombre, $idFacultad, $imagen = null) {
+        if ($imagen !== null) {
+            $sql = "UPDATE carrera SET NOMBRE_CARRERA = ?, SECUENCIALFACULTAD = ?, IMAGEN = ? WHERE SECUENCIAL = ?";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$nombre, $idFacultad, $imagen, $id]);
+        } else {
+            $sql = "UPDATE carrera SET NOMBRE_CARRERA = ?, SECUENCIALFACULTAD = ? WHERE SECUENCIAL = ?";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$nombre, $idFacultad, $id]);
+        }
     }
+
     public function eliminarCarrera($id) {
         $sql = "DELETE FROM carrera WHERE SECUENCIAL = ?";
         $stmt = $this->pdo->prepare($sql);

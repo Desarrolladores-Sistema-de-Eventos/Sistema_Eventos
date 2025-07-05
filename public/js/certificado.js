@@ -2,11 +2,14 @@
 function listarCertificadosPorEvento(idEvento) {
   axios.get('../controllers/CertificadoControler.php?option=emitidosPorEvento&idEvento=' + idEvento)
     .then(res => {
+      // Si ya existe una instancia, destrúyela y limpia
       if ($.fn.DataTable.isDataTable('#tabla-certificados')) {
-        $('#tabla-certificados').DataTable().destroy();
+        $('#tabla-certificados').DataTable().clear().destroy();
       }
+
       const tbody = document.querySelector('#tabla-certificados tbody');
       tbody.innerHTML = '';
+
       if (res.data.tipo === 'success') {
         res.data.data.forEach(row => {
           tbody.innerHTML += `
@@ -20,19 +23,22 @@ function listarCertificadosPorEvento(idEvento) {
                   ? `<button class="btn btn-outline-dark btn-sm" onclick="verCertificado('${row.URL_CERTIFICADO}')">
                       <i class="fa fa-file-pdf-o"></i> Ver PDF
                     </button>`
-                  : '<span class="text-muted">No disponible</span>'
-                }
+                  : '<span class="text-muted">No disponible</span>'}
               </td>
             </tr>
           `;
         });
       }
+
+      // Siempre reinicializa al final
       $('#tabla-certificados').DataTable({
         language: { url: '../public/js/es-ES.json' },
-        responsive: true
+        responsive: true,
+        destroy: true  // ← también puedes dejar esto por seguridad
       });
     });
 }
+
 
 // Abrir certificado PDF
 function verCertificado(url) {
