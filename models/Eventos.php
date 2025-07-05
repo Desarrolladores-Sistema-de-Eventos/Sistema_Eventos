@@ -134,6 +134,11 @@ public function getEventosConPortadaPorResponsable($idUsuario) {
     $stmt->execute([$idEvento]);
     $evento = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Obtener organizadores (incluyendo ROL_ORGANIZADOR y SECUENCIALUSUARIO)
+    $stmtOrg = $this->pdo->prepare("SELECT oe.SECUENCIALUSUARIO, oe.ROL_ORGANIZADOR, u.NOMBRES, u.APELLIDOS, u.CORREO FROM organizador_evento oe INNER JOIN usuario u ON oe.SECUENCIALUSUARIO = u.SECUENCIAL WHERE oe.SECUENCIALEVENTO = ?");
+    $stmtOrg->execute([$idEvento]);
+    $evento['ORGANIZADORES'] = $stmtOrg->fetchAll(PDO::FETCH_ASSOC);
+
     // Obtener requisitos asociados
     $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM REQUISITO_EVENTO WHERE SECUENCIALEVENTO = ?");
     $stmtReq->execute([$idEvento]);

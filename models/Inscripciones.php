@@ -1,5 +1,7 @@
 <?php
 require_once '../core/Conexion.php';
+require_once __DIR__ . '/../core/correo_usuario.php'; // Al inicio del archivo
+
 
 class Inscripciones {
     private $pdo;
@@ -76,7 +78,7 @@ public function actualizarEstadoPago($idPago, $estado, $aprobador) {
 
 
     public function validarRequisito($idArchivo, $estado) {
-        $validos = ['PEN', 'VAL', 'RECH', 'INV'];
+        $validos = ['PEN', 'VAL', 'REC', 'INV']; // Corregir: usar REC en lugar de RECH para requisitos
         if (!in_array($estado, $validos)) return false;
 
         $stmt = $this->pdo->prepare("UPDATE ARCHIVO_REQUISITO SET CODIGOESTADOVALIDACION = ? WHERE SECUENCIAL = ?");
@@ -367,7 +369,66 @@ public function validarYActualizarEstadoInscripcion($idInscripcion) {
         $sqlUpd = "UPDATE inscripcion SET CODIGOESTADOINSCRIPCION = 'ACE' WHERE SECUENCIAL = ?";
         $stmtUpd = $this->pdo->prepare($sqlUpd);
         $stmtUpd->execute([$idInscripcion]);
+
+        // Si es un evento pagado, actualizar el MONTO en la tabla PAGO con el COSTO del evento
+        if ($esPagado == 1) {
+            $sqlActualizarMonto = "
+                UPDATE pago p
+                INNER JOIN inscripcion i ON i.SECUENCIAL = p.SECUENCIALINSCRIPCION
+                INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+                SET p.MONTO = e.COSTO
+                WHERE p.SECUENCIALINSCRIPCION = ?
+            ";
+            $stmtActualizarMonto = $this->pdo->prepare($sqlActualizarMonto);
+            $stmtActualizarMonto->execute([$idInscripcion]);
+        }
+
+        // Obtener datos del usuario y evento
+        $sqlUser = "SELECT u.CORREO, CONCAT(u.NOMBRES, ' ', u.APELLIDOS) AS NOMBRE, e.TITULO AS EVENTO
+                    FROM inscripcion i
+                    JOIN usuario u ON u.SECUENCIAL = i.SECUENCIALUSUARIO
+                    JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+                    WHERE i.SECUENCIAL = ?";
+        $stmtUser = $this->pdo->prepare($sqlUser);
+        $stmtUser->execute([$idInscripcion]);
+        $info = $stmtUser->fetch(PDO::FETCH_ASSOC);
+
+        if ($info) {
+            enviarCorreoInscripcionAceptada($info['CORREO'], $info['NOMBRE'], $info['EVENTO']);
+        }
         return true;
+    } else {
+        // Si algún requisito o pago fue rechazado, puedes actualizar a REC y notificar
+        $sqlCheckRec = "SELECT COUNT(*) FROM archivo_requisito WHERE SECUENCIALINSCRIPCION = ? AND CODIGOESTADOVALIDACION = 'REC'";
+        $stmtCheckRec = $this->pdo->prepare($sqlCheckRec);
+        $stmtCheckRec->execute([$idInscripcion]);
+        $hayRec = $stmtCheckRec->fetchColumn();
+
+        // Validar si algún pago fue rechazado
+        $sqlCheckPagoRech = "SELECT COUNT(*) FROM pago WHERE SECUENCIALINSCRIPCION = ? AND CODIGOESTADOPAGO = 'RECH'";
+        $stmtCheckPagoRech = $this->pdo->prepare($sqlCheckPagoRech);
+        $stmtCheckPagoRech->execute([$idInscripcion]);
+        $hayPagoRech = $stmtCheckPagoRech->fetchColumn();
+
+        if ($hayRec > 0 || $hayPagoRech > 0) {
+            $sqlUpd = "UPDATE inscripcion SET CODIGOESTADOINSCRIPCION = 'REC' WHERE SECUENCIAL = ?";
+            $stmtUpd = $this->pdo->prepare($sqlUpd);
+            $stmtUpd->execute([$idInscripcion]);
+
+            // Obtener datos del usuario y evento
+            $sqlUser = "SELECT u.CORREO, CONCAT(u.NOMBRES, ' ', u.APELLIDOS) AS NOMBRE, e.TITULO AS EVENTO
+                        FROM inscripcion i
+                        JOIN usuario u ON u.SECUENCIAL = i.SECUENCIALUSUARIO
+                        JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+                        WHERE i.SECUENCIAL = ?";
+            $stmtUser = $this->pdo->prepare($sqlUser);
+            $stmtUser->execute([$idInscripcion]);
+            $info = $stmtUser->fetch(PDO::FETCH_ASSOC);
+
+            if ($info) {
+                enviarCorreoInscripcionRechazada($info['CORREO'], $info['NOMBRE'], $info['EVENTO']);
+            }
+        }
     }
     return false;
 }

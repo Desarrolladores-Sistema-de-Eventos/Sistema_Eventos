@@ -2,6 +2,7 @@
 
 session_start();
 require_once '../models/Certificados.php';
+require_once '../core/correo_usuario.php';
 
 header('Content-Type: application/json');
 
@@ -202,6 +203,41 @@ private function subirCertificado()
             'mensaje' => $mensaje,
             'url_certificado' => $success ? $nombreArchivo : null
         ]);
+
+        // Si se guardó exitosamente, enviar notificación por correo
+        if ($success) {
+            try {
+                // Obtener datos del usuario y evento para el correo
+                $pdo = $this->certificadoModelo->getPDO();
+                $stmt = $pdo->prepare("
+                    SELECT 
+                        u.NOMBRES, 
+                        u.APELLIDOS, 
+                        u.CORREO,
+                        e.TITULO AS NOMBRE_EVENTO,
+                        e.CODIGOTIPOEVENTO
+                    FROM usuario u, evento e 
+                    WHERE u.SECUENCIAL = ? AND e.SECUENCIAL = ?
+                ");
+                $stmt->execute([$idUsuario, $idEvento]);
+                $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if ($datos) {
+                    $nombreCompleto = $datos['NOMBRES'] . ' ' . $datos['APELLIDOS'];
+                    $tipoCertificado = ($datos['CODIGOTIPOEVENTO'] === 'CUR') ? 'Aprobación' : 'Participación';
+                    
+                    enviarCorreoCertificadoPDFDisponible(
+                        $datos['CORREO'],
+                        $nombreCompleto,
+                        $datos['NOMBRE_EVENTO'],
+                        $tipoCertificado
+                    );
+                }
+            } catch (Exception $e) {
+                // Si hay error en el correo, no afectar la respuesta principal
+                error_log('Error enviando notificación de certificado PDF: ' . $e->getMessage());
+            }
+        }
     } catch (Exception $e) {
         if (file_exists($rutaDestino)) {
             unlink($rutaDestino);

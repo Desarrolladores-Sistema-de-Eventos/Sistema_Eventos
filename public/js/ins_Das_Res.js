@@ -51,7 +51,17 @@ function cargarInscripcionesPendientesResponsable() {
     $('#tabla-pendientes').DataTable().destroy();
   }
 
-  tbody.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
+  // Animación de cargando con spinner Bootstrap
+  tbody.innerHTML = `
+    <tr>
+      <td colspan="4" style="text-align:center;">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Cargando...</span>
+        </div>
+        <div style="margin-top:8px;">Cargando inscripciones...</div>
+      </td>
+    </tr>
+  `;
 
   axios.get('../controllers/InscripcionesController.php?option=listarPendientesResponsable')
     .then(res => {
@@ -62,39 +72,38 @@ function cargarInscripcionesPendientesResponsable() {
         return;
       }
 
-
-  tbody.innerHTML = data.map(item => {
-    // Badge de estado
-    let estadoHtml = '';
-    switch (item.CODIGOESTADOINSCRIPCION) {
-      case 'ACE':
-        estadoHtml = '<span class="badge" style="background: #0066cc;">Aceptado</span>';
-        break;
-      case 'PEN':
-        estadoHtml = '<span class="badge" style="background: #ffc107; color: #212529;">Pendiente</span>';
-        break;
-      case 'REC':
-        estadoHtml = '<span class="badge" style="background: #dc3545;">Rechazado</span>';
-        break;
-      case 'ANU':
-        estadoHtml = '<span class="badge" style="background: #6c757d;">Anulado</span>';
-        break;
-      default:
-        estadoHtml = '<span class="badge" style="background: #adb5bd;">Desconocido</span>';
-    }
-    return `
-      <tr>
-        <td>${item.NOMBRE_COMPLETO}</td>
-        <td>${item.EVENTO}</td>
-        <td>${estadoHtml}</td>
-        <td class="text-center">
-          <button class="btn btn-outline-dark btn-sm" style="background: #222; border-color: #222; color: #fff;" onclick="verDetalleInscripcion(${item.INSCRIPCION_ID})">
-            <i class="fa fa-check" style="color: #fff;"></i> Validar
-          </button>
-        </td>
-      </tr>
-    `;
-  }).join('');
+      tbody.innerHTML = data.map(item => {
+        // Badge de estado
+        let estadoHtml = '';
+        switch (item.CODIGOESTADOINSCRIPCION) {
+          case 'ACE':
+            estadoHtml = '<span class="badge" style="background: #0066cc;">Aceptado</span>';
+            break;
+          case 'PEN':
+            estadoHtml = '<span class="badge" style="background: #ffc107; color: #212529;">Pendiente</span>';
+            break;
+          case 'REC':
+            estadoHtml = '<span class="badge" style="background: #dc3545;">Rechazado</span>';
+            break;
+          case 'ANU':
+            estadoHtml = '<span class="badge" style="background: #6c757d;">Anulado</span>';
+            break;
+          default:
+            estadoHtml = '<span class="badge" style="background: #adb5bd;">Desconocido</span>';
+        }
+        return `
+          <tr>
+            <td>${item.NOMBRE_COMPLETO}</td>
+            <td>${item.EVENTO}</td>
+            <td>${estadoHtml}</td>
+            <td class="text-center">
+              <button class="btn btn-outline-dark btn-sm" style="background: #222; border-color: #222; color: #fff;" onclick="verDetalleInscripcion(${item.INSCRIPCION_ID})">
+                <i class="fa fa-check" style="color: #fff;"></i> Validar
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
 
       // Re-inicializar
       $('#tabla-pendientes').DataTable({
@@ -315,7 +324,7 @@ function verDetalleInscripcion(idInscripcion) {
               <select class="form-control" onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)">
                 <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
                 <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
-                <option value="RECH" ${r.ESTADO === 'RECH' ? 'selected' : ''}>Rechazado</option>
+                <option value="REC" ${r.ESTADO === 'REC' ? 'selected' : ''}>Rechazado</option>
                 <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
               </select>
             </td>
@@ -381,44 +390,80 @@ function validarArchivoRequisito(idArchivo, estado) {
   axios.post('../controllers/InscripcionesController.php?option=estadoRequisito', new URLSearchParams({ id: idArchivo, estado }))
     .then(res => {
       if (res.data.tipo === 'success') {
-        Swal.fire({ icon: 'success', title: 'Requisito actualizado', timer: 1000, showConfirmButton: false });
-        // Lógica para autoaceptar inscripción si todo está validado
+        const mensaje = estado === 'REC' ? 'Requisito rechazado' : 
+                       estado === 'VAL' ? 'Requisito validado' : 
+                       estado === 'INV' ? 'Requisito marcado como inválido' : 'Requisito actualizado';
+        
+        Swal.fire({ 
+          icon: 'success', 
+          title: mensaje, 
+          timer: 1500, 
+          showConfirmButton: false 
+        });
+        
+        // Verificar si todo está validado para cerrar el modal
         setTimeout(() => {
-          validarAutoAceptacion();
-        }, 500);
+          verificarYCerrarModal();
+        }, 1600);
       } else {
         Swal.fire('Error', 'No se pudo actualizar el requisito', 'error');
       }
     })
-    .catch(() => Swal.fire('Error', 'Ocurrió un problema con el servidor', 'error'));
+    .catch(err => {
+      console.error('Error al validar requisito:', err);
+      Swal.fire('Error', 'Ocurrió un problema con el servidor', 'error');
+    });
 }
 
-// Lógica para autoaceptar inscripción si todos los requisitos y pagos están validados
-function validarAutoAceptacion() {
-  const idInscripcion = document.getElementById('detalleIdInscripcion')?.value;
-  if (!idInscripcion) return;
+// Función eliminada: validarAutoAceptacion ya no es necesaria
+// El backend maneja automáticamente la validación y actualización del estado
 
-  // Obtener estados de requisitos
-  const requisitos = Array.from(document.querySelectorAll('#tabla-requisitos-detalle select'));
-  const todosRequisitosValidados = requisitos.length > 0 && requisitos.every(sel => sel.value === 'VAL');
+// Función para verificar si todo está validado y cerrar el modal automáticamente
+function verificarYCerrarModal() {
+  // Obtener todos los selects de requisitos
+  const requisitosSelects = Array.from(document.querySelectorAll('#tabla-requisitos-detalle select'));
+  const todosRequisitosValidados = requisitosSelects.length > 0 && requisitosSelects.every(sel => sel.value === 'VAL');
 
-  // Obtener estados de pagos (si existen filas)
+  // Obtener todos los selects de pagos (si existen)
   const pagosSelects = Array.from(document.querySelectorAll('#tabla-pagos-detalle select'));
   const todosPagosValidados = pagosSelects.length === 0 || pagosSelects.every(sel => sel.value === 'VAL');
 
-  if (todosRequisitosValidados && todosPagosValidados) {
-    // Cambiar estado de inscripción a Aceptado
-    axios.post('../controllers/InscripcionesController.php?option=estadoInscripcion', new URLSearchParams({ id: idInscripcion, estado: 'ACE' }))
-      .then(res => {
-        if (res.data.tipo === 'success') {
-          Swal.fire({ icon: 'success', title: 'Inscripción aceptada automáticamente', timer: 1200, showConfirmButton: false });
-          $('#modalDetalleInscripcion').modal('hide');
-          cargarInscripcionesPendientesResponsable();
-          cargarMetricasTotales();
-          cargarGraficoEstados();
-          cargarGraficoEventos();
-        }
+  // Verificar si hay algún requisito o pago rechazado
+  const hayRequisitosRechazados = requisitosSelects.some(sel => sel.value === 'REC');
+  const hayPagosRechazados = pagosSelects.some(sel => sel.value === 'RECH');
+
+  console.log('🔍 Verificando estado de validaciones:');
+  console.log('- Requisitos validados:', todosRequisitosValidados);
+  console.log('- Pagos validados:', todosPagosValidados);
+  console.log('- Hay requisitos rechazados:', hayRequisitosRechazados);
+  console.log('- Hay pagos rechazados:', hayPagosRechazados);
+
+  // Si todo está validado o hay algo rechazado, cerrar modal y actualizar
+  if ((todosRequisitosValidados && todosPagosValidados) || hayRequisitosRechazados || hayPagosRechazados) {
+    let mensaje = '';
+    if (todosRequisitosValidados && todosPagosValidados) {
+      mensaje = '¡Inscripción procesada! Todos los requisitos y pagos están validados.';
+    } else if (hayRequisitosRechazados || hayPagosRechazados) {
+      mensaje = 'Inscripción procesada con elementos rechazados.';
+    }
+    
+    if (mensaje) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Procesamiento completo',
+        text: mensaje,
+        timer: 2000,
+        showConfirmButton: false
       });
+    }
+
+    setTimeout(() => {
+      $('#modalDetalleInscripcion').modal('hide');
+      cargarInscripcionesPendientesResponsable();
+      cargarMetricasTotales();
+      cargarGraficoEstados();
+      cargarGraficoEventos();
+    }, 2100);
   }
 }
 
@@ -430,14 +475,29 @@ document.getElementById('formDetalleInscripcion').addEventListener('submit', fun
   axios.post('../controllers/InscripcionesController.php?option=estadoInscripcion', new URLSearchParams({ id, estado }))
     .then(res => {
       if (res.data.tipo === 'success') {
-        Swal.fire({ icon: 'success', title: 'Inscripción actualizada', timer: 1000, showConfirmButton: false });
-        $('#modalDetalleInscripcion').modal('hide');
-        cargarInscripcionesPendientesResponsable();
+        Swal.fire({ 
+          icon: 'success', 
+          title: 'Inscripción actualizada', 
+          timer: 1500, 
+          showConfirmButton: false 
+        });
+        
+        // Cerrar modal y actualizar todo
+        setTimeout(() => {
+          $('#modalDetalleInscripcion').modal('hide');
+          cargarInscripcionesPendientesResponsable();
+          cargarMetricasTotales();
+          cargarGraficoEstados();
+          cargarGraficoEventos();
+        }, 1600);
       } else {
         Swal.fire('Error', 'No se pudo actualizar el estado', 'error');
       }
     })
-    .catch(() => Swal.fire('Error', 'Ocurrió un problema al guardar', 'error'));
+    .catch(err => {
+      console.error('Error al actualizar inscripción:', err);
+      Swal.fire('Error', 'Ocurrió un problema al guardar', 'error');
+    });
 });
 
 function actualizarEstadoPago(idPago, nuevoEstado) {
@@ -447,25 +507,27 @@ function actualizarEstadoPago(idPago, nuevoEstado) {
   }))
   .then(res => {
     if (res.data.tipo === 'success') {
+      const mensaje = nuevoEstado === 'RECH' ? 'Pago rechazado' : 
+                     nuevoEstado === 'VAL' ? 'Pago validado' : 
+                     nuevoEstado === 'INV' ? 'Pago marcado como inválido' : 'Estado actualizado';
+      
       Swal.fire({
         icon: 'success',
-        title: 'Estado actualizado',
-        timer: 1000,
+        title: mensaje,
+        timer: 1500,
         showConfirmButton: false
       });
 
-      // Si el estado fue cambiado a "Aprobado", recargar la tabla de pendientes
-      if (nuevoEstado === 'APR') {
-        $('#modalDetalleInscripcion').modal('hide');
-        cargarInscripcionesPendientesResponsable();
-        cargarMetricasTotales();         // ✅ ACTUALIZAR MÉTRICAS
-        cargarGraficoEstados(); 
-      }
+      // Verificar si todo está validado para cerrar el modal
+      setTimeout(() => {
+        verificarYCerrarModal();
+      }, 1600);
     } else {
       Swal.fire('Error', 'No se pudo actualizar el estado del pago', 'error');
     }
   })
-  .catch(() => {
+  .catch(err => {
+    console.error('Error al actualizar pago:', err);
     Swal.fire('Error', 'Ocurrió un problema al actualizar el estado', 'error');
   });
 }

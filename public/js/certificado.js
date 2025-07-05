@@ -70,8 +70,16 @@ async function generarTodosPDFs() {
 
   Swal.fire({
     icon: 'info',
-    title: 'Generando certificados...',
-    text: 'Esto puede tardar algunos segundos...',
+    title: 'Generando certificados PDF...',
+    html: `
+      <div style="text-align: left; margin: 20px 0;">
+        <p>🔄 Creando archivos PDF personalizados...</p>
+        <p>💾 Guardando certificados en el servidor...</p>
+        <p>📧 Preparando notificaciones por correo...</p>
+        <br>
+        <p><em>Este proceso puede tardar algunos segundos...</em></p>
+      </div>
+    `,
     showConfirmButton: false,
     allowOutsideClick: false,
     didOpen: () => Swal.showLoading()
@@ -134,7 +142,19 @@ async function generarTodosPDFs() {
   }
 
   Swal.close();
-  Swal.fire('Listo', 'Certificados generados y guardados.', 'success');
+  Swal.fire({
+    icon: 'success',
+    title: '¡Certificados generados exitosamente!',
+    html: `
+      <div style="text-align: left; margin: 20px 0;">
+        <p>✅ Los certificados PDF han sido generados y guardados correctamente.</p>
+        <p>📧 Se ha enviado una notificación por correo electrónico a cada participante informándoles que su certificado está disponible para descarga.</p>
+        <p>💡 Los usuarios podrán descargar sus certificados desde la sección "Mis Certificados" en su dashboard.</p>
+      </div>
+    `,
+    confirmButtonText: 'Entendido',
+    confirmButtonColor: '#28a745'
+  });
   listarCertificadosPorEvento(idEvento);
 }
 

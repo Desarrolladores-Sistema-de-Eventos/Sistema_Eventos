@@ -1,5 +1,6 @@
 <?php
 require_once '../core/Conexion.php';
+require_once __DIR__ . '/../core/correo_usuario.php';
 
 class Certificado {
     private $pdo;
@@ -105,19 +106,24 @@ class Certificado {
     }
 
 public function generarSiCorresponde($idInscripcion) {
-    // 1. Obtener datos de inscripción y evento
+    // 1. Obtener datos de inscripción, evento y usuario
     $sql = "
         SELECT 
             i.SECUENCIAL AS INSCRIPCION_ID,
             i.CODIGOESTADOINSCRIPCION,
             i.SECUENCIALUSUARIO,
             i.SECUENCIALEVENTO,
+            e.TITULO AS NOMBRE_EVENTO,
             e.NOTAAPROBACION,
             e.ES_PAGADO,
             e.ESTADO,
-            e.CODIGOTIPOEVENTO
+            e.CODIGOTIPOEVENTO,
+            u.NOMBRES,
+            u.APELLIDOS,
+            u.CORREO
         FROM inscripcion i
         INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        INNER JOIN usuario u ON u.SECUENCIAL = i.SECUENCIALUSUARIO
         WHERE i.SECUENCIAL = ?
     ";
     $stmt = $this->pdo->prepare($sql);
@@ -128,11 +134,31 @@ public function generarSiCorresponde($idInscripcion) {
         return ['success' => false, 'mensaje' => 'Inscripción no encontrada'];
     }
 
+    $nombreCompleto = $insc['NOMBRES'] . ' ' . $insc['APELLIDOS'];
+    $detallesAdicionales = [];
+
+    // Verificar estado del evento
     if ($insc['ESTADO'] !== 'FINALIZADO') {
+        $this->enviarNotificacionNoGenerado(
+            $insc['CORREO'], 
+            $nombreCompleto, 
+            $insc['NOMBRE_EVENTO'],
+            'El evento aún no ha sido finalizado',
+            ['Estado del evento: ' . $insc['ESTADO']]
+        );
         return ['success' => false, 'mensaje' => 'El evento aún no ha sido finalizado'];
     }
 
+    // Verificar estado de inscripción
     if (!in_array($insc['CODIGOESTADOINSCRIPCION'], ['ACE', 'COM'])) {
+        $estadoTexto = $this->getEstadoTexto($insc['CODIGOESTADOINSCRIPCION']);
+        $this->enviarNotificacionNoGenerado(
+            $insc['CORREO'], 
+            $nombreCompleto, 
+            $insc['NOMBRE_EVENTO'],
+            'La inscripción no está aceptada ni completada',
+            ['Estado de inscripción: ' . $estadoTexto]
+        );
         return ['success' => false, 'mensaje' => 'La inscripción no está aceptada ni completada'];
     }
 
@@ -148,13 +174,21 @@ public function generarSiCorresponde($idInscripcion) {
         $stmtPago->execute([$idInscripcion]);
         $pago = $stmtPago->fetch(PDO::FETCH_ASSOC);
         if (!$pago || $pago['CODIGOESTADOPAGO'] !== 'VAL') {
+            $estadoPago = $pago ? $this->getEstadoPagoTexto($pago['CODIGOESTADOPAGO']) : 'Sin registro';
+            $this->enviarNotificacionNoGenerado(
+                $insc['CORREO'], 
+                $nombreCompleto, 
+                $insc['NOMBRE_EVENTO'],
+                'El pago no ha sido validado',
+                ['Estado del pago: ' . $estadoPago]
+            );
             return ['success' => false, 'mensaje' => 'El pago no ha sido validado'];
         }
     }
 
     // 3. Obtener datos de asistencia y nota
     $stmtAsist = $this->pdo->prepare("
-        SELECT ASISTIO, NOTAFINAL, PORCENTAJE_ASISTENCIA
+        SELECT ASISTIO, NOTAFINAL, PORCENTAJE_ASISTENCIA, OBSERVACION
         FROM asistencia_nota
         WHERE SECUENCIALEVENTO = ? AND SECUENCIALUSUARIO = ?
         LIMIT 1
@@ -163,15 +197,61 @@ public function generarSiCorresponde($idInscripcion) {
     $asist = $stmtAsist->fetch(PDO::FETCH_ASSOC);
 
     if (!$asist || $asist['ASISTIO'] != 1) {
+        $detallesAdicionales = [];
+        $detallesAdicionales[] = 'Estado de asistencia: ' . ($asist ? 'No asistió' : 'Sin registro');
+        if ($asist && !empty($asist['OBSERVACION'])) {
+            $detallesAdicionales[] = 'Observaciones: ' . $asist['OBSERVACION'];
+        }
+        
+        $this->enviarNotificacionNoGenerado(
+            $insc['CORREO'], 
+            $nombreCompleto, 
+            $insc['NOMBRE_EVENTO'],
+            'No se registró asistencia al evento',
+            $detallesAdicionales
+        );
         return ['success' => false, 'mensaje' => 'El participante no asistió al evento'];
     }
 
     if ($asist['PORCENTAJE_ASISTENCIA'] === null || $asist['PORCENTAJE_ASISTENCIA'] < 70) {
+        $porcentaje = $asist['PORCENTAJE_ASISTENCIA'] ?? 0;
+        $detallesAdicionales[] = 'Porcentaje de asistencia: ' . $porcentaje . '%';
+        $detallesAdicionales[] = 'Mínimo requerido: 70%';
+        if (!empty($asist['OBSERVACION'])) {
+            $detallesAdicionales[] = 'Observaciones: ' . $asist['OBSERVACION'];
+        }
+        
+        $this->enviarNotificacionNoGenerado(
+            $insc['CORREO'], 
+            $nombreCompleto, 
+            $insc['NOMBRE_EVENTO'],
+            'El porcentaje de asistencia es insuficiente',
+            $detallesAdicionales
+        );
         return ['success' => false, 'mensaje' => 'El porcentaje de asistencia es insuficiente'];
     }
 
+    // Verificar nota para cursos
     if ($insc['CODIGOTIPOEVENTO'] === 'CUR') {
         if ($asist['NOTAFINAL'] === null || floatval($asist['NOTAFINAL']) < floatval($insc['NOTAAPROBACION'])) {
+            $notaFinal = $asist['NOTAFINAL'] ?? 'Sin nota';
+            $notaMinima = $insc['NOTAAPROBACION'];
+            
+            $detallesAdicionales = [];
+            $detallesAdicionales[] = 'Nota obtenida: ' . $notaFinal;
+            $detallesAdicionales[] = 'Nota mínima para aprobar: ' . $notaMinima;
+            $detallesAdicionales[] = 'Porcentaje de asistencia: ' . ($asist['PORCENTAJE_ASISTENCIA'] ?? 0) . '%';
+            if (!empty($asist['OBSERVACION'])) {
+                $detallesAdicionales[] = 'Observaciones: ' . $asist['OBSERVACION'];
+            }
+            
+            $this->enviarNotificacionNoGenerado(
+                $insc['CORREO'], 
+                $nombreCompleto, 
+                $insc['NOMBRE_EVENTO'],
+                'La nota final es insuficiente para aprobar',
+                $detallesAdicionales
+            );
             return ['success' => false, 'mensaje' => 'La nota final es insuficiente para aprobar'];
         }
     }
@@ -201,9 +281,30 @@ public function generarSiCorresponde($idInscripcion) {
         $tipoCertificado
     ]);
 
-    return $ok
-        ? ['success' => true, 'mensaje' => 'Certificado generado correctamente']
-        : ['success' => false, 'mensaje' => 'Error al generar el certificado'];
+    if ($ok) {
+        // Preparar detalles adicionales para el correo de éxito
+        $detallesExito = [];
+        if ($insc['CODIGOTIPOEVENTO'] === 'CUR') {
+            $detallesExito[] = 'Nota final: ' . ($asist['NOTAFINAL'] ?? 'N/A');
+            $detallesExito[] = 'Nota mínima requerida: ' . $insc['NOTAAPROBACION'];
+        }
+        $detallesExito[] = 'Porcentaje de asistencia: ' . ($asist['PORCENTAJE_ASISTENCIA'] ?? 0) . '%';
+        if (!empty($asist['OBSERVACION'])) {
+            $detallesExito[] = 'Observaciones: ' . $asist['OBSERVACION'];
+        }
+        
+        // Enviar notificación de certificado generado
+        enviarCorreoCertificadoGenerado(
+            $insc['CORREO'],
+            $nombreCompleto,
+            $insc['NOMBRE_EVENTO'],
+            $tipoCertificado,
+            $detallesExito
+        );
+        return ['success' => true, 'mensaje' => 'Certificado generado correctamente'];
+    } else {
+        return ['success' => false, 'mensaje' => 'Error al generar el certificado'];
+    }
 }
 
 public function getCertificadosEmitidos($idEvento) {
@@ -253,7 +354,31 @@ public function usuarioYEventoExisten($idUsuario, $idEvento) {
     return $res['usuario_existe'] > 0 && $res['evento_existe'] > 0;
 }
   
-   
-
+    // === FUNCIONES AUXILIARES PARA NOTIFICACIONES ===
+    
+    private function enviarNotificacionNoGenerado($correo, $nombreUsuario, $nombreEvento, $razon, $detalles = []) {
+        enviarCorreoCertificadoNoGenerado($correo, $nombreUsuario, $nombreEvento, $razon, $detalles);
+    }
+    
+    private function getEstadoTexto($codigoEstado) {
+        switch ($codigoEstado) {
+            case 'PEN': return 'Pendiente';
+            case 'ACE': return 'Aceptado';
+            case 'REC': return 'Rechazado';
+            case 'ANU': return 'Anulado';
+            case 'COM': return 'Completado';
+            default: return 'Desconocido';
+        }
+    }
+    
+    private function getEstadoPagoTexto($codigoEstado) {
+        switch ($codigoEstado) {
+            case 'PEN': return 'Pendiente';
+            case 'VAL': return 'Validado';
+            case 'RECH': return 'Rechazado';
+            case 'INV': return 'Inválido';
+            default: return 'Desconocido';
+        }
+    }
 }
 ?>

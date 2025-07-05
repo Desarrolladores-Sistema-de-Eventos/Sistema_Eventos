@@ -12,23 +12,16 @@ function cargarEventosSeleccion() {
         select.appendChild(opt);
       });
 
-      // Mostrar solo 3 opciones visibles, luego scroll
-      if (res.data.length > 3) {
-        select.size = 3;
-        select.style.overflowY = 'auto';
-        select.style.height = 'auto';
-      } else {
-        select.size = 1;
-        select.style.overflowY = '';
-        select.style.height = '';
-      }
+      // Eliminar manipulación de size y estilos para que el select sea un dropdown normal
+      select.size = 1;
+      select.style.overflowY = '';
+      select.style.height = '';
 
       // Evento change nativo
       select.onchange = function () {
         const idEvento = this.value;
         if (!idEvento) return;
         cargarInscripciones(idEvento);
-        cargarValidaciones(idEvento);
       };
     });
 }
@@ -41,13 +34,24 @@ function cargarInscripciones(idEvento) {
     tabla.DataTable().clear().destroy();
   }
 
-  tbody.empty();
+  // Animación de cargando con spinner Bootstrap
+  tbody.html(`
+    <tr>
+      <td colspan="5" style="text-align:center;">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Cargando...</span>
+        </div>
+        <div style="margin-top:8px;">Cargando inscripciones...</div>
+      </td>
+    </tr>
+  `);
 
   axios.get(`../controllers/InscripcionesController.php?option=listarPorEvento&idEvento=${idEvento}`)
     .then(res => {
       const datos = res.data;
 
       if (datos && datos.length > 0) {
+        tbody.empty();
         datos.forEach(i => {
           let facturaHtml = `<div class="celda-factura" id="factura-${i.INSCRIPCION_ID}">`;
 
@@ -92,6 +96,8 @@ function cargarInscripciones(idEvento) {
             </tr>
           `);
         });
+      } else {
+        tbody.html('<tr><td colspan="5">No hay inscripciones para este evento.</td></tr>');
       }
 
       tabla.DataTable({
@@ -104,6 +110,7 @@ function cargarInscripciones(idEvento) {
     })
     .catch(err => {
       console.error('Error al cargar inscripciones:', err);
+      tbody.html('<tr><td colspan="5">Error al cargar inscripciones.</td></tr>');
       Swal.fire('Error', 'No se pudieron cargar las inscripciones', 'error');
     });
 }
@@ -128,17 +135,54 @@ function actualizarEstadoInscripcion(estado, id) {
 }
 
 function actualizarEstadoPago(estado, id) {
+  // Obtener el evento seleccionado para recargar la tabla
+  const idEvento = document.getElementById('eventoSeleccionado').value;
   axios.post('../controllers/InscripcionesController.php?option=estadoPago', new URLSearchParams({ id, estado }))
-    .then(res => Swal.fire('Pago actualizado', '', res.data.tipo));
+    .then(res => {
+      const mensaje = estado === 'RECH' ? 'Pago rechazado' : 
+                     estado === 'VAL' ? 'Pago validado' : 
+                     estado === 'INV' ? 'Pago marcado como inválido' : 'Estado actualizado';
+      
+      Swal.fire('Pago actualizado', mensaje, res.data.tipo);
+      
+      // Verificar si todo está validado para cerrar el modal
+      setTimeout(() => {
+        verificarYCerrarModalRequisitos();
+      }, 1600);
+      
+      // Recargar la tabla de inscripciones para reflejar el cambio
+      if (idEvento) {
+        cargarInscripciones(idEvento);
+      }
+    })
+    .catch(err => {
+      console.error('Error al actualizar pago:', err);
+      Swal.fire('Error', 'No se pudo actualizar el estado del pago', 'error');
+    });
 }
 
 function validarArchivoRequisito(idArchivo, estado) {
+  // Obtener el evento seleccionado para recargar la tabla
+  const idEvento = document.getElementById('eventoSeleccionado').value;
   axios.post('../controllers/InscripcionesController.php?option=estadoRequisito', new URLSearchParams({ id: idArchivo, estado }))
     .then(res => {
-      Swal.fire(res.data.tipo === 'success' ? 'Validado' : 'Error', '', res.data.tipo);
+      const mensaje = estado === 'REC' ? 'Requisito rechazado' : 
+                     estado === 'VAL' ? 'Requisito validado' : 
+                     estado === 'INV' ? 'Requisito marcado como inválido' : 'Estado actualizado';
+      
+      Swal.fire(res.data.tipo === 'success' ? 'Éxito' : 'Error', mensaje, res.data.tipo);
+      
+      // Verificar si todo está validado para cerrar el modal
+      setTimeout(() => {
+        verificarYCerrarModalRequisitos();
+      }, 1600);
+      
       // Recargar la tabla principal si está visible
-      const idEvento = document.getElementById('eventoSeleccionado').value;
       if (idEvento) cargarInscripciones(idEvento);
+    })
+    .catch(err => {
+      console.error('Error al validar requisito:', err);
+      Swal.fire('Error', 'No se pudo actualizar el estado del requisito', 'error');
     });
 }
 
@@ -170,7 +214,7 @@ function verRequisitosPagos(idInscripcion, nombreParticipante = '') {
             <select onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)" class="form-control">
               <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
               <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
-              <option value="RECH" ${r.ESTADO === 'RECH' ? 'selected' : ''}>Rechazado</option>
+              <option value="REC" ${r.ESTADO === 'REC' ? 'selected' : ''}>Rechazado</option>
               <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
             </select>
           </td>
@@ -310,4 +354,49 @@ function subirComprobantePago(input, idPago) {
         showConfirmButton: false
       });
     });
+}
+
+// Función para verificar si todo está validado y cerrar el modal automáticamente
+function verificarYCerrarModalRequisitos() {
+  // Obtener todos los selects de requisitos
+  const requisitosSelects = Array.from(document.querySelectorAll('#tablaRequisitosModal select'));
+  const todosRequisitosValidados = requisitosSelects.length > 0 && requisitosSelects.every(sel => sel.value === 'VAL');
+
+  // Obtener todos los selects de pagos (si existen)
+  const pagosSelects = Array.from(document.querySelectorAll('#tablaPagosModal select'));
+  const todosPagosValidados = pagosSelects.length === 0 || pagosSelects.every(sel => sel.value === 'VAL');
+
+  // Verificar si hay algún requisito o pago rechazado
+  const hayRequisitosRechazados = requisitosSelects.some(sel => sel.value === 'REC');
+  const hayPagosRechazados = pagosSelects.some(sel => sel.value === 'RECH');
+
+  console.log('🔍 Verificando estado de validaciones en ins_Res:');
+  console.log('- Requisitos validados:', todosRequisitosValidados);
+  console.log('- Pagos validados:', todosPagosValidados);
+  console.log('- Hay requisitos rechazados:', hayRequisitosRechazados);
+  console.log('- Hay pagos rechazados:', hayPagosRechazados);
+
+  // Si todo está validado o hay algo rechazado, cerrar modal
+  if ((todosRequisitosValidados && todosPagosValidados) || hayRequisitosRechazados || hayPagosRechazados) {
+    let mensaje = '';
+    if (todosRequisitosValidados && todosPagosValidados) {
+      mensaje = '¡Inscripción procesada! Todos los requisitos y pagos están validados.';
+    } else if (hayRequisitosRechazados || hayPagosRechazados) {
+      mensaje = 'Inscripción procesada con elementos rechazados.';
+    }
+    
+    if (mensaje) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Procesamiento completo',
+        text: mensaje,
+        timer: 2000,
+        showConfirmButton: false
+      });
+    }
+
+    setTimeout(() => {
+      $('#modalRequisitosPagos').modal('hide');
+    }, 2100);
+  }
 }

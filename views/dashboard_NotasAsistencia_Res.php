@@ -15,8 +15,7 @@ include("../core/auth.php")?>
 <div class="titulo-linea"></div> 
     </div> 
     <hr />
-    <div class="row" id="contenedor-eventos" style="display: flex; flex-wrap: wrap;">   
-        </div>
+    <div class="eventos-grid" id="contenedor-eventos"></div>
     </div>
   </div>
 </div>
@@ -94,14 +93,16 @@ body {
 .eventos-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
-  justify-content: center;
+  gap: 32px 32px; /* Más espacio entre filas y columnas */
+  justify-content: flex-start;
+  margin-bottom: 32px;
 }
 
 /* TARJETA EVENTO */
 .tarjeta-evento {
   position: relative;
   width: 300px;
+  margin-bottom: 20px;
   background: #fff;
   border: 1px solid var(--gris-borde);
   border-radius: 12px;

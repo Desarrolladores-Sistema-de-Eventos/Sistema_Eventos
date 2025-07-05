@@ -156,12 +156,67 @@ private function actualizarInscripcion()
     );
 
     if ($ok) {
+        $logPath = __DIR__ . '/../correo.log';
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] Actualización exitosa, preparando correo\n", FILE_APPEND);
+        // Enviar correo al responsable notificando subida de requisitos y comprobante
+        require_once '../models/Usuarios.php';
+        require_once '../core/correo_responsable.php';
+        $usuarioModelo = new Usuario();
+        $datosInscrito = $usuarioModelo->getById2($this->idUsuario);
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] Datos inscrito: " . json_encode($datosInscrito) . "\n", FILE_APPEND);
+        $evento = $this->eventoModelo->getEvento($idEvento);
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] Datos evento: " . json_encode($evento) . "\n", FILE_APPEND);
+        $responsable = null;
+        if (isset($evento['ORGANIZADORES']) && is_array($evento['ORGANIZADORES'])) {
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] ORGANIZADORES es array, count: " . count($evento['ORGANIZADORES']) . "\n", FILE_APPEND);
+            foreach ($evento['ORGANIZADORES'] as $org) {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] Recorriendo ORGANIZADOR: " . json_encode($org) . "\n", FILE_APPEND);
+                if (isset($org['ROL_ORGANIZADOR']) && $org['ROL_ORGANIZADOR'] === 'RESPONSABLE') {
+                    $responsable = $org;
+                    file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] Encontrado RESPONSABLE\n", FILE_APPEND);
+                    break;
+                }
+            }
+        } else {
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] ORGANIZADORES no es array o no existe\n", FILE_APPEND);
+        }
+        if ($responsable) {
+            $responsableData = $usuarioModelo->getById2($responsable['SECUENCIALUSUARIO'] ?? null);
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] Datos responsable: " . json_encode($responsableData) . "\n", FILE_APPEND);
+            $correoResponsable = $responsableData['CORREO'] ?? null;
+            $nombreResponsable = $responsableData['NOMBRES'] . ' ' . $responsableData['APELLIDOS'];
+            $nombreInscrito = $datosInscrito['NOMBRES'] . ' ' . $datosInscrito['APELLIDOS'];
+            $datosHtml = '<ul>';
+            foreach ([
+                'Cédula' => $datosInscrito['CEDULA'] ?? '',
+                'Correo' => $datosInscrito['CORREO'] ?? '',
+                'Teléfono' => $datosInscrito['TELEFONO'] ?? '',
+                'Dirección' => $datosInscrito['DIRECCION'] ?? ''
+            ] as $k => $v) {
+                $datosHtml .= '<li><b>' . htmlspecialchars($k) . ':</b> ' . htmlspecialchars($v) . '</li>';
+            }
+            $datosHtml .= '</ul>';
+            if ($correoResponsable) {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] Enviando correo a $correoResponsable\n", FILE_APPEND);
+                enviarCorreoRequisitosSubidos(
+                    $correoResponsable,
+                    $nombreResponsable,
+                    $nombreInscrito,
+                    $datosHtml,
+                    $evento['TITULO'] ?? ''
+                );
+            } else {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] No hay correoResponsable\n", FILE_APPEND);
+            }
+        } else {
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - [actualizarInscripcion] NO se encontró responsable\n", FILE_APPEND);
+        }
         $this->json(['tipo' => 'success', 'mensaje' => 'Le llegará una notificación cuando su inscripción haya sido aprobada']);
     } else {
         $this->json([
-    'tipo' => 'error',
-    'mensaje' => $this->eventoModelo->ultimoError ?: 'No se pudo actualizar la inscripción.'
-]);
+            'tipo' => 'error',
+            'mensaje' => $this->eventoModelo->ultimoError ?: 'No se pudo actualizar la inscripción.'
+        ]);
     }
 }
 
@@ -524,11 +579,84 @@ if ($ok === true) {
         return;
     }
 
+    // Prueba de log fuera de cualquier condición
+    file_put_contents(__DIR__ . '/../correo.log', date('Y-m-d H:i:s') . " - PRUEBA DE ESCRITURA LOG (inicio metodo)\n", FILE_APPEND);
+    // Log antes de llamar a registrarInscripcionBasica
+    file_put_contents(__DIR__ . '/../correo.log', date('Y-m-d H:i:s') . " - Antes de registrarInscripcionBasica\n", FILE_APPEND);
     try {
         // Este método ahora también guarda automáticamente los archivos ya existentes (cédula, matrícula)
         $ok = $this->eventoModelo->registrarInscripcionBasica($this->idUsuario, $idEvento);
-
+        // Log después de llamar a registrarInscripcionBasica
+        file_put_contents(__DIR__ . '/../correo.log', date('Y-m-d H:i:s') . " - Después de registrarInscripcionBasica, valor de ok: " . var_export($ok, true) . "\n", FILE_APPEND);
         if ($ok) {
+            $logPath = __DIR__ . '/../correo.log';
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - Entrando a bloque ok==true\n", FILE_APPEND);
+            // Enviar correo al RESPONSABLE del evento
+            require_once '../models/Usuarios.php';
+            require_once '../core/correo_responsable.php';
+            $usuarioModelo = new Usuario();
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - Antes de getById2 usuario inscrito\n", FILE_APPEND);
+            $datosInscrito = $usuarioModelo->getById2($this->idUsuario);
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - Antes de getEvento\n", FILE_APPEND);
+            $evento = $this->eventoModelo->getEvento($idEvento);
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " - Después de getEvento\n", FILE_APPEND);
+            // Buscar responsable del evento (no organizador)
+            $responsable = null;
+            if (isset($evento['ORGANIZADORES'])) {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - ORGANIZADORES existe\n", FILE_APPEND);
+            } else {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - ORGANIZADORES NO existe\n", FILE_APPEND);
+            }
+            if (isset($evento['ORGANIZADORES']) && is_array($evento['ORGANIZADORES'])) {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - ORGANIZADORES es array, count: " . count($evento['ORGANIZADORES']) . "\n", FILE_APPEND);
+                foreach ($evento['ORGANIZADORES'] as $org) {
+                    file_put_contents($logPath, date('Y-m-d H:i:s') . " - Recorriendo ORGANIZADOR: " . json_encode($org) . "\n", FILE_APPEND);
+                    if (isset($org['ROL_ORGANIZADOR']) && $org['ROL_ORGANIZADOR'] === 'RESPONSABLE') {
+                        $responsable = $org;
+                        file_put_contents($logPath, date('Y-m-d H:i:s') . " - Encontrado RESPONSABLE\n", FILE_APPEND);
+                        break;
+                    }
+                }
+            } else {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - ORGANIZADORES no es array o está vacío\n", FILE_APPEND);
+            }
+            if ($responsable) {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - Entró al if (responsable)\n", FILE_APPEND);
+                $responsableData = $usuarioModelo->getById2($responsable['SECUENCIALUSUARIO'] ?? null);
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - Después de getById2 responsable\n", FILE_APPEND);
+                $correoResponsable = $responsableData['CORREO'] ?? null;
+                $nombreResponsable = $responsableData['NOMBRES'] . ' ' . $responsableData['APELLIDOS'];
+                $nombreInscrito = $datosInscrito['NOMBRES'] . ' ' . $datosInscrito['APELLIDOS'];
+                $datosHtml = '<ul>';
+                foreach ([
+                    'Cédula' => $datosInscrito['CEDULA'] ?? '',
+                    'Correo' => $datosInscrito['CORREO'] ?? '',
+                    'Teléfono' => $datosInscrito['TELEFONO'] ?? '',
+                    'Dirección' => $datosInscrito['DIRECCION'] ?? ''
+                ] as $k => $v) {
+                    $datosHtml .= '<li><b>' . htmlspecialchars($k) . ':</b> ' . htmlspecialchars($v) . '</li>';
+                }
+                $datosHtml .= '</ul>';
+                $logMsg = date('Y-m-d H:i:s') . " - Datos responsable: correo=$correoResponsable, nombre=$nombreResponsable\n";
+                file_put_contents($logPath, $logMsg, FILE_APPEND);
+                if ($correoResponsable) {
+                    $logMsg = date('Y-m-d H:i:s') . " - Intentando enviar correo a responsable: $correoResponsable, Nombre: $nombreResponsable\n";
+                    file_put_contents($logPath, $logMsg, FILE_APPEND);
+                    $resultadoCorreo = enviarCorreoResponsable(
+                        $correoResponsable,
+                        $nombreResponsable,
+                        $nombreInscrito,
+                        $datosHtml,
+                        $evento['TITULO'] ?? ''
+                    );
+                    $logMsg = date('Y-m-d H:i:s') . " - Resultado de enviarCorreoResponsable: " . ($resultadoCorreo ? "ÉXITO" : "FALLÓ") . "\n";
+                    file_put_contents($logPath, $logMsg, FILE_APPEND);
+                } else {
+                    file_put_contents($logPath, date('Y-m-d H:i:s') . " - No hay correoResponsable\n", FILE_APPEND);
+                }
+            } else {
+                file_put_contents($logPath, date('Y-m-d H:i:s') . " - NO se encontró responsable\n", FILE_APPEND);
+            }
             $this->json([
                 'tipo' => 'success',
                 'mensaje' => 'Inscripción registrada exitosamente.'

@@ -59,14 +59,16 @@ function renderTablasPorEstado(eventos) {
     let id = 'tabla-' + estado.toLowerCase();
     const contenedor = document.getElementById(id);
     if (contenedor) {
-      contenedor.innerHTML = generarTablaHTML(estados[estado]);
+      // Usar un id único para cada tabla según el estado
+      contenedor.innerHTML = generarTablaHTML(estados[estado], estado.toLowerCase());
     }
   });
 }
 
-function generarTablaHTML(data) {
+function generarTablaHTML(data, estado) {
   if (!data.length) return '<div class="alert alert-info">No hay eventos en este estado.</div>';
-  let html = `<table id="tabla-eventos" class="table table-bordered table-striped">
+  const tablaId = `tabla-eventos-${estado}`;
+  let html = `<table id="${tablaId}" class="table table-bordered table-striped">
     <thead>
       <tr>
         <th>Título</th>
@@ -102,8 +104,11 @@ function generarTablaHTML(data) {
   </table>`;
   // Inicializar DataTable con español y responsive
   setTimeout(() => {
-    if (window.$ && window.$.fn.DataTable && document.getElementById('tabla-eventos')) {
-      window.$('#tabla-eventos').DataTable({
+    if (window.$ && window.$.fn.DataTable && document.getElementById(tablaId)) {
+      if ($.fn.DataTable.isDataTable(`#${tablaId}`)) {
+        $(`#${tablaId}`).DataTable().destroy();
+      }
+      $(`#${tablaId}`).DataTable({
         language: {
           url: '../public/js/es-ES.json'
         },

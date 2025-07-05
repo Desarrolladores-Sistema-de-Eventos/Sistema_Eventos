@@ -131,7 +131,7 @@ class InscripcionesController {
     private function estadoRequisito() {
     $idArchivo = $_POST['id'] ?? null;
     $estado = $_POST['estado'] ?? null;
-    $validos = ['PEN', 'VAL', 'RECH', 'INV'];
+    $validos = ['PEN', 'VAL', 'REC', 'INV']; // Cambiar RECH por REC para requisitos
 
     if (!$idArchivo || !in_array($estado, $validos)) {
         $this->json(['tipo' => 'error', 'mensaje' => 'Datos inválidos']);

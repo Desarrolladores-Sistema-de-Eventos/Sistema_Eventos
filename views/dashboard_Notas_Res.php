@@ -10,7 +10,7 @@ include("../core/auth.php");
     <!-- ENCABEZADO CON BOTÓN FINALIZAR Y LÍNEA INFERIOR -->
     <div class="d-flex justify-content-between align-items-center mb-1">
       <h2 class="titulo-notas mb-0">
-        <i class="fa fa-graduation-cap"></i> Registro de Calificaciones
+        <i class="fa fa-graduation-cap"></i> Registro de Calificaciones y Asistencias
       </h2>
       <button id="btn-finalizar-evento" class="btn btn-black-red btn-sm" style="display: none;" onclick="finalizarEvento()">
         <i class="fa fa-flag-checkered"></i> Finalizar Evento
