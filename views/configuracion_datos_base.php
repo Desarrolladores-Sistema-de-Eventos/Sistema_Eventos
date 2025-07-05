@@ -1,6 +1,9 @@
 <?php include("partials/header_Admin.php"); ?>
 <?php include("../core/auth.php"); ?>
 
+<!--  CSS -->
+
+
 <style>
   :root {
     --uta-rojo: #8B0000; 

@@ -5,6 +5,9 @@
 <!-- SweetAlert2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
+<!--  CSS -->
+
+
 <style>
   .titulo-seccion {
     color: #b10024;

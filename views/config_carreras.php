@@ -1,6 +1,7 @@
 <?php include("partials/header_Admin.php"); ?>
 <?php include("../core/auth.php"); ?>
 
+
 <style>
   .uta-title {
     font-weight: bold;
