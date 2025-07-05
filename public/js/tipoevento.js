@@ -69,11 +69,15 @@ document.getElementById('formTipoEvento').addEventListener('submit', async funct
     const codigo = document.getElementById('codigoTipoEvento').value.trim();
     const nombre = document.getElementById('nombreTipoEvento').value.trim();
     const descripcion = document.getElementById('descripcionTipoEvento').value.trim();
+    // NUEVO: obtener valores de los checkboxes
+    const REQUIERENOTA = document.getElementById('REQUIERENOTA').checked ? 1 : 0;
+    const REQUIEREASISTENCIA = document.getElementById('REQUIEREASISTENCIA').checked ? 1 : 0;
     if (!codigo || !nombre) {
         alert('Código y nombre son obligatorios');
         return;
     }
-    const data = { codigo, nombre, descripcion };
+    // Agregar los nuevos campos al objeto data
+    const data = { codigo, nombre, descripcion, REQUIERENOTA, REQUIEREASISTENCIA };
     let res;
     if (document.getElementById('codigoTipoEvento').readOnly) {
         res = await actualizarTipoEvento(data);
@@ -98,6 +102,9 @@ window.editarTipoEvento = async function(codigo) {
     document.getElementById('codigoTipoEvento').readOnly = true;
     document.getElementById('nombreTipoEvento').value = tipo.NOMBRE;
     document.getElementById('descripcionTipoEvento').value = tipo.DESCRIPCION || '';
+    // NUEVO: marcar los checkboxes según los valores guardados
+    document.getElementById('REQUIERENOTA').checked = tipo.REQUIERENOTA == 1;
+    document.getElementById('REQUIEREASISTENCIA').checked = tipo.REQUIEREASISTENCIA == 1;
     $('#modalTipoEvento').modal('show');
 }
 

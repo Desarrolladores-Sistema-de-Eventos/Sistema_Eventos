@@ -70,7 +70,9 @@ class EventosController
     case 'comprobantePago':
   $this->obtenerComprobantePago();
   break;
-
+            case 'eliminarResponsable':
+                $this->eliminarResponsable();
+                break;
 
 
             default:
@@ -258,20 +260,54 @@ if ($ok === true) {
             $this->json(['tipo' => 'error', 'mensaje' => 'ID faltante']);
             return;
         }
+        // Permitir editar cualquier evento que aparece en el listado
         $evento = $this->eventoModelo->getEvento($id);
+        if (!$evento) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'No se encontró el evento.']);
+            return;
+        }
         $this->json($evento);
     }
 
     private function guardar()
     {
-        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'categoria', 'tipoEvento', 'carrera', 'estado', 'capacidad'];
+        // Verificar si es una actualización o creación
+        $idEvento = $_POST['idEvento'] ?? null;
+        $esActualizacion = !empty($idEvento);
+        
+        // Obtener si el tipo de evento requiere nota o asistencia
+        $tipoEvento = $_POST['tipoEvento'] ?? null;
+        $requiereNota = false;
+        $requiereAsistencia = false;
+        if ($tipoEvento) {
+            // Buscar en la base de datos si el tipo de evento requiere nota o asistencia
+            require_once '../models/EventoCategoria.php';
+            require_once '../models/EventoPublico.php';
+            $db = \Conexion::getConexion();
+            $stmt = $db->prepare("SELECT REQUIERENOTA, REQUIEREASISTENCIA FROM tipo_evento WHERE CODIGO = ?");
+            $stmt->execute([$tipoEvento]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row) {
+                $requiereNota = $row['REQUIERENOTA'] == 1;
+                $requiereAsistencia = $row['REQUIEREASISTENCIA'] == 1;
+            }
+        }
+        // Quitar notaAprobacion y asistenciaMinima del array $required
+        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'categoria', 'tipoEvento', 'carrera', 'estado', 'capacidad'];
         foreach ($required as $campo) {
             if (empty($_POST[$campo])) {
                 $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
                 return;
             }
         }
-
+        if ($requiereNota && empty($_POST['notaAprobacion'])) {
+            $this->json(['tipo' => 'error', 'mensaje' => "El campo 'notaAprobacion' es obligatorio para este tipo de evento."]);
+            return;
+        }
+        if ($requiereAsistencia && empty($_POST['asistenciaMinima'])) {
+            $this->json(['tipo' => 'error', 'mensaje' => "El campo 'asistenciaMinima' es obligatorio para este tipo de evento."]);
+            return;
+        }
 
         try {
             // Procesar archivo de portada
@@ -307,53 +343,89 @@ if ($ok === true) {
                 return;
             }
             
-            
-
             $esPagado = isset($_POST['esPagado']) ? 1 : 0;
             $costo = $esPagado ? ($_POST['costo'] ?? 0) : 0;
             
             $capacidad = $_POST['capacidad'] ?? 0;
             if ($capacidad <= 0) {
-    $this->json(['tipo' => 'error', 'mensaje' => 'La capacidad debe ser mayor que cero.']);
-    return;
-           }
-
-
-
-            $idEvento = $this->eventoModelo->crearEvento(
-                $_POST['titulo'],
-                $_POST['descripcion'],
-                $_POST['horas'],
-                $_POST['fechaInicio'],
-                $_POST['fechaFin'],
-                $_POST['modalidad'],
-                $_POST['notaAprobacion'],
-                $costo,
-                $_POST['publicoDestino'],
-                $esPagado,
-                $_POST['categoria'],
-                $_POST['tipoEvento'],
-                $_POST['carrera'],
-                $_POST['estado'],
-                $this->idUsuario,
-                $urlPortada,
-                $urlGaleria,
-                $capacidad
-            );
-
-            $requisitosSeleccionados = $_POST['requisitos'] ?? [];
-
-            if (!empty($requisitosSeleccionados)) {
-                require_once '../models/Requisitos.php';
-                $reqModel = new Requisitos();
-                $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
+                $this->json(['tipo' => 'error', 'mensaje' => 'La capacidad debe ser mayor que cero.']);
+                return;
             }
 
-            $this->json(['tipo' => 'success', 'mensaje' => 'Evento creado']);
+            if ($esActualizacion) {
+                // Actualizar evento existente
+                $resultado = $this->eventoModelo->actualizarEvento(
+                    $_POST['titulo'],
+                    $_POST['descripcion'],
+                    $_POST['horas'],
+                    $_POST['fechaInicio'],
+                    $_POST['fechaFin'],
+                    $_POST['modalidad'],
+                    $_POST['notaAprobacion'],
+                    $costo,
+                    $_POST['publicoDestino'],
+                    $esPagado,
+                    $_POST['categoria'],
+                    $_POST['tipoEvento'],
+                    $_POST['carrera'],
+                    $_POST['estado'],
+                    $idEvento,
+                    $this->idUsuario,
+                    $urlPortada,
+                    $urlGaleria,
+                    $capacidad
+                );
+
+                if ($resultado) {
+                    // Actualizar requisitos
+                    $requisitosSeleccionados = $_POST['requisitos'] ?? [];
+                    require_once '../models/Requisitos.php';
+                    $reqModel = new Requisitos();
+                    $reqModel->eliminarPorEvento($idEvento);
+                    if (!empty($requisitosSeleccionados)) {
+                        $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
+                    }
+                    $this->json(['tipo' => 'success', 'mensaje' => 'Evento actualizado correctamente']);
+                } else {
+                    $this->json(['tipo' => 'error', 'mensaje' => 'Error al actualizar el evento']);
+                }
+            } else {
+                // Crear nuevo evento
+                $idEvento = $this->eventoModelo->crearEvento(
+                    $_POST['titulo'],
+                    $_POST['descripcion'],
+                    $_POST['horas'],
+                    $_POST['fechaInicio'],
+                    $_POST['fechaFin'],
+                    $_POST['modalidad'],
+                    $_POST['notaAprobacion'],
+                    $costo,
+                    $_POST['publicoDestino'],
+                    $esPagado,
+                    $_POST['categoria'],
+                    $_POST['tipoEvento'],
+                    $_POST['carrera'],
+                    $_POST['estado'],
+                    $this->idUsuario,
+                    $urlPortada,
+                    $urlGaleria,
+                    $capacidad
+                );
+
+                $requisitosSeleccionados = $_POST['requisitos'] ?? [];
+
+                if (!empty($requisitosSeleccionados)) {
+                    require_once '../models/Requisitos.php';
+                    $reqModel = new Requisitos();
+                    $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
+                }
+
+                $this->json(['tipo' => 'success', 'mensaje' => 'Evento creado correctamente']);
+            }
         } catch (Exception $e) {
             $this->json([
                 'tipo' => 'error',
-                'mensaje' => 'Error al crear evento',
+                'mensaje' => $esActualizacion ? 'Error al actualizar evento' : 'Error al crear evento',
                 'debug' => $e->getMessage()
             ]);
         }
@@ -462,16 +534,16 @@ if ($ok === true) {
 
     private function cancelar()
     {
-        $id = $_GET['id'] ?? null;
+        $id = $_GET['id'] ?? $_POST['id'] ?? null;
         if (!$id) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']);
+            $this->json(['success' => false, 'mensaje' => 'ID requerido.']);
             return;
         }
 
-        $ok = $this->eventoModelo->cancelarEvento($id, $this->idUsuario);
+        $ok = $this->eventoModelo->cancelarEvento($id);
         $this->json([
-            'tipo' => $ok ? 'success' : 'error',
-            'mensaje' => $ok ? 'Evento cancelado' : 'No tienes permisos para cancelar el evento'
+            'success' => $ok,
+            'mensaje' => $ok ? 'Evento cancelado' : 'No se pudo cancelar el evento'
         ]);
     }
 
@@ -600,6 +672,21 @@ private function requisitosUsuarioEvento()
     $this->json($resultado);
 }
 
+    // Nueva función para eliminar evento por responsable
+    private function eliminarResponsable()
+    {
+        $id = $_POST['id'] ?? null;
+        if (!$id) {
+            $this->json(['success' => false, 'mensaje' => 'ID requerido']);
+            return;
+        }
+        $ok = $this->eventoModelo->eliminarEvento($id, $this->idUsuario);
+        if ($ok) {
+            $this->json(['success' => true, 'mensaje' => 'Evento eliminado correctamente']);
+        } else {
+            $this->json(['success' => false, 'mensaje' => 'No se pudo eliminar el evento']);
+        }
+    }
 
 
 }

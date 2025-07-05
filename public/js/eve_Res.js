@@ -1,26 +1,33 @@
 // ================= FUNCIONES GLOBALES =================
 
 let tablaEventos;
+let tiposEventoConfig = [];
 
 // Función reutilizable con diseño personalizado UTA
 function mostrarAlertaUTA(titulo, mensaje, tipo = 'info') {
-  Swal.fire({
+  let config = {
     title: titulo,
     text: mensaje,
-    imageUrl: '../public/img/sweet.png',
-    imageAlt: 'Icono UTA',
+    icon: tipo, // Usar el tipo como icono
     confirmButtonText: 'Aceptar',
     customClass: {
       popup: 'swal2-popup',
       confirmButton: 'swal2-confirm'
     }
-  });
+  };
+  // Solo muestra el logo UTA si es informativo
+  if (tipo === 'info') {
+    config.imageUrl = '../public/img/sweet.png';
+    config.imageAlt = 'Icono UTA';
+    delete config.icon;
+  }
+  Swal.fire(config);
 }
 
 function toggleCosto() {
   const chkPagado = document.getElementById('esPagado');
   const inputCosto = document.getElementById('costo');
-  const divCosto = document.getElementById('grupoCosto');
+  const divCosto = document.getElementById('costoGroup'); // corregido
 
   if (!chkPagado || !inputCosto || !divCosto) {
     console.warn('❗ Elementos del costo no encontrados.');
@@ -103,6 +110,9 @@ function generarTablaHTML(data) {
   // Inicializar DataTable con español y responsive
   setTimeout(() => {
     if (window.$ && window.$.fn.DataTable && document.getElementById('tabla-eventos')) {
+      if (window.$.fn.DataTable.isDataTable('#tabla-eventos')) {
+        window.$('#tabla-eventos').DataTable().destroy();
+      }
       window.$('#tabla-eventos').DataTable({
         language: {
           url: '../public/js/es-ES.json'
@@ -125,6 +135,22 @@ function cargarEventosPorEstado() {
   });
 }
 
+function cargarSelectsEventoRes(callback) {
+  axios.get('../controllers/SelectsController.php')
+    .then(res => {
+      const data = res.data;
+      llenarSelect('modalidad', data.modalidades);
+      llenarSelect('tipoEvento', data.tipos);
+      llenarSelect('carreras', data.carreras);
+      llenarSelect('categoria', data.categorias);
+      llenarSelect('estado', data.estados);
+      llenarCheckboxesRequisitos(data.requisitos);
+      if (typeof callback === 'function') {
+        setTimeout(callback, 150); // Espera breve para Choices.js
+      }
+    });
+}
+
 function edit(id) {
   if (!id) {
     mostrarAlertaUTA('Error', 'ID de evento no válido.', 'error');
@@ -134,43 +160,55 @@ function edit(id) {
   axios.get(`../controllers/EventosController.php?option=edit&id=${id}`)
     .then(res => {
       const e = res.data;
-
       if (e.tipo === 'error') {
         mostrarAlertaUTA('Error', e.mensaje, 'error');
         return;
       }
-
-      console.log('🧪 Evento recibido:', e);
-
-      // Asignar valores
-      document.getElementById('titulo').value = e.TITULO;
-      document.getElementById('descripcion').value = e.DESCRIPCION;
-      document.getElementById('horas').value = e.HORAS;
-      document.getElementById('fechaInicio').value = e.FECHAINICIO;
-      document.getElementById('fechaFin').value = e.FECHAFIN;
-      document.getElementById('modalidad').value = e.CODIGOMODALIDAD;
-      document.getElementById('tipoEvento').value = e.CODIGOTIPOEVENTO;
-      document.getElementById('carrera').value = e.SECUENCIALCARRERA;
-      document.getElementById('categoria').value = e.SECUENCIALCATEGORIA;
-      document.getElementById('notaAprobacion').value = e.NOTAAPROBACION;
-      document.getElementById('costo').value = e.COSTO;
-      document.getElementById('capacidad').value = e.CAPACIDAD;
-      document.getElementById('publicoDestino').value = e.ES_SOLO_INTERNOS == 1 ? 'internos' : 'externos';
-      document.getElementById('esPagado').checked = e.ES_PAGADO == 1;
-      document.getElementById('estado').value = e.ESTADO;
-      document.getElementById('idEvento').value = e.SECUENCIAL;
-
-      toggleCosto();
-
-      if (Array.isArray(e.REQUISITOS)) {
-        e.REQUISITOS.map(String).forEach(id => {
-          const checkbox = document.querySelector(`#req_${id}`);
-          if (checkbox) checkbox.checked = true;
-        });
-      }
-
-      document.getElementById('btn-save').innerHTML = 'Actualizar';
-      $('#modalEvento').modal('show');
+      cargarSelectsEventoRes(() => {
+        // Asignar valores solo si los elementos existen y evitar 'undefined'
+        const setValue = (id, value) => { 
+          const el = document.getElementById(id); 
+          if (el) el.value = value !== undefined && value !== null ? value : ''; 
+        };
+        setValue('titulo', e.TITULO);
+        setValue('descripcion', e.DESCRIPCION);
+        setValue('horas', e.HORAS);
+        setValue('fechaInicio', e.FECHAINICIO);
+        setValue('fechaFin', e.FECHAFIN);
+        setValue('modalidad', e.CODIGOMODALIDAD);
+        setValue('tipoEvento', e.CODIGOTIPOEVENTO);
+        setValue('categoria', e.SECUENCIALCATEGORIA);
+        setValue('notaAprobacion', e.NOTAAPROBACION);
+        setValue('costo', e.COSTO);
+        setValue('capacidad', e.CAPACIDAD);
+        setValue('publicoDestino', e.publicoDestino);
+        setValue('estado', e.ESTADO);
+        setValue('idEvento', e.SECUENCIAL);
+        const esPagado = document.getElementById('esPagado');
+        if (esPagado) esPagado.checked = e.ES_PAGADO == 1;
+        // Carreras con Choices.js
+        const selectCarreras = document.getElementById('carreras');
+        if (selectCarreras && selectCarreras.choicesInstance) {
+          selectCarreras.choicesInstance.removeActiveItems();
+          if (Array.isArray(e.carreras)) {
+            e.carreras.forEach(function(id) {
+              selectCarreras.choicesInstance.setChoiceByValue(id.toString());
+            });
+          } else if (e.carreras) {
+            selectCarreras.choicesInstance.setChoiceByValue(e.carreras.toString());
+          }
+        }
+        toggleCosto();
+        if (Array.isArray(e.REQUISITOS)) {
+          e.REQUISITOS.map(String).forEach(id => {
+            const checkbox = document.querySelector(`#req_${id}`);
+            if (checkbox) checkbox.checked = true;
+          });
+        }
+        const btnSave = document.getElementById('btn-save-res');
+        if (btnSave) btnSave.innerHTML = 'Actualizar';
+        $('#modalEvento').modal('show');
+      });
     })
     .catch(err => {
       console.error('Error al cargar evento para edición:', err);
@@ -199,12 +237,22 @@ function eliminar(id) {
     }
   }).then(result => {
     if (result.isConfirmed) {
-      axios.get(`../controllers/EventosController.php?option=delete&id=${id}`)
+      let formData = new FormData();
+      formData.append('id', id);
+      axios.post('../controllers/EventosController.php?option=eliminarResponsable', formData)
         .then(res => {
           const info = res.data;
-          if (info.tipo === 'success') {
-            mostrarAlertaUTA('Cancelado', info.mensaje, 'success');
-            tablaEventos.ajax.reload();
+          if (info.success === true || info.success === "true" || info.mensaje === "Evento eliminado correctamente") {
+            mostrarAlertaUTA('Eliminado', info.mensaje || 'Evento eliminado correctamente', 'success');
+            if (typeof tablaEventos !== 'undefined' && tablaEventos.ajax) {
+              tablaEventos.ajax.reload();
+            } else if (typeof cargarEventosPorEstado === 'function') {
+              cargarEventosPorEstado();
+            }
+            // Cerrar el modal si está abierto (opcional, si usas modal)
+            if (typeof $ !== 'undefined' && $('#modalEvento').length) {
+              $('#modalEvento').modal('hide');
+            }
           } else {
             mostrarAlertaUTA('Error', info.mensaje || 'No se pudo cancelar el evento.', 'error');
           }
@@ -222,7 +270,12 @@ function llenarCheckboxesRequisitos(requisitos) {
   if (!contenedor) return;
   contenedor.innerHTML = '';
 
+  // Filtrar duplicados por valor y texto
+  const vistos = new Set();
   requisitos.forEach(req => {
+    const key = req.value + '|' + req.text;
+    if (vistos.has(key)) return;
+    vistos.add(key);
     const div = document.createElement('div');
     div.className = 'form-check';
 
@@ -248,12 +301,14 @@ function cargarSelects() {
   axios.get('../controllers/SelectsController.php')
     .then(res => {
       const data = res.data;
+      console.log('REQUISITOS DEL BACKEND:', data.requisitos); // <-- Agregado para depuración
       llenarSelect('modalidad', data.modalidades);
       llenarSelect('tipoEvento', data.tipos);
-      llenarSelect('carrera', data.carreras);
+      llenarSelect('carreras', data.carreras); // Corregido: usar 'carreras' en vez de 'carrera'
       llenarSelect('categoria', data.categorias);
       llenarSelect('estado', data.estados);
       llenarCheckboxesRequisitos(data.requisitos);
+      tiposEventoConfig = data.tipos; // Guardar la configuración de tipos de evento
     })
     .catch(err => {
       console.error('❌ Error cargando selects:', err);
@@ -263,107 +318,278 @@ function cargarSelects() {
 
 function llenarSelect(id, opciones) {
   const select = document.getElementById(id);
-  if (!select) return;
+  if (!select) {
+    console.error('No existe el select con id:', id);
+    return;
+  }
+  
   const isMultiple = select.hasAttribute('multiple');
-  select.innerHTML = isMultiple ? '' : '<option value="">Seleccione</option>';
-
-  opciones.forEach(op => {
-    const opt = document.createElement('option');
-    opt.value = op.value;
-    opt.textContent = op.text;
-    select.appendChild(opt);
-  });
+  
+  // Destruir Choices.js si ya existe
+  if (select.choicesInstance) {
+    select.choicesInstance.destroy();
+    select.choicesInstance = null;
+  }
+  
+  // Limpiar el select
+  select.innerHTML = '';
+  
+  // Manejo especial para carreras
+  if (id === 'carreras') {
+    // Agregar opción "Todas las carreras" al inicio
+    const optTodas = document.createElement('option');
+    optTodas.value = 'TODAS';
+    optTodas.textContent = 'Todas las carreras';
+    select.appendChild(optTodas);
+    
+    // Ordenar carreras alfabéticamente
+    const carrerasOrdenadas = opciones.slice().sort((a, b) => 
+      (a.text || a.NOMBRE_CARRERA).toUpperCase().localeCompare((b.text || b.NOMBRE_CARRERA).toUpperCase())
+    );
+    
+    // Guardar IDs de todas las carreras para uso posterior
+    window.idsTodasCarreras = carrerasOrdenadas.map(op => (op.value || op.SECUENCIAL).toString());
+    
+    // Agregar cada carrera
+    carrerasOrdenadas.forEach(op => {
+      const opt = document.createElement('option');
+      opt.value = op.value || op.SECUENCIAL;
+      opt.textContent = op.text || op.NOMBRE_CARRERA;
+      select.appendChild(opt);
+    });
+    
+    // Inicializar Choices.js para carreras
+    select.choicesInstance = new Choices(select, {
+      removeItemButton: true,
+      searchResultLimit: 20,
+      placeholder: true,
+      placeholderValue: 'Seleccione una o varias carreras',
+      noResultsText: 'No se encontraron carreras',
+      noChoicesText: 'No hay carreras disponibles',
+      itemSelectText: 'Seleccionar',
+      shouldSort: false,
+    });
+    
+    // Lógica de exclusividad para "Todas las carreras"
+    const btnLimpiar = document.getElementById('btnLimpiarCarreras');
+    
+    select.choicesInstance.passedElement.element.addEventListener('addItem', function(event) {
+      const value = event.detail.value;
+      let currentValues = select.choicesInstance.getValue(true);
+      
+      if (value === 'TODAS' && currentValues.length > 1) {
+        // Si se selecciona 'Todas las carreras' y ya hay otras, limpiar y dejar solo esa
+        setTimeout(() => {
+          select.choicesInstance.removeActiveItems();
+          select.choicesInstance.setChoiceByValue('TODAS');
+          select.choicesInstance.disable();
+          if (btnLimpiar) btnLimpiar.style.display = '';
+        }, 0);
+      } else if (value !== 'TODAS' && currentValues.includes('TODAS')) {
+        // Si se selecciona otra y estaba 'Todas las carreras', quitar solo 'Todas las carreras'
+        setTimeout(() => {
+          select.choicesInstance.removeActiveItemsByValue('TODAS');
+          select.choicesInstance.enable();
+          if (btnLimpiar) btnLimpiar.style.display = 'none';
+        }, 0);
+      }
+    });
+    
+    select.choicesInstance.passedElement.element.addEventListener('removeItem', function(event) {
+      if (event.detail.value === 'TODAS') {
+        setTimeout(() => {
+          select.choicesInstance.enable();
+          if (btnLimpiar) btnLimpiar.style.display = 'none';
+        }, 0);
+      }
+    });
+    
+    // Evento change para manejar la exclusividad
+    select.removeEventListener('change', select.carrerasChangeHandler);
+    select.carrerasChangeHandler = function (e) {
+      let values = Array.from(select.selectedOptions).map(opt => opt.value);
+      if (values.includes('TODAS')) {
+        select.choicesInstance.removeActiveItems();
+        select.choicesInstance.setChoiceByValue('TODAS');
+        select.choicesInstance.disable();
+        if (btnLimpiar) btnLimpiar.style.display = '';
+      } else {
+        select.choicesInstance.enable();
+        // Si hay alguna carrera seleccionada, deshabilitar 'Todas las carreras'
+        const allChoices = select.choicesInstance._store.choices;
+        if (values.length > 0) {
+          allChoices.forEach(choice => {
+            if (choice.value === 'TODAS') {
+              choice.disabled = true;
+            } else {
+              choice.disabled = false;
+            }
+          });
+        } else {
+          allChoices.forEach(choice => {
+            choice.disabled = false;
+          });
+        }
+        select.choicesInstance._store.choices = allChoices;
+        select.choicesInstance._render();
+        if (btnLimpiar) btnLimpiar.style.display = 'none';
+      }
+    };
+    select.addEventListener('change', select.carrerasChangeHandler);
+    
+    console.log('Carreras cargadas:', carrerasOrdenadas.length, 'opciones');
+    
+  } else {
+    // Para otros selects (modalidad, tipoEvento, categoria, estado)
+    opciones.forEach(op => {
+      const opt = document.createElement('option');
+      opt.value = op.value || op.CODIGO || op.SECUENCIAL;
+      opt.textContent = op.text || op.NOMBRE || op.NOMBRE_CARRERA;
+      select.appendChild(opt);
+    });
+  }
 }
 
 // ================= INICIALIZACIÓN =================
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
+  const btnNuevo = document.getElementById('btn-nuevo');
+  const form = document.getElementById('formEventoRes');
+  const btnSave = document.getElementById('btn-save-res');
+  const idEvento = document.getElementById('idEvento');
+
+  if (btnNuevo && form) {
+    btnNuevo.addEventListener('click', function() {
+      $('#modalEvento').modal('show');
+      form.reset();
+      idEvento.value = '';
+      btnSave.innerHTML = 'Guardar';
+      cargarSelects();
+      toggleCosto();
+    });
+  }
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Validaciones estrictas
+      const titulo = document.getElementById('titulo').value.trim();
+      const descripcion = document.getElementById('descripcion').value.trim();
+      const horas = parseFloat(document.getElementById('horas').value);
+      const capacidad = parseInt(document.getElementById('capacidad').value);
+      const notaAprobacion = document.getElementById('notaAprobacion') ? parseFloat(document.getElementById('notaAprobacion').value) : null;
+      const fechaInicio = document.getElementById('fechaInicio').value;
+      const fechaFin = document.getElementById('fechaFin').value;
+      const hoy = new Date().toISOString().split('T')[0];
+      const costo = parseFloat(document.getElementById('costo').value);
+      const esPagado = document.getElementById('esPagado').checked;
+      if (titulo.length < 3) return mostrarAlertaUTA('Error', 'El título debe tener al menos 3 caracteres.', 'error');
+      if (descripcion.length < 10) return mostrarAlertaUTA('Error', 'La descripción debe tener al menos 10 caracteres.', 'error');
+      if (isNaN(horas) || horas <= 0) return mostrarAlertaUTA('Error', 'Las horas deben ser mayores a 0.', 'error');
+      if (isNaN(capacidad) || capacidad <= 0) return mostrarAlertaUTA('Error', 'La capacidad debe ser positiva.', 'error');
+      if (!isNaN(notaAprobacion) && (notaAprobacion < 0 || notaAprobacion > 100)) return mostrarAlertaUTA('Error', 'Nota fuera de rango.', 'error');
+      if (fechaInicio < hoy) return mostrarAlertaUTA('Error', 'Fecha de inicio inválida.', 'error');
+      if (fechaFin && fechaFin < fechaInicio) return mostrarAlertaUTA('Error', 'Fecha fin menor a inicio.', 'error');
+      if (esPagado && (isNaN(costo) || costo < 0)) return mostrarAlertaUTA('Error', 'Costo requerido para eventos pagados.', 'error');
+      // Manejo de carreras igual que admin
+      const selectCarreras = document.getElementById('carreras');
+      let values = Array.from(selectCarreras.selectedOptions).map(opt => opt.value);
+      if (values.includes('TODAS')) {
+        selectCarreras.choicesInstance.removeActiveItems();
+        window.idsTodasCarreras.forEach(function(id) {
+          selectCarreras.choicesInstance.setChoiceByValue(id);
+        });
+        values = window.idsTodasCarreras;
+      }
+      for (let i = 0; i < selectCarreras.options.length; i++) {
+        selectCarreras.options[i].selected = values.includes(selectCarreras.options[i].value);
+      }
+      const formData = new FormData(form);
+      formData.delete('carreras[]');
+      values.forEach(id => {
+        formData.append('carreras[]', id);
+      });
+      // Validar requisitos (opcional, según tu lógica)
+      // Enviar el campo 'carrera' como el primer valor seleccionado (o 'TODAS')
+      if (values.length > 0) {
+        formData.set('carrera', values[0]);
+      } else {
+        formData.set('carrera', '');
+      }
+      // Siempre enviar notaAprobacion y asistenciaMinima (aunque estén ocultos o no existan)
+      const notaAprobacionInput = document.getElementById('notaAprobacion');
+      if (notaAprobacionInput) {
+        const group = notaAprobacionInput.closest('.form-group');
+        if ((group && group.style.display === 'none') || notaAprobacionInput.style.display === 'none') {
+          formData.set('notaAprobacion', '');
+        }
+      } else {
+        formData.set('notaAprobacion', '');
+      }
+      const asistenciaMinimaInput = document.getElementById('asistenciaMinima');
+      if (asistenciaMinimaInput) {
+        const group = asistenciaMinimaInput.closest('.form-group');
+        if ((group && group.style.display === 'none') || asistenciaMinimaInput.style.display === 'none') {
+          formData.set('asistenciaMinima', '');
+        }
+      } else {
+        formData.set('asistenciaMinima', '');
+      }
+      // Envío AJAX igual que el admin
+      axios.post('../controllers/EventosController.php?option=save', formData)
+        .then(res => {
+          if (res.data.tipo === 'success') {
+            mostrarAlertaUTA('Éxito', res.data.mensaje, 'success');
+            $('#modalEvento').modal('hide');
+            cargarEventosPorEstado();
+            form.reset();
+            btnSave.innerHTML = 'Guardar';
+          } else {
+            mostrarAlertaUTA('Error', res.data.mensaje || 'No se pudo guardar el evento.', 'error');
+          }
+        })
+        .catch(err => {
+          mostrarAlertaUTA('Error', 'Ocurrió un error al guardar el evento.', 'error');
+          console.error('Error al guardar evento:', err);
+        });
+    });
+  }
   cargarEventosPorEstado();
   cargarSelects();
-
-  const frm = document.querySelector('#formEvento');
-  const btnSave = document.getElementById('btn-save');
-  const idEvento = document.getElementById('idEvento');
-  const btnNuevo = document.getElementById('btn-nuevo');
-
   document.getElementById('esPagado')?.addEventListener('change', toggleCosto);
   toggleCosto();
+});
 
-  frm.onsubmit = function (e) {
-    e.preventDefault();
+// Mostrar/ocultar campos de nota/asistencia según el tipo de evento seleccionado
+// Usar el mismo comportamiento que el admin
 
-    const hoy = new Date().toISOString().split("T")[0];
-    const fechaInicio = frm.fechaInicio.value;
-    const fechaFin = frm.fechaFin.value;
-    const capacidad = parseInt(frm.capacidad.value, 10);
-
-    if (fechaInicio < hoy) {
-      mostrarAlertaUTA('Error', 'La fecha de inicio no puede ser anterior a hoy.', 'error');
-      return;
+document.addEventListener('change', function(e) {
+  if (e.target && e.target.id === 'tipoEvento') {
+    const codigo = e.target.value;
+    const tipo = tiposEventoConfig.find(t => t.CODIGO === codigo || t.value === codigo);
+    // Usar los IDs correctos del HTML de responsables
+    const notaMinimaContainer = document.getElementById('notaAprobacionGroup');
+    const asistenciaMinimaContainer = document.getElementById('asistenciaMinimaGroup');
+    const notaAprobacion = document.getElementById('notaAprobacion');
+    const asistenciaMinima = document.getElementById('asistenciaMinima');
+    if (tipo) {
+      if (tipo.REQUIERENOTA == 1) {
+        if (notaMinimaContainer) notaMinimaContainer.style.display = '';
+      } else {
+        if (notaMinimaContainer) notaMinimaContainer.style.display = 'none';
+        if (notaAprobacion) notaAprobacion.value = '';
+      }
+      if (tipo.REQUIEREASISTENCIA == 1) {
+        if (asistenciaMinimaContainer) asistenciaMinimaContainer.style.display = '';
+      } else {
+        if (asistenciaMinimaContainer) asistenciaMinimaContainer.style.display = 'none';
+        if (asistenciaMinima) asistenciaMinima.value = '';
+      }
+    } else {
+      if (notaMinimaContainer) notaMinimaContainer.style.display = 'none';
+      if (asistenciaMinimaContainer) asistenciaMinimaContainer.style.display = 'none';
+      if (notaAprobacion) notaAprobacion.value = '';
+      if (asistenciaMinima) asistenciaMinima.value = '';
     }
-
-    if (fechaFin && fechaFin < fechaInicio) {
-      mostrarAlertaUTA('Error', 'La fecha de fin no puede ser anterior a la de inicio.', 'error');
-      return;
-    }
-
-    if (!capacidad || capacidad <= 0) {
-      mostrarAlertaUTA('Error', 'La capacidad debe ser mayor que cero.', 'error');
-      return;
-    }
-
-    const formData = new FormData(frm);
-
-    const portada = frm.urlPortada?.files[0];
-    const galeria = frm.urlGaleria?.files[0];
-    if (portada) formData.set('urlPortada', portada);
-    if (galeria) formData.set('urlGaleria', galeria);
-
-    const url = idEvento.value ? '../controllers/EventosController.php?option=update' : '../controllers/EventosController.php?option=save';
-
-    axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(res => {
-        const info = res.data;
-        if (info?.tipo === 'success') {
-          Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: info.mensaje,
-            timer: 1500,
-            showConfirmButton: false,
-            customClass: {
-              popup: 'swal2-popup'
-            }
-          }).then(() => {
-            $('#modalEvento').modal('hide');
-            $('.modal-backdrop').remove();
-            $('body').removeClass('modal-open').css('padding-right', '');
-            frm.reset();
-            btnSave.innerHTML = 'Guardar';
-            tablaEventos.ajax.reload();
-          });
-        } else {
-          mostrarAlertaUTA('Error', info?.mensaje || 'Ocurrió un error al guardar.', 'error');
-        }
-      })
-      .catch(err => {
-        console.error('❌ Error inesperado:', err);
-        mostrarAlertaUTA('Error', 'No se pudo guardar el evento.', 'error');
-      });
-  };
-
-  $('#modalEvento').on('hidden.bs.modal', () => {
-    frm.reset();
-    btnSave.innerHTML = 'Guardar';
-    toggleCosto();
-    tablaEventos.ajax.reload();
-  });
-
-  btnNuevo?.addEventListener('click', () => {
-    frm.reset();
-    idEvento.value = '';
-    btnSave.innerHTML = 'Guardar';
-    toggleCosto();
-    $('#modalEvento').modal('show');
-  });
+  }
 });

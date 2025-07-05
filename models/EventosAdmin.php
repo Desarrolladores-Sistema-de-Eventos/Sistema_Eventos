@@ -12,12 +12,10 @@ class Evento {
         $sql = "SELECT e.*, 
                        me.NOMBRE AS MODALIDAD,
                        te.NOMBRE AS TIPO,
-                       ca.NOMBRE_CARRERA AS CARRERA,
                        ce.NOMBRE AS CATEGORIA
                 FROM evento e
                 LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
                 LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-                LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
                 LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
                 ORDER BY e.FECHAINICIO DESC";
         $stmt = $this->pdo->query($sql);
@@ -27,22 +25,47 @@ class Evento {
     public function getById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM evento WHERE SECUENCIAL = ?");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $evento = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($evento) {
+            $evento['carreras'] = $this->getCarrerasPorEvento($id);
+            // Obtener responsable y organizador
+            $stmtOrg = $this->pdo->prepare("SELECT SECUENCIALUSUARIO, ROL_ORGANIZADOR FROM organizador_evento WHERE SECUENCIALEVENTO = ?");
+            $stmtOrg->execute([$id]);
+            $orgs = $stmtOrg->fetchAll(PDO::FETCH_ASSOC);
+            $evento['responsable'] = '';
+            $evento['organizador'] = '';
+            foreach ($orgs as $org) {
+                if ($org['ROL_ORGANIZADOR'] === 'RESPONSABLE') {
+                    $evento['responsable'] = $org['SECUENCIALUSUARIO'];
+                } else if ($org['ROL_ORGANIZADOR'] === 'ORGANIZADOR') {
+                    $evento['organizador'] = $org['SECUENCIALUSUARIO'];
+                }
+            }
+        }
+        return $evento;
     }
 
  public function crear($data) {
-    $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, SECUENCIALCARRERA, ESTADO, CAPACIDAD, ES_DESTACADO)
+    $sql = "INSERT INTO evento (TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, ESTADO, CAPACIDAD, ES_DESTACADO, ASISTENCIAMINIMA)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $this->pdo->prepare($sql);
     $ok = $stmt->execute([
         $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
         $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
-        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['capacidad'], $data['esDestacado'] ?? 0
+        $data['categoria'], $data['tipoEvento'], $data['estado'], $data['capacidad'], $data['esDestacado'] ?? 0, $data['asistenciaMinima'] ?? null
     ]);
 
     if (!$ok) return false;
 
     $idEvento = $this->pdo->lastInsertId();
+
+    // Guardar carreras en la tabla intermedia
+    if (!empty($data['carreras']) && is_array($data['carreras'])) {
+        foreach ($data['carreras'] as $idCarrera) {
+            $stmtCarrera = $this->pdo->prepare("INSERT INTO EVENTO_CARRERA (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
+            $stmtCarrera->execute([$idEvento, $idCarrera]);
+        }
+    }
 
     $this->asignarOrganizador($idEvento, $data['responsable'], 'RESPONSABLE');
     $this->asignarOrganizador($idEvento, $data['organizador'], 'ORGANIZADOR');
@@ -65,16 +88,24 @@ class Evento {
 }
 
 public function editar($id, $data) {
-    $sql = "UPDATE evento SET TITULO=?, DESCRIPCION=?, HORAS=?, FECHAINICIO=?, FECHAFIN=?, CODIGOMODALIDAD=?, NOTAAPROBACION=?, COSTO=?, ES_SOLO_INTERNOS=?, ES_PAGADO=?, SECUENCIALCATEGORIA=?, CODIGOTIPOEVENTO=?, SECUENCIALCARRERA=?, ESTADO=?, ES_DESTACADO=?
-            WHERE SECUENCIAL=?";
+    $sql = "UPDATE evento SET TITULO=?, DESCRIPCION=?, HORAS=?, FECHAINICIO=?, FECHAFIN=?, CODIGOMODALIDAD=?, NOTAAPROBACION=?, COSTO=?, ES_SOLO_INTERNOS=?, ES_PAGADO=?, SECUENCIALCATEGORIA=?, CODIGOTIPOEVENTO=?, ESTADO=?, ES_DESTACADO=?, ASISTENCIAMINIMA=? WHERE SECUENCIAL=?";
     $stmt = $this->pdo->prepare($sql);
     $ok = $stmt->execute([
         $data['titulo'], $data['descripcion'], $data['horas'], $data['fechaInicio'], $data['fechaFin'],
         $data['modalidad'], $data['notaAprobacion'], $data['costo'], $data['esSoloInternos'], $data['esPagado'],
-        $data['categoria'], $data['tipoEvento'], $data['carrera'], $data['estado'], $data['esDestacado'] ?? 0, $id
+        $data['categoria'], $data['tipoEvento'], $data['estado'], $data['esDestacado'] ?? 0, $data['asistenciaMinima'] ?? null, $id
     ]);
 
     if (!$ok) return false;
+
+    // Actualizar carreras en la tabla intermedia
+    $this->pdo->prepare("DELETE FROM EVENTO_CARRERA WHERE SECUENCIALEVENTO = ?")->execute([$id]);
+    if (!empty($data['carreras']) && is_array($data['carreras'])) {
+        foreach ($data['carreras'] as $idCarrera) {
+            $stmtCarrera = $this->pdo->prepare("INSERT INTO EVENTO_CARRERA (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
+            $stmtCarrera->execute([$id, $idCarrera]);
+        }
+    }
 
     $this->actualizarOrganizador($id, $data['responsable'], 'RESPONSABLE');
     $this->actualizarOrganizador($id, $data['organizador'], 'ORGANIZADOR');
@@ -146,11 +177,12 @@ public function editar($id, $data) {
         $organizadores = $stmtOrg->fetchAll(PDO::FETCH_COLUMN);
 
         // 7.1 Eliminar imagen_organizador_evento asociadas a organizadores de este evento
-        if ($organizadores) {
-            $in = implode(',', array_fill(0, count($organizadores), '?'));
-            $delImgOrg = $this->pdo->prepare("DELETE FROM imagen_organizador_evento WHERE SECUENCIAL_ORGANIZADOR_EVENTO IN ($in)");
-            $delImgOrg->execute($organizadores);
-        }
+        // Comentado porque la tabla no existe en la base de datos
+        // if ($organizadores) {
+        //     $in = implode(',', array_fill(0, count($organizadores), '?'));
+        //     $delImgOrg = $this->pdo->prepare("DELETE FROM imagen_organizador_evento WHERE SECUENCIALEVENTO IN ($in)");
+        //     $delImgOrg->execute($organizadores);
+        // }
 
         // 7.2 Eliminar organizador_evento
         $stmtOrgDel = $this->pdo->prepare("DELETE FROM organizador_evento WHERE SECUENCIALEVENTO=?");
@@ -198,7 +230,7 @@ public function editar($id, $data) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 public function getTiposEvento() {
-    $stmt = $this->pdo->query("SELECT CODIGO, NOMBRE FROM tipo_evento");
+    $stmt = $this->pdo->query("SELECT CODIGO, NOMBRE, REQUIERENOTA, REQUIEREASISTENCIA FROM tipo_evento");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 public function getModalidades() {
@@ -215,6 +247,12 @@ public function getEstados() {
         ['value' => 'CERRADO', 'text' => 'Cerrado'],
         ['value' => 'CANCELADO', 'text' => 'Cancelado']
     ];
+}
+
+public function getCarrerasPorEvento($idEvento) {
+    $stmt = $this->pdo->prepare("SELECT SECUENCIALCARRERA FROM EVENTO_CARRERA WHERE SECUENCIALEVENTO = ?");
+    $stmt->execute([$idEvento]);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 }

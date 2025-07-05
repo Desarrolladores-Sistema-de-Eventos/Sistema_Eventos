@@ -56,6 +56,17 @@
             <label for="descripcionTipoEvento">Descripción</label>
             <textarea class="form-control" id="descripcionTipoEvento" name="descripcion" maxlength="500"></textarea>
           </div>
+          <!-- INICIO: Campos agregados para requerir nota/asistencia -->
+          <div class="form-group">
+            <label for="controlesTipoEvento">Requerimientos de control</label><br>
+            <div class="checkbox-inline">
+              <label><input type="checkbox" id="REQUIERENOTA" name="REQUIERENOTA"> Requiere Nota</label>
+            </div>
+            <div class="checkbox-inline">
+              <label><input type="checkbox" id="REQUIEREASISTENCIA" name="REQUIEREASISTENCIA"> Requiere Asistencia</label>
+            </div>
+          </div>
+          <!-- FIN: Campos agregados para requerir nota/asistencia -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
