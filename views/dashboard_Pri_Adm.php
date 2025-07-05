@@ -3,6 +3,100 @@
 $rolRequerido = 'ADMIN';
 include("../core/auth.php")?>
 
+<style>
+  :root {
+    --uta-rojo: #b10024;
+    --uta-rojo-oscuro: #92001c;
+    --uta-gris: #f5f5f5;
+    --uta-azul: #004466;
+    --uta-verde: #2e7d32;
+    --uta-cafe: #6d4c41;
+  }
+
+  .panel {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border: none;
+  }
+
+  .panel .panel-heading {
+    background-color: var(--uta-rojo);
+    color: white;
+    font-weight: bold;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+  }
+
+  .panel .panel-body {
+    background-color: white;
+    padding: 20px;
+  }
+
+  .panel-default {
+    border: 1px solid #e0e0e0;
+  }
+
+  .panel-back.noti-box {
+    background-color: #fff;
+    border-left: 5px solid var(--uta-rojo);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+  }
+
+  .panel-back.noti-box:hover {
+    transform: translateY(-5px);
+  }
+
+  .icon-box {
+    width: 60px;
+    height: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .bg-color-red {
+    background-color: var(--uta-rojo);
+  }
+
+  .bg-color-green {
+    background-color: var(--uta-verde);
+  }
+
+  .bg-color-blue {
+    background-color: var(--uta-azul);
+  }
+
+  .bg-color-brown {
+    background-color: var(--uta-cafe);
+  }
+
+  .text-box .main-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--uta-rojo);
+  }
+
+  .text-muted {
+    color: #6c757d !important;
+  }
+
+  h2 i {
+    color: var(--uta-rojo);
+  }
+
+  .hr {
+    border-top: 2px solid var(--uta-rojo);
+  }
+</style>
+
 
 <div id="page-wrapper">
   <div id="page-inner">

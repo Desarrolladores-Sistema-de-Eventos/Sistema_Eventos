@@ -1,4 +1,99 @@
 <?php include("partials/header_Admin.php");?>
+<style>
+  h2, h4.modal-title {
+    color: #8B0000;
+    font-weight: 600;
+  }
+
+  .panel-heading {
+    background-color: #8B0000;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .btn-primary {
+    background-color: #006699;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #004466;
+  }
+
+  .btn-success {
+    background-color: #2b7a0b;
+    border: none;
+  }
+
+  .btn-success:hover {
+    background-color: #1e5c05;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+
+  .table-responsive {
+    max-height: 550px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+
+  #tabla-eventos thead {
+    background-color: #8B0000;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  #tabla-eventos tbody tr:hover {
+    background-color: #fff7e6;
+  }
+
+  label {
+    font-weight: 600;
+  }
+
+  .form-group, .row > div {
+    margin-bottom: 15px;
+  }
+
+  .modal-content {
+    border-radius: 10px;
+    border: 2px solid #DAA520;
+  }
+
+  .modal-header {
+    background-color: #8B0000;
+    color: white;
+    border-bottom: 1px solid #DAA520;
+  }
+
+  .modal-footer {
+    border-top: 1px solid #DAA520;
+  }
+
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+
+  #btn-save {
+    font-weight: bold;
+  }
+
+  .select2-container--default .select2-selection--single {
+    border: 1px solid #8B0000;
+    border-radius: 4px;
+    height: 38px;
+  }
+
+</style>
+
 <?php 
 $rolRequerido = 'ADMIN';
 include("../core/auth.php")?>
@@ -16,6 +111,7 @@ include("../core/auth.php")?>
         <button class="btn btn-primary mb-3" id="btn-nuevo" data-toggle="modal" data-target="#modalEvento">
           <i class="fa fa-plus"></i> Nuevo Evento
         </button>
+        <BR></BR>
         <div class="form-check mb-2">
           <label class="form-check-label">
             <input type="checkbox" id="mostrarCancelados" class="form-check-input">Mostrar eventos cancelados

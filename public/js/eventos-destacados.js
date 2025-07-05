@@ -1,7 +1,3 @@
-/**
- * JavaScript para el carrusel de eventos destacados
- * Inicializa Owl Carousel con configuración responsive y controles dinámicos
- */
 $(document).ready(function() {
     // Verificar si existe el carrusel antes de inicializarlo
     if ($('.eventos-carousel').length > 0) {
