@@ -1,5 +1,81 @@
 <?php include("partials/header_Admin.php"); ?>
+<style>
+  h2 {
+    color: #8B0000;
+    font-weight: bold;
+  }
+
+  .panel {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    background: #fff;
+    border-radius: 10px;
+    border: none;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .panel-heading {
+    background: linear-gradient(90deg, #f9f9f9, #ececec);
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .panel-heading h5 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+  }
+
+  .panel-heading i {
+    margin-right: 10px;
+    font-size: 1.4rem;
+  }
+
+  .panel-body {
+    padding: 1.25rem;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+  }
+
+  .btn-outline-primary {
+    border: 2px solid #006699;
+    color: #006699;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #006699;
+    color: #fff;
+  }
+
+  .row.g-4 > div {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .panel-heading h5 {
+      font-size: 1rem;
+    }
+    .panel-heading i {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+
 <?php 
+
 $rolRequerido = 'ADMIN';
 include("../core/auth.php"); 
 ?>
