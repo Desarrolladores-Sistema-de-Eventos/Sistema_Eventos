@@ -52,7 +52,8 @@ include("../core/auth.php"); ?>
             <div class="modal-content">
               <div class="modal-header" style="background: #222; color:rgb(40, 40, 40); border-top-left-radius: 6px; border-top-right-radius: 6px;">
                 <h4 class="modal-title" style="color: #fff;">Detalles de Inscripción</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" style="color: #fff; opacity: 1;">
+                  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -100,130 +101,145 @@ include("../core/auth.php"); ?>
     
   </div>
 </div>
+
 <style>
   body {
-    background-color: #fff;
-    color: #000;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    color: #2c2c2c;
   }
 
-  .panel-heading {
-    background: rgb(27, 26, 26) !important;
-    color: #fff !important;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    border-bottom: 2px solid #7b2020;
-     font-weight: normal;
-     font-size: 14px;
-
-  }
-   h2 {
+  h2 {
     font-size: 24px;
-    color: rgb(23, 23, 23);
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #8b0000;
   }
 
-  
+  .panel {
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.06);
+    border-radius: 10px;
+    background: #fff;
+  }
 
   .panel-heading {
-    background:rgb(185, 51, 51);
-    color: #fff;
-    
+    background-color: #b10024;
+    color: white;
+    padding: 12px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
   }
- select.form-control {
-    border: 1.5px solid #9b2e2e;
+
+  .form-group label {
+    font-weight: 600;
+  }
+
+  select.form-control {
     border-radius: 6px;
-    font-size: 14px;
-    background: #f9fafb;
-    color: #222;
-    transition: border-color 0.2s;
+    border: 1px solid #ccc;
+    padding: 8px;
   }
-   
+
   .btn-primary {
-    background: #9b2e2e;
+    background-color: #b10024;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    background-color: #92001c;
+  }
+
+  .btn-default {
+    background-color: #f0f0f0;
     border: none;
     font-weight: 600;
+    color: #333;
+    border-radius: 4px;
+  }
+
+  .btn-default:hover {
+    background-color: #dcdcdc;
+  }
+
+  .table {
+    background: white;
     border-radius: 6px;
-    transition: background 0.2s;
+    overflow: hidden;
   }
-  .btn-primary:hover {
-    background: #7b2020;
+
+  .table thead {
+    background-color: #b10024;
+    color: white;
   }
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
-  background-color: #c0392b !important;
-  border-color: #c0392b !important;
-  color: white !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-thead {
-  background-color: rgb(180, 34, 34);
-  color: white;
-  font-size: 14px;
-  font-weight: normal;
-}
-  th {
-    padding: 12px;
+
+  .table th, .table td {
     text-align: center;
     vertical-align: middle;
-    border: 1px solid #ddd;
-    background-color: rgb(180, 34, 34); 
     font-size: 14px;
-    font-weight: normal;
   }
-td {
-  padding: 12px;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px solid #ddd;
-  background-color::rgb(180, 34, 34); 
-  font-size: 14px;
-}
-h4 {
-  font-size: 14px;
-  
-}
-label{
-  font-weight: normal;
-  font-size: 14px;
-}
-p{
-  font-size: 14px;
-  font-weight: normal;
-}
-hr{
-  border-top: 2px solid #9b2e2e;
-  opacity: 1;
-}
-.dataTables_length label,
-.dataTables_length select {
-  font-size: 14px !important;
-}
-/* Asegura que el select y el dropdown de Choices.js sean más anchos */
-.choices__inner, .choices[data-type*=select-one] .choices__list--dropdown {
-    min-width: 250px;
+  .table tbody tr:hover {
+    background-color: #fceeee;
+  }
+
+  .modal-header {
+    background-color: #b10024;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .modal-footer {
+    border-top: 1px solid #ddd;
+  }
+
+  .form-check-input {
+    transform: scale(1.1);
+    margin-right: 8px;
+  }
+
+  #evento {
     max-width: 350px;
-    width: 100%;
-    font-size: 1rem;
-    white-space: normal;
-    word-break: break-word;
-}
-.choices__list--dropdown {
-    min-width: 250px !important;
-    max-width: 350px !important;
-    width: 100% !important;
-}
-.choices__list--dropdown, .choices__list[aria-expanded] {
-    border: 2px solid #a00 !important;
-    box-shadow: 0 2px 8px rgba(160,0,0,0.08);
-}
+  }
+
+  .select2-container--default .select2-selection--single {
+    border-radius: 6px;
+    height: 38px;
+    border-color: #b10024;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 36px;
+  }
+
+  hr {
+    border-top: 2px solid #92001c;
+  }
+
+  /* Asegura que el select y el dropdown de Choices.js sean más anchos */
+  .choices__inner, .choices[data-type*=select-one] .choices__list--dropdown {
+      min-width: 250px;
+      max-width: 350px;
+      width: 100%;
+      font-size: 1rem;
+      white-space: normal;
+      word-break: break-word;
+  }
+  .choices__list--dropdown {
+      min-width: 250px !important;
+      max-width: 350px !important;
+      width: 100% !important;
+  }
+  .choices__list--dropdown, .choices__list[aria-expanded] {
+      border: 2px solid #a00 !important;
+      box-shadow: 0 2px 8px rgba(160,0,0,0.08);
+  }
 </style>
+
 
 <!-- Librerías -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
