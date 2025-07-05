@@ -1,5 +1,21 @@
-    <?php include "../views/solicitud_usuario.php"?>
-<footer style="background:rgb(121, 7, 7); color: #fff; padding: 30px 0 0 0; margin-top: 40px;">
+<link rel="stylesheet" href="../public/css/style.css">
+<style>
+   .footer-uta {
+    background: linear-gradient(to right, rgb(56, 57, 59), #212529);
+    padding-top: 18px !important;
+    padding-bottom: 10px !important;
+    min-height: unset !important;
+  }
+  .footer-uta .mb-4 {
+    margin-bottom: 10px !important;
+  }
+  .footer-uta .row {
+    margin-bottom: 0 !important;
+  }
+  
+</style>
+<?php include "../views/solicitud_usuario.php"?>
+<footer class="footer-uta" style="color: #fff; margin-top: 40px;">
   <div class="container">
     <div class="row">
       <!-- Contacto -->
@@ -24,7 +40,7 @@
   <h5 style="color:#fff; letter-spacing:2px; font-weight:bold;">INFORMACIÓN</h5>
   <p>Cuéntanos tus inquietudes o dudas.</p>
   <a href="../views/contact.php">
-    <button style="background:rgb(5, 5, 5); color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold;">
+    <button style="background:rgb(134, 17, 17); color:#fff; border:none; padding:10px 20px; border-radius:4px; font-weight:bold;">
       Solicitar Información – CTT
     </button>
   </a>

@@ -11,13 +11,14 @@
   <link rel="stylesheet" href="../public/css/style.css">
 
   <style>
-    html, body {
-	  overflow-x: hidden;
-	  width: 100%;
-      font-family: 'Lato', sans-serif;
-      background-color: #f6f7f9;
-      margin: 0;
-    }
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+    background: #f6f7f9 url('../public/img/uta/background.jpg') center center no-repeat;
+    background-size: cover;
+    margin: 0;
+}
 
     .main-content {
       flex: 1 0 auto;
@@ -170,23 +171,7 @@
       margin-top: 10px;
       max-width: 80px;
     }
-	.btn-regresar {
-  background-color: transparent;
-  border: 2px solid #8B0000;
-  color: #8B0000;
-  font-weight: bold;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  padding: 6px 15px;
-  display: inline-block;
-  text-decoration: none;
-}
-
-.btn-regresar:hover {
-  background-color: #8B0000;
-  color: white;
-  border-color: #660000;
-}
+ 
 .banner-uta {
   width: 100vw;        
   overflow: hidden;
@@ -206,37 +191,42 @@
 </head>
 
 <body>
-   <div class="banner-uta">
-  <img src="../public/img/header.png" alt="Banner UTA" class="img-banner">
-</div>
 
-  <div class="main-content">
-    <!-- Botón de regreso -->
-    <div class="container mt-3">
-      <a href="../public" class="btn btn-regresar">
-  <i class="fa fa-arrow-left"></i> Regresar
-</a>
-    </div>
 
-    <!-- Formulario de login -->
-    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
-      <div class="col-md-7 col-lg-5">
-        <div class="login-wrap p-4 p-md-5 text-center">
-          <img src="../public/img/logo_login.png" alt="Logo Universidad Técnica de Ambato" class="login-logo">
-          <h3 class="mb-4">Inicio de sesión</h3>
 
+<div class="container-fluid d-flex align-items-center justify-content-center" style="min-height:100vh;">
+  <div class="d-flex justify-content-center align-items-center w-100" style="min-height:100vh;">
+    <div class="d-flex flex-row shadow-lg" style="border-radius:18px; min-width:900px; max-width:1100px; min-height:420px; max-height:480px; width:100%;">
+      <!-- Columna izquierda: imágenes y textos institucionales -->
+      <div class="d-flex flex-column align-items-center justify-content-center p-4" style="width:50%; border-radius:18px 0 0 18px; background:rgba(255,255,255,0.97); min-height:420px; max-height:480px; box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+        <div style="display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap; margin-bottom:18px;">
+          <img src="../public/img/uta/logo2020.png" alt="FISEI" style="height:100px;">
+          <img src="../public/img/uta/fisei_logo.png" alt="FISEI" style="height:100px;">
+
+        </div>
+        <h4 style="font-weight:bold;color:#222; margin-bottom:8px; text-align:center;">PLATAFORMA EDUCATIVA INSTITUCIONAL</h4>
+        <h5 style="color:#8B0000;font-weight:bold; text-align:center;">Facultad de Ingeniería en Sistemas, Electrónica e Industrial</h5>
+        <img src="../public/img/uta/logo1.png" alt="Escudo UTA" style="height:100px;">
+      </div>
+      <!-- Columna derecha: formulario de login -->
+      <div class="d-flex flex-column align-items-center justify-content-center p-4" style="width:50%; border-radius:0 18px 18px 0; background:rgba(255,255,255,0.97); min-height:420px; max-height:480px; border-left:1px solid #eee; box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+        <div class="w-100" style="max-width:350px; margin:0 auto;">
           <form id="formLogin" class="signin-form text-start">
+            <h3 class="mb-4 text-center" style="color:#8B0000;font-weight:bold;">Login</h3>
             <div class="form-group">
               <div class="icon-box">
                 <i class="fa fa-user"></i>
               </div>
               <input type="email" name="correo" id="correo" class="form-control" placeholder="Correo electrónico" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="position:relative;">
               <div class="icon-box">
                 <i class="fa fa-key"></i>
               </div>
-              <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Contraseña" required>
+              <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Contraseña" required style="padding-right:40px;">
+              <button type="button" id="toggle-password" tabindex="-1" style="position:absolute; right:8px; top:8px; background:transparent; border:none; outline:none; color:#8B0000; font-size:18px; z-index:2;" aria-label="Mostrar/Ocultar contraseña">
+                <i class="fa fa-eye" id="icon-eye"></i>
+              </button>
             </div>
             <div class="form-group">
               <button type="submit" class="form-control btn btn-primary rounded submit px-3">Iniciar sesión</button>
@@ -244,14 +234,39 @@
             <div class="form-group mt-2 text-start">
               <a href="../views/recuperar_contrasena.php">¿Olvidaste tu contraseña?</a>
             </div>
+            <div class="form-group mt-2 text-center" style="font-size:14px; color:#8B0000;">
+              Español · Internacional (es) <span style="color:#b00; font-size:16px; vertical-align:middle;">&#9660;</span> &nbsp; <i class="fa fa-info-circle"></i> Aviso de Cookies
+            </div>
           </form>
-
           <p class="text-center mt-3">¿No tienes cuenta? <a href="../views/register.php">Regístrate</a></p>
           <p id="login-error" class="text-danger text-center mt-2"></p>
         </div>
       </div>
     </div>
   </div>
+</div>
+<script>
+  // Mostrar/ocultar contraseña
+  document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('toggle-password');
+    var input = document.getElementById('contrasena');
+    var icon = document.getElementById('icon-eye');
+    if(btn && input && icon) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if(input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    }
+  });
+</script>
 
   <!-- JS -->
   <script src="../public/js/jquery.min.js"></script>
@@ -259,7 +274,5 @@
   <script src="../public/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../public/js/login.js"></script>
-   <?php include('partials/footer.php'); ?>
-
 </body>
 </html>

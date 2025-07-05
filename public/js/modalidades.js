@@ -45,8 +45,8 @@ async function renderModalidadesTable() {
                     <td>${m.CODIGO}</td>
                     <td>${m.NOMBRE}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="editarModalidad('${m.CODIGO}')"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarModalidadConfirm('${m.CODIGO}')"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-secondary btn-sm text-dark" style="background-color: #e0e0e0; border-color: #bdbdbd;" onclick="editarModalidad('${m.CODIGO}')"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-secondary btn-sm text-dark" style="background-color: #e0e0e0; border-color: #bdbdbd;" onclick="eliminarModalidadConfirm('${m.CODIGO}')"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
             `;

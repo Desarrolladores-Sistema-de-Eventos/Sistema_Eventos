@@ -9,7 +9,7 @@ class Facultad {
     }
 
     public function getFacultad($id = 1) {
-        $stmt = $this->pdo->prepare("SELECT NOMBRE, MISION, VISION, UBICACION FROM facultad WHERE SECUENCIAL = ?");
+        $stmt = $this->pdo->prepare("SELECT NOMBRE, MISION, VISION, UBICACION, ABOUT FROM facultad WHERE SECUENCIAL = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

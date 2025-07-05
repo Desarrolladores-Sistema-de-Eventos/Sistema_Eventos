@@ -46,8 +46,8 @@ async function renderTiposEventoTable() {
                     <td>${t.NOMBRE}</td>
                     <td>${t.DESCRIPCION || ''}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="editarTipoEvento('${t.CODIGO}')"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarTipoEventoConfirm('${t.CODIGO}')"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-sm" style="background-color: #e0e0e0; color: #222;" onclick="editarTipoEvento('${t.CODIGO}')"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-sm" style="background-color: #e0e0e0; color: #222;" onclick="eliminarTipoEventoConfirm('${t.CODIGO}')"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
             `;

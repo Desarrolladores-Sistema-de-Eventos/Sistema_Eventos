@@ -80,20 +80,22 @@ class EventoController {
     // Procesar imagen de portada
     $data['urlPortada'] = null;
     if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
-        $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
+        $extension = pathinfo($_FILES['urlPortada']['name'], PATHINFO_EXTENSION);
+        $nombreArchivo = uniqid('portada_') . '.' . $extension;
         $rutaDestino = '../public/img/' . $nombreArchivo;
         if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-            $data['urlPortada'] = 'public/img/' . $nombreArchivo;
+            $data['urlPortada'] = $nombreArchivo;
         }
     }
 
     // Procesar imagen de galería
     $data['urlGaleria'] = null;
     if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
-        $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
+        $extension = pathinfo($_FILES['urlGaleria']['name'], PATHINFO_EXTENSION);
+        $nombreArchivo = uniqid('galeria_') . '.' . $extension;
         $rutaDestino = '../public/img/' . $nombreArchivo;
         if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-            $data['urlGaleria'] = 'public/img/' . $nombreArchivo;
+            $data['urlGaleria'] = $nombreArchivo;
         }
     }
 
@@ -120,20 +122,22 @@ private function editar() {
     // Procesar imagen de portada
     $data['urlPortada'] = null;
     if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
-        $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
-        $rutaDestino = '../public/img/' . $nombreArchivo;
+        $extension = pathinfo($_FILES['urlPortada']['name'], PATHINFO_EXTENSION);
+        $nombreArchivo = uniqid('portada_') . '.' . $extension;
+        $rutaDestino = '../public/img/eventos/portadas/' . $nombreArchivo;
         if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-            $data['urlPortada'] = 'public/img/' . $nombreArchivo;
+            $data['urlPortada'] = $nombreArchivo;
         }
     }
 
     // Procesar imagen de galería
     $data['urlGaleria'] = null;
     if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
-        $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
-        $rutaDestino = '../public/img/' . $nombreArchivo;
+        $extension = pathinfo($_FILES['urlGaleria']['name'], PATHINFO_EXTENSION);
+        $nombreArchivo = uniqid('galeria_') . '.' . $extension;
+        $rutaDestino = '../public/img/eventos/galerias/' . $nombreArchivo;
         if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-            $data['urlGaleria'] = 'public/img/' . $nombreArchivo;
+            $data['urlGaleria'] = $nombreArchivo;
         }
     }
 

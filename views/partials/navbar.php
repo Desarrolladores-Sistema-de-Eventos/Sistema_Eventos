@@ -1,4 +1,13 @@
 
+    <style>
+ .navbar-nav .nav-link.active,
+.navbar-nav .nav-link.active:focus,
+.navbar-nav .nav-link.active:hover {
+  color: #b10024 !important;
+  font-weight: bold;
+  text-shadow: 0 1px 6px #fff2, 0 1px 0 #fff;
+}
+    </style>
     <!-- Navbar Start -->
     <div class="container-fluid position-relative nav-bar p-0">
         <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
@@ -6,7 +15,7 @@
                 <a href="" class="navbar-brand">
                     <h1 class="m-0 text-primary">
                     <i class="fas fa-laptop-code me-2"></i> 
-                    <span class="text-dark">SOFT</span>WARE
+                    <span class="text-dark">EVENTS</span>SOFT
                     </h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">

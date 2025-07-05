@@ -48,8 +48,8 @@ async function renderRolesUsuarioTable() {
                     <td>${r.CODIGO}</td>
                     <td>${r.NOMBRE}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="editarRolUsuario('${r.CODIGO}')"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarRolUsuarioConfirm('${r.CODIGO}')"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-sm" style="background-color: #e0e0e0; color: #222;" onclick="editarRolUsuario('${r.CODIGO}')"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-sm" style="background-color: #e0e0e0; color: #222;" onclick="eliminarRolUsuarioConfirm('${r.CODIGO}')"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
             `;
@@ -76,7 +76,16 @@ document.getElementById('formRolUsuario').addEventListener('submit', async funct
     const codigo = document.getElementById('codigoRolUsuario').value.trim();
     const nombre = document.getElementById('nombreRolUsuario').value.trim();
     if (!codigo || !nombre) {
-        alert('Código y nombre son obligatorios');
+        Swal.fire('Campos obligatorios', 'Código y nombre son obligatorios', 'warning');
+        return;
+    }
+    // Validación: impedir crear o editar un rol con el código ADMIN
+    if (codigo.toUpperCase() === 'ADMIN') {
+        Swal.fire('No permitido', 'No se puede crear o editar un rol con el código ADMIN.', 'error');
+        return;
+    }
+    if (nombre.toUpperCase() === 'ADMIN' || nombre.toUpperCase() === 'ADMINISTRADOR') {
+        Swal.fire('No permitido', 'No se puede crear o editar un rol con el nombre ADMIN.', 'error');
         return;
     }
     const data = { codigo, nombre };
@@ -90,7 +99,7 @@ document.getElementById('formRolUsuario').addEventListener('submit', async funct
         $('#modalRolUsuario').modal('hide');
         renderRolesUsuarioTable();
     } else {
-        alert(res.mensaje);
+        Swal.fire('Error', res.mensaje, 'error');
     }
 });
 

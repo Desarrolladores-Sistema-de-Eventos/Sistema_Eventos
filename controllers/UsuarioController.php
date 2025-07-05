@@ -231,6 +231,11 @@ private function archivosUsuario() {
             return;
         }
         $usuarios = $this->usuarioModelo->listar();
+        // Ajustar la URL de la foto de perfil para cada usuario
+        foreach ($usuarios as &$usuario) {
+            $foto = !empty($usuario['FOTO_PERFIL']) ? basename($usuario['FOTO_PERFIL']) : 'default.png';
+            $usuario['FOTO_PERFIL_URL'] = '../public/img/perfiles/' . $foto;
+        }
         $this->json($usuarios);
     }
 
@@ -306,9 +311,16 @@ private function registrarUsuario() {
 
     // Procesa la subida de la foto de perfil y retorna el nombre del archivo o null
     private function procesarFotoPerfil() {
+        // Carpeta de perfiles
+        $carpeta = dirname(__DIR__) . '/public/img/perfiles/';
+        if (!is_dir($carpeta)) {
+            mkdir($carpeta, 0777, true);
+        }
         if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
-            $nombreArchivo = uniqid('perfil_') . '_' . basename($_FILES['foto_perfil']['name']);
-            $rutaDestino = __DIR__ . '/public/img/' . $nombreArchivo;
+            $ext = strtolower(pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, ['jpg', 'jpeg', 'png'])) return null;
+            $nombreArchivo = uniqid('perfil_') . '.' . $ext;
+            $rutaDestino = $carpeta . $nombreArchivo;
             if (move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $rutaDestino)) {
                 return $nombreArchivo;
             }
@@ -316,9 +328,15 @@ private function registrarUsuario() {
         return null;
     }
     private function procesarCedulaPDF() {
+    $carpeta = dirname(__DIR__) . '/documents/cedulas/';
+    if (!is_dir($carpeta)) {
+        mkdir($carpeta, 0777, true);
+    }
     if (isset($_FILES['cedula_pdf']) && $_FILES['cedula_pdf']['error'] === UPLOAD_ERR_OK) {
-        $nombreArchivo = uniqid('cedula_') . '_' . basename($_FILES['cedula_pdf']['name']);
-        $rutaDestino = __DIR__ . '/public/img/' . $nombreArchivo;
+        $ext = strtolower(pathinfo($_FILES['cedula_pdf']['name'], PATHINFO_EXTENSION));
+        if ($ext !== 'pdf') return null;
+        $nombreArchivo = 'cedula_' . uniqid() . '.' . $ext;
+        $rutaDestino = $carpeta . $nombreArchivo;
         if (move_uploaded_file($_FILES['cedula_pdf']['tmp_name'], $rutaDestino)) {
             return $nombreArchivo;
         }
@@ -386,8 +404,12 @@ $cedulaNombre = !empty($_POST['cedula_pdf_actual']) ? basename($_POST['cedula_pd
 if (isset($_FILES['cedula_pdf']) && $_FILES['cedula_pdf']['error'] === UPLOAD_ERR_OK) {
     $ext = strtolower(pathinfo($_FILES['cedula_pdf']['name'], PATHINFO_EXTENSION));
     if ($ext !== 'pdf') throw new Exception('El archivo de cédula debe ser PDF');
+    $carpeta = dirname(__DIR__) . '/documents/cedulas/';
+    if (!is_dir($carpeta)) {
+        mkdir($carpeta, 0777, true);
+    }
     $cedulaNombre = 'cedula_' . uniqid() . '.' . $ext;
-    $rutaDestino = dirname(__DIR__) . '/public/img/' . $cedulaNombre;
+    $rutaDestino = $carpeta . $cedulaNombre;
     move_uploaded_file($_FILES['cedula_pdf']['tmp_name'], $rutaDestino);
 }
 
@@ -446,9 +468,10 @@ private function perfilUsuario() {
         $this->json(['success' => false, 'mensaje' => 'Usuario no encontrado']);
         return;
     }
-    $usuario['FOTO_PERFIL_URL'] = !empty($usuario['FOTO_PERFIL']) ? '../public/img/' . basename($usuario['FOTO_PERFIL']) : '';
-$usuario['CEDULA_PDF_URL'] = !empty($usuario['URL_CEDULA']) ? '../public/img/' . basename($usuario['URL_CEDULA']) : '';
-$usuario['MATRICULA_PDF_URL'] = !empty($usuario['URL_MATRICULA']) ? '../public/img/' . basename($usuario['URL_MATRICULA']) : '';
+    $foto = !empty($usuario['FOTO_PERFIL']) ? basename($usuario['FOTO_PERFIL']) : 'default.png';
+    $usuario['FOTO_PERFIL_URL'] = '../public/img/perfiles/' . $foto;
+    $usuario['CEDULA_PDF_URL'] = !empty($usuario['URL_CEDULA']) ? '../public/img/' . basename($usuario['URL_CEDULA']) : '';
+    $usuario['MATRICULA_PDF_URL'] = !empty($usuario['URL_MATRICULA']) ? '../public/img/' . basename($usuario['URL_MATRICULA']) : '';
 
 
     // Enviar al frontend todo lo necesario

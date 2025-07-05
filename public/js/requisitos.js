@@ -44,8 +44,12 @@ async function renderRequisitosTable() {
                 <tr>
                     <td>${req.DESCRIPCION}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="editarRequisito(${req.SECUENCIAL})"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarRequisitoConfirm(${req.SECUENCIAL})"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-sm" style="background-color: #d3d3d3; color: #222;" onclick="editarRequisito(${req.SECUENCIAL})">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm" style="background-color: #d3d3d3; color: #222;" onclick="eliminarRequisitoConfirm(${req.SECUENCIAL})">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             `;

@@ -171,6 +171,9 @@
                 margin: 5px 0 !important;
             }
         }
+    .sidebar-bordered {
+        border-left: 5px solid #b10024;
+    }
     </style>
 </head>
 <body>
@@ -179,11 +182,11 @@
     <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
 
         <div class="d-flex align-items-center mb-2 mb-lg-0">
-          <img src="../public/img/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
+          <img src="../public/img/uta/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
           <div>
             <h6 class="mb-0 text-uppercase font-weight-bold" style="color: #660000;">UNIVERSIDAD</h6>
             <h5 class="mb-0 font-weight-bold" style="color: #660000;">TÉCNICA DE AMBATO</h5>
-			<span class="badge" style="background-color:rgb(126, 9, 9); color: white;">CAMPUS-HUACHI</span>
+            <span class="badge" style="background-color:rgb(32, 31, 31); color: white;">CAMPUS-HUACHI</span>
           </div>
         </div>
         <div class="d-flex align-items-center user-actions">
@@ -284,7 +287,7 @@
 
             <div class="mb-5">
                 <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Categorías</h4>
-                <div class="bg-white" style="padding: 30px;">
+                <div class="bg-white sidebar-bordered" style="padding: 30px;">
                     <ul class="list-inline m-0" id="listaCategorias">
                         </ul>
                 </div>
@@ -292,7 +295,7 @@
 
             <div class="mb-5">
                 <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Evento Reciente</h4>
-                <div id="eventosRecientesSidebar"></div>
+                <div id="eventosRecientesSidebar" style="padding: 30px;"></div>
             </div>
         </div>
     </div>

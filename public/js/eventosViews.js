@@ -23,21 +23,17 @@ function cargarEventosPublicos(page = 1) {
                 contenedor.innerHTML += `
                 <div class="col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
-                        <div style="font-weight: bold; color: #d9534f; font-size: 14px; margin-bottom: 5px;">
-                            ${ev.ESTADO}
-                        </div>
-                        <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
+                        <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../public/img/eventos/portadas/${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
                         <div class="p-4">
                             <div class="d-flex justify-content-between mb-3">
                                 <small class="m-0"><i class="fas fa-book-open text-primary mr-2"></i>${ev.TIPO_EVENTO}</small>
                                 <small class="m-0"><i class="fas fa-hourglass-half text-primary mr-2"></i>${ev.HORAS} horas</small>
                                 <small class="m-0"><i class="fas fa-user-graduate text-primary mr-2"></i>${ev.DISPONIBLES} cupos</small>
-
                             </div>
                             <a class="h5 text-decoration-none" href="../views/Evento_Detalle1.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fas fa-star text-primary mr-2"></i>5</h6>
+                                    <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
                                     <h5 class="m-0">$${parseFloat(ev.COSTO).toFixed(2)}</h5>
                                 </div>
                             </div>
@@ -143,10 +139,7 @@ function buscarEventos(keyword) {
                 contenedor.innerHTML += `
                 <div class="col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
-                        <div style="font-weight: bold; color: #d9534f; font-size: 14px; margin-bottom: 5px;">
-                            ${ev.ESTADO}
-                        </div>
-                        <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
+                        <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../public/img/eventos/portadas/${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
                         <div class="p-4">
                             <div class="d-flex justify-content-between mb-3">
                                 <small class="m-0"><i class="fas fa-book-open text-primary mr-2"></i>${ev.TIPO_EVENTO}</small>
@@ -156,7 +149,7 @@ function buscarEventos(keyword) {
                             <a class="h5 text-decoration-none" href="../views/Evento_Detalle1.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fas fa-star text-primary mr-2"></i>5</h6>
+                                    <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
                                     <h5 class="m-0">$${parseFloat(ev.COSTO).toFixed(2)}</h5>
                                 </div>
                             </div>
@@ -182,7 +175,7 @@ function cargarEventosRecientes() {
             res.data.forEach(ev => {
                 contenedor.innerHTML += `
                     <a class="d-flex align-items-center text-decoration-none bg-white mb-3" href="../views/Evento_Detalle1.php?id=${ev.SECUENCIAL}">
-                        <img class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;" src="../${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
+                        <img class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;" src="../public/img/eventos/portadas/${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
                         <div class="pl-3">
                             <h6 class="m-1">${ev.TITULO}</h6>
                             <small>${ev.FECHAINICIO ? ev.FECHAINICIO : ''}</small>
@@ -264,21 +257,17 @@ function aplicarFiltros(page = 1) {
                 contenedor.innerHTML += `
                 <div class="col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
-                        <div style="font-weight: bold; color: #d9534f; font-size: 14px; margin-bottom: 5px;">
-                            ${ev.ESTADO}
-                        </div>
-                        <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
+                        <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../public/img/eventos/portadas/${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
                         <div class="p-4">
                             <div class="d-flex justify-content-between mb-3">
                                 <small class="m-0"><i class="fas fa-book-open text-primary mr-2"></i>${ev.TIPO_EVENTO}</small>
                                 <small class="m-0"><i class="fas fa-hourglass-half text-primary mr-2"></i>${ev.HORAS} horas</small>
                                 <small class="m-0"><i class="fas fa-user-graduate text-primary mr-2"></i>${ev.DISPONIBLES} cupos</small>
-
                             </div>
                             <a class="h5 text-decoration-none" href="../views/Evento_Detalle1.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fas fa-star text-primary mr-2"></i>5</h6>
+                                    <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
                                     <h5 class="m-0">$${parseFloat(ev.COSTO).toFixed(2)}</h5>
                                 </div>
                             </div>
@@ -329,10 +318,7 @@ function aplicarFiltros(page = 1) {
             contenedor.innerHTML += `
             <div class="col-md-6 mb-4">
                 <div class="package-item bg-white mb-2">
-                    <div style="font-weight: bold; color: #d9534f; font-size: 14px; margin-bottom: 5px;">
-                        ${ev.ESTADO}
-                    </div>
-                     <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
+                    <img class="img-fluid" style="width: 100%; height: 180px; object-fit: cover;" src="../public/img/eventos/portadas/${ev.PORTADA || 'public/img/default-event.jpg'}" alt="${ev.TITULO}">
                     <div class="p-4">
                         <div class="d-flex justify-content-between mb-3">
                             <small class="m-0"><i class="fas fa-book-open text-primary mr-2"></i>${ev.TIPO_EVENTO}</small>
@@ -342,7 +328,7 @@ function aplicarFiltros(page = 1) {
                         <a class="h5 text-decoration-none" href="../views/Evento_Detalle1.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                         <div class="border-top mt-4 pt-4">
                             <div class="d-flex justify-content-between">
-                                <h6 class="m-0"><i class="fas fa-star text-primary mr-2"></i>4.5</h6>
+                                <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
                                 <h5 class="m-0">$${parseFloat(ev.COSTO).toFixed(2)}</h5>
                             </div>
                         </div>

@@ -27,7 +27,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
   <nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0">
    <div class="navbar-header">
   <a class="navbar-brand" href="#" style="padding: 0; display: flex; align-items: center; height: 60px;">
-    <img src="../public/img/logo_UTA.png" alt="UTA Logo" style="height: 100%; width: 100%; object-fit: contain; padding: 0 8px;">
+    <img src="../public/img/uta/logo_UTA.png" alt="UTA Logo" style="height: 100%; width: 100%; object-fit: contain; padding: 0 8px;">
   </a>
 </div>
     

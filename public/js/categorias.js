@@ -45,8 +45,8 @@ async function renderCategoriasTable() {
                     <td>${cat.NOMBRE}</td>
                     <td>${cat.DESCRIPCION || ''}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="editarCategoria(${cat.SECUENCIAL})"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarCategoriaConfirm(${cat.SECUENCIAL})"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-light btn-sm" onclick="editarCategoria(${cat.SECUENCIAL})"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-light btn-sm" onclick="eliminarCategoriaConfirm(${cat.SECUENCIAL})"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
             `;

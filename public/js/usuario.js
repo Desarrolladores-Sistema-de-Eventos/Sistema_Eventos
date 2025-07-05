@@ -1,27 +1,36 @@
 let tablaUsuarios;
+let rolSeleccionado = 'EST'; // Por defecto Estudiante
 function inicializarTablaUsuarios() {
-    if (tablaUsuarios) tablaUsuarios.destroy();
+    if (tablaUsuarios) {
+        tablaUsuarios.clear().destroy();
+        $('#tabla-usuarios tbody').empty();
+    }
     tablaUsuarios = $('#tabla-usuarios').DataTable({
         ajax: {
             url: '../controllers/UsuarioController.php?option=listar',
             dataSrc: function (json) {
-                // Ocultar administradores
-                let mostrarInactivos = document.getElementById('mostrarInactivos')?.checked;
+                // Ocultar administradores y filtrar por rol seleccionado
                 let filtrados = json.filter(u => u.CODIGOROL !== 'ADM');
-                if (mostrarInactivos) {
-                    return filtrados.filter(u => u.CODIGOESTADO === 'INACTIVO');
+                // Si el tab es "OTRO" mostrar todos los que no sean EST, DOC, INV, ADM
+                if (rolSeleccionado === 'OTRO') {
+                    filtrados = filtrados.filter(u => !['EST','DOC','INV','ADM'].includes((u.CODIGOROL||'').toUpperCase()));
+                } else {
+                    filtrados = filtrados.filter(u => (u.CODIGOROL||'').toUpperCase() === rolSeleccionado);
                 }
-                return filtrados.filter(u => u.CODIGOESTADO === 'ACTIVO');
+                return filtrados;
             }
         },
         columns: [
-            // Si quieres mostrar la foto en la tabla, descomenta esto:
-            // {
-            //     data: 'FOTO_PERFIL',
-            //     render: function(data) {
-            //         return data ? `<img src=\"../public/img/${data}\" style=\"width:40px;height:40px;border-radius:50%;object-fit:cover;\">` : '';
-            //     }
-            // },
+            {
+                data: 'FOTO_PERFIL_URL',
+                orderable: false,
+                render: function(data, type, row) {
+                    // Si no hay foto, mostrar user.jpg
+                    let url = data && data.trim() !== '' ? data : '../public/img/perfiles/user.jpg';
+                    return `<img src="${url}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;" alt="Foto de ${row.NOMBRES}">`;
+                },
+                className: 'text-center align-middle'
+            },
             { data: 'NOMBRES' },
             { data: 'APELLIDOS' },
             { data: 'CEDULA' },
@@ -29,16 +38,17 @@ function inicializarTablaUsuarios() {
             { data: 'DIRECCION' },
             { data: 'CORREO' },
             { data: 'CODIGOROL' },
-            { data: 'CODIGOESTADO' },
             {
                 data: null,
+                orderable: false,
                 render: function (data, type, row) {
                     return `
-                    <button onclick="editarUsuario(${row.SECUENCIAL})" class="btn btn-primary btn-sm" title="Editar"><i class="fa fa-pencil"></i></button>
-                    <button onclick="eliminarUsuario(${row.SECUENCIAL})" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash"></i></button>
-                    <button onclick="inactivarUsuario(${row.SECUENCIAL})" class="btn btn-warning btn-sm" title="Inactivar"><i class="fa fa-ban"></i></button> 
+                    <button onclick="editarUsuario(${row.SECUENCIAL})" class="btn btn-sm" style="background-color:#e0e0e0;color:#222;" title="Editar"><i class="fa fa-pencil"></i></button>
+                    <button onclick="eliminarUsuario(${row.SECUENCIAL})" class="btn btn-sm" style="background-color:#e0e0e0;color:#222;" title="Eliminar"><i class="fa fa-trash"></i></button>
+                    <button onclick="inactivarUsuario(${row.SECUENCIAL})" class="btn btn-sm" style="background-color:#e0e0e0;color:#222;" title="Inactivar"><i class="fa fa-ban"></i></button>
                     `;
-                }
+                },
+                className: 'text-center align-middle'
             }
         ],
         language: {
@@ -47,13 +57,34 @@ function inicializarTablaUsuarios() {
     });
 }
 document.addEventListener('DOMContentLoaded', function () {
-    inicializarTablaUsuarios();
-    const chkInactivos = document.getElementById('mostrarInactivos');
-    if (chkInactivos) {
-        chkInactivos.addEventListener('change', function () {
-            inicializarTablaUsuarios();
-        });
+    // Mostrar/ocultar campo matrícula según el rol seleccionado
+    const selectRol = document.getElementById('codigorol');
+    const matriculaDiv = document.getElementById('matricula_pdf')?.closest('.col-md-6') || document.getElementById('matricula_pdf')?.closest('div');
+    function toggleMatriculaField() {
+        if (!selectRol || !matriculaDiv) return;
+        const rol = selectRol.value;
+        if (rol === 'INV' || rol === 'DOC') {
+            matriculaDiv.style.display = 'none';
+        } else {
+            matriculaDiv.style.display = '';
+        }
     }
+    if (selectRol && matriculaDiv) {
+        selectRol.addEventListener('change', toggleMatriculaField);
+        // Ejecutar al cargar por si acaso
+        toggleMatriculaField();
+    }
+
+    // Lógica para tabs de roles
+    $(document).on('click', '#navTabsRoles .nav-link', function (e) {
+        e.preventDefault();
+        $('#navTabsRoles .nav-link').removeClass('active');
+        $(this).addClass('active');
+        rolSeleccionado = $(this).data('rol');
+        inicializarTablaUsuarios();
+    });
+
+    inicializarTablaUsuarios();
 
     const frm = document.getElementById('formUsuario');
     const btnSave = document.getElementById('btn-save-usuario');
@@ -101,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
         codigorol.disabled = false;
         codigorol_hidden.value = '';
         if (fotoPerfilActual) fotoPerfilActual.value = '';
+        const preview = document.getElementById('foto_perfil_preview');
+        if (preview) preview.innerHTML = '';
     });
 
     document.getElementById('btn-nuevo-usuario').addEventListener('click', function () {
@@ -110,6 +143,16 @@ document.addEventListener('DOMContentLoaded', function () {
         codigorol.disabled = false;
         codigorol_hidden.value = '';
         if (fotoPerfilActual) fotoPerfilActual.value = '';
+        // Limpiar los labels de PDF y la miniatura de foto
+        const preview = document.getElementById('foto_perfil_preview');
+        if (preview) preview.innerHTML = '';
+        const cedulaPdfLabel = document.getElementById('cedula_pdf_label');
+        if (cedulaPdfLabel) cedulaPdfLabel.innerHTML = '<span class="text-muted" style="font-size:13px;">Sin PDF</span>';
+        const matriculaPdfLabel = document.getElementById('matricula_pdf_label');
+        if (matriculaPdfLabel) matriculaPdfLabel.innerHTML = '<span class="text-muted" style="font-size:13px;">Sin PDF</span>';
+        // Limpiar los input hidden de archivos actuales
+        if (document.getElementById('cedula_pdf_actual')) document.getElementById('cedula_pdf_actual').value = '';
+        if (document.getElementById('matricula_pdf_actual')) document.getElementById('matricula_pdf_actual').value = '';
         $('#modalUsuario').modal('show');
     });
 });
@@ -132,9 +175,45 @@ function editarUsuario(id) {
             document.getElementById('estado').value = u.CODIGOESTADO;
             document.getElementById('es_interno').checked = u.ES_INTERNO == 1;
             document.getElementById('contrasena').value = '';
-            // Setea la foto actual en un input hidden
+            // NUEVO: Setear cédula y fecha de nacimiento si existen
+            if(document.getElementById('cedula')) document.getElementById('cedula').value = u.CEDULA || '';
+            if(document.getElementById('fecha_nacimiento')) document.getElementById('fecha_nacimiento').value = u.FECHA_NACIMIENTO || '';
+            // NUEVO: Setear nombre del PDF de cédula si existe y mostrarlo
+            if(document.getElementById('cedula_pdf_actual')) document.getElementById('cedula_pdf_actual').value = u.URL_CEDULA || '';
+            // Mostrar nombre del PDF de cédula si existe
+            const cedulaPdfLabel = document.getElementById('cedula_pdf_label');
+            if (cedulaPdfLabel) {
+                if (u.URL_CEDULA) {
+                    const nombrePdf = u.URL_CEDULA.split('/').pop();
+                    cedulaPdfLabel.innerHTML = `<a href="../documents/cedulas/${nombrePdf}" target="_blank"><i class='fa fa-file-pdf-o'></i> ${nombrePdf}</a>`;
+                } else {
+                    cedulaPdfLabel.innerHTML = '<span class="text-muted" style="font-size:13px;">Sin PDF</span>';
+                }
+            }
+            // NUEVO: Setear nombre del PDF de matrícula si existe y mostrarlo
+            if(document.getElementById('matricula_pdf_actual')) document.getElementById('matricula_pdf_actual').value = u.URL_MATRICULA || '';
+            // Mostrar nombre del PDF de matrícula si existe
+            const matriculaPdfLabel = document.getElementById('matricula_pdf_label');
+            if (matriculaPdfLabel) {
+                if (u.URL_MATRICULA) {
+                    const nombreMatricula = u.URL_MATRICULA.split('/').pop();
+                    matriculaPdfLabel.innerHTML = `<a href="../documents/matriculas/${nombreMatricula}" target="_blank"><i class='fa fa-file-pdf-o'></i> ${nombreMatricula}</a>`;
+                } else {
+                    matriculaPdfLabel.innerHTML = '<span class="text-muted" style="font-size:13px;">Sin PDF</span>';
+                }
+            }
+            // Setea la foto actual en un input hidden y muestra miniatura
             if (document.getElementById('foto_perfil_actual')) {
                 document.getElementById('foto_perfil_actual').value = u.FOTO_PERFIL || '';
+            }
+            // Mostrar miniatura de la foto actual
+            const preview = document.getElementById('foto_perfil_preview');
+            if (preview) {
+                if (u.FOTO_PERFIL) {
+                    preview.innerHTML = `<img src="../public/img/perfiles/${u.FOTO_PERFIL}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;box-shadow:0 0 3px #aaa;"> <span class='text-muted' style='font-size:13px;'>${u.FOTO_PERFIL}</span>`;
+                } else {
+                    preview.innerHTML = `<img src="../public/img/perfiles/user.jpg" style="width:60px;height:60px;border-radius:50%;object-fit:cover;opacity:0.7;"> <span class='text-muted' style='font-size:13px;'>Sin foto</span>`;
+                }
             }
             $('#modalUsuario').modal('show');
             document.getElementById('btn-save-usuario').innerHTML = 'Actualizar';

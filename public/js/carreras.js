@@ -52,8 +52,8 @@ async function renderCarrerasTable() {
                     <td>${c.NOMBRE_CARRERA}</td>
                     <td>${facultad ? facultad.NOMBRE : ''}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="editarCarrera(${c.SECUENCIAL})"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarCarreraConfirm(${c.SECUENCIAL})"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-sm" style="background-color: #d3d3d3; color: #000;" onclick="editarCarrera(${c.SECUENCIAL})"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-sm" style="background-color: #d3d3d3; color: #000;" onclick="eliminarCarreraConfirm(${c.SECUENCIAL})"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
             `;

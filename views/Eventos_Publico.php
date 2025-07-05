@@ -18,15 +18,71 @@
     <link href="../public/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <link href="../public/css/style.css" rel="stylesheet">
+    <!-- AOS Animate On Scroll CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <style>
         /* Estilos adicionales para que se vea más parecido al ejemplo */
         .filter-section {
             background-color: #fff;
-            padding: 20px 30px; /* Ajusta el padding según necesites */
-            border-radius: .25rem; /* Bordes redondeados */
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Sombra ligera */
-            margin-bottom: 20px; /* Espacio debajo del bloque de filtros */
+            padding: 20px 30px;
+            border-radius: .25rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 8px;
+        }
+
+        /* Tarjetas de evento con efecto tipo home */
+        .evento-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .evento-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+        }
+        .evento-imagen {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        .evento-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease-in-out;
+        }
+        .evento-card:hover .evento-imagen img {
+            transform: scale(1.1);
+        }
+        .evento-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+        }
+        .evento-card:hover .evento-overlay {
+            opacity: 1;
+        }
+        .evento-card .evento-footer {
+            margin-top: auto;
+        }
+        .evento-card .evento-precio {
+            font-weight: bold;
+            color: rgb(119, 23, 20);
+            font-size: 1.1rem;
         }
         .filter-toggle-button {
             border: none;
@@ -93,24 +149,64 @@
         #sidebarSearchForm {
             display: none; 
         }
+        #listaCategorias li a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+#listaCategorias li a:hover {
+    color: #b10024;
+}
+
+#eventosRecientesSidebar .evento-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#eventosRecientesSidebar .evento-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #b10024;
+}
+
+#eventosRecientesSidebar .evento-item .titulo {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+#eventosRecientesSidebar .evento-item .titulo:hover {
+    color: #b10024;
+}
+.sidebar-bordered {
+    border-left: 5px solid #b10024;
+}
     </style>
 </head>
 <body>
 <?php include 'partials/header.php'; ?>
-    <div class="container-fluid page-header">
-    <div class="container">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-            <h3 class="display-4 text-white text-uppercase">Eventos Académicos</h3>
-            <div class="d-inline-flex text-white">
-                <p class="m-0 text-uppercase"><a class="text-white" href="#">Home</a></p>
-                <i class="fa fa-angle-double-right pt-1 px-3"></i>
-                <p class="m-0 text-uppercase">Eventos Académicos</p>
+    <div class="container-fluid page-header" style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../public/img/uta/uta.png') center 20%/cover no-repeat; min-height: 420px; display: flex; align-items: center;">
+        <div class="container">
+            <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 340px;">
+                <h3 class="display-4 text-white text-uppercase text-shadow" style="text-shadow: 2px 2px 8px #000, 0 1px 10px #b10024;">Eventos Académicos</h3>
+                <div class="d-inline-flex text-white mt-2" style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 6px 18px;">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="#">Home</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Eventos Académicos</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container-fluid booking mt-5 pb-5">
-    <div class="container pb-5">
+<div class="container-fluid booking mt-5" style="padding-bottom: 0;">
+    <div class="container" style="padding-bottom: 0;">
         <div class="filter-section"> <form onsubmit="return false;">
                 <div class="row align-items-center mb-3">
                     <div class="col-12">
@@ -172,7 +268,7 @@
     </div>
     <div class="row">
         <div class="col-lg-8">
-            <div class="row" id="contenedorEventos"></div>
+            <div class="row" id="contenedorEventos"><!-- Las tarjetas de eventos se insertan aquí por JS, pero agregamos el atributo data-aos a cada tarjeta vía JS --></div>
             <div class="col-12">
                 <nav aria-label="Page navigation">
                     <ul class="pagination pagination-lg justify-content-center bg-white mb-0" style="padding: 30px;">
@@ -193,18 +289,18 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-5">
+            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
                 <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Categorias</h4>
-                <div class="bg-white" style="padding: 30px;">
+                <div class="bg-white sidebar-bordered" style="padding: 30px;">
                     <ul class="list-inline m-0" id="listaCategorias">
                         <li class="mb-3 d-flex justify-content-between align-items-center">
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="mb-5">
+            <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
                 <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Evento Reciente</h4>
-                <div id="eventosRecientesSidebar"></div>
+                <div id="eventosRecientesSidebar" style="padding: 30px;"></div>
             </div>
             </div>
 </div>
@@ -222,8 +318,17 @@
     <script src="../public/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="../public/mail/jqBootstrapValidation.min.js"></script>
     <script src="../public/mail/contact.js"></script>
+    <!-- AOS Animate On Scroll JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true,
+        duration: 700,
+        offset: 60
+      });
+    </script>
     <script src="../public/js/eventospublicos.js"></script>
-
    <?php include 'partials/footer.php'; ?>
+
     </body>
 </html>

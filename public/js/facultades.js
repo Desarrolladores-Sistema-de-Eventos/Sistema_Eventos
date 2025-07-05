@@ -47,8 +47,12 @@ async function renderFacultadesTable() {
                     <td>${f.VISION || ''}</td>
                     <td>${f.UBICACION || ''}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="editarFacultad(${f.SECUENCIAL})"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="eliminarFacultadConfirm(${f.SECUENCIAL})"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-light btn-sm text-dark" style="border:1px solid #ccc;" onclick="editarFacultad(${f.SECUENCIAL})">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-light btn-sm text-dark" onclick="eliminarFacultadConfirm(${f.SECUENCIAL})">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             `;

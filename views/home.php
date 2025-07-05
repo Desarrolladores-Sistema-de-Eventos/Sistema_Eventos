@@ -25,264 +25,214 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../public/css/style.css" rel="stylesheet">
     
-    <style>
-    /* Estilos para el carrusel de eventos destacados */
-    .eventos-carousel {
-        position: relative;
-        padding: 0 20px;
-        margin: 0 auto;
-    }
+<style>
+
+    :root {
+    --uta-rojo: #b10024;
+    --uta-negro: #1a1a1a;
+    --uta-gris: #f8f9fa;
+    --uta-blanco: #ffffff;
+    --uta-hover: #90001d;
+}
+/* ======================
+   Tarjetas de Eventos
+   ====================== */
+.evento-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.evento-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen */
+.evento-imagen {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.evento-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+}
+
+.evento-card:hover .evento-imagen img {
+  transform: scale(1.1);
+}
+
+/* Overlay con botón */
+.evento-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.evento-card:hover .evento-overlay {
+  opacity: 1;
+}
+
+.btn-ver-mas {
+  background: var(--uta-rojo);
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.btn-ver-mas:hover {
+  background: var(--uta-hover);
+}
+
+/* Contenido */
+.evento-contenido {
+  padding: 18px 16px;
+  flex-grow: 1;
+}
+
+.evento-tipo {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--uta-negro);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+
+.evento-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--uta-rojo);
+  margin-bottom: 10px;
+}
+
+
+
+/* Footer */
+
+
+.evento-info i {
+  color: var(--uta-rojo);
+  margin-right: 4px;
+}
+
+.evento-precio {
+  font-weight: bold;
+  color: var(--uta-rojo);
+  font-size: 1rem;
+}
+
+
+</style>
+
     
-    .eventos-carousel .owl-stage-outer {
-        overflow: hidden;
-    }
-    
-    .evento-card {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        margin: 15px;
-        height: 400px;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .evento-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-    
-    .evento-imagen {
-        position: relative;
-        height: 200px;
-        overflow: hidden;
-    }
-    
-    .evento-imagen img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-    
-    .evento-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .evento-imagen:hover .evento-overlay {
-        opacity: 1;
-    }
-    
-    .evento-imagen:hover img {
-        transform: scale(1.1);
-    }
-    
-    .btn-ver-mas {
-        background: #dc3545;
-        color: white;
-        padding: 12px 25px;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        border: 2px solid #dc3545;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    .btn-ver-mas:hover {
-        background: white;
-        color: #dc3545;
-        text-decoration: none;
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
-    }
-    
-    .evento-contenido {
-        padding: 20px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .evento-tipo {
-        background: #dc3545;
-        color: white;
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-size: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
-        align-self: flex-start;
-        margin-bottom: 10px;
-    }
-    
-    .evento-titulo {
-        color: #333;
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        line-height: 1.3;
-    }
-    
-    .evento-descripcion {
-        color: #666;
-        font-size: 14px;
-        line-height: 1.5;
-        flex: 1;
-        margin-bottom: 15px;
-    }
-    
-    .evento-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        border-top: 1px solid #eee;
-        padding-top: 15px;
-    }
-    
-    .evento-info small {
-        color: #999;
-        display: block;
-        margin-bottom: 2px;
-    }
-    
-    .evento-precio {
-        color: #dc3545;
-        font-weight: bold;
-        font-size: 16px;
-    }
-    
-    /* Puntos indicadores */
-    .eventos-carousel .owl-dots {
-        text-align: center;
-        margin-top: 30px;
-    }
-    
-    .eventos-carousel .owl-dots .owl-dot {
-        display: inline-block;
-        margin: 0 5px;
-    }
-    
-    .eventos-carousel .owl-dots .owl-dot span {
-        width: 12px;
-        height: 12px;
-        background: #ddd;
-        border-radius: 50%;
-        display: block;
-        transition: all 0.3s ease;
-    }
-    
-    .eventos-carousel .owl-dots .owl-dot.active span,
-    .eventos-carousel .owl-dots .owl-dot:hover span {
-        background: #dc3545;
-        transform: scale(1.3);
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-        .evento-card {
-            height: auto;
-            margin: 10px 5px;
-        }
-        
-        .eventos-carousel {
-            padding: 0 15px;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .eventos-carousel {
-            padding: 0 10px;
-        }
-    }
-    </style>
 </head>
 
-<body>
+<body style="background: #fdfce9 !important; min-height: 100vh;">
+<?php
+require_once '../models/CarruselModelo.php';
+$modeloCarrusel = new CarruselModelo();
+$imagenesCarrusel = $modeloCarrusel->obtenerCarruselPublico(); 
+?>
 <?php include('partials/header.php'); ?>
-<!-- Carousel Start -->
-    <div class="container-fluid p-0">
-        <div id="header-carousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="w-100" src="img/carrusel.jpg" alt="Image" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h4 class="text-white text-uppercase mb-md-3">EVENTOS ACADÉMICOS DE TODO TIPO</h4>
-                            <h1 class="display-3 text-white mb-md-4">Disponibilidad para todas las personas que deseen expandir sus conocimientos</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Ver más</a>
+        <!-- Carousel Start -->
+        <div class="container-fluid p-0" style="background: #fdfce9;">
+            <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <?php foreach ($imagenesCarrusel as $i => $img): ?>
+                    <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
+                        <img class="w-100" src="../<?= $img['URL_IMAGEN'] ?>" alt="Carrusel <?= $i ?>" style="height: 500px; object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3" style="max-width: 900px;">
+                                <h4 class="text-white text-uppercase mb-md-3 fw-bold" style="letter-spacing:2px; text-shadow:2px 2px 8px #000,0 1px 10px #b10024; font-size:2.5rem;">
+                                    <?= htmlspecialchars($img['TITULO']) ?>
+                                </h4>
+                                <h1 class="display-3 text-white mb-md-4 fw-bold" style="text-shadow:2px 2px 8px #000,0 1px 10px #b10024; font-size:3.5rem; letter-spacing:1.5px;">
+                                    <?= htmlspecialchars($img['DESCRIPCION']) ?>
+                                </h1>
+                                <a href="../views/Eventos_Publico.php" class="btn btn-primary py-md-3 px-md-5 mt-2">Ver más</a>
+                            </div>
                         </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="img/carrusel4.jpg" alt="Image" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h4 class="text-white text-uppercase mb-md-3">CURSOS BÁSICOS Y AVANZADOS</h4>
-                            <h1 class="display-3 text-white mb-md-4">Enseñanza y aprendizaje óptimo de programación con cursos escalables</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Ver más</a>
-                        </div>
+                <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                    <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                        <span class="carousel-control-prev-icon mb-n2"></span>
                     </div>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-                <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                    <span class="carousel-control-prev-icon mb-n2"></span>
-                </div>
-            </a>
-            <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-                <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                    <span class="carousel-control-next-icon mb-n2"></span>
-                </div>
-            </a>
-        </div>
-    </div>
-    <!-- Carousel End -->
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container pt-5">
-            <div class="row">
-                <div class="col-lg-6" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-75 h-50" src="img/promocion.png" style="object-fit: contain;">
+                </a>
+                <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                    <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                        <span class="carousel-control-next-icon mb-n2"></span>
                     </div>
-                </div>
-                <div class="col-lg-6 pt-5 pb-lg-5">
-                    <div class="about-text bg-white p-4 p-lg-5 my-lg-5">
-                        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">SOBRE NOSOTROS</h6>
-                        <h1 class="mb-3">El inicio de una nueva forma de aprendizaje</h1>
-                        <p style="text-align: justify;">El 20 de octubre de 2002 se crea el Centro de Transferencia y Desarrollo de Tecnologías mediante resoluión 1452-2002-CU-P en las áreas de Ingenierías en Sistemas, Electrónica e Industrial de la
-                            Universidad Técnica de Ambato, para proveer servicios a la comunidad mediante la realización de trabajos y proyectos especificos, asesorias, estudios, investigaciones, cursos de entrenamiento, seminarios y otras actividades de servicios
-                         a los sectores sociales y productivos en las áreas de ingeniería en Sistemas computacionales e informáticos, ingeniería Electrónica y Comunícaciones e Ingeniería Industrial en Procesos de automatización.</p>
-                        </p>
-                        <a href="../views/about.php" class="btn btn-primary mt-1">Ver más</a>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
+        <!-- Carousel End -->
+     
+<!-- Sobre Nosotros Start-->
+ <div data-aos="fade-up" data-aos-delay="100">
+<section class="py-4" style="background: #fdfce9;">
+
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Imagen -->
+      <div class="col-md-6 mb-4 mb-md-0">
+        <img src="../public/img/uta/promocion.png" class="img-fluid rounded shadow" alt="Promoción UTA">
+      </div>
+
+      <!-- Texto -->
+      <div class="col-md-6">
+        <div class="p-4 bg-white rounded shadow-sm border-start border-4 border-danger">
+          <h6 class="text-danger text-uppercase fw-bold mb-2" style="letter-spacing: 2px;">Sobre Nosotros</h6>
+          <h2 class="fw-bold mb-3">El inicio de una nueva forma de aprendizaje</h2>
+          <p id="facultad-about" class="text-muted" style="text-align: justify;">
+            [Cargando descripción de la facultad...]
+          </p>
+          <a href="../views/about.php" class="btn btn-danger mt-3 px-4 py-2 shadow-sm">
+            <i class="fas fa-info-circle me-2"></i> Ver más
+          </a>
+        </div>
+      </div>
     </div>
-    <!-- About End -->
+  </div>
+</section>
+<!-- Sobre Nosotros End-->
+
 
     <!-- Eventos Destacados Start -->
-    <div class="container-fluid py-5" style="background-color: #f8f9fa;">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">DESTACADOS</h6>
-                <h1>Eventos Más Populares</h1>
-            </div>
+     <div data-aos="fade-up" data-aos-delay="100">
+         <div class="container-fluid py-4" style="background: #fdfce9;">
+
+              <div class="container">
+                <div class="text-center mb-5">
+                    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">DESTACADOS</h6>
+
+                    <h2 class="fw-bold text-dark">Eventos Académicos Recientes</h2>
+
+                </div>
             
             <?php
             require_once '../controllers/EventosDestacadosController.php';
@@ -305,7 +255,7 @@
                     <div class="evento-card">
                         <?php if ($evento['PORTADA']) { ?>
                         <div class="evento-imagen">
-                            <img src="../documents/<?= $evento['PORTADA'] ?>" alt="<?= htmlspecialchars($evento['TITULO']) ?>">
+                            <img src="../public/img/eventos/portadas/<?= $evento['PORTADA'] ?>" alt="<?= htmlspecialchars($evento['TITULO']) ?>">
                             <div class="evento-overlay">
                                 <a href="../public/index.php?view=login" class="btn-ver-mas">Ver más</a>
                             </div>
@@ -337,62 +287,11 @@
     </div>
     <!-- Eventos Destacados End -->
 
-    <!-- Feature Start -->
- <div class="container-fluid pb-5">
-    <div class="container pb-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="d-flex mb-4 mb-lg-0">
-                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-primary mr-3" style="height: 100px; width: 100px;">
-                        <i class="fa fa-2x fa-money-check-alt text-white"></i>
-                    </div>
-                    <div class="d-flex flex-column">
-                        <h5>Pagos Seguros</h5>
-                        <p class="m-0">Tus transacciones están protegidas con los más altos estándares de seguridad.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex mb-4 mb-lg-0">
-                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-primary mr-3" style="height: 100px; width: 100px;">
-                        <i class="fa fa-2x fa-award text-white"></i>
-                    </div>
-                    <div class="d-flex flex-column">
-                        <h5>Atención Personalizada</h5>
-                        <p class="m-0">Nuestro equipo está disponible para ayudarte en cada paso del proceso.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex mb-4 mb-lg-0">
-                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-primary mr-3" style="height: 100px; width: 100px;">
-                        <i class="fa fa-2x fa-globe text-white"></i>
-                    </div>
-                    <div class="d-flex flex-column">
-                        <h5>Cobertura Nacional</h5>
-                        <p class="m-0">Ofrecemos servicios en todo el país para tu comodidad y confianza.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    <!-- Feature End -->
-    <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">FISEI</h6>
-                <h1>Facultad de Ingeniería en Sistemas, Electrónica e Industrial</h1>
-            </div>
-            <div class="row"  id="autoridades-row" >
-                
-            </div>
-        </div>
-    </div>
-    <!-- Team End -->
-    <script src="../public/js/autoridades.js"></script>
+    <!-- Footer Start -->
+     <div data-aos="fade-up" data-aos-delay="100">
      <?php include('partials/footer.php'); ?>
+    <!-- Footer End -->
+
    
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
@@ -405,6 +304,13 @@
     <script src="../public/lib/tempusdominus/js/moment.min.js"></script>
     <script src="../public/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="../public/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Animate On Scroll -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+    AOS.init();
+    </script>
+
 
     <!-- Contact Javascript File -->
     <script src="../public/mail/jqBootstrapValidation.min.js"></script>
@@ -412,7 +318,9 @@
 
     <!-- Template Javascript -->
     <script src="../public/js/main.js"></script>
-    
+    <script src="../public/js/fisei.js"></script>
+
+
     <!-- Eventos Destacados Javascript -->
     <script src="../public/js/eventos-destacados.js"></script>
 </body>
