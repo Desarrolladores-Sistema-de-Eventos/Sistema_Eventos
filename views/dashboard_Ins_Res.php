@@ -15,18 +15,15 @@ include("../core/auth.php"); ?>
       <div class="panel-heading"><i class="fa fa-calendar"></i> Eventos</div>
       <div class="panel-body">
         <div style="display: flex; justify-content: center;">
-  <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-bottom: 40px;">
-    <label for="eventoSeleccionado" style="margin-bottom: 0; white-space: nowrap;">
-      <i class="fa fa-search" style="margin-right: 6px; font-size: 14px; "></i>
-      Evento:
+  <div class="form-group" style="max-width: 500px; margin: 0 auto;">
+  <div class="d-flex align-items-center" style="gap: 10px;">
+    <label for="evento" class="font-weight-bold mb-0" style="font-size: 1.1rem;">
+      <i class="fa fa-search"></i> Evento:
     </label>
-    <select id="eventoSeleccionado" class="form-control">
-  <option value="">Seleccione</option>
-
-</select>
-
+    <select class="form-control border border-danger" id="evento" name="evento" style="max-width: 250px;"></select>
   </div>
 </div>
+        </div>
         <hr />
 
         <!-- Tabla de Inscripciones -->
@@ -185,7 +182,6 @@ include("../core/auth.php"); ?>
     vertical-align: middle;
     font-size: 14px;
   }
-
   .table tbody tr:hover {
     background-color: #fceeee;
   }
@@ -206,7 +202,7 @@ include("../core/auth.php"); ?>
     margin-right: 8px;
   }
 
-  #eventoSeleccionado {
+  #evento {
     max-width: 350px;
   }
 
@@ -223,6 +219,25 @@ include("../core/auth.php"); ?>
   hr {
     border-top: 2px solid #92001c;
   }
+
+  /* Asegura que el select y el dropdown de Choices.js sean más anchos */
+  .choices__inner, .choices[data-type*=select-one] .choices__list--dropdown {
+      min-width: 250px;
+      max-width: 350px;
+      width: 100%;
+      font-size: 1rem;
+      white-space: normal;
+      word-break: break-word;
+  }
+  .choices__list--dropdown {
+      min-width: 250px !important;
+      max-width: 350px !important;
+      width: 100% !important;
+  }
+  .choices__list--dropdown, .choices__list[aria-expanded] {
+      border: 2px solid #a00 !important;
+      box-shadow: 0 2px 8px rgba(160,0,0,0.08);
+  }
 </style>
 
 
@@ -235,4 +250,32 @@ include("../core/auth.php"); ?>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script src="../public/js/ins_Res.js"></script>
+<!-- Choices.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<!-- Choices.js JS -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../controllers/EventosController.php?option=listarResponsable')
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('evento');
+                select.innerHTML = '';
+                data.forEach(evento => {
+                    const option = document.createElement('option');
+                    option.value = evento.SECUENCIAL;
+                    option.textContent = evento.TITULO;
+                    select.appendChild(option);
+                });
+                new Choices(select, {
+                    searchEnabled: true,
+                    itemSelectText: '',
+                    shouldSort: false,
+                    placeholder: true,
+                    placeholderValue: 'Buscar evento...',
+                    searchPlaceholderValue: 'Buscar evento...'
+                });
+            });
+    });
+</script>
 <?php include("partials/footer_Admin.php"); ?>

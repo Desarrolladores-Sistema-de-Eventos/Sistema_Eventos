@@ -81,10 +81,10 @@ public function eliminarFacultad($id) {
     }
 
     // ================= TIPO EVENTO =================
-    public function crearTipoEvento($codigo, $nombre, $descripcion) {
-        $sql = "INSERT INTO tipo_evento (CODIGO, NOMBRE, DESCRIPCION) VALUES (?, ?, ?)";
+    public function crearTipoEvento($codigo, $nombre, $descripcion, $REQUIERENOTA = 0, $REQUIEREASISTENCIA = 0) {
+        $sql = "INSERT INTO tipo_evento (CODIGO, NOMBRE, DESCRIPCION, REQUIERENOTA, REQUIEREASISTENCIA) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$codigo, $nombre, $descripcion]);
+        $stmt->execute([$codigo, $nombre, $descripcion, $REQUIERENOTA, $REQUIEREASISTENCIA]);
         return $codigo;
     }
     public function obtenerTiposEvento() {
@@ -92,10 +92,10 @@ public function eliminarFacultad($id) {
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function actualizarTipoEvento($codigo, $nombre, $descripcion) {
-        $sql = "UPDATE tipo_evento SET NOMBRE = ?, DESCRIPCION = ? WHERE CODIGO = ?";
+    public function actualizarTipoEvento($codigo, $nombre, $descripcion, $REQUIERENOTA = 0, $REQUIEREASISTENCIA = 0) {
+        $sql = "UPDATE tipo_evento SET NOMBRE = ?, DESCRIPCION = ?, REQUIERENOTA = ?, REQUIEREASISTENCIA = ? WHERE CODIGO = ?";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$nombre, $descripcion, $codigo]);
+        return $stmt->execute([$nombre, $descripcion, $REQUIERENOTA, $REQUIEREASISTENCIA, $codigo]);
     }
     public function eliminarTipoEvento($codigo) {
         $sql = "DELETE FROM tipo_evento WHERE CODIGO = ?";

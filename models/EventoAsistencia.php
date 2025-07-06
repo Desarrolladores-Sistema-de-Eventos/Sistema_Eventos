@@ -99,4 +99,20 @@ class EventoAsistencia {
 
         return $reporte;
     }
+
+    public function getAsistenciasPorCarrera($idCarrera) {
+        $sql = "SELECT 
+                a.*, 
+                e.TITULO, 
+                e.FECHAINICIO, 
+                e.FECHAFIN
+            FROM asistencia_nota a
+            INNER JOIN evento e ON a.SECUENCIALEVENTO = e.SECUENCIAL
+            INNER JOIN EVENTO_CARRERA ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO
+            WHERE ec.SECUENCIALCARRERA = ?
+            ORDER BY e.FECHAINICIO DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idCarrera]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

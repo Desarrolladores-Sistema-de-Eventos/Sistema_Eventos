@@ -312,7 +312,8 @@ private function eliminarCarrera() {
         }
         try {
             $codigo = $this->configuracionesModelo->crearTipoEvento(
-                $_POST['codigo'], $_POST['nombre'], $_POST['descripcion']
+                $_POST['codigo'], $_POST['nombre'], $_POST['descripcion'],
+                $_POST['REQUIERENOTA'] ?? 0, $_POST['REQUIEREASISTENCIA'] ?? 0
             );
             $this->json(['tipo' => 'success', 'mensaje' => 'Tipo de evento creado', 'codigo' => $codigo]);
         } catch (Exception $e) {
@@ -324,7 +325,8 @@ private function eliminarCarrera() {
         if (!$codigo) { $this->json(['tipo' => 'error', 'mensaje' => 'Código requerido.']); return; }
         try {
             $ok = $this->configuracionesModelo->actualizarTipoEvento(
-                $codigo, $_POST['nombre'], $_POST['descripcion']
+                $codigo, $_POST['nombre'], $_POST['descripcion'],
+                $_POST['REQUIERENOTA'] ?? 0, $_POST['REQUIEREASISTENCIA'] ?? 0
             );
             $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Tipo de evento actualizado' : 'No se pudo actualizar']);
         } catch (Exception $e) {

@@ -127,15 +127,16 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
 
         // 5. Eliminar organizador_evento donde el usuario es organizador
         // Antes, eliminar imagen_organizador_evento asociadas a estos organizadores
+        // Comentado porque la tabla no existe en la base de datos
         $stmtOrg = $this->pdo->prepare("SELECT SECUENCIAL FROM organizador_evento WHERE SECUENCIALUSUARIO=?");
         $stmtOrg->execute([$id]);
         $organizadores = $stmtOrg->fetchAll(PDO::FETCH_COLUMN);
 
-        if ($organizadores) {
-            $in = implode(',', array_fill(0, count($organizadores), '?'));
-            $delImgOrg = $this->pdo->prepare("DELETE FROM imagen_organizador_evento WHERE SECUENCIAL_ORGANIZADOR_EVENTO IN ($in)");
-            $delImgOrg->execute($organizadores);
-        }
+        // if ($organizadores) {
+        //     $in = implode(',', array_fill(0, count($organizadores), '?'));
+        //     $delImgOrg = $this->pdo->prepare("DELETE FROM imagen_organizador_evento WHERE SECUENCIAL_ORGANIZADOR_EVENTO IN ($in)");
+        //     $delImgOrg->execute($organizadores);
+        // }
 
         $delOrg = $this->pdo->prepare("DELETE FROM organizador_evento WHERE SECUENCIALUSUARIO=?");
         $delOrg->execute([$id]);

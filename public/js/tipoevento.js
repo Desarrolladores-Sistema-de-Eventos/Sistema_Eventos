@@ -68,47 +68,54 @@ document.getElementById('btnAgregarTipoEvento').addEventListener('click', () => 
 });
 
 // Guardar o actualizar tipo de evento
-document.getElementById('formTipoEvento').addEventListener('submit', async function (e) {
-  e.preventDefault();
-  const codigo = document.getElementById('codigoTipoEvento').value.trim();
-  const nombre = document.getElementById('nombreTipoEvento').value.trim();
-  const descripcion = document.getElementById('descripcionTipoEvento').value.trim();
-
-  if (!codigo || !nombre) {
-    Swal.fire("Advertencia", "Código y nombre son obligatorios.", "warning");
-    return;
-  }
-
-  const data = { codigo, nombre, descripcion };
-  let res;
-
-  if (document.getElementById('codigoTipoEvento').readOnly) {
-    res = await actualizarTipoEvento(data);
-  } else {
-    res = await guardarTipoEvento(data);
-  }
-
-  if (res.tipo === 'success') {
-    $('#modalTipoEvento').modal('hide');
-    await renderTiposEventoTable();
-    Swal.fire("Éxito", res.mensaje || "Operación realizada correctamente", "success");
-  } else {
-    Swal.fire("Error", res.mensaje || "No se pudo completar la operación", "error");
-  }
+document.getElementById('formTipoEvento').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const codigo = document.getElementById('codigoTipoEvento').value.trim();
+    const nombre = document.getElementById('nombreTipoEvento').value.trim();
+    const descripcion = document.getElementById('descripcionTipoEvento').value.trim();
+    // NUEVO: obtener valores de los checkboxes
+    const REQUIERENOTA = document.getElementById('REQUIERENOTA').checked ? 1 : 0;
+    const REQUIEREASISTENCIA = document.getElementById('REQUIEREASISTENCIA').checked ? 1 : 0;
+    
+    if (!codigo || !nombre) {
+        Swal.fire("Advertencia", "Código y nombre son obligatorios.", "warning");
+        return;
+    }
+    
+    // Agregar los nuevos campos al objeto data
+    const data = { codigo, nombre, descripcion, REQUIERENOTA, REQUIEREASISTENCIA };
+    let res;
+    
+    if (document.getElementById('codigoTipoEvento').readOnly) {
+        res = await actualizarTipoEvento(data);
+    } else {
+        res = await guardarTipoEvento(data);
+    }
+    
+    if (res.tipo === 'success') {
+        $('#modalTipoEvento').modal('hide');
+        await renderTiposEventoTable();
+        Swal.fire("Éxito", res.mensaje || "Operación realizada correctamente", "success");
+    } else {
+        Swal.fire("Error", res.mensaje || "No se pudo completar la operación", "error");
+    }
 });
 
 // Editar tipo de evento
-window.editarTipoEvento = async function (codigo) {
-  const tipos = await listarTiposEvento();
-  const tipo = tipos.find(t => t.CODIGO === codigo);
-  if (!tipo) return;
-
-  document.getElementById('modalTipoEventoLabel').textContent = 'Editar Tipo de Evento';
-  document.getElementById('codigoTipoEvento').value = tipo.CODIGO;
-  document.getElementById('codigoTipoEvento').readOnly = true;
-  document.getElementById('nombreTipoEvento').value = tipo.NOMBRE;
-  document.getElementById('descripcionTipoEvento').value = tipo.DESCRIPCION || '';
-  $('#modalTipoEvento').modal('show');
+window.editarTipoEvento = async function(codigo) {
+    const tipos = await listarTiposEvento();
+    const tipo = tipos.find(t => t.CODIGO === codigo);
+    if (!tipo) return;
+    
+    document.getElementById('modalTipoEventoLabel').textContent = 'Editar Tipo de Evento';
+    document.getElementById('codigoTipoEvento').value = tipo.CODIGO;
+    document.getElementById('codigoTipoEvento').readOnly = true;
+    document.getElementById('nombreTipoEvento').value = tipo.NOMBRE;
+    document.getElementById('descripcionTipoEvento').value = tipo.DESCRIPCION || '';
+    // NUEVO: marcar los checkboxes según los valores guardados
+    document.getElementById('REQUIERENOTA').checked = tipo.REQUIERENOTA == 1;
+    document.getElementById('REQUIEREASISTENCIA').checked = tipo.REQUIEREASISTENCIA == 1;
+    $('#modalTipoEvento').modal('show');
 }
 
 // Eliminar tipo de evento con confirmación
