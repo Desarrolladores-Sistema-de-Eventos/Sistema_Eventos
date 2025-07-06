@@ -119,46 +119,80 @@
 
         /* === AUTORIDADES === */
         .card-autoridad {
-            position: relative;
+            width: 100%;
+            max-width: 300px;
+            height: 520px;
+            background-color: var(--uta-blanco);
             border-radius: 15px;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-            background-color: var(--uta-blanco);
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             color: var(--uta-negro);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-bottom: 2rem;
         }
 
-        .card-autoridad:hover {
+        .card-autoridad:hover,
+        .card-autoridad:focus-within {
             transform: translateY(-5px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
         }
 
         .card-autoridad .team-img img {
             width: 100%;
             height: 280px;
             object-fit: cover;
+            object-position: top;
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
+            display: block;
         }
 
         .card-autoridad .text-center {
             padding: 1.2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
         }
 
         .card-autoridad h5 {
             color: var(--uta-rojo);
             font-weight: 600;
+            font-size: 1.15rem;
+            line-height: 1.4;
+            min-height: 48px;
+            margin-bottom: 0.3rem;
         }
 
         .card-autoridad p {
             color: var(--uta-negro);
-            margin: 0.3rem 0;
             font-weight: 500;
+            font-size: 1rem;
+            min-height: 38px;
+            margin: 0.4rem 0;
         }
 
         .card-autoridad small {
             color: #555;
             font-size: 0.85rem;
+            line-height: 1.4;
         }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .card-autoridad {
+                max-width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+
+
 
         /* === BUBBLES ANIMATION === */
         .bubbles {
@@ -258,7 +292,7 @@
 
 <main class="container position-relative z-1">
     <div class="section-title">
-        <h2>Nuestro Equipo</h2>
+        <h2>Autoridades académicas</h2>
     </div>
     <div class="row" id="autoridades-row">
         <!-- Autoridades se cargan dinámicamente -->
@@ -278,5 +312,7 @@
 
 <script src="../public/js/autoridades.js"></script>
 <script src="../public/js/carreras.js"></script>
+
+
 </body>
 </html>
