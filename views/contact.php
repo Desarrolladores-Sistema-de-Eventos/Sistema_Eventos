@@ -32,7 +32,7 @@
  <!-- Header Start -->
 <div class="container-fluid page-header" style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../public/img/uta/about.png') center 20%/cover no-repeat; min-height: 420px; display: flex; align-items: center;">
     <div class="container">
-        <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 340px;">
+        <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 485px;">
             <h3 class="display-4 text-white text-uppercase text-shadow" style="text-shadow: 2px 2px 8px #000, 0 1px 10px #b10024;">Contacto</h3>
             <div class="d-inline-flex text-white mt-2" style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 6px 18px;">
                 <p class="m-0 text-uppercase"><a class="text-white" href="#">Home</a></p>

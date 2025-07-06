@@ -24,36 +24,56 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../public/css/style.css" rel="stylesheet">
+    <style>
+    #galeriaEvento {
+      max-height: 300px;
+      object-fit: cover;
+    }
+    </style>
 </head>
 
 <body>
-    <?php include 'partials/header.php'; ?>
-
-    <!-- Header Start -->
-    <div class="container-fluid page-header">
-        <div class="container">
-            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-                <h3 class="display-4 text-white text-uppercase" id="tipoEvento"></h3>
-                <div class="d-inline-flex text-white">
-                    <p class="m-0 text-uppercase"><a class="text-white" href="#">Eventos Académicos</a></p>
-                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+    <?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['usuario'])) {
+        include 'partials/header.php';
+    }
+    ?>
+    <?php if (isset($_SESSION['usuario'])): ?>
+    <div class="container-fluid py-2 border-bottom" style="background-color:#fff;">
+      <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
+        <div class="d-flex align-items-center mb-2 mb-lg-0">
+          <img src="../public/img/uta/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
+          <div>
+            <h6 class="mb-0 text-uppercase font-weight-bold" style="color: rgb(134, 17, 17);">UNIVERSIDAD</h6>
+            <h5 class="mb-0 font-weight-bold" style="color: rgb(134, 17, 17);">TÉCNICA DE AMBATO</h5>
+      <span class="badge" style="background-color:rgb(49, 49, 49); color: white;">CAMPUS-HUACHI</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="text-center d-flex flex-column flex-md-row align-items-center mx-3">
+                <i class="fas fa-user-circle text-danger fa-2x mb-2 mb-md-0 mr-md-2"></i>
+                <div class="d-flex flex-column flex-md-row gap-2">
+                    <a href="../views/dashboard_Pri_Usu.php" class="btn btn-outline-dark btn-sm mx-1">Dashboard</a>
+                    <a href="../controllers/logout.php" class="btn btn-outline-danger btn-sm mx-1">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
+      </div>
     </div>
-    <!-- Header End -->
-
+    <?php endif; ?>
     <!-- Blog Start -->
-     <div class="container-fluid py-5" style="background-color: #fcfbe7;">
-        <div class="container py-5">
+     <div class="container-fluid pt-4 pb-4" style="background-color: #fcfbe7;">
+        <div class="container pt-3 pb-4">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="bg-white p-4 rounded shadow-sm">
+                        <h2 class="mb-3 text-dark font-weight-bold" id="tituloEvento"></h2>
                         <div class="mb-4">
                             <img class="img-fluid rounded w-100" id="galeriaEvento" alt="Imagen del evento">
                         </div>
-
-                        <h2 class="mb-3 text-dark font-weight-bold" id="tituloEvento"></h2>
                         <p id="descripcionEvento" class="mb-4 text-muted"></p>
 
                         <div class="row mb-3">

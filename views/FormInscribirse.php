@@ -102,27 +102,28 @@ session_start();
 </head>
 <body>
    <!-- Topbar -->
-    <div class="container-fluid bg-white py-2 border-bottom">
-        <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
-            <div class="d-flex align-items-center mb-2 mb-lg-0">
-                <img src="../public/img/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
-                <div>
-                    <h6 class="mb-0 text-uppercase font-weight-bold" style="color: #660000;">UNIVERSIDAD</h6>
-                    <h5 class="mb-0 font-weight-bold" style="color: #660000;">TÉCNICA DE AMBATO</h5>
-                    <span class="badge" style="background-color:rgb(126, 9, 9); color: white;">CAMPUS-HUACHI</span>
-                </div>
-            </div>
-            <div class="d-flex align-items-center">
-                <div class="text-center d-flex flex-column flex-md-row align-items-center mx-3">
-                    <i class="fas fa-user-circle text-danger fa-2x mb-2 mb-md-0 mr-md-2"></i>
-                    <div class="d-flex flex-column flex-md-row gap-2">
-                        <a href="../views/dashboard_Pri_Usu.php" class="btn btn-outline-dark btn-sm mx-1">Dashboard</a>
-                        <a href="../controllers/logout.php" class="btn btn-outline-danger btn-sm mx-1">Cerrar Sesión</a>
-                    </div>
+      <div class="container-fluid py-2 border-bottom" style="background-color:#fff;">
+      <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
+        <div class="d-flex align-items-center mb-2 mb-lg-0">
+          <img src="../public/img/uta/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
+          <div>
+            <h6 class="mb-0 text-uppercase font-weight-bold" style="color: rgb(134, 17, 17);">UNIVERSIDAD</h6>
+            <h5 class="mb-0 font-weight-bold" style="color: rgb(134, 17, 17);">TÉCNICA DE AMBATO</h5>
+      <span class="badge" style="background-color:rgb(49, 49, 49); color: white;">CAMPUS-HUACHI</span>
+          </div>
+        </div>
+<div class="d-flex align-items-center">
+            <div class="text-center d-flex flex-column flex-md-row align-items-center mx-3">
+                <i class="fas fa-user-circle text-danger fa-2x mb-2 mb-md-0 mr-md-2"></i>
+                <div class="d-flex flex-column flex-md-row gap-2">
+                    <a href="../views/dashboard_Pri_Usu.php" class="btn btn-outline-dark btn-sm mx-1">Dashboard</a>
+                    <a href="../controllers/logout.php" class="btn btn-outline-danger btn-sm mx-1">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
-    </div>
+  </div>
+</div>
+ </div>
 
 <div class="container my-5">
     <div class="card shadow-lg form-card">

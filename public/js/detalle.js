@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Imagen principal
             if (ev.GALERIA && ev.GALERIA.length) {
-                setSrc('galeriaEvento', '../' + ev.GALERIA[0]);
+                setSrc('galeriaEvento', '../public/img/eventos/galerias/' + ev.GALERIA[0]);
             } else if (ev.PORTADA) {
-                setSrc('galeriaEvento', '../' + ev.PORTADA);
+                setSrc('galeriaEvento', '../public/img/eventos/portadas/' + ev.PORTADA);
             }
 
             // Requisitos (texto)
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (ev.ORGANIZADOR) {
                 setText('nombreOrganizador', `${ev.ORGANIZADOR.NOMBRES} ${ev.ORGANIZADOR.APELLIDOS}`);
                 setText('correoOrganizador', ev.ORGANIZADOR.CORREO);
-                setSrc('fotoOrganizador', '../public/img/' + (ev.ORGANIZADOR.FOTO_PERFIL || 'public/img/blog-3.jpg'));
+                setSrc('fotoOrganizador', '../public/img/perfiles/' + (ev.ORGANIZADOR.FOTO_PERFIL || 'public/img/user.jpg'));
             }
 
             // Redirigir al formulario de inscripción

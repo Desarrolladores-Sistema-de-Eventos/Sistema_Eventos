@@ -33,7 +33,7 @@
     <!-- Header Start -->
     <div class="container-fluid page-header" style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../public/img/uta/facultad1.png') center 25%/cover no-repeat; min-height: 420px; display: flex; align-items: center;">
         <div class="container">
-            <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 340px;">
+            <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 485px;">
                 <h3 class="display-4 text-white text-uppercase text-shadow" style="text-shadow: 2px 2px 8px #000, 0 1px 10px #b10024;">Nosotros</h3>
                 <div class="d-inline-flex text-white mt-2" style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 6px 18px;">
                     <p class="m-0 text-uppercase"><a class="text-white" href="#">Home</a></p>
@@ -45,8 +45,8 @@
     </div>
     <!-- Header End -->
 
-<div class="container my-5 py-4 position-relative" data-aos="fade-up" data-aos-delay="200" style="z-index:2;">
-    <div class="text-center mb-5">
+<div class="container my-3 py-2 position-relative" data-aos="fade-up" data-aos-delay="100" style="z-index:2;">
+    <div class="text-center mb-3">
         <h2 class="section-title">UNIVERSIDAD TÉCNICA DE AMBATO</h2>
     </div>
     <div class="row g-4 align-items-center">
@@ -87,17 +87,17 @@
     </div>
 </div>
 <main class="container position-relative z-1">
-    <div class="section-title" data-aos="fade-up" data-aos-delay="100">
+    <div class="section-title" data-aos="fade-up" data-aos-delay="100" style="margin-bottom: 2.5rem;">
         <h2 class="text-center">AUTORIDADES</h2>
     </div>
-    <div class="row" id="autoridades-row" data-aos="fade-up" data-aos-delay="200">
+    <div class="row" id="autoridades-row" data-aos="fade-up" data-aos-delay="200" style="margin-bottom: 3.5rem;">
         <!-- Autoridades se cargan dinámicamente -->
     </div>
 
-    <div class="section-title mt-5" data-aos="fade-up" data-aos-delay="300">
+    <div class="section-title mt-5" data-aos="fade-up" data-aos-delay="300" style="margin-bottom: 2.5rem;">
         <h2 class="text-center">CARRERAS</h2>
     </div>
-    <div class="position-relative" data-aos="fade-up" data-aos-delay="400">
+    <div class="position-relative" data-aos="fade-up" data-aos-delay="400" style="margin-bottom: 2.5rem;">
         <div class="owl-carousel owl-theme" id="carreras-carousel">
             <!-- Carreras se cargan dinámicamente como slides -->
         </div>

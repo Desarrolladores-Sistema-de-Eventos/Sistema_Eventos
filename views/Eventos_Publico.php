@@ -28,7 +28,7 @@
             padding: 20px 30px;
             border-radius: .25rem;
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
         }
 
         /* Tarjetas de evento con efecto tipo home */
@@ -192,10 +192,13 @@
     </style>
 </head>
 <body>
-<?php include 'partials/header.php'; ?>
+<?php
+if (!isset($_SESSION['usuario'])) {
+    include 'partials/header.php';
+?>
     <div class="container-fluid page-header" style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../public/img/uta/uta.png') center 20%/cover no-repeat; min-height: 420px; display: flex; align-items: center;">
         <div class="container">
-            <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 340px;">
+            <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 485px;">
                 <h3 class="display-4 text-white text-uppercase text-shadow" style="text-shadow: 2px 2px 8px #000, 0 1px 10px #b10024;">Eventos Académicos</h3>
                 <div class="d-inline-flex text-white mt-2" style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 6px 18px;">
                     <p class="m-0 text-uppercase"><a class="text-white" href="#">Home</a></p>
@@ -205,7 +208,34 @@
             </div>
         </div>
     </div>
-<div class="container-fluid booking mt-5" style="padding-bottom: 0;">
+<?php } ?>
+
+<?php if (isset($_SESSION['usuario'])): ?>
+<div class="container-fluid py-2 border-bottom" style="background-color:#fff;">
+      <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center">
+        <div class="d-flex align-items-center mb-2 mb-lg-0">
+          <img src="../public/img/uta/logo.png" alt="Logo Facultad" style="height: 60px; margin-right: 10px;">
+          <div>
+            <h6 class="mb-0 text-uppercase font-weight-bold" style="color: rgb(134, 17, 17);">UNIVERSIDAD</h6>
+            <h5 class="mb-0 font-weight-bold" style="color: rgb(134, 17, 17);">TÉCNICA DE AMBATO</h5>
+      <span class="badge" style="background-color:rgb(49, 49, 49); color: white;">CAMPUS-HUACHI</span>
+          </div>
+        </div>
+<div class="d-flex align-items-center">
+            <div class="text-center d-flex flex-column flex-md-row align-items-center mx-3">
+                <i class="fas fa-user-circle text-danger fa-2x mb-2 mb-md-0 mr-md-2"></i>
+                <div class="d-flex flex-column flex-md-row gap-2">
+                    <a href="../views/dashboard_Pri_Usu.php" class="btn btn-outline-dark btn-sm mx-1">Dashboard</a>
+                    <a href="../controllers/logout.php" class="btn btn-outline-danger btn-sm mx-1">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+ </div>
+<?php endif; ?>
+
+<div class="container-fluid booking mt-4" style="padding-bottom: 0; margin-top: 1.2rem !important;">
     <div class="container" style="padding-bottom: 0;">
         <div class="filter-section"> <form onsubmit="return false;">
                 <div class="row align-items-center mb-3">
@@ -261,10 +291,9 @@
         </div>
     </div>
 </div>
-<div class="container py-5">
+<div class="container pt-3 pb-4">
     <div class="text-center mb-3 pb-3">
-        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Eventos</h6>
-        <h1>Disponibles</h1>
+    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Disponibles</h6>
     </div>
     <div class="row">
         <div class="col-lg-8">

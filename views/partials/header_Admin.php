@@ -34,7 +34,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
  <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 50px 5px 50px;">
   <!-- Izquierda: botón de regresar solo para ciertos roles -->
   <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
-    <a href="../views/Eventos_Views.php" style="color: white; text-decoration: none; font-size: 16px;">
+    <a href="../views/Eventos_Publico.php" style="color: white; text-decoration: none; font-size: 16px;">
       <i class="fa fa-arrow-left"></i> Regresar a Home
     </a>
   <?php else: ?>

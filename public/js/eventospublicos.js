@@ -30,7 +30,7 @@ function cargarEventosPublicos(page = 1) {
                                 <small class="m-0"><i class="fas fa-hourglass-half text-primary mr-2"></i>${ev.HORAS} horas</small>
                                 <small class="m-0"><i class="fas fa-user-graduate text-primary mr-2"></i>${ev.DISPONIBLES} cupos</small>
                             </div>
-                            <a class="h5 text-decoration-none" href="Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
+                            <a class="h5 text-decoration-none" href="../views/Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
@@ -146,7 +146,7 @@ function buscarEventos(keyword) {
                                 <small class="m-0"><i class="fas fa-hourglass-half text-primary mr-2"></i>${ev.HORAS} horas</small>
                                 <small class="m-0"><i class="fas fa-user-graduate text-primary mr-2"></i>${ev.DISPONIBLES} cupos</small>
                             </div>
-                            <a class="h5 text-decoration-none" href="Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
+                            <a class="h5 text-decoration-none" href="../views/Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
@@ -264,7 +264,7 @@ function aplicarFiltros(page = 1) {
                                 <small class="m-0"><i class="fas fa-hourglass-half text-primary mr-2"></i>${ev.HORAS} horas</small>
                                 <small class="m-0"><i class="fas fa-user-graduate text-primary mr-2"></i>${ev.DISPONIBLES} cupos</small>
                             </div>
-                            <a class="h5 text-decoration-none" href="Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
+                            <a class="h5 text-decoration-none" href="../views/Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
@@ -325,7 +325,7 @@ function aplicarFiltros(page = 1) {
                             <small class="m-0"><i class="fas fa-hourglass-half text-primary mr-2"></i>${ev.HORAS} horas</small>
                             <small class="m-0"><i class="fas fa-user-graduate text-primary mr-2"></i>${ev.DISPONIBLES} cupos</small>
                         </div>
-                        <a class="h5 text-decoration-none" href="Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
+                        <a class="h5 text-decoration-none" href="../views/Evento_Detalle.php?id=${ev.SECUENCIAL}">${ev.TITULO}</a>
                         <div class="border-top mt-4 pt-4">
                             <div class="d-flex justify-content-between">
                                 <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
