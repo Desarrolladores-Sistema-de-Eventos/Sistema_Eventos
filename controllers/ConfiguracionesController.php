@@ -42,6 +42,8 @@ public function __construct()
             case 'facultad_eliminar': $this->eliminarFacultad(); break;
             //CARRERAS DE LA FISEI
             case 'carrera_fisei':$this->listarCarrerasFISEI(); break;
+            // AUTORIDADES PÚBLICAS
+            case 'autoridades_publicas': $this->listarAutoridadesPublic(); break;
             // CARRERA
             case 'carrera_listar': $this->listarCarreras(); break;
             case 'carrera_guardar': $this->guardarCarrera(); break;
@@ -97,6 +99,29 @@ private function listarCarrerasFISEI() {
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Error al obtener carreras FISEI']);
+    }
+}
+
+//===================== AUTORIDADES DE LA FISEI =================
+private function listarAutoridadesPublic() {
+    try {
+        $stmt = $this->pdo->prepare("
+            SELECT 
+                SECUENCIAL AS identificador,
+                NOMBRE AS nombre,
+                CARGO AS cargo,
+                CORREO AS correo,
+                TELEFONO AS telefono,
+                FOTO_URL AS imagen
+            FROM autoridades
+            ORDER BY SECUENCIAL DESC
+        ");
+        $stmt->execute();
+        $autoridades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($autoridades);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Error al obtener autoridades públicas']);
     }
 }
 

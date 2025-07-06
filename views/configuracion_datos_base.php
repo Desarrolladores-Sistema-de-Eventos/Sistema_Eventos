@@ -139,6 +139,10 @@
           <i class="fa fa-image"></i>
           <a href="config_carrusel.php">Carrusel</a>
         </div>
+        <div class="catalogo-card">
+          <i class="fa fa-tag"></i>
+          <a href="config_autoridades.php">Autoridades</a>
+        </div>
       </div>
     </div>
   </div>
