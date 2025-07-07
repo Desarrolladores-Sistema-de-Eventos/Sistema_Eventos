@@ -8,9 +8,8 @@ include("../core/auth.php")?>
     --uta-rojo: #b10024;
     --uta-rojo-oscuro: #92001c;
     --uta-gris: #f5f5f5;
-    --uta-azul: #004466;
-    --uta-verde: #2e7d32;
-    --uta-cafe: #6d4c41;
+    --uta-negro: #000000;
+    --uta-blanco: #ffffff;
   }
 
   .panel {
@@ -37,8 +36,25 @@ include("../core/auth.php")?>
     border: 1px solid #e0e0e0;
   }
 
+  /* SCROLLBAR (MANTENIDA SIN CAMBIOS) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
   .panel-back.noti-box {
-    background-color: #fff;
+    background-color: var(--uta-blanco);
     border-left: 5px solid var(--uta-rojo);
     padding: 1.5rem;
     border-radius: 10px;
@@ -62,20 +78,18 @@ include("../core/auth.php")?>
     margin-bottom: 10px;
   }
 
+  /* COLORES ACTUALIZADOS (SOLO ROJO Y VARIANTES) */
   .bg-color-red {
     background-color: var(--uta-rojo);
   }
-
   .bg-color-green {
-    background-color: var(--uta-verde);
+    background-color: var(--uta-rojo-oscuro);
   }
-
   .bg-color-blue {
-    background-color: var(--uta-azul);
+    background-color: var(--uta-rojo);
   }
-
   .bg-color-brown {
-    background-color: var(--uta-cafe);
+    background-color: var(--uta-rojo-oscuro);
   }
 
   .text-box .main-text {
@@ -85,7 +99,7 @@ include("../core/auth.php")?>
   }
 
   .text-muted {
-    color: #6c757d !important;
+    color: var(--uta-negro) !important;
   }
 
   h2 i {
@@ -95,20 +109,29 @@ include("../core/auth.php")?>
   .hr {
     border-top: 2px solid var(--uta-rojo);
   }
-</style>
 
+  /* Estilo para la tabla con scroll */
+  .table-responsive {
+    max-height: 550px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+</style>
 
 <div id="page-wrapper">
   <div id="page-inner">
     <div class="row">
       <div class="col-md-12">
         <h2><i class="fa fa-dashboard fa"></i> Panel Principal</h2>
-        <h5>Bienvenido <?php echo $_SESSION['usuario']['NOMBRES'] . ' ' . $_SESSION['usuario']['APELLIDOS']; ?></h5>
+        <h5 class="welcome-text">Bienvenido <?php echo $_SESSION['usuario']['NOMBRES'] . ' ' . $_SESSION['usuario']['APELLIDOS']; ?></h5>
       </div>
     </div>
     <hr />
 
-    <!-- Estadísticas rápidas -->
+    <!-- Estadísticas rápidas (COLORES ACTUALIZADOS) -->
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-6">
         <div class="panel panel-back noti-box">
@@ -157,7 +180,7 @@ include("../core/auth.php")?>
     </div>
     <hr />
 
-    <!-- Gráficos principales: Barra y Donut lado a lado -->
+    <!-- Gráficos principales -->
     <div class="row">
       <!-- Inscripciones por Evento (Barra) -->
       <div class="col-md-8 col-sm-12 col-xs-12">
@@ -182,16 +205,17 @@ include("../core/auth.php")?>
         </div>
       </div>
     </div>
-    <!-- ...tu HTML hasta aquí... -->
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="../public/js/estadisticas.js"></script>
 
-    <!-- Tus scripts personalizados -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Chart.js eliminado porque usas Morris.js -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  </div>
+</div>
+
 <?php include("partials/footer_Admin.php"); ?>
