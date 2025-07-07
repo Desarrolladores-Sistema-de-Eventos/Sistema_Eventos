@@ -33,7 +33,7 @@
     <div class="container-lg px-0">
         <nav class="navbar navbar-expand-lg navbar-light navbar-modern py-3 px-3 px-lg-4 rounded-bottom shadow-sm">
             <a href="../public/index.php" class="navbar-brand d-flex align-items-center">
-                <i class="fas fa-laptop-code me-2 text-danger fs-4"></i>
+                <i class="fas fa-laptop-code me-2 text-black fs-4"></i>
                 <h2 class="mb-0">MY<span>CS</span></h2>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
