@@ -24,7 +24,7 @@ if (empty($responsables)) {
     die("No hay información disponible para este evento.");
 }
 
-$eventoNombre = $responsables[0]['EVENTO'];
+$eventoNombre = htmlspecialchars($responsables[0]['EVENTO']);
 $fechaInicio = $responsables[0]['FECHAINICIO']->format('Y-m-d');
 $fechaFin = $responsables[0]['FECHAFIN']->format('Y-m-d');
 $fechaGeneracion = date('Y-m-d H:i:s');
@@ -32,44 +32,54 @@ $fechaGeneracion = date('Y-m-d H:i:s');
 // Comenzar HTML
 $html = '
 <style>
+    /* Definición de colores principales: ÚNICAMENTE ROJO, BLANCO Y NEGRO */
+    :root {
+        --uta-rojo: #b10024; /* Rojo principal de UTA */
+        --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
+        --uta-negro: #000000;
+        --uta-blanco: #ffffff;
+    }
+
     body {
         font-family: Arial, sans-serif;
         font-size: 12px;
         margin: 0;
         padding: 0;
+        color: var(--uta-negro); /* Texto general en negro */
     }
     h2 {
         text-align: center;
-        margin-top: 25px; /* Un poco más de margen para que no se pegue al encabezado */
+        margin-top: 25px;
         margin-bottom: 15px;
-        color: #B71C1C; /* Color rojo */
+        color: var(--uta-negro); /* Título principal en negro */
         font-size: 18px;
     }
     .main-header { /* Nuevo contenedor para la cabecera principal */
-        background-color: #B71C1C; /* Fondo rojo para la cabecera */
-        color: white; /* Texto blanco en la cabecera */
-        padding: 10px 20px; /* Padding interno */
+        background-color: var(--uta-rojo); /* Fondo rojo para la cabecera */
+        color: var(--uta-blanco); /* Texto blanco en la cabecera */
+        padding: 10px 20px;
         display: flex;
         align-items: center;
-        justify-content: center; /* Centrar el contenido */
+        justify-content: center;
         width: 100%;
-        box-sizing: border-box; /* Incluye padding en el ancho total */
+        box-sizing: border-box;
     }
     .main-header-text {
-        text-align: center; /* Centrar el texto */
+        text-align: center;
     }
     .main-header-text h3, .main-header-text h4, .main-header-text p {
         margin: 0;
         line-height: 1.2;
-        color: white; /* Texto blanco */
+        color: var(--uta-blanco); /* Texto blanco */
     }
     .section-title { /* Para "RESUMEN DEL EVENTO" o "Listado de Asistentes" */
-        background-color: #f2f2f2; /* Color de fondo gris claro */
-        color: #333; /* Texto oscuro */
+        background-color: var(--uta-negro); /* Fondo negro */
+        color: var(--uta-blanco); /* Texto blanco */
         padding: 6px 10px;
         font-weight: bold;
         margin-top: 20px;
-        border-bottom: 1px solid #ccc; /* Línea debajo */
+        margin-bottom: 5px; /* Más margen inferior para separar del contenido */
+        border-bottom: 1px solid var(--uta-negro); /* Línea debajo en negro */
     }
     .stats-table { /* Para el resumen del evento */
         width: 100%;
@@ -79,8 +89,9 @@ $html = '
     }
     .stats-table td {
         padding: 4px;
-        border: none; /* Sin bordes en esta tabla de resumen */
-        background-color: #f2f2f2;
+        border: 1px solid var(--uta-negro); /* Bordes en negro */
+        background-color: var(--uta-blanco); /* Fondo blanco */
+        color: var(--uta-negro); /* Texto en negro */
     }
     .stats-table td:first-child {
         font-weight: bold;
@@ -97,22 +108,23 @@ $html = '
         font-size: 11px;
     }
     th {
-        background-color: #B71C1C; /* Color rojo para los encabezados de tabla */
-        color: white;
+        background-color: var(--uta-negro); /* Color negro para los encabezados de tabla */
+        color: var(--uta-blanco);
         padding: 6px;
-        border: 1px solid #B71C1C; /* Borde rojo para celdas */
+        border: 1px solid var(--uta-negro); /* Borde negro para celdas */
         text-align: left;
     }
     td {
-        border: 1px solid #ccc;
+        border: 1px solid var(--uta-negro); /* Borde negro */
         padding: 5px;
-        background-color: #fff;
+        background-color: var(--uta-blanco);
+        color: var(--uta-negro); /* Texto en negro */
     }
     tbody tr:nth-child(even) {
-        background-color: #f8d7da; /* Color para filas pares (similar al rojo claro) */
+        background-color: var(--uta-blanco); /* Todas las filas en blanco */
     }
     tbody tr:nth-child(odd) {
-        background-color: #ffffff;
+        background-color: var(--uta-blanco); /* Todas las filas en blanco */
     }
     ul {
         list-style: none; /* Eliminar viñetas predeterminadas */
@@ -121,9 +133,13 @@ $html = '
     }
     ul li {
         margin-bottom: 5px;
-        background-color: #f2f2f2; /* Fondo gris claro para los ítems de la lista */
+        background-color: var(--uta-blanco); /* Fondo blanco para los ítems de la lista */
         padding: 4px 8px;
-        border-left: 3px solid #B71C1C; /* Barra lateral roja para los ítems de la lista */
+        border-left: 3px solid var(--uta-rojo); /* Barra lateral roja para los ítems de la lista */
+        color: var(--uta-negro); /* Texto en negro */
+    }
+    ul li strong {
+        color: var(--uta-negro); /* Asegurar que el texto fuerte sea negro */
     }
 </style>
 
