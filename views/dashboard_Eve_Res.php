@@ -268,7 +268,25 @@ include("../core/auth.php")
      font-weight: normal;
      font-size: 14px;
 
-  }
+  }/* Estilo para checkboxes verticales */
+.custom-checkbox-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 54px;
+}
+.label-checkbox-vertical {
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: normal;
+}
+.custom-checkbox-vertical input[type="checkbox"] {
+  margin: 10px auto 0 auto; /* Baja el checkbox y lo centra */
+  width: 15px;
+  height: 15px;
+  accent-color: #ae0c22; /* Rojo institucional */
+}
    h2 {
     font-size: 24px;
     color: rgb(23, 23, 23);

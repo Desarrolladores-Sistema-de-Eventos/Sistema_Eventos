@@ -51,17 +51,7 @@ class Evento {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$idUsuario]);
         $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // Agregar carreras y requisitos a cada evento
-        foreach ($eventos as &$evento) {
-            // Obtener carreras asociadas (muchos a muchos)
-            $stmtCar = $this->pdo->prepare("SELECT c.SECUENCIAL, c.NOMBRE_CARRERA FROM evento_carrera ec INNER JOIN carrera c ON ec.SECUENCIALCARRERA = c.SECUENCIAL WHERE ec.SECUENCIALEVENTO = ?");
-            $stmtCar->execute([$evento['SECUENCIAL']]);
-            $evento['CARRERAS'] = $stmtCar->fetchAll(PDO::FETCH_ASSOC);
-            // Obtener requisitos asociados (corregido: la tabla es requisito_evento y el campo es SECUENCIAL, no SECUENCIALREQUISITO)
-            $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM requisito_evento WHERE SECUENCIALEVENTO = ?");
-            $stmtReq->execute([$evento['SECUENCIAL']]);
-            $evento['REQUISITOS'] = $stmtReq->fetchAll(PDO::FETCH_COLUMN);
-        }
+        // Solo devolver los campos simples para la tabla (sin carreras ni requisitos)
         return $eventos;
     }
 
@@ -188,15 +178,37 @@ public function getEvento($idEvento){
         $stmtCar->execute([$idEvento]);
         $evento['CARRERAS'] = $stmtCar->fetchAll(PDO::FETCH_ASSOC);
 
-    // Requisitos asociados
-    $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM REQUISITO_EVENTO WHERE SECUENCIALEVENTO = ?");
-    $stmtReq->execute([$idEvento]);
-    $evento['REQUISITOS'] = $stmtReq->fetchAll(PDO::FETCH_COLUMN);
+        // Requisitos asociados (solo IDs)
+        $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM REQUISITO_EVENTO WHERE SECUENCIALEVENTO = ?");
+        $stmtReq->execute([$idEvento]);
+        $evento['REQUISITOS'] = $stmtReq->fetchAll(PDO::FETCH_COLUMN);
 
         // Organizadores
         $stmtOrg = $this->pdo->prepare("SELECT oe.SECUENCIALUSUARIO, oe.ROL_ORGANIZADOR, u.NOMBRES, u.APELLIDOS, u.CORREO FROM organizador_evento oe INNER JOIN usuario u ON oe.SECUENCIALUSUARIO = u.SECUENCIAL WHERE oe.SECUENCIALEVENTO = ?");
         $stmtOrg->execute([$idEvento]);
         $evento['ORGANIZADORES'] = $stmtOrg->fetchAll(PDO::FETCH_ASSOC);
+
+
+        // Traer todos los requisitos generales (no asociados a ningún evento) y los asociados a este evento, SIN DUPLICADOS
+        // 1. Requisitos generales (de la tabla requisito_evento, que no están asociados a ningún evento)
+        $sqlGenerales = "SELECT SECUENCIAL, DESCRIPCION, NULL AS SECUENCIALEVENTO FROM requisito_evento WHERE SECUENCIALEVENTO IS NULL";
+        $stmtGen = $this->pdo->prepare($sqlGenerales);
+        $stmtGen->execute();
+        $generales = $stmtGen->fetchAll(PDO::FETCH_ASSOC);
+
+        // 2. Requisitos asociados a este evento (de la tabla requisito_evento)
+        $sqlAsociados = "SELECT SECUENCIAL, DESCRIPCION, SECUENCIALEVENTO FROM requisito_evento WHERE SECUENCIALEVENTO = ?";
+        $stmtAso = $this->pdo->prepare($sqlAsociados);
+        $stmtAso->execute([$idEvento]);
+        $asociados = $stmtAso->fetchAll(PDO::FETCH_ASSOC);
+
+        // Eliminar duplicados: si un requisito general ya está asociado, no lo dupliques
+        $asociadosIds = array_column($asociados, 'SECUENCIAL');
+        $generalesFiltrados = array_filter($generales, function($gen) use ($asociadosIds) {
+            return !in_array($gen['SECUENCIAL'], $asociadosIds);
+        });
+        // Unir ambos arrays (primero generales filtrados, luego asociados)
+        $evento['TODOS_REQUISITOS'] = array_merge(array_values($generalesFiltrados), $asociados);
 
         file_put_contents($logPath, date('Y-m-d H:i:s') . " [getEvento] Evento final: " . var_export($evento, true) . "\n", FILE_APPEND);
         return $evento;
@@ -282,7 +294,7 @@ public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaF
 public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaFin, $modalidad,
                                  $notaAprobacion, $costo, $esPagado,
                                  $categoria, $tipo, $carreras, $estado, $idEvento, $idUsuario,
-                                 $urlPortada, $urlGaleria, $capacidad, $contenido, $asistenciaMinima, $esDestacado = 0) // $carreras es un array de IDs
+                                 $urlPortada, $urlGaleria, $capacidad, $contenido, $asistenciaMinima, $esDestacado = 0, $requisitos = []) // $carreras y $requisitos son arrays de IDs
 {
     // Verificar si el usuario es responsable del evento
     $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM organizador_evento 
@@ -331,6 +343,23 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
             foreach ($carrerasUnicas as $idCarrera) {
                 $stmtCarr = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
                 $stmtCarr->execute([$idEvento, $idCarrera]);
+            }
+        }
+
+        // --- NUEVO: Actualizar requisitos asociados (muchos a muchos) ---
+        $this->pdo->prepare("DELETE FROM requisito_evento WHERE SECUENCIALEVENTO = ?")->execute([$idEvento]);
+        if (!empty($requisitos) && is_array($requisitos)) {
+            $requisitosUnicos = array_unique(array_filter($requisitos, function($v) { return $v !== '' && $v !== null; }));
+            foreach ($requisitosUnicos as $idRequisito) {
+                // Obtener la descripción del requisito general o asociado
+                $stmtDesc = $this->pdo->prepare("SELECT DESCRIPCION FROM requisito_evento WHERE SECUENCIAL = ?");
+                $stmtDesc->execute([$idRequisito]);
+                $desc = $stmtDesc->fetchColumn();
+                if ($desc !== false) {
+                    // Insertar nuevo requisito asociado (NO copiar el SECUENCIAL, dejar que sea autoincremental)
+                    $stmtInsert = $this->pdo->prepare("INSERT INTO requisito_evento (SECUENCIALEVENTO, DESCRIPCION) VALUES (?, ?)");
+                    $stmtInsert->execute([$idEvento, $desc]);
+                }
             }
         }
 

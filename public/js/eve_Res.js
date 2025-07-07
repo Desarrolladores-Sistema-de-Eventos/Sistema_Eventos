@@ -178,13 +178,70 @@ function editarEvento(id) {
       if (document.getElementById('estado')) {
         document.getElementById('estado').value = e.ESTADO;
       }
-      // Requisitos
-      if (Array.isArray(e.REQUISITOS)) {
-        document.querySelectorAll('input[name="requisitos[]"]').forEach(chk => chk.checked = false);
-        e.REQUISITOS.map(String).forEach(id => {
-          const checkbox = document.querySelector(`#req_${id}`);
-          if (checkbox) checkbox.checked = true;
-        });
+      // --- VISUALIZACIÓN ESTILO ADMIN: Generales primero, luego asociados con texto y color especial ---
+      // Mostrar solo requisitos generales (SECUENCIALEVENTO == null) y asociados SOLO a este evento
+      if (Array.isArray(e.TODOS_REQUISITOS) && e.SECUENCIAL) {
+        const contenedor = document.getElementById('listaRequisitos');
+        if (contenedor) {
+          contenedor.innerHTML = '';
+          // 1. Generales (SECUENCIALEVENTO == null)
+          const tituloGen = document.createElement('div');
+          tituloGen.innerHTML = '<span style="font-size:1.1em;"><i class="fa fa-list"></i> Requisitos Generales</span>';
+          contenedor.appendChild(tituloGen);
+          e.TODOS_REQUISITOS.filter(r => r.SECUENCIALEVENTO === null || r.SECUENCIALEVENTO === undefined).forEach(req => {
+            const div = document.createElement('div');
+            div.className = 'form-check';
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.className = 'form-check-input';
+            input.name = 'requisitos[]';
+            input.value = req.SECUENCIAL;
+            input.id = 'req_' + req.SECUENCIAL;
+            // Marcar si está en REQUISITOS_ASOCIADOS
+            if (Array.isArray(e.REQUISITOS_ASOCIADOS)) {
+              const found = e.REQUISITOS_ASOCIADOS.some(r => {
+                if (typeof r === 'object' && r !== null) return String(r.SECUENCIAL) === String(req.SECUENCIAL);
+                return String(r) === String(req.SECUENCIAL);
+              });
+              input.checked = found;
+            }
+            const label = document.createElement('label');
+            label.className = 'form-check-label';
+            label.htmlFor = input.id;
+            label.textContent = req.DESCRIPCION;
+            div.appendChild(input);
+            div.appendChild(label);
+            contenedor.appendChild(div);
+          });
+          // 2. Separador para asociados
+          const sep = document.createElement('div');
+          sep.innerHTML = '<span style="font-size:1.1em;margin-top:8px;display:block;color:#b71c1c"><i class="fa fa-link"></i> Requisitos Asociados solo a este evento</span>';
+          sep.id = 'tituloRequisitosAsociados';
+          sep.style.marginTop = '8px';
+          contenedor.appendChild(sep);
+          // 3. Asociados (SOLO de este evento, SECUENCIALEVENTO == e.SECUENCIAL)
+          e.TODOS_REQUISITOS.filter(r => String(r.SECUENCIALEVENTO) === String(e.SECUENCIAL)).forEach(req => {
+            const div = document.createElement('div');
+            div.className = 'form-check req-dinamico';
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.className = 'form-check-input';
+            input.name = 'requisitos[]';
+            input.value = req.SECUENCIAL;
+            input.id = 'req_' + req.SECUENCIAL;
+            input.checked = true;
+            input.style.outline = '2px solid #b71c1c';
+            const label = document.createElement('label');
+            label.className = 'form-check-label';
+            label.htmlFor = input.id;
+            label.textContent = req.DESCRIPCION + ' (asociado solo a este evento)';
+            label.style.color = '#222';
+            label.style.fontWeight = 'normal';
+            div.appendChild(input);
+            div.appendChild(label);
+            contenedor.appendChild(div);
+          });
+        }
       }
       // Mostrar nombres de imágenes si existen
       const nombrePortada = document.getElementById('nombrePortada');
@@ -372,6 +429,11 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('carrera[]', opt.value);
       });
     }
+    // Requisitos: enviar como array (soporte para checkboxes)
+    formData.delete('requisitos[]');
+    document.querySelectorAll('input[name="requisitos[]"]:checked').forEach(chk => {
+      formData.append('requisitos[]', chk.value);
+    });
     // Habilitar/deshabilitar el input de costo según el checkbox esPagado
     const chkPagado = document.getElementById('esPagado');
     const inputCosto = document.getElementById('costo');

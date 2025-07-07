@@ -480,6 +480,7 @@ if ($ok === true) {
                 return;
             }
 
+            $requisitosSeleccionados = $_POST['requisitos'] ?? [];
             $resultado = $this->eventoModelo->actualizarEvento(
                 $_POST['titulo'],
                 $_POST['descripcion'],
@@ -501,21 +502,11 @@ if ($ok === true) {
                 $capacidad,
                 $_POST['contenido'] ?? '',
                 $_POST['asistenciaMinima'] ?? null,
-                $esDestacado
+                $esDestacado,
+                $requisitosSeleccionados
             );
 
             if ($resultado) {
-                $requisitosSeleccionados = $_POST['requisitos'] ?? [];
-
-                require_once '../models/Requisitos.php';
-                $reqModel = new Requisitos();
-
-                $reqModel->eliminarPorEvento($idEvento);
-
-                if (!empty($requisitosSeleccionados)) {
-                    $reqModel->asociarAEvento($idEvento, $requisitosSeleccionados);
-                }
-
                 $this->json(['tipo' => 'success', 'mensaje' => 'Evento actualizado']);
             } else {
                 $this->json(['tipo' => 'error', 'mensaje' => 'No tienes permisos para actualizar este evento']);
@@ -546,7 +537,21 @@ if ($ok === true) {
 
     private function json($data)
     {
-        echo json_encode($data);
+        // Forzar UTF-8 y detectar errores de codificación
+        header('Content-Type: application/json; charset=utf-8');
+        $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+        if ($json === false) {
+            $error = json_last_error_msg();
+            http_response_code(500);
+            echo json_encode([
+                'tipo' => 'error',
+                'mensaje' => 'Error al codificar JSON',
+                'debug' => $error,
+                'data' => $data
+            ], JSON_UNESCAPED_UNICODE);
+        } else {
+            echo $json;
+        }
     }
 
     private function listarTarjetas()
