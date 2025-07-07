@@ -36,6 +36,64 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Definición de colores principales */
+    :root {
+        --uta-rojo: #b10024; /* Rojo principal de UTA */
+        --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
+        --uta-negro: #000000;
+        --uta-blanco: #ffffff;
+    }
+
+    /* SOLO CAMBIOS DE COLOR. NO SE ALTERAN TAMAÑOS NI POSICIONAMIENTOS. */
+
+    /* Barra de navegación superior */
+    .navbar-cls-top {
+        background-color: var(--uta-negro) !important; /* Fondo negro */
+        color: var(--uta-blanco); /* Color de texto blanco */
+    }
+    .navbar-brand {
+        color: var(--uta-blanco) !important; /* Color de texto blanco */
+    }
+
+    /* Barra de navegación lateral */
+    .navbar-default.navbar-side {
+        background-color: var(--uta-negro); /* Fondo negro */
+        color: var(--uta-blanco); /* Color de texto blanco */
+    }
+    .navbar-side .nav > li > a {
+        color: var(--uta-blanco); /* Color de texto blanco para los enlaces del menú */
+        border-bottom: 1px solid var(--uta-negro); /* Borde negro para separación */
+    }
+    .navbar-side .nav > li > a:hover {
+        background-color: var(--uta-rojo-oscuro); /* Rojo oscuro al pasar el ratón */
+        color: var(--uta-blanco); /* Color de texto blanco al pasar el ratón */
+    }
+
+    /* Botón Cerrar Sesión */
+    .square-btn-adjust {
+        background-color: var(--uta-rojo) !important; /* Rojo principal de UTA */
+        color: var(--uta-blanco) !important; /* Texto blanco en el botón */
+    }
+    .square-btn-adjust:hover {
+        background-color: var(--uta-rojo-oscuro) !important; /* Rojo oscuro al pasar el ratón */
+        color: var(--uta-blanco) !important; /* Texto blanco al pasar el ratón */
+    }
+
+    /* Asegurar que el texto de "Regresar a Home" sea blanco */
+    a[href="../views/Eventos_Views.php"] {
+        color: var(--uta-blanco) !important;
+    }
+    /* Asegurar que el texto de la hora sea blanco */
+    #hora {
+        color: var(--uta-blanco) !important;
+    }
+
+    /* No se modifican otras propiedades de layout como width, height, padding, margin, etc. */
+    /* Se asume que custom.css y bootstrap.css manejan el layout general. */
+
+  </style>
 </head>
 <body>
 <div id="wrapper">
@@ -65,7 +123,7 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
   <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
       <ul class="nav" id="main-menu">
-        <?php if ($esResponsable): ?> 
+        <?php if ($esResponsable): ?>
           <li><a href="../views/dashboard_Pri_Res.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
           <li><a href="../views/dashboard_Eve_Res.php"><i class="fa fa-calendar fa-3x"></i> Gestión Eventos</a></li>
           <li><a href="../views/dashboard_Ins_Res.php"><i class="fa fa-users fa-3x"></i> Inscripciones</a></li>
@@ -111,4 +169,5 @@ $esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
   setInterval(actualizarHora, 1000);
   actualizarHora();
 </script>
-
+</body>
+</html>

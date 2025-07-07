@@ -27,22 +27,31 @@ $comprobantes = $reporte['comprobantes'];
 // Iniciar HTML
 $html = '
 <style>
+    /* Definición de colores principales: ÚNICAMENTE ROJO, BLANCO Y NEGRO */
+    :root {
+        --uta-rojo: #b10024; /* Rojo principal de UTA */
+        --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
+        --uta-negro: #000000;
+        --uta-blanco: #ffffff;
+    }
+
     body {
         font-family: Arial, sans-serif;
         font-size: 12px;
         margin: 0;
         padding: 0;
+        color: var(--uta-negro); /* Texto general en negro */
     }
     h2 {
         text-align: center;
         margin-top: 25px; /* Un poco más de margen para que no se pegue al encabezado */
         margin-bottom: 15px;
-        color: #B71C1C; /* Color rojo */
+        color: var(--uta-negro); /* Título principal en negro */
         font-size: 18px;
     }
     .main-header { /* Nuevo contenedor para la cabecera principal */
-        background-color: #B71C1C; /* Fondo rojo para la cabecera */
-        color: white; /* Texto blanco en la cabecera */
+        background-color: var(--uta-rojo); /* Fondo rojo para la cabecera */
+        color: var(--uta-blanco); /* Texto blanco en la cabecera */
         padding: 10px 20px; /* Padding interno */
         display: flex;
         align-items: center;
@@ -56,15 +65,15 @@ $html = '
     .main-header-text h3, .main-header-text h4, .main-header-text p {
         margin: 0;
         line-height: 1.2;
-        color: white; /* Texto blanco */
+        color: var(--uta-blanco); /* Texto blanco */
     }
     .section-title { /* Para "Recaudación por Forma de Pago", etc. */
-        background-color: #f2f2f2; /* Color de fondo gris claro */
-        color: #333; /* Texto oscuro */
+        background-color: var(--uta-negro); /* Fondo negro */
+        color: var(--uta-blanco); /* Texto blanco */
         padding: 6px 10px;
         font-weight: bold;
         margin-top: 20px;
-        border-bottom: 1px solid #ccc; /* Línea debajo */
+        border-bottom: 1px solid var(--uta-negro); /* Línea debajo en negro */
     }
     .stats-table { /* Para el resumen general del reporte */
         width: 100%;
@@ -74,8 +83,9 @@ $html = '
     }
     .stats-table td {
         padding: 4px;
-        border: none; /* Sin bordes en esta tabla de resumen */
-        background-color: #f2f2f2;
+        border: 1px solid var(--uta-negro); /* Bordes en negro */
+        background-color: var(--uta-blanco); /* Fondo blanco */
+        color: var(--uta-negro); /* Texto en negro */
     }
     .stats-table td:first-child {
         font-weight: bold;
@@ -92,26 +102,36 @@ $html = '
         font-size: 11px;
     }
     th {
-        background-color: #B71C1C; /* Color rojo para los encabezados de tabla */
-        color: white;
+        background-color: var(--uta-negro); /* Color negro para los encabezados de tabla */
+        color: var(--uta-blanco);
         padding: 6px;
-        border: 1px solid #B71C1C; /* Borde rojo para celdas */
+        border: 1px solid var(--uta-negro); /* Borde negro para celdas */
         text-align: left;
     }
     td {
-        border: 1px solid #ccc;
+        border: 1px solid var(--uta-negro); /* Borde negro */
         padding: 5px;
-        background-color: #fff;
+        background-color: var(--uta-blanco);
+        color: var(--uta-negro); /* Texto en negro */
     }
     tbody tr:nth-child(even) {
-        background-color: #f8d7da; /* Color para filas pares (similar al rojo claro) */
+        background-color: var(--uta-blanco); /* Todas las filas en blanco */
     }
     tbody tr:nth-child(odd) {
-        background-color: #ffffff;
+        background-color: var(--uta-blanco); /* Todas las filas en blanco */
     }
     .total-row {
         font-weight: bold;
-        background-color: #e0e0e0 !important; /* Un gris más oscuro para el total */
+        background-color: var(--uta-negro) !important; /* Fondo negro para el total */
+        color: var(--uta-blanco) !important; /* Texto blanco para el total */
+    }
+    .total-row td {
+        border: 1px solid var(--uta-negro) !important; /* Asegurar bordes negros */
+        color: var(--uta-blanco) !important; /* Asegurar texto blanco */
+    }
+    a {
+        color: var(--uta-rojo); /* Enlaces en rojo */
+        text-decoration: underline;
     }
 </style>
 
@@ -200,7 +220,7 @@ foreach ($comprobantes as $c) {
     $html .= '<td>' . htmlspecialchars($c['NOMBRE_COMPLETO']) . '</td>';
     $html .= '<td>' . htmlspecialchars($c['CORREO']) . '</td>';
     $html .= '<td>$' . number_format($c['MONTO'], 2) . '</td>';
-    $html .= '<td>' . htmlspecialchars($c['COMPROBANTE_URL']) . '</td>';
+    $html .= '<td><a href="' . htmlspecialchars($c['COMPROBANTE_URL']) . '" target="_blank">Ver Comprobante</a></td>';
     $html .= '<td>' . htmlspecialchars($c['ESTADO']) . '</td>';
     $html .= '</tr>';
     $totalComprobantes += $c['MONTO'];
