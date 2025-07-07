@@ -10680,3 +10680,244 @@
     ),
   ),
 )
+2025-07-07 11:27:43 [editar] ID recibido: '177'
+2025-07-07 11:27:43 [getEvento] ID recibido: '177'
+2025-07-07 11:27:43 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 11:27:43 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 11:27:43 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+  ),
+)
+2025-07-07 11:27:43 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+  ),
+)

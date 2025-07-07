@@ -413,18 +413,21 @@ public function getEventoDetallePublico($idEvento) {
     $sql = "SELECT e.*, 
                    me.NOMBRE AS MODALIDAD,
                    te.NOMBRE AS TIPO,
-                   ca.NOMBRE_CARRERA AS CARRERA,
                    ce.NOMBRE AS CATEGORIA,
                    (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
             FROM evento e
             LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
             LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-            LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
             LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
             WHERE e.SECUENCIAL = ?";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([$idEvento]);
     $evento = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Carreras asociadas (muchos a muchos)
+    $stmtCar = $this->pdo->prepare("SELECT c.SECUENCIAL, c.NOMBRE_CARRERA FROM evento_carrera ec INNER JOIN carrera c ON ec.SECUENCIALCARRERA = c.SECUENCIAL WHERE ec.SECUENCIALEVENTO = ?");
+    $stmtCar->execute([$idEvento]);
+    $evento['CARRERAS'] = $stmtCar->fetchAll(PDO::FETCH_ASSOC);
 
     // Organizadores
     $stmtOrg = $this->pdo->prepare("SELECT u.NOMBRES, u.APELLIDOS FROM usuario u
@@ -433,10 +436,8 @@ public function getEventoDetallePublico($idEvento) {
     $stmtOrg->execute([$idEvento]);
     $evento['ORGANIZADORES'] = $stmtOrg->fetchAll(PDO::FETCH_ASSOC);
 
-    // Requisitos
-    $stmtReq = $this->pdo->prepare("SELECT r.NOMBRE FROM requisito r
-                                    INNER JOIN requisito_evento re ON r.SECUENCIAL = re.SECUENCIALREQUISITO
-                                    WHERE re.SECUENCIALEVENTO = ?");
+    // Requisitos asociados (solo descripciones)
+    $stmtReq = $this->pdo->prepare("SELECT DESCRIPCION FROM requisito_evento WHERE SECUENCIALEVENTO = ?");
     $stmtReq->execute([$idEvento]);
     $evento['REQUISITOS'] = $stmtReq->fetchAll(PDO::FETCH_COLUMN);
 

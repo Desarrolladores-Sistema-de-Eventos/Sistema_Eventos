@@ -46,7 +46,7 @@ class EventoPublico {
     }
 
     public function getEventoDetallePublico($idEvento) {
-        // Obtener datos principales del evento
+        // Obtener datos principales del evento (sin carrera directa)
         $sql = "SELECT 
                     e.SECUENCIAL,
                     e.TITULO,
@@ -60,13 +60,11 @@ class EventoPublico {
                     e.CAPACIDAD,
                     me.NOMBRE AS MODALIDAD,
                     te.NOMBRE AS TIPO,
-                    ca.NOMBRE_CARRERA AS CARRERA,
                     ce.NOMBRE AS CATEGORIA,
                     (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
                 FROM evento e
                 LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
                 LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-                LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
                 LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
                 WHERE e.SECUENCIAL = ?";
         $stmt = $this->pdo->prepare($sql);
@@ -75,17 +73,17 @@ class EventoPublico {
 
         if (!$evento) return null;
 
+        // Obtener carreras asociadas (muchos a muchos)
+        $sqlCar = "SELECT c.SECUENCIAL, c.NOMBRE_CARRERA FROM evento_carrera ec INNER JOIN carrera c ON ec.SECUENCIALCARRERA = c.SECUENCIAL WHERE ec.SECUENCIALEVENTO = ?";
+        $stmtCar = $this->pdo->prepare($sqlCar);
+        $stmtCar->execute([$idEvento]);
+        $evento['CARRERAS'] = $stmtCar->fetchAll(PDO::FETCH_ASSOC);
+
         // Obtener requisitos
-        $sqlReq = "SELECT r.DESCRIPCION FROM requisito_evento re
-                   INNER JOIN requisito r ON re.SECUENCIALREQUISITO = r.SECUENCIAL
-                   WHERE re.SECUENCIALEVENTO = ?";
+        $sqlReq = "SELECT DESCRIPCION FROM requisito_evento WHERE SECUENCIALEVENTO = ?";
         $stmtReq = $this->pdo->prepare($sqlReq);
         $stmtReq->execute([$idEvento]);
-        $requisitos = [];
-        while ($row = $stmtReq->fetch(PDO::FETCH_ASSOC)) {
-            $requisitos[] = $row['DESCRIPCION'];
-        }
-        $evento['REQUISITOS'] = $requisitos;
+        $evento['REQUISITOS'] = $stmtReq->fetchAll(PDO::FETCH_COLUMN);
 
         // Obtener organizadores (nombres, apellidos, correo)
         $sqlOrg = "SELECT u.NOMBRES, u.APELLIDOS, u.CORREO 
@@ -94,11 +92,7 @@ class EventoPublico {
                    WHERE oe.SECUENCIALEVENTO = ? AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'";
         $stmtOrg = $this->pdo->prepare($sqlOrg);
         $stmtOrg->execute([$idEvento]);
-        $organizadores = [];
-        while ($row = $stmtOrg->fetch(PDO::FETCH_ASSOC)) {
-            $organizadores[] = $row;
-        }
-        $evento['ORGANIZADORES'] = $organizadores;
+        $evento['ORGANIZADORES'] = $stmtOrg->fetchAll(PDO::FETCH_ASSOC);
 
         return $evento;
     }
@@ -181,8 +175,10 @@ public function filtrarEventos($filtros = [], $page = 1, $limit = 6) {
         $where[] = 'e.CODIGOMODALIDAD = ?';
         $params[] = $filtros['modalidad'];
     }
+    // Filtro por carrera (tabla intermedia evento_carrera)
+    $joinCarrera = '';
     if (!empty($filtros['carrera'])) {
-        $where[] = 'e.SECUENCIALCARRERA = ?';
+        $joinCarrera = ' INNER JOIN evento_carrera ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO AND ec.SECUENCIALCARRERA = ? ';
         $params[] = $filtros['carrera'];
     }
     if (!empty($filtros['fecha'])) {
@@ -207,6 +203,7 @@ public function filtrarEventos($filtros = [], $page = 1, $limit = 6) {
                 (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
             FROM evento e
             INNER JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
+            "+$joinCarrera+"
             WHERE e.ESTADO = 'DISPONIBLE'";
 
     if (!empty($where)) {
@@ -242,8 +239,10 @@ public function contarEventosFiltrados($filtros = []) {
         $where[] = 'e.CODIGOMODALIDAD = ?';
         $params[] = $filtros['modalidad'];
     }
+    // Filtro por carrera (tabla intermedia evento_carrera)
+    $joinCarrera = '';
     if (!empty($filtros['carrera'])) {
-        $where[] = 'e.SECUENCIALCARRERA = ?';
+        $joinCarrera = ' INNER JOIN evento_carrera ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO AND ec.SECUENCIALCARRERA = ? ';
         $params[] = $filtros['carrera'];
     }
     if (!empty($filtros['fecha'])) {
@@ -255,7 +254,7 @@ public function contarEventosFiltrados($filtros = []) {
         $params[] = '%' . $filtros['busqueda'] . '%';
     }
 
-    $sql = "SELECT COUNT(*) as total FROM evento e WHERE e.ESTADO = 'DISPONIBLE'";
+    $sql = "SELECT COUNT(*) as total FROM evento e "+$joinCarrera+" WHERE e.ESTADO = 'DISPONIBLE'";
     if (!empty($where)) {
         $sql .= ' AND ' . implode(' AND ', $where);
     }
@@ -280,7 +279,12 @@ public function listarModalidades() {
 }
 
 public function listarCarreras() {
-    $sql = "SELECT SECUENCIAL, NOMBRE_CARRERA AS NOMBRE FROM carrera";
+    // Solo listar carreras que tengan al menos un evento asociado (por la tabla evento_carrera)
+    $sql = "SELECT c.SECUENCIAL, c.NOMBRE_CARRERA AS NOMBRE
+            FROM carrera c
+            INNER JOIN evento_carrera ec ON c.SECUENCIAL = ec.SECUENCIALCARRERA
+            GROUP BY c.SECUENCIAL, c.NOMBRE_CARRERA
+            ORDER BY c.NOMBRE_CARRERA ASC";
     return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -291,7 +295,6 @@ public function getEventoDetalleCompleto($idEvento) {
                 t.NOMBRE AS TIPO_EVENTO,
                 m.NOMBRE AS MODALIDAD,
                 c.NOMBRE AS CATEGORIA,
-                ca.NOMBRE_CARRERA AS CARRERA,
                 e.TITULO,
                 e.DESCRIPCION,
                 e.CONTENIDO,
@@ -306,13 +309,18 @@ public function getEventoDetalleCompleto($idEvento) {
             LEFT JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
             LEFT JOIN modalidad_evento m ON e.CODIGOMODALIDAD = m.CODIGO
             LEFT JOIN categoria_evento c ON e.SECUENCIALCATEGORIA = c.SECUENCIAL
-            LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
             WHERE e.SECUENCIAL = ?";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([$idEvento]);
     $evento = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$evento) return null;
+
+    // Carreras asociadas (muchos a muchos)
+    $sqlCar = "SELECT c.SECUENCIAL, c.NOMBRE_CARRERA FROM evento_carrera ec INNER JOIN carrera c ON ec.SECUENCIALCARRERA = c.SECUENCIAL WHERE ec.SECUENCIALEVENTO = ?";
+    $stmtCar = $this->pdo->prepare($sqlCar);
+    $stmtCar->execute([$idEvento]);
+    $evento['CARRERAS'] = $stmtCar->fetchAll(PDO::FETCH_ASSOC);
 
     // Galería de imágen
     $sqlGaleria = "SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'GALERIA'";
@@ -341,7 +349,7 @@ public function getEventoDetalleCompleto($idEvento) {
     /**
      * Obtener eventos destacados con imagen para mostrar en el carrusel
      */
-    public function obtenerEventosDestacados($limit = 10) {
+    public function obtenerEventosDestacados($limit = 6) {
         $sql = "SELECT DISTINCT e.SECUENCIAL, e.TITULO, e.DESCRIPCION, e.FECHAINICIO, e.COSTO, e.HORAS,
                        t.NOMBRE AS TIPO_EVENTO,
                        (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA

@@ -180,7 +180,7 @@
             </div>
             <div class="col-md-6" data-aos="fade-left" data-aos-delay="600">
                 <h6><i class="fas fa-graduation-cap text-danger"></i> Carrera:</h6>
-                <p id="carrera"></p>
+                <ul id="carrera"></ul>
             </div>
         </div>
         <div class="row mb-3" data-aos="fade-up" data-aos-delay="650">

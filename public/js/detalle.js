@@ -141,14 +141,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Llenar campos
             setText('tituloEvento', ev.TITULO);
-            setText('descripcionEvento', ev.DESCRIPCION);
+            // Interpretar HTML en la descripción (por ejemplo, si se usó CKEditor o similar)
+            setHTML('descripcionEvento', ev.DESCRIPCION);
             setText('horasEvento', ev.HORAS);
             setText('costoEvento', ev.COSTO ? parseFloat(ev.COSTO).toFixed(2) : '');
             setText('notaAprobacion', ev.NOTAAPROBACION);
             setText('publicoObjetivo', ev.ES_SOLO_INTERNOS ? 'Solo público interno' : 'Público externo e interno');
             setText('fechaInicio', ev.FECHAINICIO);
             setText('fechaFin', ev.FECHAFIN);
-            setText('carrera', ev.CARRERA);
+            // Mostrar carreras asociadas (formato vertical)
+            if (ev.CARRERAS && Array.isArray(ev.CARRERAS) && ev.CARRERAS.length) {
+                // Mostrar carreras en formato "recto" (una debajo de otra, alineadas a la izquierda)
+                const carrerasHtml = ev.CARRERAS.map(c => `<div>${c.NOMBRE_CARRERA}</div>`).join('');
+                setHTML('carrera', carrerasHtml);
+            } else if (ev.CARRERA) {
+                setText('carrera', ev.CARRERA); // fallback por compatibilidad
+            } else {
+                setHTML('carrera', '');
+            }
             setText('modalidad', ev.MODALIDAD);
             setText('tipoEvento', ev.TIPO_EVENTO);
 
@@ -170,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setHTML('requisitosEvento', reqHtml);
 
             if (ev.CONTENIDO) {
+                // Interpretar HTML en el contenido (por ejemplo, si se usó CKEditor o similar)
                 setHTML('contenidoEvento', ev.CONTENIDO);
             }
 

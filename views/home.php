@@ -247,9 +247,11 @@ $imagenesCarrusel = $modeloCarrusel->obtenerCarruselPublico();
                 <?php foreach ($eventos as $evento) {
                     $fecha = date('d/m/Y', strtotime($evento['FECHAINICIO']));
                     $precio = $evento['COSTO'] > 0 ? '$' . number_format($evento['COSTO'], 2) : 'GRATIS';
-                    $descripcion = strlen($evento['DESCRIPCION']) > 100 ? 
-                                  substr($evento['DESCRIPCION'], 0, 100) . '...' : 
-                                  $evento['DESCRIPCION'];
+                    // Limpiar etiquetas HTML para el resumen, pero mostrar formato en el detalle
+                    $descripcionPlano = strip_tags($evento['DESCRIPCION']);
+                    $descripcion = strlen($descripcionPlano) > 100 ? 
+                                  substr($descripcionPlano, 0, 100) . '...' : 
+                                  $descripcionPlano;
                 ?>
                 <div class="item">
                     <div class="evento-card">
