@@ -70,9 +70,6 @@ class EventosController
     case 'comprobantePago':
   $this->obtenerComprobantePago();
   break;
-
-
-
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Acción no válida']);
         }
@@ -309,11 +306,20 @@ if ($ok === true) {
     private function editar()
     {
         $id = $_GET['id'] ?? null;
+        $logPath = __DIR__ . '/../log_carreras.txt';
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " [editar] ID recibido: " . var_export($id, true) . "\n", FILE_APPEND);
         if (!$id) {
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " [editar] ID faltante\n", FILE_APPEND);
             $this->json(['tipo' => 'error', 'mensaje' => 'ID faltante']);
             return;
         }
         $evento = $this->eventoModelo->getEvento($id);
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " [editar] getEvento devuelve: " . var_export($evento, true) . "\n", FILE_APPEND);
+        if (!$evento) {
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " [editar] No se pudo cargar el evento para ID $id\n", FILE_APPEND);
+            $this->json(['tipo' => 'error', 'mensaje' => 'No se pudo cargar el evento.']);
+            return;
+        }
         $this->json($evento);
     }
 
@@ -329,13 +335,15 @@ if ($ok === true) {
 
 
         try {
+            // Leer el valor del checkbox destacado
+            $esDestacado = isset($_POST['esDestacado']) ? 1 : 0;
             // Procesar archivo de portada
             $urlPortada = null;
             if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
                 $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
                 $rutaDestino = '../public/img/eventos/portadas/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-                    $urlPortada = 'public/img/eventos/portadas/' . $nombreArchivo;
+                    $urlPortada = $nombreArchivo;
                 }
             }
 
@@ -345,7 +353,7 @@ if ($ok === true) {
                 $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
                 $rutaDestino = '../public/img/eventos/galerias/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-                    $urlGaleria = 'public/img/eventos/galerias/' . $nombreArchivo;
+                    $urlGaleria = $nombreArchivo;
                 }
             }
             $fechaInicio = $_POST['fechaInicio'];
@@ -384,16 +392,18 @@ if ($ok === true) {
                 $_POST['modalidad'],
                 $_POST['notaAprobacion'],
                 $costo,
-                $_POST['publicoDestino'],
                 $esPagado,
                 $_POST['categoria'],
                 $_POST['tipoEvento'],
-                $_POST['carrera'],
+                is_array($_POST['carrera']) ? $_POST['carrera'] : (array)$_POST['carrera'],
                 $_POST['estado'],
                 $this->idUsuario,
                 $urlPortada,
                 $urlGaleria,
-                $capacidad
+                $capacidad,
+                $_POST['contenido'] ?? '',
+                $_POST['asistenciaMinima'] ?? null,
+                $esDestacado
             );
 
             $requisitosSeleccionados = $_POST['requisitos'] ?? [];
@@ -425,13 +435,15 @@ if ($ok === true) {
         }
 
         try {
+            // Leer el valor del checkbox destacado
+            $esDestacado = isset($_POST['esDestacado']) ? 1 : 0;
             // Procesar archivo de portada
             $urlPortada = null;
             if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
                 $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
                 $rutaDestino = '../public/img/eventos/portadas/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-                    $urlPortada = 'public/img/eventos/portadas/' . $nombreArchivo;
+                    $urlPortada = $nombreArchivo;
                 }
             }
 
@@ -441,7 +453,7 @@ if ($ok === true) {
                 $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
                 $rutaDestino = '../public/img/eventos/galerias/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-                    $urlGaleria = 'public/img/eventos/galerias/' . $nombreArchivo;
+                    $urlGaleria = $nombreArchivo;
                 }
             }
 
@@ -477,17 +489,19 @@ if ($ok === true) {
                 $_POST['modalidad'],
                 $_POST['notaAprobacion'],
                 $costo,
-                $_POST['publicoDestino'],
                 $esPagado,
                 $_POST['categoria'],
                 $_POST['tipoEvento'],
-                $_POST['carrera'],
+                is_array($_POST['carrera']) ? $_POST['carrera'] : (array)$_POST['carrera'],
                 $_POST['estado'],
                 $idEvento,
                 $this->idUsuario,
                 $urlPortada,
                 $urlGaleria,
-                $capacidad
+                $capacidad,
+                $_POST['contenido'] ?? '',
+                $_POST['asistenciaMinima'] ?? null,
+                $esDestacado
             );
 
             if ($resultado) {

@@ -1,144 +1,3284 @@
-CARRERA EDITAR: Array
-(
-    [0] => 1
-    [1] => 4
-    [2] => 1
-    [3] => 4
+2025-07-07 09:21:11 [editar] ID recibido: '177'
+2025-07-07 09:21:11 [getEvento] ID recibido: '177'
+2025-07-07 09:21:11 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:21:11 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 1
-    [1] => 4
+2025-07-07 09:21:11 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 2
-    [3] => 3
+2025-07-07 09:21:11 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
+2025-07-07 09:22:50 [editar] ID recibido: '177'
+2025-07-07 09:22:50 [getEvento] ID recibido: '177'
+2025-07-07 09:22:50 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:22:50 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
-    [3] => 2
-    [4] => 3
-    [5] => 24
+2025-07-07 09:22:50 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
+2025-07-07 09:22:50 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
-    [3] => 2
-    [4] => 3
-    [5] => 24
+2025-07-07 09:23:35 [editar] ID recibido: '177'
+2025-07-07 09:23:35 [getEvento] ID recibido: '177'
+2025-07-07 09:23:35 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:23:35 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
+2025-07-07 09:23:35 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
-    [3] => 2
-    [4] => 3
-    [5] => 24
+2025-07-07 09:23:35 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
+2025-07-07 09:26:33 [editar] ID recibido: '177'
+2025-07-07 09:26:33 [getEvento] ID recibido: '177'
+2025-07-07 09:26:33 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:26:33 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
-    [3] => 2
-    [4] => 3
-    [5] => 24
+2025-07-07 09:26:33 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 24
+2025-07-07 09:26:33 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 4
-    [3] => 5
-    [4] => 2
-    [5] => 3
-    [6] => 4
-    [7] => 5
+2025-07-07 09:26:43 [editar] ID recibido: '177'
+2025-07-07 09:26:43 [getEvento] ID recibido: '177'
+2025-07-07 09:26:43 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:26:43 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 4
-    [3] => 5
+2025-07-07 09:26:43 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 4
-    [3] => 5
-    [4] => 6
-    [5] => 2
-    [6] => 3
-    [7] => 4
-    [8] => 5
-    [9] => 6
+2025-07-07 09:26:43 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 4
-    [3] => 5
-    [4] => 6
+2025-07-07 09:28:46 [editar] ID recibido: '177'
+2025-07-07 09:28:46 [getEvento] ID recibido: '177'
+2025-07-07 09:28:46 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:28:46 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
 )
-CARRERA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 4
-    [3] => 5
-    [4] => 6
-    [5] => 2
-    [6] => 3
-    [7] => 4
-    [8] => 5
-    [9] => 6
+2025-07-07 09:28:46 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )
-CARRERA FILTRADA EDITAR: Array
-(
-    [0] => 2
-    [1] => 3
-    [2] => 4
-    [3] => 5
-    [4] => 6
+2025-07-07 09:28:46 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:28:51 [editar] ID recibido: '177'
+2025-07-07 09:28:51 [getEvento] ID recibido: '177'
+2025-07-07 09:28:51 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:28:51 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:28:51 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:28:51 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:28:58 [editar] ID recibido: '178'
+2025-07-07 09:28:58 [getEvento] ID recibido: '178'
+2025-07-07 09:28:58 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:28:58 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:28:58 [getEvento] Evento final: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 100,
+    1 => 101,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:28:58 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 100,
+    1 => 101,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:15 [editar] ID recibido: '177'
+2025-07-07 09:30:15 [getEvento] ID recibido: '177'
+2025-07-07 09:30:15 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:30:15 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:30:15 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:15 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => 'mmmmmmmmmmmmmmm',
+  'DESCRIPCION' => 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:24 [editar] ID recibido: '177'
+2025-07-07 09:30:24 [getEvento] ID recibido: '177'
+2025-07-07 09:30:24 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:30:24 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:30:24 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:24 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:40 [editar] ID recibido: '177'
+2025-07-07 09:30:40 [getEvento] ID recibido: '177'
+2025-07-07 09:30:40 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:30:40 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:30:40 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 102,
+    1 => 103,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:40 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 102,
+    1 => 103,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:59 [editar] ID recibido: '178'
+2025-07-07 09:30:59 [getEvento] ID recibido: '178'
+2025-07-07 09:30:59 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:30:59 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:30:59 [getEvento] Evento final: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 100,
+    1 => 101,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:30:59 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 100,
+    1 => 101,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:34:30 [editar] ID recibido: '177'
+2025-07-07 09:34:30 [getEvento] ID recibido: '177'
+2025-07-07 09:34:30 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:34:30 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '20.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:34:30 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '20.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:34:30 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '20.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:34:41 [editar] ID recibido: '177'
+2025-07-07 09:34:41 [getEvento] ID recibido: '177'
+2025-07-07 09:34:41 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:34:41 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:34:41 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:34:41 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:34:57 [editar] ID recibido: '178'
+2025-07-07 09:34:57 [getEvento] ID recibido: '178'
+2025-07-07 09:34:57 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:34:57 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:34:57 [getEvento] Evento final: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:34:57 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:35:14 [editar] ID recibido: '178'
+2025-07-07 09:35:14 [getEvento] ID recibido: '178'
+2025-07-07 09:35:14 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:35:14 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:35:14 [getEvento] Evento final: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:35:14 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'mskmdksksmd',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:43:08 [editar] ID recibido: '177'
+2025-07-07 09:43:08 [getEvento] ID recibido: '177'
+2025-07-07 09:43:08 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:43:08 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:43:08 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:43:08 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:43:15 [editar] ID recibido: '177'
+2025-07-07 09:43:15 [getEvento] ID recibido: '177'
+2025-07-07 09:43:15 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:43:15 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:43:15 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:43:15 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:43:18 [editar] ID recibido: '178'
+2025-07-07 09:43:18 [getEvento] ID recibido: '178'
+2025-07-07 09:43:18 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:43:18 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'hola pepe',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:43:18 [getEvento] Evento final: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'hola pepe',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:43:18 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 178,
+  'TITULO' => 'hola pepe',
+  'CONTENIDO' => '<p>ahorita</p>',
+  'DESCRIPCION' => '<p>probar</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-09-20',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b735cbd0bd_images (1).jpg',
+  'GALERIA' => 'galeria_686b735cbd250_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:44:29 [editar] ID recibido: '177'
+2025-07-07 09:44:29 [getEvento] ID recibido: '177'
+2025-07-07 09:44:29 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:44:29 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:44:29 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:44:29 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:44:46 [editar] ID recibido: '177'
+2025-07-07 09:44:46 [getEvento] ID recibido: '177'
+2025-07-07 09:44:46 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:44:46 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:44:46 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:44:46 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:45:27 [editar] ID recibido: '177'
+2025-07-07 09:45:27 [getEvento] ID recibido: '177'
+2025-07-07 09:45:27 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:45:27 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:45:27 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:45:27 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:46:40 [editar] ID recibido: '177'
+2025-07-07 09:46:40 [getEvento] ID recibido: '177'
+2025-07-07 09:46:40 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 09:46:40 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 09:46:40 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+)
+2025-07-07 09:46:40 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
 )

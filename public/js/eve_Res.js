@@ -1,13 +1,100 @@
+// Inicialización de CKEditor para contenido y descripción
+window.initCKEditor = function() {
+  if (window.ClassicEditor) {
+    if (document.getElementById('contenido')) {
+      ClassicEditor.create(document.getElementById('contenido'))
+        .then(editor => { window.ckEditorContenido = editor; });
+    }
+    if (document.getElementById('descripcion')) {
+      ClassicEditor.create(document.getElementById('descripcion'))
+        .then(editor => { window.ckEditorDescripcion = editor; });
+    }
+  }
+};
+// ================= INICIALIZACIÓN FRONTEND =================
+$(document).ready(function() {
+  // Inicializar select2 con placeholder y mensaje personalizado
+  $('#carrera').select2({
+    placeholder: 'Seleccione una o varias carreras',
+    width: '100%',
+    language: {
+      noResults: function() {
+        return 'No se encontraron carreras';
+      },
+      searching: function() {
+        return 'Buscando...';
+      }
+    }
+  });
+  // Estado seleccionado global para el filtro
+  window.estadoSeleccionado = $('#navEstadosEventos li.active a').data('estado') || 'DISPONIBLE';
+
+  // Inicializar DataTable con AJAX y filtrado por estado
+  window.tablaEventos = $('#tabla-eventos').DataTable({
+    ajax: {
+      url: '../controllers/EventosController.php?option=listarResponsable',
+      dataSrc: function (json) {
+        // Filtrar por estado seleccionado en el frontend (como antes)
+        if (!window.estadoSeleccionado || window.estadoSeleccionado === '') return json;
+        return json.filter(e => {
+          let est = (e.ESTADO || e.estado || '').toString().trim().toUpperCase();
+          let filtro = window.estadoSeleccionado.toString().trim().toUpperCase();
+          return est === filtro;
+        });
+      }
+    },
+    columns: [
+      {
+        data: 'PORTADA',
+        orderable: false,
+        render: function (data, type, row) {
+          return data ? `<img src="../public/img/eventos/portadas/${data}" style="width:60px;">` : '';
+        }
+      },
+      { data: 'TITULO' },
+      { data: 'TIPO' },
+      { data: 'FECHAINICIO' },
+      { data: 'FECHAFIN' },
+      { data: 'MODALIDAD' },
+      { data: 'HORAS' },
+      { data: 'COSTO' },
+      {
+        data: null,
+        orderable: false,
+        render: function (data, type, row) {
+          return `<button class="btn btn-primary btn-editar" data-id="${row.SECUENCIAL}"><i class="fa fa-edit"></i></button>
+                  <button class="btn btn-danger btn-cancelar" data-id="${row.SECUENCIAL}"><i class="fa fa-ban"></i></button>`;
+        }
+      }
+    ],
+    language: { url: '../public/js/es-ES.json' },
+    responsive: true
+  });
+
+  // Filtrado de eventos por estado (delegado, robusto ante cambios dinámicos)
+  $('#navEstadosEventos').off('click').on('click', 'a', function(e) {
+    e.preventDefault();
+    $('#navEstadosEventos li').removeClass('active');
+    $(this).closest('li').addClass('active');
+    window.estadoSeleccionado = $(this).data('estado');
+    window.tablaEventos.ajax.reload();
+  });
+});
+
+
+// Ya no se usa filtrarEventosPorEstado, el filtrado es por DataTable AJAX
 // ================= FUNCIONES GLOBALES =================
 
-let tablaEventos;
+
+// Tabla global para recarga
+let tablaEventos = null;
 
 // Función reutilizable con diseño personalizado UTA
 function mostrarAlertaUTA(titulo, mensaje, tipo = 'info') {
   Swal.fire({
     title: titulo,
     text: mensaje,
-    imageUrl: '../public/img/sweet.png',
+    imageUrl: '../public/img/uta/sweet.png',
     imageAlt: 'Icono UTA',
     confirmButtonText: 'Aceptar',
     customClass: {
@@ -20,176 +107,114 @@ function mostrarAlertaUTA(titulo, mensaje, tipo = 'info') {
 function toggleCosto() {
   const chkPagado = document.getElementById('esPagado');
   const inputCosto = document.getElementById('costo');
-  const divCosto = document.getElementById('grupoCosto');
-
-  if (!chkPagado || !inputCosto || !divCosto) {
+  if (!chkPagado || !inputCosto) {
     console.warn('❗ Elementos del costo no encontrados.');
     return;
   }
-
   if (chkPagado.checked) {
-    divCosto.style.display = 'block';
     inputCosto.disabled = false;
     if (inputCosto.value == 0) inputCosto.value = '';
   } else {
     inputCosto.disabled = true;
     inputCosto.value = 0;
-    divCosto.style.display = 'none';
   }
 }
 
-
-// Nueva función para renderizar tablas por estado en tabs
-function renderTablasPorEstado(eventos) {
-  // Usar claves consistentes con los ids de los contenedores
-  const estados = {
-    'DISPONIBLE': [],
-    'CURSO': [],
-    'FINALIZADO': [],
-    'CANCELADO': []
-  };
-
-  eventos.forEach(e => {
-    let estado = (e.ESTADO || '').toString().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim().toUpperCase();
-    if (estado === 'EN CURSO' || estado === 'ENCURSO' || estado === 'EN_CURSO') estado = 'CURSO';
-    if (estados[estado]) estados[estado].push(e);
-  });
-
-  Object.keys(estados).forEach(estado => {
-    let id = 'tabla-' + estado.toLowerCase();
-    const contenedor = document.getElementById(id);
-    if (contenedor) {
-      // Usar un id único para cada tabla según el estado
-      contenedor.innerHTML = generarTablaHTML(estados[estado], estado.toLowerCase());
-    }
-  });
-}
-
-function generarTablaHTML(data, estado) {
-  if (!data.length) return '<div class="alert alert-info">No hay eventos en este estado.</div>';
-  const tablaId = `tabla-eventos-${estado}`;
-  let html = `<table id="${tablaId}" class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Tipo</th>
-        <th>Inicio</th>
-        <th>Finalización</th>
-        <th>Modalidad</th>
-        <th>Horas</th>
-        <th>Costo</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${data.map(e => {
-        let acciones = e.accion || '';
-        acciones = acciones.replace(/btn-danger/g, 'btn-primary');
-        return `
-        <tr>
-          <td>${e.TITULO}</td>
-          <td>${e.TIPO}</td>
-          <td>${e.FECHAINICIO}</td>
-          <td>${e.FECHAFIN}</td>
-          <td>${e.MODALIDAD}</td>
-          <td>${e.HORAS}</td>
-          <td>${e.COSTO}</td>
-          <td>${e.ESTADO}</td>
-          <td>${acciones}</td>
-        </tr>
-        `;
-      }).join('')}
-    </tbody>
-  </table>`;
-  // Inicializar DataTable con español y responsive
-  setTimeout(() => {
-    if (window.$ && window.$.fn.DataTable && document.getElementById(tablaId)) {
-      if ($.fn.DataTable.isDataTable(`#${tablaId}`)) {
-        $(`#${tablaId}`).DataTable().destroy();
-      }
-      $(`#${tablaId}`).DataTable({
-        language: {
-          url: '../public/js/es-ES.json'
-        },
-        lengthChange: true,
-        responsive: true
-      });
-    }
-  }, 10);
-  return html;
-}
-
-function cargarEventosPorEstado() {
-  $.ajax({
-    url: '../controllers/EventosController.php?option=listarResponsable',
-    dataType: 'json',
-    success: function (data) {
-      renderTablasPorEstado(data);
-    }
-  });
-}
-
-function edit(id) {
+// Editar evento: llena el formulario y muestra el modal
+function editarEvento(id) {
   if (!id) {
     mostrarAlertaUTA('Error', 'ID de evento no válido.', 'error');
     return;
   }
-
   axios.get(`../controllers/EventosController.php?option=edit&id=${id}`)
     .then(res => {
       const e = res.data;
-
       if (e.tipo === 'error') {
         mostrarAlertaUTA('Error', e.mensaje, 'error');
         return;
       }
-
-      console.log('🧪 Evento recibido:', e);
-
-      // Asignar valores
+      document.getElementById('idEvento').value = e.SECUENCIAL;
       document.getElementById('titulo').value = e.TITULO;
-      document.getElementById('descripcion').value = e.DESCRIPCION;
+      // Usar CKEditor para descripción si está disponible
+      if (window.ckEditorDescripcion) {
+        window.ckEditorDescripcion.setData(e.DESCRIPCION || '');
+      } else {
+        document.getElementById('descripcion').value = e.DESCRIPCION;
+      }
       document.getElementById('horas').value = e.HORAS;
       document.getElementById('fechaInicio').value = e.FECHAINICIO;
       document.getElementById('fechaFin').value = e.FECHAFIN;
       document.getElementById('modalidad').value = e.CODIGOMODALIDAD;
       document.getElementById('tipoEvento').value = e.CODIGOTIPOEVENTO;
-      document.getElementById('carrera').value = e.SECUENCIALCARRERA;
+      // Selección múltiple de carreras y refresco visual con select2
+      const selectCarrera = document.getElementById('carrera');
+      if (selectCarrera && Array.isArray(e.CARRERAS)) {
+        // Obtener los valores seleccionados como array de string
+        const valoresSeleccionados = e.CARRERAS.map(c => String(c.SECUENCIAL));
+        // Marcar seleccionados en el select
+        Array.from(selectCarrera.options).forEach(opt => {
+          opt.selected = valoresSeleccionados.includes(String(opt.value));
+        });
+        // Si usa select2, refrescar visualmente
+        if ($(selectCarrera).data('select2')) {
+          $(selectCarrera).trigger('change');
+        }
+      }
       document.getElementById('categoria').value = e.SECUENCIALCATEGORIA;
       document.getElementById('notaAprobacion').value = e.NOTAAPROBACION;
       document.getElementById('costo').value = e.COSTO;
       document.getElementById('capacidad').value = e.CAPACIDAD;
-      document.getElementById('publicoDestino').value = e.ES_SOLO_INTERNOS == 1 ? 'internos' : 'externos';
+      document.getElementById('asistenciaMinima').value = e.ASISTENCIAMINIMA || '';
+      // Usar CKEditor si está disponible
+      if (window.ckEditorContenido) {
+        window.ckEditorContenido.setData(e.CONTENIDO || '');
+      } else {
+        document.getElementById('contenido').value = e.CONTENIDO || '';
+      }
       document.getElementById('esPagado').checked = e.ES_PAGADO == 1;
-      document.getElementById('estado').value = e.ESTADO;
-      document.getElementById('idEvento').value = e.SECUENCIAL;
-
+      // Habilitar/deshabilitar el campo de costo según el valor cargado
       toggleCosto();
-
+      // Validar existencia de campo estado antes de asignar
+      if (document.getElementById('estado')) {
+        document.getElementById('estado').value = e.ESTADO;
+      }
+      // Requisitos
       if (Array.isArray(e.REQUISITOS)) {
+        document.querySelectorAll('input[name="requisitos[]"]').forEach(chk => chk.checked = false);
         e.REQUISITOS.map(String).forEach(id => {
           const checkbox = document.querySelector(`#req_${id}`);
           if (checkbox) checkbox.checked = true;
         });
       }
-
+      // Mostrar nombres de imágenes si existen
+      const nombrePortada = document.getElementById('nombrePortada');
+      const nombreGaleria = document.getElementById('nombreGaleria');
+      if (nombrePortada) {
+        nombrePortada.textContent = e.PORTADA ? e.PORTADA : '';
+      }
+      if (nombreGaleria) {
+        nombreGaleria.textContent = e.GALERIA ? e.GALERIA : '';
+      }
       document.getElementById('btn-save').innerHTML = 'Actualizar';
+      // Marcar el checkbox de destacado si corresponde
+      const chkDestacado = document.getElementById('esDestacado');
+      if (chkDestacado) {
+        chkDestacado.checked = e.ES_DESTACADO == 1 || e.ES_DESTACADO === '1';
+      }
       $('#modalEvento').modal('show');
     })
     .catch(err => {
       console.error('Error al cargar evento para edición:', err);
-      const mensaje = err?.response?.data?.mensaje || 'No se pudo cargar el evento.';
-      mostrarAlertaUTA('Error', mensaje, 'error');
+      mostrarAlertaUTA('Error', 'No se pudo cargar el evento.', 'error');
     });
 }
 
-function eliminar(id) {
+// Cancelar evento (marcar como cancelado)
+function cancelarEvento(id) {
   if (!id) {
     mostrarAlertaUTA('Error', 'ID no válido.', 'error');
     return;
   }
-
   Swal.fire({
     title: '¿Estás seguro?',
     text: 'El evento será marcado como CANCELADO.',
@@ -204,12 +229,12 @@ function eliminar(id) {
     }
   }).then(result => {
     if (result.isConfirmed) {
-      axios.get(`../controllers/EventosController.php?option=delete&id=${id}`)
+      axios.get(`../controllers/EventosController.php?option=cancelar&id=${id}`)
         .then(res => {
           const info = res.data;
           if (info.tipo === 'success') {
             mostrarAlertaUTA('Cancelado', info.mensaje, 'success');
-            tablaEventos.ajax.reload();
+            if (window.tablaEventos) window.tablaEventos.ajax.reload(null, false);
           } else {
             mostrarAlertaUTA('Error', info.mensaje || 'No se pudo cancelar el evento.', 'error');
           }
@@ -282,8 +307,9 @@ function llenarSelect(id, opciones) {
 
 // ================= INICIALIZACIÓN =================
 
+
 document.addEventListener('DOMContentLoaded', function () {
-  cargarEventosPorEstado();
+  // cargarEventos(); // Eliminado: ya no existe, DataTable maneja la carga
   cargarSelects();
 
   const frm = document.querySelector('#formEvento');
@@ -294,38 +320,75 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('esPagado')?.addEventListener('change', toggleCosto);
   toggleCosto();
 
+  // Delegación para editar
+  $(document).on('click', '.btn-editar', function () {
+    const id = $(this).data('id');
+    editarEvento(id);
+  });
+  // Delegación para cancelar
+  $(document).on('click', '.btn-cancelar', function () {
+    const id = $(this).data('id');
+    cancelarEvento(id);
+  });
+
   frm.onsubmit = function (e) {
     e.preventDefault();
-
     const hoy = new Date().toISOString().split("T")[0];
     const fechaInicio = frm.fechaInicio.value;
     const fechaFin = frm.fechaFin.value;
     const capacidad = parseInt(frm.capacidad.value, 10);
-
     if (fechaInicio < hoy) {
       mostrarAlertaUTA('Error', 'La fecha de inicio no puede ser anterior a hoy.', 'error');
       return;
     }
-
     if (fechaFin && fechaFin < fechaInicio) {
       mostrarAlertaUTA('Error', 'La fecha de fin no puede ser anterior a la de inicio.', 'error');
       return;
     }
-
     if (!capacidad || capacidad <= 0) {
       mostrarAlertaUTA('Error', 'La capacidad debe ser mayor que cero.', 'error');
       return;
     }
-
     const formData = new FormData(frm);
-
+    // Añadir campos manualmente para asegurar que se envían correctamente
+    // Usar CKEditor para obtener el contenido y la descripción si están disponibles
+    if (window.ckEditorContenido) {
+      formData.set('contenido', window.ckEditorContenido.getData());
+    } else {
+      formData.set('contenido', frm.contenido?.value || '');
+    }
+    if (window.ckEditorDescripcion) {
+      formData.set('descripcion', window.ckEditorDescripcion.getData());
+    } else {
+      formData.set('descripcion', frm.descripcion?.value || '');
+    }
+    formData.set('asistenciaMinima', frm.asistenciaMinima?.value || '');
+    // Carreras: enviar como array (soporte para select múltiple)
+    const selectCarrera = frm.carrera;
+    if (selectCarrera && selectCarrera.multiple) {
+      // Elimina cualquier valor previo
+      formData.delete('carrera');
+      Array.from(selectCarrera.selectedOptions).forEach(opt => {
+        formData.append('carrera[]', opt.value);
+      });
+    }
+    // Habilitar/deshabilitar el input de costo según el checkbox esPagado
+    const chkPagado = document.getElementById('esPagado');
+    const inputCosto = document.getElementById('costo');
+    if (chkPagado) {
+      if (chkPagado.checked) {
+        inputCosto.disabled = false;
+      } else {
+        inputCosto.disabled = true;
+        inputCosto.value = 0;
+      }
+    }
+    // Imágenes
     const portada = frm.urlPortada?.files[0];
     const galeria = frm.urlGaleria?.files[0];
     if (portada) formData.set('urlPortada', portada);
     if (galeria) formData.set('urlGaleria', galeria);
-
     const url = idEvento.value ? '../controllers/EventosController.php?option=update' : '../controllers/EventosController.php?option=save';
-
     axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(res => {
         const info = res.data;
@@ -345,15 +408,36 @@ document.addEventListener('DOMContentLoaded', function () {
             $('body').removeClass('modal-open').css('padding-right', '');
             frm.reset();
             btnSave.innerHTML = 'Guardar';
-            tablaEventos.ajax.reload();
+            // Recargar la tabla de eventos dinámicamente
+            if (window.tablaEventos) window.tablaEventos.ajax.reload(null, false);
           });
         } else {
-          mostrarAlertaUTA('Error', info?.mensaje || 'Ocurrió un error al guardar.', 'error');
+          // Mostrar el error devuelto por el backend, si existe
+          let mensaje = info?.mensaje || 'Ocurrió un error al guardar.';
+          // Mostrar todo el objeto info por consola para depuración
+          console.error('Respuesta backend:', info);
+          // Si hay más información, mostrarla en el alert
+          if (info?.debug) {
+            mensaje += `\n\n[Debug: ${info.debug}]`;
+          }
+          if (info?.error) {
+            mensaje += `\n\n[Detalles: ${info.error}]`;
+          }
+          mostrarAlertaUTA('Error', mensaje, 'error');
         }
       })
       .catch(err => {
-        console.error('❌ Error inesperado:', err);
-        mostrarAlertaUTA('Error', 'No se pudo guardar el evento.', 'error');
+        // Imprimir el error completo en consola para depuración
+        if (err.response) {
+          console.error('❌ Error inesperado (response):', err.response);
+          mostrarAlertaUTA('Error', `No se pudo guardar el evento.\n\n[${err.response.status}: ${err.response.statusText}]`, 'error');
+        } else if (err.request) {
+          console.error('❌ Error inesperado (request):', err.request);
+          mostrarAlertaUTA('Error', 'No se pudo guardar el evento.\n\n[Sin respuesta del servidor]', 'error');
+        } else {
+          console.error('❌ Error inesperado:', err);
+          mostrarAlertaUTA('Error', 'No se pudo guardar el evento.\n\n[Error desconocido]', 'error');
+        }
       });
   };
 
@@ -361,13 +445,33 @@ document.addEventListener('DOMContentLoaded', function () {
     frm.reset();
     btnSave.innerHTML = 'Guardar';
     toggleCosto();
-    tablaEventos.ajax.reload();
   });
 
   btnNuevo?.addEventListener('click', () => {
     frm.reset();
     idEvento.value = '';
     btnSave.innerHTML = 'Guardar';
+    // Limpiar CKEditor
+    if (window.ckEditorDescripcion) window.ckEditorDescripcion.setData('');
+    if (window.ckEditorContenido) window.ckEditorContenido.setData('');
+    // Limpiar selects con select2
+    const selectCarrera = document.getElementById('carrera');
+    if (selectCarrera && $(selectCarrera).data('select2')) {
+      $(selectCarrera).val(null).trigger('change');
+    }
+    // Limpiar checkboxes
+    document.getElementById('esPagado').checked = false;
+    document.getElementById('esDestacado').checked = false;
+    // Limpiar input de costo
+    document.getElementById('costo').value = 0;
+    document.getElementById('costo').disabled = true;
+    // Limpiar archivos
+    if (document.getElementById('urlPortada')) document.getElementById('urlPortada').value = '';
+    if (document.getElementById('urlGaleria')) document.getElementById('urlGaleria').value = '';
+    if (document.getElementById('nombrePortada')) document.getElementById('nombrePortada').textContent = '';
+    if (document.getElementById('nombreGaleria')) document.getElementById('nombreGaleria').textContent = '';
+    // Limpiar requisitos
+    document.querySelectorAll('input[name="requisitos[]"]').forEach(chk => chk.checked = false);
     toggleCosto();
     $('#modalEvento').modal('show');
   });

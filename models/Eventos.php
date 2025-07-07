@@ -20,20 +20,28 @@ class Evento {
             SELECT 
                 e.SECUENCIAL,
                 e.TITULO,
+                e.DESCRIPCION,
+                e.CONTENIDO,
+                e.ASISTENCIAMINIMA,
                 e.FECHAINICIO,
                 e.FECHAFIN,
                 e.HORAS,
                 e.COSTO,
                 e.ESTADO,
+                e.CAPACIDAD,
+                e.NOTAAPROBACION,
+                e.ES_PAGADO,
+                e.CODIGOMODALIDAD,
+                e.CODIGOTIPOEVENTO,
+                e.SECUENCIALCATEGORIA,
                 me.NOMBRE AS MODALIDAD,
                 te.NOMBRE AS TIPO,
-                ca.NOMBRE_CARRERA AS CARRERA,
-                ce.NOMBRE AS CATEGORIA
+                ce.NOMBRE AS CATEGORIA,
+                (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
             FROM evento e
             INNER JOIN organizador_evento oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO
             LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
             LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-            LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
             LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
             WHERE oe.SECUENCIALUSUARIO = ?
               AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
@@ -42,7 +50,19 @@ class Evento {
         ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$idUsuario]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Agregar carreras y requisitos a cada evento
+        foreach ($eventos as &$evento) {
+            // Obtener carreras asociadas (muchos a muchos)
+            $stmtCar = $this->pdo->prepare("SELECT c.SECUENCIAL, c.NOMBRE_CARRERA FROM evento_carrera ec INNER JOIN carrera c ON ec.SECUENCIALCARRERA = c.SECUENCIAL WHERE ec.SECUENCIALEVENTO = ?");
+            $stmtCar->execute([$evento['SECUENCIAL']]);
+            $evento['CARRERAS'] = $stmtCar->fetchAll(PDO::FETCH_ASSOC);
+            // Obtener requisitos asociados (corregido: la tabla es requisito_evento y el campo es SECUENCIAL, no SECUENCIALREQUISITO)
+            $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM requisito_evento WHERE SECUENCIALEVENTO = ?");
+            $stmtReq->execute([$evento['SECUENCIAL']]);
+            $evento['REQUISITOS'] = $stmtReq->fetchAll(PDO::FETCH_COLUMN);
+        }
+        return $eventos;
     }
 
 public function getEventosPublicos($filtros = []) {
@@ -128,73 +148,141 @@ public function getEventosConPortadaPorResponsable($idUsuario) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-    public function getEvento($idEvento){
-        
-    $stmt = $this->pdo->prepare("SELECT * FROM EVENTO WHERE SECUENCIAL = ?");
-    $stmt->execute([$idEvento]);
-    $evento = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Obtener organizadores (incluyendo ROL_ORGANIZADOR y SECUENCIALUSUARIO)
-    $stmtOrg = $this->pdo->prepare("SELECT oe.SECUENCIALUSUARIO, oe.ROL_ORGANIZADOR, u.NOMBRES, u.APELLIDOS, u.CORREO FROM organizador_evento oe INNER JOIN usuario u ON oe.SECUENCIALUSUARIO = u.SECUENCIAL WHERE oe.SECUENCIALEVENTO = ?");
-    $stmtOrg->execute([$idEvento]);
-    $evento['ORGANIZADORES'] = $stmtOrg->fetchAll(PDO::FETCH_ASSOC);
+public function getEvento($idEvento){
+    $logPath = __DIR__ . '/../log_carreras.txt';
+    file_put_contents($logPath, date('Y-m-d H:i:s') . " [getEvento] ID recibido: " . var_export($idEvento, true) . "\n", FILE_APPEND);
+    try {
+        // Traer todos los campos del evento, más nombres de modalidad, tipo, categoría
+        $sql = "SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?";
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " [getEvento] SQL: $sql\n", FILE_APPEND);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$idEvento]);
+        $evento = $stmt->fetch(PDO::FETCH_ASSOC);
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " [getEvento] Resultado SQL: " . var_export($evento, true) . "\n", FILE_APPEND);
+        if (!$evento) {
+            file_put_contents($logPath, date('Y-m-d H:i:s') . " [getEvento] No se encontró evento para ID $idEvento\n", FILE_APPEND);
+            return null;
+        }
 
-    // Obtener requisitos asociados
+        // Imágenes
+        $stmtPortada = $this->pdo->prepare("SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'PORTADA' LIMIT 1");
+        $stmtPortada->execute([$idEvento]);
+        $evento['PORTADA'] = $stmtPortada->fetchColumn();
+
+        $stmtGaleria = $this->pdo->prepare("SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'GALERIA' LIMIT 1");
+        $stmtGaleria->execute([$idEvento]);
+        $evento['GALERIA'] = $stmtGaleria->fetchColumn();
+
+        // Carreras asociadas (muchos a muchos)
+        $stmtCar = $this->pdo->prepare("SELECT c.SECUENCIAL, c.NOMBRE_CARRERA FROM evento_carrera ec INNER JOIN carrera c ON ec.SECUENCIALCARRERA = c.SECUENCIAL WHERE ec.SECUENCIALEVENTO = ?");
+        $stmtCar->execute([$idEvento]);
+        $evento['CARRERAS'] = $stmtCar->fetchAll(PDO::FETCH_ASSOC);
+
+    // Requisitos asociados
     $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM REQUISITO_EVENTO WHERE SECUENCIALEVENTO = ?");
     $stmtReq->execute([$idEvento]);
-    $requisitos = $stmtReq->fetchAll(PDO::FETCH_COLUMN); // devuelve array de SECUENCIAL
+    $evento['REQUISITOS'] = $stmtReq->fetchAll(PDO::FETCH_COLUMN);
 
-    $evento['REQUISITOS'] = $requisitos;
+        // Organizadores
+        $stmtOrg = $this->pdo->prepare("SELECT oe.SECUENCIALUSUARIO, oe.ROL_ORGANIZADOR, u.NOMBRES, u.APELLIDOS, u.CORREO FROM organizador_evento oe INNER JOIN usuario u ON oe.SECUENCIALUSUARIO = u.SECUENCIAL WHERE oe.SECUENCIALEVENTO = ?");
+        $stmtOrg->execute([$idEvento]);
+        $evento['ORGANIZADORES'] = $stmtOrg->fetchAll(PDO::FETCH_ASSOC);
 
-    return $evento;
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " [getEvento] Evento final: " . var_export($evento, true) . "\n", FILE_APPEND);
+        return $evento;
+    } catch (Exception $e) {
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " [getEvento] ERROR: " . $e->getMessage() . "\n", FILE_APPEND);
+        return null;
+    }
 }
 
 public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaFin, $modalidad,
-                            $notaAprobacion, $costo, $publicoDestino, $esPagado,
-                            $categoria, $tipo, $carrera, $estado, $idUsuario,
-                            $urlPortada, $urlGaleria, $capacidad) // galería es solo una imagen
+                            $notaAprobacion, $costo, $esPagado,
+                            $categoria, $tipo, $carreras, $estado, $idUsuario,
+                            $urlPortada, $urlGaleria, $capacidad, $contenido, $asistenciaMinima, $esDestacado = 0) // $carreras es un array de IDs
 {
-    $sql = "INSERT INTO evento (
-        TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, 
-        CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, 
-        ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, 
-        SECUENCIALCARRERA, ESTADO, CAPACIDAD
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
+    try {
+        file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] INICIO" . PHP_EOL, FILE_APPEND);
+        $this->pdo->beginTransaction();
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([
-        $titulo, $descripcion, $horas, $fechaInicio, $fechaFin, 
-        $modalidad, $notaAprobacion, $costo, $publicoDestino, 
-        $esPagado, $categoria, $tipo, $carrera, $estado, $capacidad
-    ]);
+        // Insertar evento (sin SECUENCIALCARRERA)
+        $sql = "INSERT INTO evento (
+            TITULO, DESCRIPCION, CONTENIDO, ASISTENCIAMINIMA, HORAS, FECHAINICIO, FECHAFIN, 
+            CODIGOMODALIDAD, NOTAAPROBACION, COSTO, 
+            ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, 
+            ESTADO, CAPACIDAD, ES_DESTACADO
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $idEvento = $this->pdo->lastInsertId();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            $titulo, $descripcion, $contenido, $asistenciaMinima, $horas, $fechaInicio, $fechaFin, 
+            $modalidad, $notaAprobacion, $costo, 
+            $esPagado, $categoria, $tipo, $estado, $capacidad, $esDestacado
+        ]);
 
-    // Asociar al usuario como RESPONSABLE
-    $orgStmt = $this->pdo->prepare("INSERT INTO organizador_evento 
-        (SECUENCIALUSUARIO, SECUENCIALEVENTO, ROL_ORGANIZADOR)
-        VALUES (?, ?, 'RESPONSABLE')");
-    $orgStmt->execute([$idUsuario, $idEvento]);
+        $idEvento = $this->pdo->lastInsertId();
+        file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] Evento insertado ID: $idEvento" . PHP_EOL, FILE_APPEND);
 
-    // Insertar imagen de portada si existe
-    if ($urlPortada) {
-        $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'PORTADA')");
-        $imgStmt->execute([$idEvento, $urlPortada]);
+        // Insertar relación evento-carrera (muchos a muchos)
+        if (is_array($carreras)) {
+            $carrerasUnicas = array_unique(array_filter($carreras, function($v) { return $v !== '' && $v !== null; }));
+            foreach ($carrerasUnicas as $idCarrera) {
+                $stmtCarr = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
+                $stmtCarr->execute([$idEvento, $idCarrera]);
+                file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] Carrera asociada: $idCarrera" . PHP_EOL, FILE_APPEND);
+            }
+        }
+
+        // Asociar al usuario como RESPONSABLE y ORGANIZADOR (si no existen ya)
+        $roles = ['RESPONSABLE', 'ORGANIZADOR'];
+        foreach ($roles as $rol) {
+            $orgStmt = $this->pdo->prepare("SELECT COUNT(*) FROM organizador_evento WHERE SECUENCIALUSUARIO = ? AND SECUENCIALEVENTO = ? AND ROL_ORGANIZADOR = ?");
+            $orgStmt->execute([$idUsuario, $idEvento, $rol]);
+            if ($orgStmt->fetchColumn() == 0) {
+                $orgInsert = $this->pdo->prepare("INSERT INTO organizador_evento (SECUENCIALUSUARIO, SECUENCIALEVENTO, ROL_ORGANIZADOR) VALUES (?, ?, ?)");
+                $orgInsert->execute([$idUsuario, $idEvento, $rol]);
+                file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] Rol asociado: $rol" . PHP_EOL, FILE_APPEND);
+            }
+        }
+
+        // Insertar imagen de portada si existe
+        if ($urlPortada) {
+            $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'PORTADA')");
+            $imgStmt->execute([$idEvento, $urlPortada]);
+            file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] Portada asociada: $urlPortada" . PHP_EOL, FILE_APPEND);
+        }
+
+        // Insertar imagen de galería si existe (igual que portada)
+        if ($urlGaleria) {
+            $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')");
+            $imgStmt->execute([$idEvento, $urlGaleria]);
+            file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] Galeria asociada: $urlGaleria" . PHP_EOL, FILE_APPEND);
+        }
+
+        $this->pdo->commit();
+        file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] COMMIT OK" . PHP_EOL, FILE_APPEND);
+        return $idEvento;
+    } catch (Exception $e) {
+        $this->pdo->rollBack();
+        file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento][ERROR] " . $e->getMessage() . PHP_EOL, FILE_APPEND);
+        throw $e;
     }
-
-    // Insertar imagen de galería si existe (igual que portada)
-    if ($urlGaleria) {
-        $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')");
-        $imgStmt->execute([$idEvento, $urlGaleria]);
-    }
-
-    return $idEvento;
 }
 
 public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaFin, $modalidad,
-                                 $notaAprobacion, $costo, $publicoDestino, $esPagado,
-                                 $categoria, $tipo, $carrera, $estado, $idEvento, $idUsuario,
-                                 $urlPortada, $urlGaleria, $capacidad) // galería es solo una imagen
+                                 $notaAprobacion, $costo, $esPagado,
+                                 $categoria, $tipo, $carreras, $estado, $idEvento, $idUsuario,
+                                 $urlPortada, $urlGaleria, $capacidad, $contenido, $asistenciaMinima, $esDestacado = 0) // $carreras es un array de IDs
 {
     // Verificar si el usuario es responsable del evento
     $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM organizador_evento 
@@ -205,54 +293,65 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
         return false; // No tiene permisos
     }
 
-    // Actualizar datos del evento
-    $sql = "UPDATE evento SET 
-                TITULO = ?, 
-                DESCRIPCION = ?, 
-                HORAS = ?, 
-                FECHAINICIO = ?, 
-                FECHAFIN = ?, 
-                CODIGOMODALIDAD = ?, 
-                NOTAAPROBACION = ?, 
-                COSTO = ?, 
-                ES_SOLO_INTERNOS = ?, 
-                ES_PAGADO = ?, 
-                SECUENCIALCATEGORIA = ?, 
-                CODIGOTIPOEVENTO = ?, 
-                SECUENCIALCARRERA = ?, 
-                ESTADO = ?, 
-                CAPACIDAD = ?
-            WHERE SECUENCIAL = ?";
+    try {
+        $this->pdo->beginTransaction();
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([
-        $titulo, $descripcion, $horas, $fechaInicio, $fechaFin,
-        $modalidad, $notaAprobacion, $costo, $publicoDestino,
-        $esPagado, $categoria, $tipo, $carrera,
-        $estado, $capacidad, $idEvento
-    ]);
+        // Actualizar datos del evento
+        $sql = "UPDATE evento SET 
+                    TITULO = ?, 
+                    DESCRIPCION = ?, 
+                    CONTENIDO = ?,
+                    ASISTENCIAMINIMA = ?,
+                    HORAS = ?, 
+                    FECHAINICIO = ?, 
+                    FECHAFIN = ?, 
+                    CODIGOMODALIDAD = ?, 
+                    NOTAAPROBACION = ?, 
+                    COSTO = ?, 
+                    ES_PAGADO = ?, 
+                    SECUENCIALCATEGORIA = ?, 
+                    CODIGOTIPOEVENTO = ?, 
+                    ESTADO = ?, 
+                    CAPACIDAD = ?,
+                    ES_DESTACADO = ?
+                WHERE SECUENCIAL = ?";
 
-    // Actualizar imagen de portada si se recibe una nueva
-    if ($urlPortada) {
-        // Elimina la portada anterior
-        $delStmt = $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'PORTADA'");
-        $delStmt->execute([$idEvento]);
-        // Inserta la nueva portada
-        $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'PORTADA')");
-        $imgStmt->execute([$idEvento, $urlPortada]);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            $titulo, $descripcion, $contenido, $asistenciaMinima, $horas, $fechaInicio, $fechaFin,
+            $modalidad, $notaAprobacion, $costo, 
+            $esPagado, $categoria, $tipo,
+            $estado, $capacidad, $esDestacado, $idEvento
+        ]);
+
+        // Actualizar carreras asociadas (muchos a muchos)
+        $this->pdo->prepare("DELETE FROM evento_carrera WHERE SECUENCIALEVENTO = ?")->execute([$idEvento]);
+        if (!empty($carreras) && is_array($carreras)) {
+            $carrerasUnicas = array_unique(array_filter($carreras, function($v) { return $v !== '' && $v !== null; }));
+            foreach ($carrerasUnicas as $idCarrera) {
+                $stmtCarr = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
+                $stmtCarr->execute([$idEvento, $idCarrera]);
+            }
+        }
+
+        // Actualizar imagen de portada si se recibe una nueva
+        if ($urlPortada) {
+            $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'PORTADA'")->execute([$idEvento]);
+            $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'PORTADA')")->execute([$idEvento, $urlPortada]);
+        }
+
+        // Actualizar imagen de galería si se recibe una nueva
+        if ($urlGaleria) {
+            $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'GALERIA'")->execute([$idEvento]);
+            $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')")->execute([$idEvento, $urlGaleria]);
+        }
+
+        $this->pdo->commit();
+        return true;
+    } catch (Exception $e) {
+        $this->pdo->rollBack();
+        throw $e;
     }
-
-    // Actualizar imagen de galería si se recibe una nueva
-    if ($urlGaleria) {
-        // Elimina la galería anterior
-        $delStmt = $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'GALERIA'");
-        $delStmt->execute([$idEvento]);
-        // Inserta la nueva galería
-        $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')");
-        $imgStmt->execute([$idEvento, $urlGaleria]);
-    }
-
-    return true;
 }
 
 public function eliminarEvento($idEvento, $idUsuario) {
@@ -444,7 +543,7 @@ public function registrarInscripcion($idUsuario, $idEvento, $monto, $formaPago, 
     }
 }
 
-public function registrarInscripcionBasica($idUsuario, $idEvento, $archivoRequisitoRuta = null)
+public function registrarInscripcionBasica($idUsuario, $idEvento)
 {
     // 1. Insertar inscripción
     $stmt = $this->pdo->prepare("
@@ -456,7 +555,7 @@ public function registrarInscripcionBasica($idUsuario, $idEvento, $archivoRequis
     // 2. Obtener ID de la inscripción recién creada
     $idInscripcion = $this->pdo->lastInsertId();
 
-    // 3. Obtener requisitos del evento (sin JOIN)
+    // ✅ 3. Obtener requisitos del evento (sin JOIN)
     $stmt = $this->pdo->prepare("
         SELECT SECUENCIAL, DESCRIPCION 
         FROM requisito_evento 
@@ -481,13 +580,6 @@ public function registrarInscripcionBasica($idUsuario, $idEvento, $archivoRequis
             $archivoExistente = $usuario['URL_CEDULA'];
         } elseif (str_contains($descripcion, 'matrícula') && !empty($usuario['URL_MATRICULA'])) {
             $archivoExistente = $usuario['URL_MATRICULA'];
-        }
-
-        // Si se subió un archivo de requisito y no es cédula ni matrícula, lo asociamos al primer requisito que no sea cédula/matrícula
-        if (!$archivoExistente && $archivoRequisitoRuta && !str_contains($descripcion, 'cédula') && !str_contains($descripcion, 'matrícula')) {
-            $archivoExistente = $archivoRequisitoRuta;
-            // Solo asociar el archivo una vez
-            $archivoRequisitoRuta = null;
         }
 
         if ($archivoExistente) {
@@ -616,12 +708,5 @@ public function getComprobantePago($idInscripcion)
     $stmt->execute([$idInscripcion]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-
-
-
-
-
-
-
 
 }
