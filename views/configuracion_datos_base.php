@@ -64,7 +64,7 @@
   left: 0;
   bottom: -8px;
   width: 100%;
-  height: 5px;
+  height: 8px;
   background: #ae0c22;
   border-radius: 3px;
 }
@@ -132,7 +132,7 @@
   </div>
   <div class="catalogo-item">
       <i class="fa fa-users" style="font-size:6rem;"></i>
-      <a href="config_autoridades.php">Configuración Autoridades</a>
+      <a href="config_autoridades.php">Autoridades</a>
   </div>
 
 </div>

@@ -7,8 +7,12 @@ function listarCertificadosPorEvento(idEvento) {
       }
       const tbody = document.querySelector('#tabla-certificados tbody');
       tbody.innerHTML = '';
+      let todosTienenCertificado = true;
       if (res.data.tipo === 'success') {
         res.data.data.forEach(row => {
+          if (!row.URL_CERTIFICADO) {
+            todosTienenCertificado = false;
+          }
           tbody.innerHTML += `
             <tr data-id="${row.ID_USUARIO}">
               <td>${row.CEDULA || ''}</td>
@@ -26,17 +30,31 @@ function listarCertificadosPorEvento(idEvento) {
             </tr>
           `;
         });
+      } else {
+        todosTienenCertificado = false;
       }
       $('#tabla-certificados').DataTable({
         language: { url: '../public/js/es-ES.json' },
         responsive: true
       });
+
+      // Lógica para habilitar/deshabilitar el botón de generar certificados
+      const btnGenerar = document.getElementById('btnGenerarTodos');
+      if (btnGenerar) {
+        if (todosTienenCertificado && res.data.data && res.data.data.length > 0) {
+          btnGenerar.disabled = true;
+          btnGenerar.title = 'Todos los certificados ya han sido generados para este evento.';
+        } else {
+          btnGenerar.disabled = false;
+          btnGenerar.title = '';
+        }
+      }
     });
 }
 
 // Abrir certificado PDF
 function verCertificado(url) {
-  window.open('../documents/' + url, '_blank');
+  window.open('../documents/certificados/' + url, '_blank');
 }
 
 // Subir certificado en base64 al servidor
@@ -63,8 +81,14 @@ async function subirCertificadoBase64(base64, idUsuario, idEvento) {
 // Generar y subir todos los certificados en PDF
 async function generarTodosPDFs() {
   const filas = document.querySelectorAll('#tabla-certificados tbody tr');
-  if (!filas.length) {
-    Swal.fire('Atención', 'No hay certificados emitidos para este evento.', 'info');
+  // Verifica si la tabla está vacía o solo tiene la fila de "No disponible"
+  if (!filas.length || (filas.length === 1 && filas[0].querySelectorAll('td').length === 1)) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No se puede generar certificados',
+      text: 'No hay registros de participantes en la tabla para este evento.',
+      confirmButtonColor: '#b93333'
+    });
     return;
   }
 
@@ -73,7 +97,6 @@ async function generarTodosPDFs() {
     title: 'Generando certificados PDF...',
     html: `
       <div style="text-align: left; margin: 20px 0;">
-        <p>🔄 Creando archivos PDF personalizados...</p>
         <p>💾 Guardando certificados en el servidor...</p>
         <p>📧 Preparando notificaciones por correo...</p>
         <br>
@@ -85,7 +108,7 @@ async function generarTodosPDFs() {
     didOpen: () => Swal.showLoading()
   });
 
-  const urlFondo = '../public/img/plantilla.png';
+  const urlFondo = '../public/img/uta/plantilla.png';
   const fondo = await cargarImagenBase64(urlFondo);
   const idEvento = document.getElementById('selectEvento').value;
 
@@ -147,9 +170,8 @@ async function generarTodosPDFs() {
     title: '¡Certificados generados exitosamente!',
     html: `
       <div style="text-align: left; margin: 20px 0;">
-        <p>✅ Los certificados PDF han sido generados y guardados correctamente.</p>
-        <p>📧 Se ha enviado una notificación por correo electrónico a cada participante informándoles que su certificado está disponible para descarga.</p>
-        <p>💡 Los usuarios podrán descargar sus certificados desde la sección "Mis Certificados" en su dashboard.</p>
+        <p> Los certificados PDF han sido generados y guardados correctamente.</p>
+        <p>Se ha enviado una notificación por correo electrónico a cada participante informándoles que su certificado está disponible para descarga.</p>
       </div>
     `,
     confirmButtonText: 'Entendido',
@@ -185,20 +207,46 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('nombreEventoSeleccionado').textContent = '';
         return;
       }
+
       res.data.forEach(ev => {
         select.innerHTML += `<option value="${ev.SECUENCIAL}">${ev.TITULO}</option>`;
       });
 
-      // Mostrar solo 3 opciones visibles, luego scroll
-      select.size = 1; // select normal, pero el scroll aparece automáticamente si abres el select
 
-      // Evento change: actualiza tabla y nombre del evento
-      select.addEventListener('change', function () {
-        listarCertificadosPorEvento(this.value);
-        const selectedText = this.options[this.selectedIndex]?.text || '';
-        document.getElementById('nombreEventoSeleccionado').textContent =
-          this.value ? 'Evento: ' + selectedText : '';
-      });
+      // Inicializar Select2 después de llenar el select
+      if (window.jQuery && $(select).select2) {
+        if ($(select).hasClass('select2-hidden-accessible')) {
+          $(select).select2('destroy');
+        }
+        $(select).select2({
+          placeholder: 'Buscar o seleccionar evento...',
+          allowClear: true,
+          width: '100%',
+          language: {
+            noResults: function() {
+              return 'No se encontraron eventos';
+            }
+          }
+        });
+        // Cerrar el menú al seleccionar o al cambiar (incluso si es la misma opción)
+        $(select).on('select2:select', function() {
+          $(this).select2('close');
+        });
+        $(select).on('change', function () {
+          $(this).select2('close');
+          listarCertificadosPorEvento(this.value);
+          const selectedText = this.options[this.selectedIndex]?.text || '';
+          document.getElementById('nombreEventoSeleccionado').textContent =
+            this.value ? 'Evento: ' + selectedText : '';
+        });
+      } else {
+        select.addEventListener('change', function () {
+          listarCertificadosPorEvento(this.value);
+          const selectedText = this.options[this.selectedIndex]?.text || '';
+          document.getElementById('nombreEventoSeleccionado').textContent =
+            this.value ? 'Evento: ' + selectedText : '';
+        });
+      }
 
       // Al cargar, si hay valor seleccionado, muestra la tabla y el nombre
       if (select.value) {

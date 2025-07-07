@@ -7,44 +7,43 @@ include("../core/auth.php")?>
     <div class="row">
         <div class="col-md-12">
         <h2><i class="fa fa-calendar"></i> Gestión de Eventos</h2>
+                <div class="linea-roja-uta"></div>
         </div>
     </div> 
-    <hr /> 
-    <div class="panel panel-default">
-      <div class="panel-heading"><i class="fa fa-list"></i> Lista de Eventos</div>
-      <div class="panel-body">
-        <button class="btn btn-primary mb-3" id="btn-nuevo" data-toggle="modal" data-target="#modalEvento">
-          <i class="fa fa-plus"></i> Nuevo Evento
-        </button>
-        <div class="form-check mb-2">
-          <label class="form-check-label">
-            <input type="checkbox" id="mostrarCancelados" class="form-check-input">Mostrar eventos cancelados
-          </label>
+        <div class="text-right" style="margin-bottom: 15px;">
+            <button class="btn mb-3" id="btn-nuevo" data-toggle="modal" data-target="#modalEvento" style="background-color: #e0e0e0; color: #222; border: 1px solid #b0b0b0;">
+            <i class="fa fa-plus"></i> Nuevo Evento
+            </button>
         </div>
-        <br><br>
+
+        <!-- Nav tabs para filtrar por estado -->
+        <ul class="nav nav-tabs" id="navEstadosEventos" style="margin-bottom: 15px;">
+          <li class="active"><a href="#" data-estado="DISPONIBLE">Disponible</a></li>
+          <li><a href="#" data-estado="EN CURSO">En Curso</a></li>
+          <li><a href="#" data-estado="FINALIZADO">Finalizado</a></li>
+          <li><a href="#" data-estado="CANCELADO">Cancelado</a></li>
+        </ul>
         <div class="table-responsive">
           <table class="table table-bordered table-striped" id="tabla-eventos">
             <thead class="thead-dark">
               <tr>
-                <th>TÍTULO</th>
-                <th>TIPO</th>
-                <th>INICIO</th>
-                <th>FINALIZACIÓN</th>
-                <th>MODALIDAD</th>
-                <th>HORAS</th>
-                <th>COSTO</th>
-                <th>ESTADO</th>
-                <th>ACCIONES</th>
+                <th>Foto</th>
+                <th>Título</th>
+                <th>Tipo</th>
+                <th>Inicio</th>
+                <th>Finalización</th>
+                <th>Modalidad</th>
+                <th>Horas</th>
+                <th>Costo</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
-        
-
 <!-- Modal -->
         <div class="modal fade" id="modalEvento" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
+          <div class="modal-dialog" style="max-width:800px;width:98vw; height: 90vh;">
             <div class="modal-content">
 
               <div class="modal-header">
@@ -54,183 +53,381 @@ include("../core/auth.php")?>
                 <h4 class="modal-title" id="modalEventoLabel"><i class="fa fa-edit"></i> Crear/Editar Evento</h4>
               </div>
               <div class="modal-body">
-  <form id="formEvento" role="form" enctype="multipart/form-data">
-
-    <!-- Campo oculto para actualizar -->
+                <form id="formEvento" role="form" enctype="multipart/form-data">
     <input type="hidden" id="idEvento" name="idEvento">
-
-    <!-- Título y horas -->
-    <div class="row">
+    <div class="row" style="margin-bottom:10px; align-items: flex-end;">
       <div class="col-md-6">
         <label for="titulo"><i class="fa fa-book"></i> Título del Evento</label>
         <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ej: Congreso de Tecnología" required>
       </div>
-      <div class="col-md-6">
-        <label for="horas"><i class="fa fa-clock-o"></i> Horas del Evento</label>
-        <input type="number" class="form-control" id="horas" name="horas" min="1" step="0.1" required>
+      <div class="col-md-2">
+        <label for="fechaInicio"><i class="fa fa-calendar"></i> Inicio</label>
+        <input type="date" class="form-control input-sm" id="fechaInicio" name="fechaInicio" required style="min-width: 120px;">
       </div>
-    </div><br>
-
-    <!-- Descripción -->
-    <div class="form-group">
-      <label for="descripcion"><i class="fa fa-align-left"></i> Descripción del Evento</label>
-      <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+      <div class="col-md-2">
+        <label for="fechaFin"><i class="fa fa-calendar"></i> Fin</label>
+        <input type="date" class="form-control input-sm" id="fechaFin" name="fechaFin" style="min-width: 120px;">
+      </div>
+      <div class="col-md-2 text-center">
+        <div class="custom-checkbox-vertical">
+          <label for="esDestacado" class="label-checkbox-vertical">¿Destacado?</label>
+          <input type="checkbox" id="esDestacado" name="esDestacado">
+        </div>
+      </div>
     </div>
-
-    <!-- Tipo, modalidad, categoría -->
+    <div class="row" style="margin-bottom:10px; align-items: flex-end;">
+      <div class="col-md-2">
+        <label for="horas"><i class="fa fa-clock-o"></i> Horas</label>
+        <input type="number" class="form-control input-sm" id="horas" name="horas" min="1" step="0.1" required>
+      </div>
+      <div class="col-md-2 text-center">
+        <div class="custom-checkbox-vertical">
+          <label for="esPagado" class="label-checkbox-vertical">¿Pagado?</label>
+          <input type="checkbox" id="esPagado" name="esPagado">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="costo"><i class="fa fa-dollar"></i> Costo</label>
+        <input type="number" class="form-control input-sm" id="costo" name="costo" min="0" step="0.01" value="0" readonly>
+      </div>
+      <div class="col-md-2">
+        <label for="notaAprobacion"><i class="fa fa-check-circle"></i> Nota mín.</label>
+        <input type="number" class="form-control input-sm" id="notaAprobacion" name="notaAprobacion" min="0" step="0.1">
+      </div>
+      <div class="col-md-2">
+        <label for="asistenciaMinima"><i class=""></i> % Por. Mín.</label>
+        <input type="number" class="form-control input-sm" id="asistenciaMinima" name="asistenciaMinima" min="0" max="100" step="0.1">
+      </div>
+      <div class="col-md-2">
+        <label for="capacidad"><i class="fa fa-users"></i> Capacidad</label>
+        <input type="number" class="form-control input-sm" id="capacidad" name="capacidad" min="1" step="1" required>
+      </div>
+      <div class="col-md-2" style="display:flex; align-items:center; gap:12px; margin-top:18px;">
+        
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-4">
         <label for="tipoEvento"><i class="fa fa-folder-open"></i> Tipo de Evento</label>
-        <select class="form-control" id="tipoEvento" name="tipoEvento" required>
+        <select class="form-control input-sm" id="tipoEvento" name="tipoEvento" required style="max-width: 220px;">
           <option value="">Seleccione</option>
         </select>
       </div>
       <div class="col-md-4">
         <label for="modalidad"><i class="fa fa-random"></i> Modalidad</label>
-        <select class="form-control" id="modalidad" name="modalidad" required>
+        <select class="form-control input-sm" id="modalidad" name="modalidad" required style="max-width: 220px;">
           <option value="">Seleccione</option>
         </select>
       </div>
       <div class="col-md-4">
         <label for="categoria"><i class="fa fa-tags"></i> Categoría</label>
-        <select class="form-control" id="categoria" name="categoria" required>
+        <select class="form-control input-sm" id="categoria" name="categoria" required style="max-width: 220px;">
           <option value="">Seleccione</option>
         </select>
       </div>
     </div><br>
-
-    <!-- Fechas -->
+    <div class="row">
+      <div class="col-md-4">
+        <label for="responsable"><i class="fa fa-user"></i> Responsable</label>
+        <select class="form-control input-sm" id="responsable" name="responsable" style="max-width: 220px;">
+          <option value="">Seleccione</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="organizador"><i class="fa fa-user"></i> Organizador</label>
+        <select class="form-control input-sm" id="organizador" name="organizador" style="max-width: 220px;">
+          <option value="">Seleccione</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="esSoloInternos"><i class="fa fa-users"></i> Inscripción</label>
+        <select id="esSoloInternos" name="esSoloInternos" class="form-control input-sm" style="max-width: 140px;">
+          <option value="1">Internos</option>
+          <option value="0">Externos</option>
+        </select>
+      </div>
+    </div><br>
+        <div class="row" style="margin-bottom:10px; align-items: flex-end;">
+      <div class="col-md-12">
+        <label for="carrera"><i class="fa fa-graduation-cap"></i> Carreras</label>
+        <select class="form-control select2 input-sm" id="carrera" name="carrera[]" multiple required style="width:100%; max-width: 700px;">
+          <!-- Opciones generadas dinámicamente -->
+        </select>
+        <small class="text-muted">Puede seleccionar varias carreras.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="descripcion"><i class="fa fa-align-left"></i> Descripción</label>
+      <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="contenido"><i class="fa fa-list-alt"></i> Contenido del Evento</label>
+      <textarea class="form-control" id="contenido" name="contenido" rows="4"></textarea>
+    </div>
+    <!-- Eliminado campo de asistencia mínima aquí, ahora está junto a nota mínima -->
+    <!-- Requisitos movidos al final del formulario -->
     <div class="row">
       <div class="col-md-6">
-        <label for="fechaInicio"><i class="fa fa-calendar"></i> Fecha de Inicio</label>
-        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
+        <label for="urlPortada"><i class="fa fa-image"></i> Imagen de Portada</label>
+        <input type="file" class="form-control" id="urlPortada" name="urlPortada" accept="image/*">
+        <div id="nombrePortada" class="text-muted" style="font-size:13px;margin-top:4px;"></div>
+        <div id="miniaturaPortada" style="margin-top:6px;"></div>
       </div>
       <div class="col-md-6">
-        <label for="fechaFin"><i class="fa fa-calendar"></i> Fecha de Fin</label>
-        <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+        <label for="urlGaleria"><i class="fa fa-picture-o"></i> Imagen de Galería</label>
+        <input type="file" class="form-control" id="urlGaleria" name="urlGaleria" accept="image/*">
+        <div id="nombreGaleria" class="text-muted" style="font-size:13px;margin-top:4px;"></div>
+        <div id="miniaturaGaleria" style="margin-top:6px;"></div>
       </div>
-    </div><br>
-
-    <!-- Nota y costo -->
-    <div class="row">
-      <div class="col-md-6">
-        <label for="notaAprobacion"><i class="fa fa-check-circle"></i> Nota mínima de aprobación</label>
-        <input type="number" class="form-control" id="notaAprobacion" name="notaAprobacion" min="0" step="0.1">
-      </div>
-
-      <div class="col-md-6">
-        <label for="costo"><i class="fa fa-dollar"></i> Costo ($)</label>
-        <input type="number" class="form-control" id="costo" name="costo" min="0" step="0.01" value="0" readonly>
-      </div>
-    </div><br>
-
-    <!-- Capacidad -->
-    <div class="form-group">
-      <label for="capacidad"><i class="fa fa-users"></i> Capacidad del Evento</label>
-      <input type="number" class="form-control" id="capacidad" name="capacidad" min="1" step="1" required>
-    </div><br>
-
-   <!-- Carrera -->
-<div class="form-group">
-  <label for="carrera"><i class="fa fa-graduation-cap"></i> Carrera</label>
-  <select class="form-control" id="carrera" name="carrera" required>
-    <option value="">Seleccione</option>
-  </select>
-</div><br>
-
-<!-- Responsable y Organizador (nuevo) -->
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group">
-      <label for="responsable"><i class="fa fa-user-shield"></i> Responsable del Evento</label>
-      <select class="form-control" id="responsable" name="responsable" required>
-        <option value="">Seleccione</option>
-      </select>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="form-group">
-      <label for="organizador"><i class="fa fa-user"></i> Organizador del Evento</label>
-      <select class="form-control" id="organizador" name="organizador" required>
-        <option value="">Seleccione</option>
-      </select>
+    <!-- Requisitos movidos después de las imágenes -->
+    <div class="row" style="margin-top:10px;">
+      <div class="col-md-12">
+        <div id="listaRequisitos" class="form-check"></div>
+      </div>
     </div>
-  </div>
-</div>
-<br>
-
-<!-- Público destino -->
-<div class="form-group">
-  <label for="publicoDestino"><i class="fa fa-users"></i> ¿Quiénes pueden inscribirse?</label>
-    <select id="esSoloInternos" name="esSoloInternos" class="form-control" required>
-      <option value="1">Internos</option>
-      <option value="0">Externos</option>
-    </select>
-</div>
-
-    <!-- Certificado -->
-    <div class="form-group">
-      <label for="esPagado"><i class="fa fa-certificate"></i> ¿Es pagado?</label>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" id="esPagado" name="esPagado"> Sí
-        </label>
-      </div>
-    </div><br>
-
-    <!-- Evento Destacado -->
-    <div class="form-group">
-      <label for="esDestacado"><i class="fa fa-star"></i> ¿Es un evento destacado?</label>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" id="esDestacado" name="esDestacado"> Sí
-        </label>
-      </div>
-    </div><br>
-    <div class="form-group">
-  <label for="requisitos">Requisitos del evento</label>
-  <div id="listaRequisitos" class="form-check">
-  </div>
-</div>
-
-<!-- Imagen de Portada -->
-<div class="form-group">
-  <label for="urlPortada"><i class="fa fa-image"></i> Imagen de Portada</label>
-  <input type="file" class="form-control" id="urlPortada" name="urlPortada" accept="image/*">
-</div>
-
-<!-- Imagen de Galería -->
-<div class="form-group">
-  <label for="urlGaleria"><i class="fa fa-picture-o"></i> Imagen de Galería</label>
-  <input type="file" class="form-control" id="urlGaleria" name="urlGaleria" accept="image/*">
-</div><br>
-
-    <!-- Botón -->
-    <div class="text-right">
-      <button type="submit" id="btn-save" class="btn btn-success">
-        <i class="fa fa-save"></i> Guardar Evento
+    <!-- Footer del modal dentro del form -->
+    <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 8px;">
+      <button type="submit" id="btn-save" class="btn" style="background-color:rgb(211, 211, 211); color: #222; border: 1px solid #b0b0b0;">
+        <i class="fa fa-save" style="color: #222;"></i> Guardar Evento
+      </button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        Cerrar
       </button>
     </div>
-  </form>
-</div>
+<!-- Mostrar nombre de archivos seleccionados o ya existentes -->
+<script>
+  // Mostrar nombre de archivo al seleccionar
+  document.addEventListener('DOMContentLoaded', function() {
+    const portadaInput = document.getElementById('urlPortada');
+    const galeriaInput = document.getElementById('urlGaleria');
+    const nombrePortada = document.getElementById('nombrePortada');
+    const nombreGaleria = document.getElementById('nombreGaleria');
 
-<!-- Footer del modal -->
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-  </div>
+    if (portadaInput) {
+      portadaInput.addEventListener('change', function() {
+        if (this.files && this.files.length > 0) {
+          nombrePortada.textContent = this.files[0].name;
+        } else {
+          nombrePortada.textContent = '';
+        }
+      });
+    }
+    if (galeriaInput) {
+      galeriaInput.addEventListener('change', function() {
+        if (this.files && this.files.length > 0) {
+          nombreGaleria.textContent = this.files[0].name;
+        } else {
+          nombreGaleria.textContent = '';
+        }
+      });
+    }
+    // Cuando se edita un evento, mostrar el nombre y miniatura del archivo ya existente si lo hay
+    window.mostrarNombresImagenesEvento = function(portada, galeria) {
+      nombrePortada.textContent = portada ? portada : '';
+      nombreGaleria.textContent = galeria ? galeria : '';
+      // Mostrar solo la URL debajo del input si hay nombre
+      const miniaturaPortada = document.getElementById('miniaturaPortada');
+      const miniaturaGaleria = document.getElementById('miniaturaGaleria');
+      if (portada) {
+        miniaturaPortada.innerHTML = '';
+      } else {
+        miniaturaPortada.innerHTML = '';
+      }
+      if (galeria) {
+        miniaturaGaleria.innerHTML = '';
+      } else {
+        miniaturaGaleria.innerHTML = '';
+      }
+    };
+  });
+</script>
+
+                </form>
               </div>
             </div>
           </div>
-
 <!-- Fin modal -->
-         
+        </div>
 
-      </div>
-    </div>
-  </div>
-</div>
+<style>
+  body {
+    background-color: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
+  }
+  .alert-info {
+  background-color: #ffd6d6 !important; /* Rojo claro */
+  color: #222 !important;               /* Letra negra */
+  border-color: #ffb3b3 !important;     /* Borde rojo suave */
+}
+
+  .panel-heading {
+    background: rgb(27, 26, 26) !important;
+    color: #fff !important;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom: 2px solid #7b2020;
+     font-weight: normal;
+     font-size: 14px;
+
+  }
+   h2 {
+    font-size: 24px;
+    color: rgb(23, 23, 23);
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  
+
+  .panel-heading {
+    background:rgb(185, 51, 51);
+    color: #fff;
+    
+  }
+ select.form-control {
+    border: 1.5px solid #9b2e2e;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #f9fafb;
+    color: #222;
+    transition: border-color 0.2s;
+  }
+   th.nombre-columna, td.nombre-columna {
+  max-width: 100px;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+ div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:hover {
+    color: #111 !important;
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+    background-color: #9b2e2e !important;
+    border-color: #9b2e2e!important;
+    color: #fff !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+thead {
+  background-color: rgb(180, 34, 34);
+  color: white;
+  font-size: 14px;
+  font-weight: normal;
+}
+.table {
+  width: 100% !important;
+  max-width: 90vw !important;
+  margin: 0 auto;
+}
+.table th, .table td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table th {
+  background-color: rgb(180, 34, 34);
+  color: #fff;
+  font-weight: normal;
+}
+h4 {
+  font-size: 14px;
+  
+}
+label{
+  font-weight: normal;
+  font-size: 14px;
+}
+p{
+  font-size: 14px;
+  font-weight: normal;
+}
+hr{
+  border-top: 2px solid #9b2e2e;
+  opacity: 1;
+}
+.dataTables_length label,
+.dataTables_length select {
+  font-size: 14px !important;
+}
+ .titulo-linea {
+    border-bottom: 2px solid rgb(185, 51, 51);
+    margin-top: 6px;
+    margin-bottom: 20px;
+  }
+
+/* Tabs UTA institucional */
+.nav-tabs > li > a {
+  color: #222 !important; /* Negro para inactivos */
+}
+.nav-tabs > li > a:hover {
+  background: #c0392b !important;
+  color: #fff !important;
+}
+ul.nav.nav-tabs {
+  margin-top: -8px !important;
+  margin-bottom: 15px;
+}
+
+.linea-roja-uta {
+  width: 100%;
+  height: 8px;
+  background: #ae0c22;
+  border-radius: 3px;
+  margin-top: 0px;
+  margin-bottom: 18px;
+}
+  /* Alto máximo y scroll para el cuerpo del modal de eventos */
+  .modal-body {
+    overflow-y: auto;
+  }
+/* Estilo para checkboxes verticales */
+.custom-checkbox-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 54px;
+}
+.label-checkbox-vertical {
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: normal;
+}
+.custom-checkbox-vertical input[type="checkbox"] {
+  margin: 10px auto 0 auto; /* Baja el checkbox y lo centra */
+  width: 15px;
+  height: 15px;
+  accent-color: #ae0c22; /* Rojo institucional */
+}
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color:rgb(184, 46, 46) !important; /* Rojo institucional */
+  color: #fff !important;
+}
+</style>
+
+
     <!-- Scripts necesarios -->
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

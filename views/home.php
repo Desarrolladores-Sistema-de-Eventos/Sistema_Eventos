@@ -158,7 +158,7 @@ $imagenesCarrusel = $modeloCarrusel->obtenerCarruselPublico();
 ?>
 <?php include('partials/header.php'); ?>
         <!-- Carousel Start -->
-        <div class="container-fluid p-0" style="background: #fdfce9;">
+        <div class="container-fluid p-0">
             <div id="header-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <?php foreach ($imagenesCarrusel as $i => $img): ?>
@@ -194,7 +194,7 @@ $imagenesCarrusel = $modeloCarrusel->obtenerCarruselPublico();
      
 <!-- Sobre Nosotros Start-->
  <div data-aos="fade-up" data-aos-delay="100">
-<section class="py-4" style="background: #fdfce9;">
+<section class="py-4" style="background-color: #fafafa;">
 
   <div class="container">
     <div class="row align-items-center">
@@ -224,7 +224,7 @@ $imagenesCarrusel = $modeloCarrusel->obtenerCarruselPublico();
 
     <!-- Eventos Destacados Start -->
      <div data-aos="fade-up" data-aos-delay="100">
-         <div class="container-fluid py-4" style="background: #fdfce9;">
+         <div class="container-fluid py-4" style="background-color: #fafafa;">
 
               <div class="container">
                 <div class="text-center mb-5">

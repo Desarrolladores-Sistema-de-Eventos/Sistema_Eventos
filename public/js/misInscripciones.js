@@ -106,7 +106,7 @@ function abrirModalSubida(idInscripcion, idEvento, esPagado) {
           div.innerHTML = `
             <label><strong>${req.descripcion}</strong></label>
             <div class="grupo-archivo" data-id="${idReq}">
-              <a href="../documents/${req.archivo}" target="_blank" class="nombre-archivo mr-2" style="color: #0066cc;">${req.archivo}</a>
+              <a href="../documents/requisitos/${req.archivo}" target="_blank" class="nombre-archivo mr-2" style="color: #0066cc;">${req.archivo}</a>
               <button type="button" class="btn btn-sm btn-outline-primary cambiar-archivo">Cambiar</button>
               <input type="file" name="requisito_${idReq}" class="form-control-file mt-2" style="display: none;" accept=".pdf,.jpg,.jpeg,.png">
             </div>`;
@@ -149,7 +149,7 @@ function abrirModalSubida(idInscripcion, idEvento, esPagado) {
         wrapper.style.display = 'block';
         nuevo.style.display = 'none';
         link.textContent = comprobante;
-        link.href = `../documents/${comprobante}`;
+        link.href = `../documents/comprobantes/${comprobante}`;
         link.style.color = '#0066cc';
         link.classList.remove('text-muted');
         input.style.display = 'none';

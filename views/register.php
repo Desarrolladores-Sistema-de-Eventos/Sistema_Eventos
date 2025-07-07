@@ -10,25 +10,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     html, body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #f4f4f4;
       overflow-x: hidden;
+      width: 100%;
+      font-family: 'Lato', 'Poppins', sans-serif;
+      background: #f6f7f9 url('../public/img/uta/background.jpg') center center no-repeat;
+      background-size: cover;
+      margin: 0;
+      height: 100%;
     }
 
     .main-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-top: 30px;
-      padding-bottom: 30px;
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
     }
 
     .register-container {
@@ -135,98 +133,85 @@
 
 <body>
 
-  <!-- Banner institucional (opcional reemplazar con tu banner real) -->
-  <div class="banner-uta">
-    <img src="../public/img/header.png" alt="Banner UTA" style="width: 100%; height: auto; display: block;">
-  </div>
-
-  <!-- Formulario -->
-  <div class="main-content">
-    <div class="register-container">
-      <h2 class="form-title d-flex align-items-center justify-content-center gap-2"><i class="fas fa-user-plus" style="color: #8B0000; font-size: 28px;"></i>Registro</h2>
-      <form id="formRegistroUsuario" method="POST" action="#" autocomplete="off">
-        <div class="row">
-          <div class="col-md-6">
-            <!-- Nombres -->
-            <div class="mb-3">
-              <label for="nombres" class="form-label">
-                <i class="fas fa-user" style="color:#8B0000;"></i> Nombres
-              </label>
-              <input type="text" class="form-control" id="nombres" name="nombres" required maxlength="100">
-            </div>
-
-            <!-- Apellidos -->
-            <div class="mb-3">
-              <label for="apellidos" class="form-label">
-                <i class="fas fa-user-tag" style="color:#8B0000;"></i> Apellidos
-              </label>
-              <input type="text" class="form-control" id="apellidos" name="apellidos" required maxlength="100">
-            </div>
-
-            <!-- Teléfono -->
-            <div class="mb-3">
-              <label for="telefono" class="form-label">
-                <i class="fas fa-phone-alt" style="color:#8B0000;"></i> Teléfono
-              </label>
-              <input type="text" class="form-control" id="telefono" name="telefono" required maxlength="20">
-            </div>
-
-            <!-- Dirección -->
-            <div class="mb-3">
-              <label for="direccion" class="form-label">
-                <i class="fas fa-map-marker-alt" style="color:#8B0000;"></i> Dirección
-              </label>
-              <input type="text" class="form-control" id="direccion" name="direccion" maxlength="255">
-            </div>
-
-            <!-- Fecha nacimiento -->
-            <div class="mb-3">
-              <label for="fecha_nacimiento" class="form-label">
-                <i class="fas fa-calendar-alt" style="color:#8B0000;"></i> Fecha de nacimiento
-              </label>
-              <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-            </div>
+  <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height:100vh;">
+    <div class="d-flex justify-content-center align-items-center w-100" style="min-height:100vh;">
+      <div class="d-flex flex-row shadow-lg flex-wrap" style="border-radius:18px; min-width:420px; max-width:1100px; min-height:480px; width:100%;">
+        <!-- Columna izquierda: imágenes y textos institucionales -->
+        <div class="d-flex flex-column align-items-center justify-content-center p-3" style="width:100%; max-width:440px; border-radius:18px 0 0 18px; background:rgba(255,255,255,0.97); min-height:480px; box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+          <div style="display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap; margin-bottom:18px;">
+            <img src="../public/img/uta/logo2020.png" alt="FISEI" style="height:100px;">
+            <img src="../public/img/uta/fisei_logo.png" alt="FISEI" style="height:100px;">
           </div>
-
-          <div class="col-md-6">
-            <!-- Correo -->
-            <div class="mb-3">
-              <label for="correo" class="form-label">
-                <i class="fas fa-envelope" style="color:#8B0000;"></i> Correo electrónico
-              </label>
-              <input type="email" class="form-control" id="correo" name="correo" required maxlength="100">
+          <h4 style="font-weight:bold;color:#222; margin-bottom:8px; text-align:center;">PLATAFORMA EDUCATIVA INSTITUCIONAL</h4>
+          <h5 style="color:#8B0000;font-weight:bold; text-align:center;">Facultad de Ingeniería en Sistemas, Electrónica e Industrial</h5>
+          <img src="../public/img/uta/logo1.png" alt="Escudo UTA" style="height:100px;">
+        </div>
+        <!-- Columna derecha: formulario de registro -->
+        <div class="d-flex flex-column align-items-center justify-content-center p-3" style="width:100%; max-width:540px; border-radius:0 18px 18px 0; background:rgba(255,255,255,0.97); min-height:480px; border-left:1px solid #eee; box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+          <div class="w-100" style="max-width:440px; margin:0 auto;">
+            <form id="formRegistroUsuario" method="POST" action="#" autocomplete="off" class="text-start">
+              <h3 class="mb-4 text-center" style="color:#8B0000;font-weight:bold;">Registro</h3>
+              <div class="row g-2">
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="nombres" class="form-label"><i class="fas fa-user" style="color:#8B0000;"></i> Nombres</label>
+                    <input type="text" class="form-control form-control-sm" id="nombres" name="nombres" required maxlength="100" style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="apellidos" class="form-label"><i class="fas fa-user-tag" style="color:#8B0000;"></i> Apellidos</label>
+                    <input type="text" class="form-control form-control-sm" id="apellidos" name="apellidos" required maxlength="100" style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="telefono" class="form-label"><i class="fas fa-phone-alt" style="color:#8B0000;"></i> Teléfono</label>
+                    <input type="text" class="form-control form-control-sm" id="telefono" name="telefono" required maxlength="20" style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="direccion" class="form-label"><i class="fas fa-map-marker-alt" style="color:#8B0000;"></i> Dirección</label>
+                    <input type="text" class="form-control form-control-sm" id="direccion" name="direccion" maxlength="255" style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="fecha_nacimiento" class="form-label"><i class="fas fa-calendar-alt" style="color:#8B0000;"></i> Fecha de nacimiento</label>
+                    <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" required style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="correo" class="form-label"><i class="fas fa-envelope" style="color:#8B0000;"></i> Correo electrónico</label>
+                    <input type="email" class="form-control form-control-sm" id="correo" name="correo" required maxlength="100" style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="contrasena" class="form-label"><i class="fas fa-lock" style="color:#8B0000;"></i> Contraseña</label>
+                    <input type="password" class="form-control form-control-sm" id="contrasena" name="contrasena" required minlength="6" maxlength="255" style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group mb-2">
+                    <label for="confirmar_contrasena" class="form-label"><i class="fas fa-lock" style="color:#8B0000;"></i> Confirmar contraseña</label>
+                    <input type="password" class="form-control form-control-sm" id="confirmar_contrasena" name="confirmar_contrasena" required minlength="6" maxlength="255" style="font-size:15px; padding:6px 10px;">
+                  </div>
+                </div>
+              </div>
+              <div class="progress mb-2" style="height: 5px;">
+                <div id="password-strength-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100 mt-2" style="font-size:16px; padding:7px 0;"><i class="fas fa-user-plus me-2"></i> Registrarse</button>
+            </form>
+            <div class="text-center mt-3" style="color: #000;">
+              ¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a>
             </div>
-
-            <!-- Contraseña -->
-            <div class="mb-3">
-              <label for="contrasena" class="form-label">
-                <i class="fas fa-lock" style="color:#8B0000;"></i> Contraseña
-              </label>
-              <input type="password" class="form-control" id="contrasena" name="contrasena" required minlength="6" maxlength="255">
-            </div>
-
-            <!-- Barra de fuerza -->
-            <div class="progress mb-2" style="height: 6px;">
-              <div id="password-strength-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-
-            <!-- Confirmar contraseña -->
-            <div class="mb-3">
-              <label for="confirmar_contrasena" class="form-label">
-                <i class="fas fa-lock" style="color:#8B0000;"></i> Confirmar contraseña
-              </label>
-              <input type="password" class="form-control" id="confirmar_contrasena" name="confirmar_contrasena" required minlength="6" maxlength="255">
-            </div>
+            <p id="register-error" class="text-danger text-center mt-2"></p>
           </div>
         </div>
-
-        <button type="submit" class="btn w-100 mt-2">
-          <i class="fas fa-user-plus me-2"></i> Registrarse
-        </button>
-      </form>
-
-      <div class="text-center mt-3" style="color: #000;">
-        ¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a>
       </div>
     </div>
   </div>
@@ -238,6 +223,5 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../public/js/usuario.js"></script>
-  <?php include('partials/footer.php'); ?>
 </body>
 </html>

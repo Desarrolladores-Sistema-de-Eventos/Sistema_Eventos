@@ -444,7 +444,7 @@ public function registrarInscripcion($idUsuario, $idEvento, $monto, $formaPago, 
     }
 }
 
-public function registrarInscripcionBasica($idUsuario, $idEvento)
+public function registrarInscripcionBasica($idUsuario, $idEvento, $archivoRequisitoRuta = null)
 {
     // 1. Insertar inscripción
     $stmt = $this->pdo->prepare("
@@ -456,7 +456,7 @@ public function registrarInscripcionBasica($idUsuario, $idEvento)
     // 2. Obtener ID de la inscripción recién creada
     $idInscripcion = $this->pdo->lastInsertId();
 
-    // ✅ 3. Obtener requisitos del evento (sin JOIN)
+    // 3. Obtener requisitos del evento (sin JOIN)
     $stmt = $this->pdo->prepare("
         SELECT SECUENCIAL, DESCRIPCION 
         FROM requisito_evento 
@@ -481,6 +481,13 @@ public function registrarInscripcionBasica($idUsuario, $idEvento)
             $archivoExistente = $usuario['URL_CEDULA'];
         } elseif (str_contains($descripcion, 'matrícula') && !empty($usuario['URL_MATRICULA'])) {
             $archivoExistente = $usuario['URL_MATRICULA'];
+        }
+
+        // Si se subió un archivo de requisito y no es cédula ni matrícula, lo asociamos al primer requisito que no sea cédula/matrícula
+        if (!$archivoExistente && $archivoRequisitoRuta && !str_contains($descripcion, 'cédula') && !str_contains($descripcion, 'matrícula')) {
+            $archivoExistente = $archivoRequisitoRuta;
+            // Solo asociar el archivo una vez
+            $archivoRequisitoRuta = null;
         }
 
         if ($archivoExistente) {

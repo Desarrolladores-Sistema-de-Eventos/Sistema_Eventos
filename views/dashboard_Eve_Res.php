@@ -9,7 +9,7 @@ include("../core/auth.php")
     <div class="row">
       <div class="col-md-12 d-flex justify-content-between align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
         <h2 style="margin-bottom: 0;"><i class="fa fa-calendar"></i> Gestión de Eventos</h2>
-        <button class="btn btn-primary mb-3" id="btn-nuevo" data-toggle="modal" data-target="#modalEvento" style="margin-bottom: 0;">
+        <button class="btn btn-primary mb-3" id="btn-nuevo" data-toggle="modal" data-target="#modalEvento" style="margin-bottom: 0; background: #f3f3f3; color: #222; border: none;">
           <i class="fa fa-plus-square-o"></i> Nuevo
         </button>
       </div>

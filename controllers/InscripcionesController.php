@@ -241,7 +241,7 @@ private function subirFactura() {
 
     $extension = pathinfo($archivo['name'], PATHINFO_EXTENSION);
     $nombreArchivo = uniqid('factura_') . "." . $extension;
-    $rutaDestino = "../facturas_Comprobantes/" . $nombreArchivo;
+    $rutaDestino = "../documents/facturas/" . $nombreArchivo;
 
     if (!move_uploaded_file($archivo['tmp_name'], $rutaDestino)) {
         return $this->json([

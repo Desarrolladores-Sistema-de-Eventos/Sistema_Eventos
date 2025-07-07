@@ -141,112 +141,120 @@ class CertificadoController
         $this->json($data);
     }
 
-
-private function subirCertificado()
-{
-    $base64 = $_POST['base64'] ?? null;
-    $idUsuario = $_POST['idUsuario'] ?? null;
-    $idEvento = $_POST['idEvento'] ?? null;
-
-    if (!$base64 || !$idUsuario || !$idEvento) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Datos incompletos para subir certificado.']);
-        return;
+    private function logCorreo($mensaje) {
+        $logPath = __DIR__ . '/../correo.log';
+        file_put_contents($logPath, date('Y-m-d H:i:s') . " - $mensaje\n", FILE_APPEND);
     }
 
-    // Validar existencia de usuario y evento antes de continuar
-    if (!$this->certificadoModelo->usuarioYEventoExisten($idUsuario, $idEvento)) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Usuario o evento no existe.']);
-        return;
-    }
+    private function subirCertificado()
+    {
+        $base64 = $_POST['base64'] ?? null;
+        $idUsuario = $_POST['idUsuario'] ?? null;
+        $idEvento = $_POST['idEvento'] ?? null;
 
-    $pdfData = base64_decode($base64);
-    if (!$pdfData || strlen($pdfData) < 1000) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Base64 inválido o PDF demasiado pequeño']);
-        return;
-    }
+        $this->logCorreo("[subirCertificado] POST: base64=" . ($base64 ? 'OK' : 'NO') . ", idUsuario=$idUsuario, idEvento=$idEvento");
 
-    $nombreArchivo = 'certificado_' . intval($idUsuario) . '_' . intval($idEvento) . '_' . time() . '.pdf';
-    $directorio = '../documents/';
-    $rutaDestino = $directorio . $nombreArchivo;
-
-    if (!is_dir($directorio) || !is_writable($directorio)) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Directorio de destino no disponible o no escribible']);
-        return;
-    }
-
-    $guardado = @file_put_contents($rutaDestino, $pdfData);
-    if ($guardado === false) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'No se pudo guardar el archivo PDF']);
-        return;
-    }
-
-    try {
-        $certExistente = $this->certificadoModelo->buscarCertificadoPorUsuarioEvento($idUsuario, $idEvento);
-
-        if ($certExistente) {
-            $resultado = $this->certificadoModelo->editarCertificado($certExistente['SECUENCIAL'], $nombreArchivo);
-        } else {
-            $resultado = $this->certificadoModelo->crearCertificado($idUsuario, $idEvento, $nombreArchivo);
+        if (!$base64 || !$idUsuario || !$idEvento) {
+            $this->logCorreo("[subirCertificado] Faltan datos base64, idUsuario o idEvento");
+            $this->json(['tipo' => 'error', 'mensaje' => 'Datos incompletos para subir certificado.']);
+            return;
         }
 
-        // Si $resultado es un array, úsalo directamente
-        if (is_array($resultado)) {
-            $success = $resultado['success'];
-            $mensaje = $resultado['mensaje'];
-        } else {
-            $success = $resultado;
-            $mensaje = $resultado ? 'Certificado guardado correctamente' : 'Error al guardar en la base de datos';
+        if (!$this->certificadoModelo->usuarioYEventoExisten($idUsuario, $idEvento)) {
+            $this->logCorreo("[subirCertificado] Usuario o evento no existe: usuario=$idUsuario evento=$idEvento");
+            $this->json(['tipo' => 'error', 'mensaje' => 'Usuario o evento no existe.']);
+            return;
         }
 
-        $this->json([
-            'tipo' => $success ? 'success' : 'error',
-            'mensaje' => $mensaje,
-            'url_certificado' => $success ? $nombreArchivo : null
-        ]);
+        $pdfData = base64_decode($base64);
+        if (!$pdfData || strlen($pdfData) < 1000) {
+            $this->logCorreo("[subirCertificado] Base64 inválido o PDF demasiado pequeño. Length: " . strlen($pdfData));
+            $this->json(['tipo' => 'error', 'mensaje' => 'Base64 inválido o PDF demasiado pequeño']);
+            return;
+        }
 
-        // Si se guardó exitosamente, enviar notificación por correo
-        if ($success) {
-            try {
-                // Obtener datos del usuario y evento para el correo
-                $pdo = $this->certificadoModelo->getPDO();
-                $stmt = $pdo->prepare("
-                    SELECT 
-                        u.NOMBRES, 
-                        u.APELLIDOS, 
-                        u.CORREO,
-                        e.TITULO AS NOMBRE_EVENTO,
-                        e.CODIGOTIPOEVENTO
-                    FROM usuario u, evento e 
-                    WHERE u.SECUENCIAL = ? AND e.SECUENCIAL = ?
-                ");
-                $stmt->execute([$idUsuario, $idEvento]);
-                $datos = $stmt->fetch(PDO::FETCH_ASSOC);
-                
-                if ($datos) {
-                    $nombreCompleto = $datos['NOMBRES'] . ' ' . $datos['APELLIDOS'];
-                    $tipoCertificado = ($datos['CODIGOTIPOEVENTO'] === 'CUR') ? 'Aprobación' : 'Participación';
-                    
-                    enviarCorreoCertificadoPDFDisponible(
-                        $datos['CORREO'],
-                        $nombreCompleto,
-                        $datos['NOMBRE_EVENTO'],
-                        $tipoCertificado
-                    );
-                }
-            } catch (Exception $e) {
-                // Si hay error en el correo, no afectar la respuesta principal
-                error_log('Error enviando notificación de certificado PDF: ' . $e->getMessage());
+        $nombreArchivo = 'certificado_' . intval($idUsuario) . '_' . intval($idEvento) . '_' . time() . '.pdf';
+        $directorio = '../documents/certificados/';
+        $rutaDestino = $directorio . $nombreArchivo;
+
+        $this->logCorreo("[subirCertificado] Intentando guardar en: $rutaDestino");
+
+        if (!is_dir($directorio) || !is_writable($directorio)) {
+            $this->logCorreo("[subirCertificado] Directorio no existe o no escribible: $directorio");
+            $this->json(['tipo' => 'error', 'mensaje' => 'Directorio de destino no disponible o no escribible']);
+            return;
+        }
+
+        $guardado = @file_put_contents($rutaDestino, $pdfData);
+        if ($guardado === false) {
+            $this->logCorreo("[subirCertificado] No se pudo guardar el archivo PDF en $rutaDestino");
+            $this->json(['tipo' => 'error', 'mensaje' => 'No se pudo guardar el archivo PDF']);
+            return;
+        }
+
+        try {
+            $certExistente = $this->certificadoModelo->buscarCertificadoPorUsuarioEvento($idUsuario, $idEvento);
+            $this->logCorreo("[subirCertificado] Certificado existente: " . ($certExistente ? 'SI' : 'NO'));
+
+            if ($certExistente) {
+                $resultado = $this->certificadoModelo->editarCertificado($certExistente['SECUENCIAL'], $nombreArchivo);
+            } else {
+                $resultado = $this->certificadoModelo->crearCertificado($idUsuario, $idEvento, $nombreArchivo);
             }
+
+            if (is_array($resultado)) {
+                $success = $resultado['success'];
+                $mensaje = $resultado['mensaje'];
+            } else {
+                $success = $resultado;
+                $mensaje = $resultado ? 'Certificado guardado correctamente' : 'Error al guardar en la base de datos';
+            }
+
+            $this->logCorreo("[subirCertificado] Resultado BD: success=$success, mensaje=$mensaje");
+
+            $this->json([
+                'tipo' => $success ? 'success' : 'error',
+                'mensaje' => $mensaje,
+                'url_certificado' => $success ? $nombreArchivo : null
+            ]);
+
+            if ($success) {
+                try {
+                    $pdo = $this->certificadoModelo->getPDO();
+                    $stmt = $pdo->prepare("
+                        SELECT 
+                            u.NOMBRES, 
+                            u.APELLIDOS, 
+                            u.CORREO,
+                            e.TITULO AS NOMBRE_EVENTO,
+                            e.CODIGOTIPOEVENTO
+                        FROM usuario u, evento e 
+                        WHERE u.SECUENCIAL = ? AND e.SECUENCIAL = ?
+                    ");
+                    $stmt->execute([$idUsuario, $idEvento]);
+                    $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($datos) {
+                        $nombreCompleto = $datos['NOMBRES'] . ' ' . $datos['APELLIDOS'];
+                        $tipoCertificado = ($datos['CODIGOTIPOEVENTO'] === 'CUR') ? 'Aprobación' : 'Participación';
+                        enviarCorreoCertificadoPDFDisponible(
+                            $datos['CORREO'],
+                            $nombreCompleto,
+                            $datos['NOMBRE_EVENTO'],
+                            $tipoCertificado
+                        );
+                    }
+                } catch (Exception $e) {
+                    $this->logCorreo('[subirCertificado] Error enviando notificación de certificado PDF: ' . $e->getMessage());
+                }
+            }
+        } catch (Exception $e) {
+            $this->logCorreo('[subirCertificado] Excepción: ' . $e->getMessage());
+            if (file_exists($rutaDestino)) {
+                unlink($rutaDestino);
+            }
+            $this->json(['tipo' => 'error', 'mensaje' => 'Excepción al guardar: ' . $e->getMessage()]);
         }
-    } catch (Exception $e) {
-        if (file_exists($rutaDestino)) {
-            unlink($rutaDestino);
-        }
-        $this->json(['tipo' => 'error', 'mensaje' => 'Excepción al guardar: ' . $e->getMessage()]);
     }
-}
-
-
 
     private function json($data)
     {

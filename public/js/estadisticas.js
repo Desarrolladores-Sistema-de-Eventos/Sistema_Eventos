@@ -36,19 +36,35 @@ $(document).ready(function() {
                 datasets: [{
                     label: 'Inscripciones',
                     data: values,
-                    backgroundColor: '#0b62a4'
+                    backgroundColor: '#8B0000', // Rojo UTA
+                    borderColor: '#222', // Negro UTA
+                    borderWidth: 2,
+                    hoverBackgroundColor: '#600000',
+                    hoverBorderColor: '#8B0000'
                 }]
             },
             options: {
                 indexAxis: 'y', // Barras horizontales
                 responsive: true,
                 plugins: {
-                    legend: { display: false }
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#222',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#8B0000',
+                        borderWidth: 1
+                    }
                 },
                 scales: {
                     x: {
                         beginAtZero: true,
-                        ticks: { precision:0 }
+                        ticks: { color: '#222', precision:0 },
+                        grid: { color: '#e0e0e0' }
+                    },
+                    y: {
+                        ticks: { color: '#222', font: { weight: 'bold' } },
+                        grid: { color: '#e0e0e0' }
                     }
                 }
             }
@@ -62,9 +78,15 @@ $(document).ready(function() {
             Morris.Donut({
                 element: 'usuarios-donut-chart',
                 data: data,
-                colors: ['#1abc9c', '#3498db', '#e67e22'],
-                resize: true
+                colors: ['#8B0000', '#222', '#FFD600', '#600000', '#b22222'], // Rojo, negro, amarillo UTA, variantes
+                resize: true,
+                labelColor: '#222',
+                formatter: function (y) { return y; }
             });
+            // Cambia el color del texto de las leyendas (Morris no lo hace por defecto)
+            setTimeout(function() {
+                $('#usuarios-donut-chart text').attr('fill', '#8B0000').css('font-weight','bold');
+            }, 300);
         });
     }
 

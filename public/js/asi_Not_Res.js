@@ -12,7 +12,7 @@ function cargarTarjetas() {
         const tarjeta = document.createElement('div');
         tarjeta.classList.add('tarjeta-evento', 'shadow-sm');
         tarjeta.innerHTML = `
-          <img src="../${e.IMAGEN || 'public/img/default.jpg'}" class="evento-img rounded-top">
+          <img src="../public/img/eventos/portadas/${e.IMAGEN || 'public/img/default.jpg'}" class="evento-img rounded-top">
           <div class="p-3 bg-white rounded-bottom">
             <h5 class="text-dark font-weight-bold mb-3">
               <i class="fa fa-calendar-alt mr-2 text-danger"></i> ${e.TITULO}

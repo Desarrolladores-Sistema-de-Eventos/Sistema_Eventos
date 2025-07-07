@@ -161,16 +161,24 @@ strong{
 .align-items-center {
   align-items: center;
 }
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
-  background-color: rgb(185, 51, 51); !important;
-  border-color: rgb(185, 51, 51); !important;
-  color: white !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:hover {
+    color: #111 !important;
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+    background-color: #9b2e2e !important;
+    border-color: #9b2e2e !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
 .form-control-sm {
   border: 2px solid #ccc;
   border-radius: 6px;

@@ -138,15 +138,26 @@ thead {
     font-size: 14px;
     font-weight: normal;
   }
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
-  background-color: rgb(180, 34, 34) !important;
-  border-color: #9b2e2e !important;
-  color: white !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:hover {
+    color: #111 !important;
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+    background-color: #9b2e2e !important;
+    border-color: #9b2e2e !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+
 .dataTables_length label,
 .dataTables_length select {
   font-size: 14px !important;

@@ -195,6 +195,8 @@
       },
       error: function () {
         Swal.fire('Error', 'No se pudo enviar la solicitud.', 'error');
+        $('#modalSolicitud').modal('hide'); // Cierra el modal aunque haya error
+        $('#formSolicitud')[0].reset();     // Limpia el formulario
       }
     });
   });

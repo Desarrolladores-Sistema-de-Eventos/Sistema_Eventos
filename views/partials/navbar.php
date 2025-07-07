@@ -6,7 +6,7 @@
                 <a href="" class="navbar-brand">
                     <h1 class="m-0 text-primary">
                     <i class="fas fa-laptop-code me-2"></i> 
-                    <span class="text-dark">EVENTS</span>SOFT
+                    <span class="text-dark">EVENT</span>SPARK
                     </h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">

@@ -393,7 +393,7 @@ if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_
     $ext = strtolower(pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION));
     if (!in_array($ext, ['jpg', 'jpeg', 'png'])) throw new Exception('Formato de imagen inválido');
     $fotoNombre = 'perfil_' . uniqid() . '.' . $ext;
-    $rutaDestino = dirname(__DIR__) . '/public/img/' . $fotoNombre;
+    $rutaDestino = dirname(__DIR__) . '/public/img/perfiles/' . $fotoNombre;
     move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $rutaDestino);
 }
 
@@ -423,7 +423,7 @@ if (
     $ext = strtolower(pathinfo($_FILES['matricula_pdf']['name'], PATHINFO_EXTENSION));
     if ($ext !== 'pdf') throw new Exception('El archivo de matrícula debe ser PDF');
     $matriculaNombre = 'matricula_' . uniqid() . '.' . $ext;
-    $rutaDestino = dirname(__DIR__) . '/public/img/' . $matriculaNombre;
+    $rutaDestino = dirname(__DIR__) . '/documents/matriculas/' . $matriculaNombre;
     move_uploaded_file($_FILES['matricula_pdf']['tmp_name'], $rutaDestino);
 }
 
@@ -470,8 +470,8 @@ private function perfilUsuario() {
     }
     $foto = !empty($usuario['FOTO_PERFIL']) ? basename($usuario['FOTO_PERFIL']) : 'default.png';
     $usuario['FOTO_PERFIL_URL'] = '../public/img/perfiles/' . $foto;
-    $usuario['CEDULA_PDF_URL'] = !empty($usuario['URL_CEDULA']) ? '../public/img/' . basename($usuario['URL_CEDULA']) : '';
-    $usuario['MATRICULA_PDF_URL'] = !empty($usuario['URL_MATRICULA']) ? '../public/img/' . basename($usuario['URL_MATRICULA']) : '';
+    $usuario['CEDULA_PDF_URL'] = !empty($usuario['URL_CEDULA']) ? '../documents/cedulas/' . basename($usuario['URL_CEDULA']) : '';
+    $usuario['MATRICULA_PDF_URL'] = !empty($usuario['URL_MATRICULA']) ? '../documents/matriculas/' . basename($usuario['URL_MATRICULA']) : '';
 
 
     // Enviar al frontend todo lo necesario

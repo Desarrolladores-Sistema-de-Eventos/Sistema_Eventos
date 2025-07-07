@@ -17,6 +17,26 @@ function cargarEventosSeleccion() {
       select.style.overflowY = '';
       select.style.height = '';
 
+      // Inicializar Select2 con buscador
+      if ($(select).hasClass('select2-hidden-accessible')) {
+        $(select).select2('destroy');
+      }
+      $(select).select2({
+        placeholder: 'Buscar o seleccionar evento...',
+        allowClear: true,
+        width: '100%',
+        language: {
+          noResults: function() {
+            return 'No se encontraron eventos';
+          }
+        }
+      });
+
+      // Cerrar el menú al seleccionar
+      $(select).on('select2:select', function() {
+        $(this).select2('close');
+      });
+
       // Evento change nativo
       select.onchange = function () {
         const idEvento = this.value;
@@ -51,65 +71,58 @@ function cargarInscripciones(idEvento) {
       const datos = res.data;
 
       if (datos && datos.length > 0) {
+        // Prepara los datos como array de arrays para DataTables
+        const data = datos.map(i => [
+          `${i.NOMBRES} ${i.APELLIDOS}`,
+          i.FECHAINSCRIPCION,
+          (() => {
+            switch (i.CODIGOESTADOINSCRIPCION) {
+              case 'ACE': return '<span class="badge" style="background: #0066cc;">Aceptado</span>';
+              case 'PEN': return '<span class="badge" style="background: #ffc107; color: #212529;">Pendiente</span>';
+              case 'REC': return '<span class="badge" style="background: #dc3545;">Rechazado</span>';
+              case 'ANU': return '<span class="badge" style="background: #6c757d;">Anulado</span>';
+              default: return '<span class="badge" style="background: #adb5bd;">Desconocido</span>';
+            }
+          })(),
+          (i.CODIGOESTADOINSCRIPCION === 'ACE'
+            ? `<button class="btn btn-dark btn-sm" onclick="verFacturaDinamica(${i.INSCRIPCION_ID})" title="Ver factura"><i class="fa fa-certificate"></i> Ver Factura</button>`
+            : `<button class="btn btn-secondary btn-sm" disabled title="Solo disponible si la inscripción está aceptada"><i class="fa fa-file-pdf-o"></i> Ver Factura</button>`),
+          `<button class="btn btn-dark btn-sm" onclick="verRequisitosPagos(${i.INSCRIPCION_ID}, '${i.NOMBRES} ${i.APELLIDOS}')"><i class="fa fa-check"></i> Validar</button>`
+        ]);
+
+        // Limpia el tbody
         tbody.empty();
-        datos.forEach(i => {
-          let facturaHtml = `<div class="celda-factura" id="factura-${i.INSCRIPCION_ID}">`;
 
-          // Mostrar botón solo si la inscripción está aceptada
-          if (i.CODIGOESTADOINSCRIPCION === 'ACE') {
-            facturaHtml += `
-              <button class="btn btn-dark btn-sm" onclick="verFacturaDinamica(${i.INSCRIPCION_ID})" title="Ver factura">
-                <i class="fa fa-certificate"></i> Ver Factura
-              </button>
-            `;
-          } else {
-            facturaHtml += `
-              <button class="btn btn-secondary btn-sm" disabled title="Solo disponible si la inscripción está aceptada">
-                <i class="fa fa-file-pdf-o"></i> Ver Factura
-              </button>
-            `;
+        // Inicializa DataTables con los datos
+        tabla.DataTable({
+          data: data,
+          columns: [
+            { title: "Nombres y Apellidos" },
+            { title: "Fecha de Inscripción" },
+            { title: "Estado Inscripción" },
+            { title: "Factura" },
+            { title: "Requisitos" }
+          ],
+          language: {
+            url: '../public/js/es-ES.json'
+          },
+          lengthChange: true,
+          responsive: true,
+          createdRow: function(row, data, dataIndex) {
+            // Permite que los botones HTML y badges se rendericen correctamente
+            $(row).find('td').eq(2).html(data[2]);
+            $(row).find('td').eq(3).html(data[3]);
+            $(row).find('td').eq(4).html(data[4]);
           }
-
-          facturaHtml += `</div>`;
-
-          tbody.append(`
-            <tr id="fila-${i.INSCRIPCION_ID}">
-              <td>${i.NOMBRES} ${i.APELLIDOS}</td>
-              <td>${i.FECHAINSCRIPCION}</td>
-              <td>
-                ${(() => {
-                  switch (i.CODIGOESTADOINSCRIPCION) {
-                    case 'ACE': return '<span class="badge" style="background: #0066cc;">Aceptado</span>';
-                    case 'PEN': return '<span class="badge" style="background: #ffc107; color: #212529;">Pendiente</span>';
-                    case 'REC': return '<span class="badge" style="background: #dc3545;">Rechazado</span>';
-                    case 'ANU': return '<span class="badge" style="background: #6c757d;">Anulado</span>';
-                    default: return '<span class="badge" style="background: #adb5bd;">Desconocido</span>';
-                  }
-                })()}
-              </td>
-              <td>${facturaHtml}</td>
-              <td>
-                <button class="btn btn-dark btn-sm" onclick="verRequisitosPagos(${i.INSCRIPCION_ID}, '${i.NOMBRES} ${i.APELLIDOS}')">
-                  <i class="fa fa-check"></i> Validar
-                </button>
-              </td>
-            </tr>
-          `);
         });
       } else {
+        // Si no hay datos, destruye DataTable (ya destruido arriba) y solo muestra el mensaje
         tbody.html('<tr><td colspan="5">No hay inscripciones para este evento.</td></tr>');
       }
-
-      tabla.DataTable({
-        language: {
-          url: '../public/js/es-ES.json'
-        },
-        lengthChange: true,
-        responsive: true
-      });
     })
     .catch(err => {
       console.error('Error al cargar inscripciones:', err);
+      // Si hay error, destruye DataTable (ya destruido arriba) y solo muestra el mensaje
       tbody.html('<tr><td colspan="5">Error al cargar inscripciones.</td></tr>');
       Swal.fire('Error', 'No se pudieron cargar las inscripciones', 'error');
     });
@@ -195,31 +208,64 @@ function verRequisitosPagos(idInscripcion, nombreParticipante = '') {
     const tbodyReq = document.getElementById('tablaRequisitosModal');
     tbodyReq.innerHTML = '';
     resReq.data.requisitos.forEach(r => {
-      tbodyReq.innerHTML += `
-        <tr>
-          <td>${r.REQUISITO}</td>
-          <td id="requisito-${r.ARCHIVO_ID}">
-            ${r.ARCHIVO ? `
-            <button class="btn btn-dark btn-sm mb-1" onclick="window.open('../documents/${r.ARCHIVO}', '_blank')" title="Ver archivo" type="button">
-              <i class="fa fa-eye"></i>
-            </button>
-            <button class="btn btn-dark btn-sm" onclick="mostrarActualizarRequisito(${r.ARCHIVO_ID})" title="Actualizar archivo">
-              <i class="fa fa-edit"></i>
-            </button>
-            ` : `
-              <input type="file" onchange="subirRequisito(this, ${r.ARCHIVO_ID})" class="form-control form-control-sm" />
-            `}
-          </td>
-          <td>
-            <select onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)" class="form-control">
-              <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
-              <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
-              <option value="REC" ${r.ESTADO === 'REC' ? 'selected' : ''}>Rechazado</option>
-              <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
-            </select>
-          </td>
-        </tr>
+      const tr = document.createElement('tr');
+      // Celda requisito
+      const tdReq = document.createElement('td');
+      tdReq.textContent = r.REQUISITO;
+      tr.appendChild(tdReq);
+
+      // Celda archivo (con búsqueda en 3 rutas)
+      const tdArchivo = document.createElement('td');
+      tdArchivo.id = `requisito-${r.ARCHIVO_ID}`;
+      if (r.ARCHIVO) {
+        tdArchivo.textContent = 'Buscando archivo...';
+        const rutas = [
+          `../documents/requisitos/${r.ARCHIVO}`,
+          `../documents/cedulas/${r.ARCHIVO}`,
+          `../documents/matriculas/${r.ARCHIVO}`
+        ];
+        let idxRuta = 0;
+        function probarRuta() {
+          if (idxRuta >= rutas.length) {
+            tdArchivo.innerHTML = '<span style="color:red">Archivo no encontrado</span>';
+            // Botón para actualizar archivo
+            tdArchivo.innerHTML += ` <button class="btn btn-dark btn-sm" onclick="mostrarActualizarRequisito(${r.ARCHIVO_ID})" title="Actualizar archivo"><i class="fa fa-edit"></i></button>`;
+            return;
+          }
+          fetch(rutas[idxRuta], { method: 'HEAD' })
+            .then(resp => {
+              if (resp.ok) {
+                tdArchivo.innerHTML = `<button class=\"btn btn-dark btn-sm mb-1\" onclick=\"window.open('${rutas[idxRuta]}', '_blank')\" title=\"Ver archivo\" type=\"button\"><i class=\"fa fa-eye\"></i></button>` +
+                  ` <button class=\"btn btn-dark btn-sm\" onclick=\"mostrarActualizarRequisito(${r.ARCHIVO_ID})\" title=\"Actualizar archivo\"><i class=\"fa fa-edit\"></i></button>`;
+              } else {
+                idxRuta++;
+                probarRuta();
+              }
+            })
+            .catch(() => {
+              idxRuta++;
+              probarRuta();
+            });
+        }
+        probarRuta();
+      } else {
+        tdArchivo.innerHTML = `<input type="file" onchange="subirRequisito(this, ${r.ARCHIVO_ID})" class="form-control form-control-sm" />`;
+      }
+      tr.appendChild(tdArchivo);
+
+      // Celda select
+      const tdSelect = document.createElement('td');
+      tdSelect.innerHTML = `
+        <select onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)" class="form-control">
+          <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
+          <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
+          <option value="REC" ${r.ESTADO === 'REC' ? 'selected' : ''}>Rechazado</option>
+          <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
+        </select>
       `;
+      tr.appendChild(tdSelect);
+
+      tbodyReq.appendChild(tr);
     });
 
     // Mostrar u ocultar la sección de pagos
@@ -235,7 +281,7 @@ function verRequisitosPagos(idInscripcion, nombreParticipante = '') {
             <tr>
               <td id="comprobante-${p.PAGO_ID}">
                 ${p.COMPROBANTE_URL ? `
-                  <button class="btn btn-dark btn-sm mb-1" onclick="window.open('../documents/${p.COMPROBANTE_URL}', '_blank')" title="Ver comprobante" type="button">
+                  <button class="btn btn-dark btn-sm mb-1" onclick="window.open('../documents/comprobantes/${p.COMPROBANTE_URL}', '_blank')" title="Ver comprobante" type="button">
                     <i class="fa fa-eye"></i>
                   </button>
                   <button class="btn btn-dark btn-sm" onclick="mostrarActualizarComprobante(${p.PAGO_ID})" title="Actualizar comprobante">
@@ -289,7 +335,7 @@ function subirRequisito(input, idArchivo) {
       if (res.data.tipo === 'success') {
         const div = document.getElementById(`requisito-${idArchivo}`);
         div.innerHTML = `
-          <a href="../documents/${res.data.nombreArchivo}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo"><i class="fa fa-eye"></i></a>
+          <a href="../documents/requisitos/${res.data.nombreArchivo}" target="_blank" class="btn btn-sm btn-primary mb-1" title="Ver archivo"><i class="fa fa-eye"></i></a>
           <button class="btn btn-warning btn-sm" onclick="mostrarActualizarRequisito(${idArchivo})" title="Actualizar archivo"><i class="fa fa-undo"></i></button>
         `;
       }
@@ -333,7 +379,7 @@ function subirComprobantePago(input, idPago) {
       if (res.data.tipo === 'success') {
         const div = document.getElementById(`comprobante-${idPago}`);
         div.innerHTML = `
-          <button class="btn btn-dark btn-sm mb-1" onclick="window.open('../documents/${res.data.nombreArchivo}', '_blank')" title="Ver comprobante" type="button"><i class="fa fa-eye"></i></button>
+          <button class="btn btn-dark btn-sm mb-1" onclick="window.open('../documents/comprobantes/${res.data.nombreArchivo}', '_blank')" title="Ver comprobante" type="button"><i class="fa fa-eye"></i></button>
           <button class="btn btn-dark btn-sm" onclick="mostrarActualizarComprobante(${idPago})" title="Actualizar comprobante"><i class="fa fa-edit"></i></button>
         `;
       }

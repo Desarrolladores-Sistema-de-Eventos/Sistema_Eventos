@@ -198,7 +198,13 @@ html, body {
   <div class="d-flex justify-content-center align-items-center w-100" style="min-height:100vh;">
     <div class="d-flex flex-row shadow-lg" style="border-radius:18px; min-width:900px; max-width:1100px; min-height:420px; max-height:480px; width:100%;">
       <!-- Columna izquierda: imágenes y textos institucionales -->
-      <div class="d-flex flex-column align-items-center justify-content-center p-4" style="width:50%; border-radius:18px 0 0 18px; background:rgba(255,255,255,0.97); min-height:420px; max-height:480px; box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+      <div class="d-flex flex-column align-items-center justify-content-center p-4 position-relative" style="width:50%; border-radius:18px 0 0 18px; background:rgba(255,255,255,0.97); min-height:420px; max-height:480px; box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+        <!-- Botón regresar al home -->
+        <a href="../index.php" title="Volver al inicio" style="position:absolute; left:18px; top:18px; z-index:10; text-decoration:none;">
+          <button type="button" style="background:#8B0000; color:#fff; border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.10); transition:background 0.2s; font-size:20px;">
+            <i class="fa fa-arrow-left"></i>
+          </button>
+        </a>
         <div style="display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap; margin-bottom:18px;">
           <img src="../public/img/uta/logo2020.png" alt="FISEI" style="height:100px;">
           <img src="../public/img/uta/fisei_logo.png" alt="FISEI" style="height:100px;">

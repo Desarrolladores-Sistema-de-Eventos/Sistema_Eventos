@@ -1,16 +1,9 @@
 <?php
-session_start();
+
 require '../core/Conexion.php';
 
-// Verifica que la sesión esté activa y definida
-if (!isset($_SESSION['usuario_id'])) {
-    http_response_code(401);
-    echo json_encode(['error' => '⚠ Sesión no iniciada. Usuario no autenticado.']);
-    exit;
-}
-
-// ID del usuario logeado
-$usuario_id = $_SESSION['usuario_id'];
+// Permitir acceso sin sesión iniciada
+$usuario_id = $_SESSION['usuario']['SECUENCIAL_USUARIO'] ?? null;
 
 // Captura de datos del formulario
 $modulo = trim($_POST['MODULO_AFECTADO']);
@@ -22,7 +15,7 @@ $archivoNombre = null;
 
 // Procesar archivo si se adjunta
 if (isset($_FILES['ARCHIVO_EVIDENCIA']) && $_FILES['ARCHIVO_EVIDENCIA']['error'] === UPLOAD_ERR_OK) {
-    $carpetaDestino = "../evidencias/";
+    $carpetaDestino = "../documents/evidencias/";
     if (!is_dir($carpetaDestino)) {
         mkdir($carpetaDestino, 0777, true);
     }

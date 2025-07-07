@@ -126,7 +126,7 @@ function cargarPerfilUsuario() {
         inputFoto.style.display = 'none';
         btnFotoEditar.style.display = 'inline-block';
       } else {
-        img.src = 'assets/img/profile_placeholder.png';
+        img.src = 'assets/img/uta/profile_placeholder.png';
         inputFoto.style.display = 'block';
         btnFotoEditar.style.display = 'none';
       }

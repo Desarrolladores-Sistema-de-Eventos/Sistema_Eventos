@@ -316,20 +316,63 @@ function verDetalleInscripcion(idInscripcion) {
       tbodyReq.innerHTML = '';
 
       data.requisitos.forEach(r => {
-        tbodyReq.innerHTML += `
-          <tr>
-            <td>${r.REQUISITO}</td>
-            <td><a href="../documents/${r.ARCHIVO}" target="_blank">Ver archivo</a></td>
-            <td>
-              <select class="form-control" onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)">
-                <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
-                <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
-                <option value="REC" ${r.ESTADO === 'REC' ? 'selected' : ''}>Rechazado</option>
-                <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
-              </select>
-            </td>
-          </tr>
+        const row = document.createElement('tr');
+        // Celda requisito
+        const tdReq = document.createElement('td');
+        tdReq.textContent = r.REQUISITO;
+        row.appendChild(tdReq);
+
+        // Celda archivo (con búsqueda en 3 rutas)
+        const tdArchivo = document.createElement('td');
+        tdArchivo.textContent = 'Buscando archivo...';
+        row.appendChild(tdArchivo);
+
+        // Celda select
+        const tdSelect = document.createElement('td');
+        tdSelect.innerHTML = `
+          <select class="form-control" onchange="validarArchivoRequisito(${r.ARCHIVO_ID}, this.value)">
+            <option value="PEN" ${r.ESTADO === 'PEN' ? 'selected' : ''}>Pendiente</option>
+            <option value="VAL" ${r.ESTADO === 'VAL' ? 'selected' : ''}>Validado</option>
+            <option value="REC" ${r.ESTADO === 'REC' ? 'selected' : ''}>Rechazado</option>
+            <option value="INV" ${r.ESTADO === 'INV' ? 'selected' : ''}>Inválido</option>
+          </select>
         `;
+        row.appendChild(tdSelect);
+
+        tbodyReq.appendChild(row);
+
+        // Lógica para buscar el archivo en 3 rutas
+        const rutas = [
+          `../documents/requisitos/${r.ARCHIVO}`,
+          `../documents/cedulas/${r.ARCHIVO}`,
+          `../documents/matriculas/${r.ARCHIVO}`
+        ];
+        let encontrado = false;
+        let idxRuta = 0;
+        function probarRuta() {
+          if (idxRuta >= rutas.length) {
+            tdArchivo.innerHTML = '<span style="color:red">Archivo no encontrado</span>';
+            return;
+          }
+          fetch(rutas[idxRuta], { method: 'HEAD' })
+            .then(resp => {
+              if (resp.ok) {
+                tdArchivo.innerHTML = `<a href="${rutas[idxRuta]}" target="_blank" style="color:#0066cc;">Ver archivo</a>`;
+              } else {
+                idxRuta++;
+                probarRuta();
+              }
+            })
+            .catch(() => {
+              idxRuta++;
+              probarRuta();
+            });
+        }
+        if (r.ARCHIVO) {
+          probarRuta();
+        } else {
+          tdArchivo.innerHTML = '<span style="color:gray">Sin archivo</span>';
+        }
       });
 
       // === Mostrar pagos solo si el evento es pagado ===
@@ -358,7 +401,7 @@ function verDetalleInscripcion(idInscripcion) {
         pagos.forEach(p => {
           tbodyPagos.innerHTML += `
             <tr>
-              <td><a href="../documents/${p.COMPROBANTE_URL}" target="_blank">Ver comprobante</a></td>
+              <td><a href="../documents/comprobantes/${p.COMPROBANTE_URL}" target="_blank">Ver comprobante</a></td>
               <td>${p.FORMA_PAGO || 'Desconocida'}</td>
               <td>
                 <select class="form-control" onchange="actualizarEstadoPago(${p.PAGO_ID}, this.value)">

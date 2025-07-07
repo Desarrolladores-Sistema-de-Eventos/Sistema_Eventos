@@ -14,35 +14,37 @@ include("../core/auth.php"); ?>
     <div class="panel panel-default">
       <div class="panel-heading"><i class="fa fa-calendar"></i> Eventos</div>
       <div class="panel-body">
-        <div style="display: flex; justify-content: center;">
-  <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-bottom: 40px;">
-    <label for="eventoSeleccionado" style="margin-bottom: 0; white-space: nowrap;">
-      <i class="fa fa-search" style="margin-right: 6px; font-size: 14px; "></i>
-      Evento:
-    </label>
-    <select id="eventoSeleccionado" class="form-control" style="width: 350px;"></select>
-  </div>
-</div>
-        <hr />
 
-        <!-- Tabla de Inscripciones -->
-        <h4><i class="fa fa-users"></i> Lista de Inscripciones</h4>
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped" id="tabla-inscripciones">
-            <thead>
-              <tr>
-                <th>Nombres y Apellidos</th>
-                <th>Fecha de Inscripción</th>
-                <th>Estado Inscripción</th>
-                <th>Factura</th>
-                <th>Requisitos</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+        <div class="row" style="margin-top: 10px;">
+          <!-- Sidebar: Selector de eventos -->
+          <div class="col-md-4 col-lg-3" id="sidebar-evento">
+            <div class="evento-select-sidebar" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(155,46,46,0.08); padding: 24px 18px; margin-bottom: 20px;">
+              <label for="eventoSeleccionado" class="evento-label" style="font-size: 16px; font-weight: 600; color: #9b2e2e;">
+                <i class="fa fa-search"></i> Seleccione Evento:
+              </label>
+              <select id="eventoSeleccionado" class="form-control select2-evento" style="width: 100%; margin-top: 10px;"></select>
+            </div>
+          </div>
+          <!-- Contenido principal: Tabla -->
+          <div class="col-md-8 col-lg-9">
+            <div class="table-responsive mt-2">
+              <h4><i class="fa fa-users"></i> Lista de Inscripciones</h4>
+              <table class="table table-bordered table-striped" id="tabla-inscripciones">
+                <thead>
+                  <tr>
+                    <th>Nombres y Apellidos</th>
+                    <th>Fecha de Inscripción</th>
+                    <th>Estado Inscripción</th>
+                    <th>Factura</th>
+                    <th>Requisitos</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <br>
-        <br/>
 
 
         <!-- MODAL: Ver requisitos y pagos -->
@@ -100,6 +102,27 @@ include("../core/auth.php"); ?>
   </div>
 </div>
 <style>
+/* Select2: opción resaltada en rojo y texto blanco */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #b93333 !important;
+  color: #fff !important;
+}
+.select2-container--default .select2-selection--single {
+  border: 1.5px solid #9b2e2e !important;
+  border-radius: 6px !important;
+  font-size: 14px;
+  background: #f9fafb;
+  color: #222;
+  height: 38px;
+  min-height: 38px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #9b2e2e;
+  line-height: 36px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 36px;
+}
   body {
     background-color: #fff;
     color: #000;
@@ -207,6 +230,7 @@ hr{
 </style>
 
 <!-- Librerías -->
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -215,4 +239,5 @@ hr{
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script src="../public/js/ins_Res.js"></script>
+
 <?php include("partials/footer_Admin.php"); ?>

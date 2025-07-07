@@ -129,7 +129,7 @@ private function actualizarInscripcion()
         if (isset($_FILES[$campo]) && $_FILES[$campo]['error'] === UPLOAD_ERR_OK) {
             $archivo = $_FILES[$campo];
             $nombreArchivo = uniqid("req_") . '_' . basename($archivo['name']);
-            $ruta = "../documents/$nombreArchivo";
+            $ruta = "../documents/requisitos/$nombreArchivo";
             if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
                 $archivosSubidos[$idReq] = $nombreArchivo;
             }
@@ -141,7 +141,7 @@ private function actualizarInscripcion()
     if ($esPagado && isset($_FILES['comprobante_pago']) && $_FILES['comprobante_pago']['error'] === UPLOAD_ERR_OK) {
         $archivo = $_FILES['comprobante_pago'];
         $nombreComprobante = uniqid("comprobante_") . '_' . basename($archivo['name']);
-        $ruta = "../documents/$nombreComprobante";
+        $ruta = "../documents/comprobantes/$nombreComprobante";
         move_uploaded_file($archivo['tmp_name'], $ruta);
     }
 
@@ -246,7 +246,7 @@ public function registrarInscripcion()
         if (isset($_FILES[$campo]) && $_FILES[$campo]['error'] === UPLOAD_ERR_OK) {
             $archivo = $_FILES[$campo];
             $nombre = uniqid("requisito_") . "_" . basename($archivo['name']);
-            $ruta = "../documents/$nombre";
+            $ruta = "../documents/requisitos/$nombre";
             if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
                 $requisitosArchivos[$idReq] = $nombre;
             }
@@ -258,7 +258,7 @@ public function registrarInscripcion()
     if (isset($_FILES['comprobante_pago']) && $_FILES['comprobante_pago']['error'] === UPLOAD_ERR_OK) {
         $archivo = $_FILES['comprobante_pago'];
         $nombre = uniqid("comprobante_") . "_" . basename($archivo['name']);
-        $ruta = "../documents/$nombre";
+        $ruta = "../documents/comprobantes/$nombre";
         if (move_uploaded_file($archivo['tmp_name'], $ruta)) {
             $comprobanteRuta = $nombre;
         }
@@ -333,9 +333,9 @@ if ($ok === true) {
             $urlPortada = null;
             if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
                 $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
-                $rutaDestino = '../public/img/' . $nombreArchivo;
+                $rutaDestino = '../public/img/eventos/portadas/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-                    $urlPortada = 'public/img/' . $nombreArchivo;
+                    $urlPortada = 'public/img/eventos/portadas/' . $nombreArchivo;
                 }
             }
 
@@ -343,9 +343,9 @@ if ($ok === true) {
             $urlGaleria = null;
             if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
                 $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
-                $rutaDestino = '../public/img/' . $nombreArchivo;
+                $rutaDestino = '../public/img/eventos/galerias/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-                    $urlGaleria = 'public/img/' . $nombreArchivo;
+                    $urlGaleria = 'public/img/eventos/galerias/' . $nombreArchivo;
                 }
             }
             $fechaInicio = $_POST['fechaInicio'];
@@ -429,9 +429,9 @@ if ($ok === true) {
             $urlPortada = null;
             if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
                 $nombreArchivo = uniqid('portada_') . '_' . basename($_FILES['urlPortada']['name']);
-                $rutaDestino = '../public/img/' . $nombreArchivo;
+                $rutaDestino = '../public/img/eventos/portadas/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
-                    $urlPortada = 'public/img/' . $nombreArchivo;
+                    $urlPortada = 'public/img/eventos/portadas/' . $nombreArchivo;
                 }
             }
 
@@ -439,9 +439,9 @@ if ($ok === true) {
             $urlGaleria = null;
             if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
                 $nombreArchivo = uniqid('galeria_') . '_' . basename($_FILES['urlGaleria']['name']);
-                $rutaDestino = '../public/img/' . $nombreArchivo;
+                $rutaDestino = '../public/img/eventos/galerias/' . $nombreArchivo;
                 if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
-                    $urlGaleria = 'public/img/' . $nombreArchivo;
+                    $urlGaleria = 'public/img/eventos/galerias/' . $nombreArchivo;
                 }
             }
 

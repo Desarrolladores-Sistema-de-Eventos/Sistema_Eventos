@@ -4,7 +4,6 @@ $requiereResponsable = true;
 include("../core/auth.php"); ?>
 <div id="page-wrapper">
   <div id="page-inner">
-
     <!-- TÍTULO -->
     <div class="titulo-barra">
       <h2><i class="fa fa-certificate"></i> Gestión de Certificados</h2>
@@ -14,33 +13,35 @@ include("../core/auth.php"); ?>
     </div>
     <div class="titulo-linea"></div>
 
-    <!-- SELECT EVENTO EN FILA -->
-    <div class="evento-select-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 40px; justify-content: center;">
-      <label for="selectEvento" class="evento-label">
-        <i class="fa fa-search"></i> Evento:
-      </label>
-      <select id="selectEvento" class="selectEvento"></select>
-    </div>
-    <hr/>
-
-    <div class="titulo-linea"></div>
-
-    <!-- TABLA -->
-    <div class="table-responsive mt-4">
-      <table id="tabla-certificados" class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Cédula</th>
-            <th>Nombres</th>
-            <th>Apellidos</th>
-            <th>Correo</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- JS llenará esta parte -->
-        </tbody>
-      </table>
+    <div class="row" style="margin-top: 30px;">
+      <!-- Sidebar: Selector de eventos -->
+      <div class="col-md-4 col-lg-3" id="sidebar-evento">
+        <div class="evento-select-sidebar" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(155,46,46,0.08); padding: 24px 18px; margin-bottom: 20px;">
+          <label for="selectEvento" class="evento-label" style="font-size: 16px; font-weight: 600; color: #9b2e2e;">
+            <i class="fa fa-search"></i> Seleccione Evento:
+          </label>
+          <select id="selectEvento" class="selectEvento" style="width: 100%; margin-top: 10px;"></select>
+        </div>
+      </div>
+      <!-- Contenido principal: Tabla -->
+      <div class="col-md-8 col-lg-9">
+        <div class="table-responsive mt-2">
+          <table id="tabla-certificados" class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Cédula</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- JS llenará esta parte -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -52,142 +53,158 @@ body {
   font-family: Arial, sans-serif;
 }
 
+h2 {
+  font-size: 24px;
+  color: rgb(23, 23, 23);
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  h2 {
-    font-size: 24px;
-    color: rgb(23, 23, 23);
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+.titulo-linea {
+  border-bottom: 2px solid rgb(185, 51, 51);
+  margin-top: 6px;
+  margin-bottom: 20px;
+}
 
-  .titulo-linea {
-    border-bottom: 2px solid rgb(185, 51, 51);
-    margin-top: 6px;
-    margin-bottom: 20px;
-  }
+.evento-select-sidebar {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(155,46,46,0.08);
+  padding: 24px 18px;
+  margin-bottom: 20px;
+}
 
-  .evento-select-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-
-  .evento-label {
-    font-weight: normal;
+.evento-label {
+  font-weight: 600;
   font-size: 16px;
-  
+  color: #9b2e2e;
 }
 
- hr {
-    border-top: 2px solid rgb(185, 51, 51);
-    opacity: 1;
-  }
-
-  #tabla-certificados {
-    font-size: 14px;
-  }
-
-  #tabla-certificados thead th {
-    background-color:rgb(185, 51, 51);
-    color: white;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 14px;
-    font-weight: normal;
-  }
-
-  #tabla-certificados td,
-  #tabla-certificados th {
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  .btn-primary {
-    background-color: rgb(185, 51, 51);
-    border-color: #000;
-    font-weight: 600;
-    transition: 0.2s ease-in-out;
-    font-weight: normal;
-  font-size: 14px;
-
-  }
-
-  .btn-primary:hover {
-    background-color: rgb(185, 51, 51);
-    border-color: #000;
-  }
-
-  .btn-secondary {
-    background-color: #888;
-    border-color: #444;
-  }
-
-  .titulo-barra {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0;
-    margin-top: 10px;
-  }
-  label{
-    font-weight: normal;
-    font-size: 14px;
-}
-
-  @media (max-width: 600px) {
-    .titulo-barra {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .evento-select-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-    }
-    .select2-container, .select2-dropdown {
-      max-width: 100% !important;
-      min-width: 140px;
-    }
-    
-  }
-
-  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
-div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
-  background-color: #9b2e2e !important;
-  border-color: #9b2e2e !important;
-  color: white !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-.dataTables_length label,
-.dataTables_length select {
-  font-size: 14px !important;
-}
 #selectEvento {
-  max-height: 90px; 
+  max-height: 160px;
   overflow-y: auto;
-  min-width: 220px;
-  max-width: 350px;
-  font-size: 14px;
-  padding: 4px 8px;
-  border: 2px solid #9b2e2e; 
+  min-width: 180px;
+  max-width: 100%;
+  font-size: 15px;
+  padding: 6px 10px;
+  border: 2px solid #9b2e2e;
   border-radius: 6px;
+  margin-top: 10px;
+  width: 100%;
+  background: #fff;
+  box-sizing: border-box;
 }
 
 #selectEvento option {
-  padding: 4px 8px;
-  height: 28px;
+  padding: 8px 8px;
+  height: 38px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+
+#selectEvento option:last-child {
+  border-bottom: none;
+}
+
+.table-responsive {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(155,46,46,0.08);
+  padding: 18px 12px;
+  max-height: 370px;
+  overflow-y: auto;
+  overflow-x: hidden; /* Oculta scroll horizontal */
+}
+
+#tabla-certificados {
+  font-size: 14px;
+  margin-bottom: 0;
+  width: 100%;
+  table-layout: auto;
+  min-width: 0;
+}
+
+#tabla-certificados {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+#tabla-certificados thead th {
+  background-color:rgb(185, 51, 51);
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+#tabla-certificados td,
+#tabla-certificados th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn-primary {
+  background-color: rgb(185, 51, 51);
+  border-color: #000;
+  font-weight: 600;
+  transition: 0.2s ease-in-out;
   font-size: 14px;
 }
 
+.btn-primary:hover {
+  background-color: rgb(185, 51, 51);
+  border-color: #000;
+}
+
+.titulo-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+label{
+  font-weight: normal;
+  font-size: 14px;
+}
+
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li > a:hover {
+    color: #111 !important;
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:focus,
+  div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover {
+    background-color: #9b2e2e !important;
+    border-color: #9b2e2e!important;
+    color: #fff !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color:rgb(184, 46, 46) !important; /* Rojo institucional */
+  color: #fff !important;
+}
+#btnGenerarTodos:disabled,
+#btnGenerarTodos[disabled] {
+  background-color: #b93333 !important;
+  border-color: #b93333 !important;
+  color: #fff !important;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 </style>
 
 <!-- LIBRERÍAS -->
@@ -198,6 +215,7 @@ div.dataTables_wrapper .dataTables_paginate ul.pagination > li.active > a:hover 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script src="../public/js/certificado.js"></script>
 
 <?php include("partials/footer_Admin.php"); ?>

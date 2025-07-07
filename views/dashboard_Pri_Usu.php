@@ -22,7 +22,7 @@ include("../core/auth.php");
   <div class="cedula-upload">
     <p class="etiqueta-doc">Copia de cédula</p>
     <div id="pdf-preview" style="display: none; text-align: center;">
-      <img src="../public/img/pdf.png" alt="PDF" class="pdf-icon">
+      <img src="../public/img/uta/pdf.png" alt="PDF" class="pdf-icon">
       <div>
         <a id="btn-abrir-pdf" href="#" target="_blank" class="btn-secondary">Abrir archivo</a>
         <button type="button" id="btn-pdf-editar" class="btn-secondary">Editar</button>
@@ -35,7 +35,7 @@ include("../core/auth.php");
   <div class="matricula-upload">
     <p class="etiqueta-doc">Matrícula</p>
     <div id="matricula-preview" style="display: none; text-align: center;">
-      <img src="../public/img/pdf.png" alt="PDF" class="pdf-icon">
+      <img src="../public/img/uta/pdf.png" alt="PDF" class="pdf-icon">
       <div>
         <a id="btn-abrir-matricula" href="#" target="_blank" class="btn-secondary">Abrir archivo</a>
         <button type="button" id="btn-matricula-editar" class="btn-secondary">Editar</button>

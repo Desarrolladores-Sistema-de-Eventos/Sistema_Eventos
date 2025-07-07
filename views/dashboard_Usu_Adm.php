@@ -107,9 +107,13 @@ include("../core/auth.php")?>
   left: 0;
   bottom: -8px;
   width: 100%;
-  height: 5px;
+  height: 8px;
   background: #ae0c22;
   border-radius: 3px;
+}
+label{
+  font-weight: normal;
+  font-size: 14px;
 }
 </style>
 

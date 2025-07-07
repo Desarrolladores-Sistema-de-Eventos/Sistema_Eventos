@@ -4,6 +4,13 @@ require_once '../models/EventosAdmin.php';
 header('Content-Type: application/json');
 
 class EventoController {
+    // --- NUEVO: obtener requisitos generales ---
+    public function requisitosGenerales() {
+        require_once '../models/Requisitos.php';
+        $reqModel = new Requisitos();
+        $requisitos = $reqModel->getRequisitosGenerales();
+        $this->json($requisitos);
+    }
     private $eventoModelo;
     private $rol;
 
@@ -15,6 +22,9 @@ class EventoController {
     public function handleRequest() {
         $option = $_GET['option'] ?? '';
         switch ($option) {
+            case 'requisitos_generales':
+                $this->requisitosGenerales();
+                break;
             case 'listar':
                 $this->listar();
                 break;
@@ -57,16 +67,39 @@ class EventoController {
             return;
         }
         $evento = $this->eventoModelo->getById($id);
+
+        // --- NUEVO: cargar requisitos asociados al evento ---
+        require_once '../models/Requisitos.php';
+        $reqModel = new Requisitos();
+        $requisitosAsociados = $reqModel->getRequisitosPorEvento($id);
+        if (is_array($requisitosAsociados) && count($requisitosAsociados) > 0) {
+            $evento['requisitos'] = array_map(function($r) {
+                return isset($r['SECUENCIAL']) ? $r['SECUENCIAL'] : null;
+            }, $requisitosAsociados);
+            $evento['requisitos_detalle'] = $requisitosAsociados; // [{SECUENCIAL, DESCRIPCION}]
+        } else {
+            $evento['requisitos'] = [];
+            $evento['requisitos_detalle'] = [];
+        }
+
         $this->json($evento);
     }
 
-   private function crear() {
+    private function crear() {
     if ($this->rol !== 'ADM') {
         $this->json(['success' => false, 'mensaje' => 'No autorizado']);
         return;
     }
 
     $data = $_POST;
+    // Asegura que $data['carrera'] siempre sea array
+    if (isset($data['carrera']) && !is_array($data['carrera'])) {
+        $data['carrera'] = [$data['carrera']];
+    }
+
+    // Normalizar campos nuevos
+    $data['contenido'] = isset($data['contenido']) ? $data['contenido'] : '';
+    $data['asistenciaMinima'] = isset($data['asistenciaMinima']) && $data['asistenciaMinima'] !== '' ? $data['asistenciaMinima'] : null;
 
     // Validar campos requeridos
     $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
@@ -77,23 +110,31 @@ class EventoController {
         }
     }
 
-    // Procesar imagen de portada
+    // Procesar imagen de portada (siempre en la carpeta correcta)
     $data['urlPortada'] = null;
     if (isset($_FILES['urlPortada']) && $_FILES['urlPortada']['error'] === UPLOAD_ERR_OK) {
         $extension = pathinfo($_FILES['urlPortada']['name'], PATHINFO_EXTENSION);
         $nombreArchivo = uniqid('portada_') . '.' . $extension;
-        $rutaDestino = '../public/img/' . $nombreArchivo;
+        $rutaDestino = '../public/img/eventos/portadas/' . $nombreArchivo;
+        // Crear carpeta si no existe
+        if (!is_dir('../public/img/eventos/portadas/')) {
+            mkdir('../public/img/eventos/portadas/', 0777, true);
+        }
         if (move_uploaded_file($_FILES['urlPortada']['tmp_name'], $rutaDestino)) {
             $data['urlPortada'] = $nombreArchivo;
         }
     }
 
-    // Procesar imagen de galería
+    // Procesar imagen de galería (siempre en la carpeta correcta)
     $data['urlGaleria'] = null;
     if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
         $extension = pathinfo($_FILES['urlGaleria']['name'], PATHINFO_EXTENSION);
         $nombreArchivo = uniqid('galeria_') . '.' . $extension;
-        $rutaDestino = '../public/img/' . $nombreArchivo;
+        $rutaDestino = '../public/img/eventos/galerias/' . $nombreArchivo;
+        // Crear carpeta si no existe
+        if (!is_dir('../public/img/eventos/galerias/')) {
+            mkdir('../public/img/eventos/galerias/', 0777, true);
+        }
         if (move_uploaded_file($_FILES['urlGaleria']['tmp_name'], $rutaDestino)) {
             $data['urlGaleria'] = $nombreArchivo;
         }
@@ -102,10 +143,17 @@ class EventoController {
     $data['estado'] = 'DISPONIBLE';
 
     $idEvento = $this->eventoModelo->crear($data);
+    // Guardar requisitos asociados si se creó el evento
+    if ($idEvento && isset($_POST['requisitos']) && is_array($_POST['requisitos'])) {
+        require_once '../models/Requisitos.php';
+        $reqModel = new Requisitos();
+        $reqModel->eliminarPorEvento($idEvento); // Por si acaso
+        $reqModel->asociarAEvento($idEvento, $_POST['requisitos']);
+    }
     $this->json($idEvento ? ['success' => true, 'id' => $idEvento] : ['success' => false, 'mensaje' => 'No se pudo crear el evento']);
 }
 
-private function editar() {
+    private function editar() {
     if ($this->rol !== 'ADM') {
         $this->json(['success' => false, 'mensaje' => 'No autorizado']);
         return;
@@ -118,6 +166,16 @@ private function editar() {
     }
 
     $data = $_POST;
+    // Refuerzo: siempre inicializar carreras como array aunque no llegue del frontend
+    if (!isset($data['carrera'])) {
+        $data['carrera'] = [];
+    } elseif (!is_array($data['carrera'])) {
+        $data['carrera'] = [$data['carrera']];
+    }
+
+    // Normalizar campos nuevos
+    $data['contenido'] = isset($data['contenido']) ? $data['contenido'] : '';
+    $data['asistenciaMinima'] = isset($data['asistenciaMinima']) && $data['asistenciaMinima'] !== '' ? $data['asistenciaMinima'] : null;
 
     // Procesar imagen de portada
     $data['urlPortada'] = null;
@@ -142,6 +200,15 @@ private function editar() {
     }
 
     $ok = $this->eventoModelo->editar($id, $data);
+    // Actualizar requisitos asociados (siempre eliminar y asociar los que vengan, aunque ninguno)
+    if ($ok) {
+        require_once '../models/Requisitos.php';
+        $reqModel = new Requisitos();
+        $reqModel->eliminarPorEvento($id);
+        if (isset($_POST['requisitos']) && is_array($_POST['requisitos']) && count($_POST['requisitos']) > 0) {
+            $reqModel->asociarAEvento($id, $_POST['requisitos']);
+        }
+    }
     $this->json($ok ? ['success' => true] : ['success' => false, 'mensaje' => 'No se pudo actualizar el evento']);
 }
 
