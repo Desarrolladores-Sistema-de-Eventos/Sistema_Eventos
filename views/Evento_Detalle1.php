@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Descripción del Evento</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/></svg>"
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <!-- Favicon -->
