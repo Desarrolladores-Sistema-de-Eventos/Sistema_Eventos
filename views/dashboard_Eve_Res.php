@@ -319,6 +319,14 @@ include("../core/auth.php")
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.linea-roja-uta {
+  width: 100%;
+  height: 2px;
+  background: #ae0c22;
+  border-radius: 3px;
+  margin-top: 0px;
+  margin-bottom: 18px;
+}
 
 /* Botón PDF estilo claro con icono */
 .btn-primary {

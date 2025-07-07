@@ -10921,3 +10921,1593 @@
     ),
   ),
 )
+2025-07-07 11:31:07 [editar] ID recibido: '177'
+2025-07-07 11:31:07 [getEvento] ID recibido: '177'
+2025-07-07 11:31:07 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 11:31:07 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 11:31:07 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 109,
+    1 => 110,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 109,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 110,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)
+2025-07-07 11:31:07 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<p>mmmmmmmmmmmmmmm</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 109,
+    1 => 110,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 109,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 110,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)
+2025-07-07 11:32:43 [editar] ID recibido: '177'
+2025-07-07 11:32:43 [getEvento] ID recibido: '177'
+2025-07-07 11:32:43 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 11:32:43 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 11:32:43 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+  ),
+)
+2025-07-07 11:32:43 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+  ),
+)
+2025-07-07 11:39:16 [editar] ID recibido: '177'
+2025-07-07 11:39:16 [getEvento] ID recibido: '177'
+2025-07-07 11:39:16 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 11:39:16 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 11:39:16 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 111,
+    1 => 112,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 111,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 112,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)
+2025-07-07 11:39:16 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 111,
+    1 => 112,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 111,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 112,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)
+2025-07-07 11:39:54 [editar] ID recibido: '177'
+2025-07-07 11:39:54 [getEvento] ID recibido: '177'
+2025-07-07 11:39:54 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 11:39:54 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 11:39:54 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 111,
+    1 => 112,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 111,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 112,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)
+2025-07-07 11:39:54 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 111,
+    1 => 112,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 111,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 112,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)
+2025-07-07 11:42:07 [editar] ID recibido: '177'
+2025-07-07 11:42:07 [getEvento] ID recibido: '177'
+2025-07-07 11:42:07 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 11:42:07 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 11:42:07 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+  ),
+)
+2025-07-07 11:42:07 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+  ),
+)
+2025-07-07 11:45:21 [editar] ID recibido: '177'
+2025-07-07 11:45:21 [getEvento] ID recibido: '177'
+2025-07-07 11:45:21 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-07 11:45:21 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-07 11:45:21 [getEvento] Evento final: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 113,
+    1 => 114,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 113,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 114,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)
+2025-07-07 11:45:21 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 177,
+  'TITULO' => 'Taller de Desarrollo Web Frontend',
+  'CONTENIDO' => '<h3>🔹 <strong>Contenido del Taller</strong></h3><p>✅ <strong>Módulo 1: Introducción a la Creatividad</strong></p><p>Concepto de creatividad e innovación.</p><p>Mitos y bloqueos creativos.</p><p>✅ <strong>Módulo 2: Técnicas Creativas</strong></p><p>Brainstorming efectivo.</p><p>SCAMPER para generar nuevas ideas.</p><p>Mapas mentales y visual thinking.</p><p>✅ <strong>Módulo 3: Innovación Aplicada</strong></p><p>Design Thinking paso a paso.</p><p>Prototipado rápido de ideas.</p><p>Casos de éxito y buenas prácticas.</p><p>✅ <strong>Módulo 4: Dinámicas y Ejercicios</strong></p><p>Juegos para romper bloqueos mentales.</p><p>Resolución colaborativa de problemas.</p><p>Pitch creativo de propuestas.</p>',
+  'DESCRIPCION' => '<p>✨ <strong>Descripción General:</strong><br>Sumérgete en una experiencia dinámica diseñada para potenciar tu creatividad, fomentar el trabajo en equipo y desarrollar soluciones innovadoras.</p><p>🔹 <strong>Objetivos del Taller:</strong></p><p>Descubrir técnicas para estimular el pensamiento creativo.</p><p>Aprender herramientas prácticas de innovación aplicables a proyectos reales.</p><p>Fomentar un ambiente colaborativo y participativo.</p><p>🔹 <strong>Dirigido a:</strong></p><p>Profesionales de cualquier área interesados en mejorar sus habilidades creativas.</p><p>Emprendedores en busca de nuevas ideas para sus negocios.</p><p>Estudiantes que deseen fortalecer su perfil profesional.</p><p>🔹 <strong>Metodología:</strong></p><p>Ejercicios prácticos y dinámicas grupales.</p><p>Resolución de casos reales.</p><p>Espacios para networking y retroalimentación.</p><p>🔹 <strong>Duración:</strong></p><p>4 horas intensivas.</p><p>🔹 <strong>Incluye:</strong></p><p>Material digital del taller.</p><p>Certificado de participación.</p><p>Coffee break.</p>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-09-11',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 10,
+  'NOTAAPROBACION' => '20.00',
+  'ES_PAGADO' => 1,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 6,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686b6721bc089_images.jpg',
+  'GALERIA' => 'galeria_686b6721bc406_images.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 113,
+    1 => 114,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 88,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Patricio',
+      'APELLIDOS' => 'Jaramillo',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Certificado de vacunación COVID-19',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Presentación o diapositivas (para ponentes)',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Certificado de conocimiento previo',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 113,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 177,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 114,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 177,
+    ),
+  ),
+)

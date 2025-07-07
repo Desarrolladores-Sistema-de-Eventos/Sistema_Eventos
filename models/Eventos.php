@@ -376,6 +376,16 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
         }
 
         $this->pdo->commit();
+        // Asociar al usuario como RESPONSABLE y ORGANIZADOR (si no existen ya)
+        $roles = ['RESPONSABLE', 'ORGANIZADOR'];
+        foreach ($roles as $rol) {
+            $orgStmt = $this->pdo->prepare("SELECT COUNT(*) FROM organizador_evento WHERE SECUENCIALUSUARIO = ? AND SECUENCIALEVENTO = ? AND ROL_ORGANIZADOR = ?");
+            $orgStmt->execute([$idUsuario, $idEvento, $rol]);
+            if ($orgStmt->fetchColumn() == 0) {
+                $orgInsert = $this->pdo->prepare("INSERT INTO organizador_evento (SECUENCIALUSUARIO, SECUENCIALEVENTO, ROL_ORGANIZADOR) VALUES (?, ?, ?)");
+                $orgInsert->execute([$idUsuario, $idEvento, $rol]);
+            }
+        }
         return true;
     } catch (Exception $e) {
         $this->pdo->rollBack();

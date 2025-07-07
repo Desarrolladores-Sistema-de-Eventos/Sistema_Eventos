@@ -62,8 +62,8 @@ $(document).ready(function() {
         data: null,
         orderable: false,
         render: function (data, type, row) {
-          return `<button class="btn btn-primary btn-editar" data-id="${row.SECUENCIAL}"><i class="fa fa-edit"></i></button>
-                  <button class="btn btn-danger btn-cancelar" data-id="${row.SECUENCIAL}"><i class="fa fa-ban"></i></button>`;
+            return `<button class="btn btn-editar" data-id="${row.SECUENCIAL}" style="background-color:#e0e0e0;color:#222;border:none;"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-cancelar" data-id="${row.SECUENCIAL}" style="background-color:#e0e0e0;color:#222;border:none;"><i class="fa fa-ban"></i></button>`;
         }
       }
     ],
