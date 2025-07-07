@@ -127,15 +127,16 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
 
         // 5. Eliminar organizador_evento donde el usuario es organizador
         // Antes, eliminar imagen_organizador_evento asociadas a estos organizadores
+        // Comentado porque la tabla no existe en la base de datos
         $stmtOrg = $this->pdo->prepare("SELECT SECUENCIAL FROM organizador_evento WHERE SECUENCIALUSUARIO=?");
         $stmtOrg->execute([$id]);
         $organizadores = $stmtOrg->fetchAll(PDO::FETCH_COLUMN);
 
-        if ($organizadores) {
-            $in = implode(',', array_fill(0, count($organizadores), '?'));
-            $delImgOrg = $this->pdo->prepare("DELETE FROM imagen_organizador_evento WHERE SECUENCIAL_ORGANIZADOR_EVENTO IN ($in)");
-            $delImgOrg->execute($organizadores);
-        }
+        // if ($organizadores) {
+        //     $in = implode(',', array_fill(0, count($organizadores), '?'));
+        //     $delImgOrg = $this->pdo->prepare("DELETE FROM imagen_organizador_evento WHERE SECUENCIAL_ORGANIZADOR_EVENTO IN ($in)");
+        //     $delImgOrg->execute($organizadores);
+        // }
 
         $delOrg = $this->pdo->prepare("DELETE FROM organizador_evento WHERE SECUENCIALUSUARIO=?");
         $delOrg->execute([$id]);
@@ -179,6 +180,18 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function getById2($id)
+{
+    $stmt = Conexion::getConexion()->prepare("SELECT * FROM usuario WHERE SECUENCIAL = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+public function getArchivosUsuario($idUsuario) {
+    $stmt = $this->pdo->prepare("SELECT URL_CEDULA, URL_MATRICULA FROM usuario WHERE SECUENCIAL = ?");
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
 
   public function actualizarDatosPerfil(
@@ -191,18 +204,25 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
     $direccion,
     $fotoNombre = null,
     $cedulaNombre = null,
-    $carreraId = null
+    $carreraId = null,
+    $matriculaNombre = null // Nuevo parámetro
 ) {
     try {
-    
         // Actualizar tabla usuario
-        $update = $this->pdo->prepare("UPDATE usuario SET 
-            NOMBRES = ?, APELLIDOS = ?, CEDULA = ?, FECHA_NACIMIENTO = ?, 
-            TELEFONO = ?, DIRECCION = ?, FOTO_PERFIL = ?, URL_CEDULA = ?
-            WHERE SECUENCIAL = ?
-        ");
+        $sql = "UPDATE usuario SET 
+            NOMBRES = ?, 
+            APELLIDOS = ?, 
+            CEDULA = ?, 
+            FECHA_NACIMIENTO = ?, 
+            TELEFONO = ?, 
+            DIRECCION = ?, 
+            FOTO_PERFIL = ?, 
+            URL_CEDULA = ?, 
+            URL_MATRICULA = ? 
+            WHERE SECUENCIAL = ?";
 
-        $ok = $update->execute([
+        $stmt = $this->pdo->prepare($sql);
+        $ok = $stmt->execute([
             $nombres,
             $apellidos,
             $cedula,
@@ -211,10 +231,11 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
             $direccion,
             $fotoNombre,
             $cedulaNombre,
+            $matriculaNombre, // Nuevo valor
             $id
         ]);
 
-        // Actualizar o insertar carrera
+        // Insertar o actualizar carrera
         if ($carreraId) {
             $check = $this->pdo->prepare("SELECT COUNT(*) FROM usuario_carrera WHERE SECUENCIALUSUARIO = ?");
             $check->execute([$id]);
@@ -230,13 +251,14 @@ public function editar($id, $nombres, $apellidos, $telefono, $direccion, $correo
         }
 
         return $ok
-            ? ['success' => true, 'foto' => $fotoNombre, 'cedula' => $cedulaNombre]
+            ? ['success' => true, 'foto' => $fotoNombre, 'cedula' => $cedulaNombre, 'matricula' => $matriculaNombre]
             : ['success' => false, 'mensaje' => 'No se pudo actualizar los datos.'];
 
     } catch (PDOException $e) {
         return ['success' => false, 'mensaje' => 'Error: ' . $e->getMessage()];
     }
 }
+
 // ================= RECUPERACIÓN DE CONTRASEÑA =================
 public static function buscarPorCorreo($correo) {
     $db = Conexion::getConexion();

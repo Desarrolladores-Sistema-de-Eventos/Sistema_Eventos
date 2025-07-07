@@ -70,10 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $update->execute([$DECISION, $SECUENCIAL_CAMBIO]);
 
     http_response_code(200);
-    echo "✅ Evaluación técnica registrada correctamente.";
+    echo " Evaluación técnica registrada correctamente.";
   } catch (PDOException $e) {
     http_response_code(500);
-    echo "❌ Error al guardar la evaluación: " . $e->getMessage();
+    echo " Error al guardar la evaluación: " . $e->getMessage();
   }
 } else {
   http_response_code(405);

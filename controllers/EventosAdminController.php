@@ -68,14 +68,58 @@ class EventoController {
 
     $data = $_POST;
 
-    // Validar campos requeridos
-    $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
-    foreach ($required as $campo) {
-        if (!isset($data[$campo]) || $data[$campo] === '') {
-            $this->json(['success' => false, 'mensaje' => "El campo $campo es obligatorio"]);
-            return;
+    // Validar responsable obligatorio
+    if (empty($data['responsable'])) {
+        $this->json(['success' => false, 'mensaje' => 'Debe seleccionar un responsable para el evento.']);
+        return;
+    }
+
+    // Procesar carreras múltiples (aceptar tanto 'carreras' como 'carrera')
+    if (isset($_POST['carreras'])) {
+        $carreras = (array)$_POST['carreras'];
+    } else if (isset($_POST['carrera'])) {
+        $carreras = (array)$_POST['carrera'];
+    } else {
+        $carreras = [];
+    }
+    if (in_array('TODAS', $carreras)) {
+        // Obtener todas las carreras de la BD
+        $todas = $this->eventoModelo->getCarreras();
+        $carreras = array_column($todas, 'SECUENCIAL');
+    }
+    $data['carreras'] = $carreras;
+
+    // Público destino: 1 = Internos, 0 = Externos (asegurar valor permitido)
+    if (isset($_POST['esSoloInternos'])) {
+        $esSoloInternos = $_POST['esSoloInternos'];
+        if ($esSoloInternos === 'Todos' || $esSoloInternos == 2) {
+            $esSoloInternos = 0; // Valor por defecto permitido
+        }
+        $data['esSoloInternos'] = (int)$esSoloInternos;
+    } else {
+        $data['esSoloInternos'] = 0;
+    }
+
+    // Procesar campos condicionales
+    $tipoEvento = $_POST['tipoEvento'] ?? null;
+    $tipos = $this->eventoModelo->getTiposEvento();
+    $tipo = null;
+    foreach ($tipos as $t) {
+        if ($t['CODIGO'] == $tipoEvento) {
+            $tipo = $t;
+            break;
         }
     }
+    if ($tipo) {
+        if ($tipo['REQUIERENOTA'] != 1) {
+            $data['notaAprobacion'] = null;
+        }
+        if ($tipo['REQUIEREASISTENCIA'] != 1) {
+            $data['asistenciaMinima'] = null;
+        }
+    }
+    // Solo guardar costo si es pagado
+    $data['costo'] = (!empty($_POST['esPagado']) && $_POST['esPagado']) ? $_POST['costo'] : 0;
 
     // Procesar imagen de portada
     $data['urlPortada'] = null;
@@ -86,7 +130,6 @@ class EventoController {
             $data['urlPortada'] = 'public/img/' . $nombreArchivo;
         }
     }
-
     // Procesar imagen de galería
     $data['urlGaleria'] = null;
     if (isset($_FILES['urlGaleria']) && $_FILES['urlGaleria']['error'] === UPLOAD_ERR_OK) {
@@ -96,7 +139,6 @@ class EventoController {
             $data['urlGaleria'] = 'public/img/' . $nombreArchivo;
         }
     }
-
     $data['estado'] = 'DISPONIBLE';
 
     $idEvento = $this->eventoModelo->crear($data);
@@ -116,6 +158,47 @@ private function editar() {
     }
 
     $data = $_POST;
+
+    // Validar responsable obligatorio
+    if (empty($data['responsable'])) {
+        $this->json(['success' => false, 'mensaje' => 'Debe seleccionar un responsable para el evento.']);
+        return;
+    }
+
+    // Procesar carreras múltiples (aceptar tanto 'carreras' como 'carrera')
+    if (isset($_POST['carreras'])) {
+        $carreras = (array)$_POST['carreras'];
+    } else if (isset($_POST['carrera'])) {
+        $carreras = (array)$_POST['carrera'];
+    } else {
+        $carreras = [];
+    }
+    if (in_array('TODAS', $carreras)) {
+        $todas = $this->eventoModelo->getCarreras();
+        $carreras = array_column($todas, 'SECUENCIAL');
+    }
+    $data['carreras'] = $carreras;
+
+    // Procesar campos condicionales
+    $tipoEvento = $_POST['tipoEvento'] ?? null;
+    $tipos = $this->eventoModelo->getTiposEvento();
+    $tipo = null;
+    foreach ($tipos as $t) {
+        if ($t['CODIGO'] == $tipoEvento) {
+            $tipo = $t;
+            break;
+        }
+    }
+    if ($tipo) {
+        if ($tipo['REQUIERENOTA'] != 1) {
+            $data['notaAprobacion'] = null;
+        }
+        if ($tipo['REQUIEREASISTENCIA'] != 1) {
+            $data['asistenciaMinima'] = null;
+        }
+    }
+    // Solo guardar costo si es pagado
+    $data['costo'] = (!empty($_POST['esPagado']) && $_POST['esPagado']) ? $_POST['costo'] : 0;
 
     // Procesar imagen de portada
     $data['urlPortada'] = null;
@@ -176,7 +259,7 @@ private function editar() {
             return;
         }
         $ok = $this->eventoModelo->cancelar($id);
-        $this->json($ok ? ['success' => true] : ['success' => false, 'mensaje' => 'No se pudo cancelar el evento']);
+        $this->json($ok ? ['success' => true, 'mensaje' => 'Evento cancelado'] : ['success' => false, 'mensaje' => 'No se pudo cancelar el evento']);
     }
 
     private function organizadores() {

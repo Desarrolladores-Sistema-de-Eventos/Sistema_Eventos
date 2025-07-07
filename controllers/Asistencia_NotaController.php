@@ -29,10 +29,32 @@ class Asistencia_NotaController {
             case 'guardarAsistenciaNota':
                 $this->guardarAsistenciaNota();
                 break;
+            case 'finalizarEvento':
+  $this->finalizarEvento();
+  break;
+ case 'guardarNotasYFinalizar':
+    $this->guardarNotasYFinalizar();
+    break;
+
             default:
                 $this->json(['error' => 'Opción no válida']);
         }
     }
+
+private function guardarNotasYFinalizar() {
+    $idEvento = $_POST['idEvento'] ?? null;
+    $datos = json_decode($_POST['datos'] ?? '[]', true);
+
+    if (!$idEvento || empty($datos)) {
+        $this->json(['success' => false, 'mensaje' => 'Datos incompletos.']);
+        return;
+    }
+    $resultado = $this->modelo->guardarNotasYFinalizarEvento($idEvento, $datos);
+
+    $this->json($resultado);
+}
+
+
 
     // Listar eventos donde el usuario es responsabl
 private function eventosResponsable() {
@@ -56,17 +78,24 @@ private function guardarAsistenciaNota()
     $idInscripcion = $_POST['idInscripcion'] ?? null;
     $asistencia = $_POST['asistencia'] ?? null;
     $nota = $_POST['nota'] ?? null;
+    $porcentajeAsistencia = $_POST['porcentaje'] ?? null;
+    $observacion = $_POST['observacion'] ?? null;
 
-    if (!$idInscripcion || $asistencia === null || $nota === null) {
+    if (!$idInscripcion || $asistencia === null) {
         $this->json(['success' => false, 'mensaje' => 'Datos incompletos']);
-        return; // <-- Agrega esto
+        return;
     }
 
-    $resultado = $this->modelo->guardarAsistenciaNota($idInscripcion, $asistencia, $nota);
+    $resultado = $this->modelo->guardarAsistenciaNota(
+        $idInscripcion,
+        $asistencia,
+        $nota,
+        $porcentajeAsistencia,
+        $observacion
+    );
 
     $this->json($resultado);
 }
-    
 
     private function json($data) {
         header('Content-Type: application/json');
