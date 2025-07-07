@@ -1,225 +1,173 @@
-<?php include("partials/header_Admin.php"); ?>
-<?php 
-$rolRequerido = 'ADMIN';
-include("../core/auth.php")?>
+<?php
+require_once '../core/roles.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$rol = strtoupper($_SESSION['usuario']['ROL'] ?? '');
+$esResponsable = !empty($_SESSION['usuario']['ES_RESPONSABLE']);
+?>
 
-<style>
-  :root {
-    --uta-rojo: #b10024;
-    --uta-rojo-oscuro: #92001c;
-    --uta-gris: #f5f5f5;
-    --uta-negro: #000000;
-    --uta-blanco: #ffffff;
-  }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menú Administrativo</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>"
 
-  .panel {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    border: none;
-  }
+  <!-- Estilos -->
+  <link href="../public/assets/css/bootstrap.css" rel="stylesheet" />
+  <link href="../public/assets/css/font-awesome.css" rel="stylesheet" />
+  <link href="../public/assets/css/custom.css" rel="stylesheet" />
+  <link href="../public/assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
 
-  .panel .panel-heading {
-    background-color: var(--uta-rojo);
-    color: white;
-    font-weight: bold;
-    padding: 12px 15px;
-    font-size: 1.1rem;
-  }
+  <!-- Scripts: ORDEN IMPORTANTE -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  .panel .panel-body {
-    background-color: white;
-    padding: 20px;
-  }
+  <!-- DataTables -->
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
 
-  .panel-default {
-    border: 1px solid #e0e0e0;
-  }
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  .panel-back.noti-box {
-    background-color: var(--uta-blanco);
-    border-left: 5px solid var(--uta-rojo);
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease;
-  }
+  <style>
+    /* Definición de colores principales */
+    :root {
+        --uta-rojo: #b10024; /* Rojo principal de UTA */
+        --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
+        --uta-negro: #000000;
+        --uta-blanco: #ffffff;
+    }
 
-  .panel-back.noti-box:hover {
-    transform: translateY(-5px);
-  }
+    /* SOLO CAMBIOS DE COLOR. NO SE ALTERAN TAMAÑOS NI POSICIONAMIENTOS. */
 
-  .icon-box {
-    width: 60px;
-    height: 60px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    font-size: 1.8rem;
-    color: white;
-    margin-bottom: 10px;
-  }
+    /* Barra de navegación superior */
+    .navbar-cls-top {
+        background-color: var(--uta-negro) !important; /* Fondo negro */
+        color: var(--uta-blanco); /* Color de texto blanco */
+    }
+    .navbar-brand {
+        color: var(--uta-blanco) !important; /* Color de texto blanco */
+    }
 
-  .bg-color-red {
-    background-color: var(--uta-rojo);
-  }
-  .bg-color-green {
-    background-color: var(--uta-rojo-oscuro);
-  }
-  .bg-color-blue {
-    background-color: var(--uta-rojo);
-  }
-  .bg-color-brown {
-    background-color: var(--uta-rojo-oscuro);
-  }
+    /* Barra de navegación lateral */
+    .navbar-default.navbar-side {
+        background-color: var(--uta-negro); /* Fondo negro */
+        color: var(--uta-blanco); /* Color de texto blanco */
+    }
+    .navbar-side .nav > li > a {
+        color: var(--uta-blanco); /* Color de texto blanco para los enlaces del menú */
+        border-bottom: 1px solid var(--uta-negro); /* Borde negro para separación */
+    }
+    .navbar-side .nav > li > a:hover {
+        background-color: var(--uta-rojo-oscuro); /* Rojo oscuro al pasar el ratón */
+        color: var(--uta-blanco); /* Color de texto blanco al pasar el ratón */
+    }
 
-  .text-box .main-text {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--uta-rojo);
-  }
+    /* Botón Cerrar Sesión */
+    .square-btn-adjust {
+        background-color: var(--uta-rojo) !important; /* Rojo principal de UTA */
+        color: var(--uta-blanco) !important; /* Texto blanco en el botón */
+    }
+    .square-btn-adjust:hover {
+        background-color: var(--uta-rojo-oscuro) !important; /* Rojo oscuro al pasar el ratón */
+        color: var(--uta-blanco) !important; /* Texto blanco al pasar el ratón */
+    }
 
-  .text-muted {
-    color: var(--uta-negro) !important;
-  }
+    /* Asegurar que el texto de "Regresar a Home" sea blanco */
+    a[href="../views/Eventos_Views.php"] {
+        color: var(--uta-blanco) !important;
+    }
+    /* Asegurar que el texto de la hora sea blanco */
+    #hora {
+        color: var(--uta-blanco) !important;
+    }
 
-  h2 i {
-    color: var(--uta-rojo);
-  }
+    /* No se modifican otras propiedades de layout como width, height, padding, margin, etc. */
+    /* Se asume que custom.css y bootstrap.css manejan el layout general. */
 
-  .hr {
-    border-top: 2px solid var(--uta-rojo);
-  }
-
-  .table-responsive {
-    max-height: 550px;
-    overflow-y: auto;
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  }
-
-  .welcome-text {
-    font-weight: bold;
-    font-size: 1.4em; /* 40% más grande */
-    margin-top: 10px;
-  }
-
-  .grafico-container {
-    margin-bottom: 30px;
-  }
-</style>
-
-<div id="page-wrapper">
-  <div id="page-inner">
-    <div class="row">
-      <div class="col-md-12">
-        <h2><i class="fa fa-dashboard fa"></i> Panel Principal</h2>
-        <h5 class="welcome-text">Bienvenido <?php echo $_SESSION['usuario']['NOMBRES'] . ' ' . $_SESSION['usuario']['APELLIDOS']; ?></h5>
-      </div>
-    </div>
-    <hr />
-
-    <!-- Estadísticas -->
-    <div class="row">
-      <div class="col-md-3 col-sm-6 col-xs-6">
-        <div class="panel panel-back noti-box">
-          <span class="icon-box bg-color-red set-icon">
-            <i class="fa fa-users"></i>
-          </span>
-          <div class="text-box">
-            <p class="main-text"><span id="iconoTotalUsuarios">0</span></p>
-            <p class="text-muted">Usuarios Activos</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 col-sm-6 col-xs-6">
-        <div class="panel panel-back noti-box">
-          <span class="icon-box bg-color-green set-icon">
-            <i class="fa fa-calendar"></i>
-          </span>
-          <div class="text-box">
-            <p class="main-text"><span id="iconoTotalEventos">0</span></p>
-            <p class="text-muted">Eventos Disponibles</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 col-sm-6 col-xs-6">
-        <div class="panel panel-back noti-box">
-          <span class="icon-box bg-color-blue set-icon">
-            <i class="fa fa-users"></i>
-          </span>
-          <div class="text-box">
-            <p class="main-text"><span id="iconoUsuariosInactivos">0</span></p>
-            <p class="text-muted">Usuarios Inactivos</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 col-sm-6 col-xs-6">
-        <div class="panel panel-back noti-box">
-          <span class="icon-box bg-color-brown set-icon">
-            <i class="fa fa-calendar"></i>
-          </span>
-          <div class="text-box">
-            <p class="main-text"><span id="iconoEventosCanceladosCerrados">0</span></p>
-            <p class="text-muted">Eventos Cancelados/Cerrados</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr />
-
-    <!-- Gráficos uno debajo del otro -->
-    <div class="grafico-container">
-      <div class="panel panel-default">
-        <div class="panel-heading">Inscripciones por Evento</div>
-        <div class="panel-body">
-          <canvas id="eventos-bar-horizontal" style="width:100%; height:250px; max-height:250px;"></canvas>
-        </div>
-      </div>
+  </style>
+</head>
+<body>
+<div id="wrapper">
+  <nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" style="padding: 0; display: flex; align-items: center; height: 60px;">
+        <img src="../public/img/logo_UTA.png" alt="UTA Logo" style="height: 100%; width: 100%; object-fit: contain; padding: 0 8px;">
+      </a>
     </div>
 
-    <div class="grafico-container">
-      <div class="panel panel-default">
-        <div class="panel-heading">Tipo de Usuarios</div>
-        <div class="panel-body text-center">
-          <div id="usuarios-donut-chart" style="height: 200px; margin: auto;"></div>
-        </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 50px 5px 50px;">
+      <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
+        <a href="../views/Eventos_Views.php" style="color: white; text-decoration: none; font-size: 16px;">
+          <i class="fa fa-arrow-left"></i> Regresar a Home
+        </a>
+      <?php else: ?>
+        <div></div>
+      <?php endif; ?>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span id="hora" style="color: white; font-size: 16px;"></span>
+        <a href="../controllers/logout.php" class="btn btn-danger square-btn-adjust">Cerrar Sesión</a>
       </div>
     </div>
+  </nav>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <script src="../public/js/estadisticas.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <nav class="navbar-default navbar-side" role="navigation">
+    <div class="sidebar-collapse">
+      <ul class="nav" id="main-menu">
+        <?php if ($esResponsable): ?>
+          <li><a href="../views/dashboard_Pri_Res.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
+          <li><a href="../views/dashboard_Eve_Res.php"><i class="fa fa-calendar fa-3x"></i> Gestión Eventos</a></li>
+          <li><a href="../views/dashboard_Ins_Res.php"><i class="fa fa-users fa-3x"></i> Inscripciones</a></li>
+          <li><a href="../views/dashboard_NotasAsistencia_Res.php"><i class="fa fa-check-square-o fa-3x"></i> Notas/Asistencia</a></li>
+          <li><a href="../views/dashboard_Cer_Res.php"><i class="fa fa-certificate fa-3x"></i> Certificados</a></li>
+          <li><a href="../views/dashboard_Rep_Res.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
+        <?php endif; ?>
 
-  </div>
+        <?php if ($rol === 'ADMIN'): ?>
+          <li><a href="../views/dashboard_Pri_Adm.php"><i class="fa fa-dashboard fa-3x"></i> Panel Principal</a></li>
+          <li><a href="../views/dashboard_Eve_Adm.php"><i class="fa fa-calendar fa-3x"></i>Eventos</a></li>
+          <li><a href="../views/dashboard_Usu_Adm.php"><i class="fa fa-users fa-3x"></i> Usuarios</a></li>
+          <li><a href="../views/dashboard_Rep_Adm.php"><i class="fa fa-file-text fa-3x"></i> Reportes</a></li>
+          <li><a href="../views/configuracion_datos_base.php"><i class="fa fa-gear fa-3x"></i> Configuraciones</a></li>
+          <li><a href="../views/evaluacion_tecnica.php"><i class="fa fa-check fa-3x"></i> Evaluación Técnica</a></li>
+        <?php endif; ?>
+
+        <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
+          <li><a href="../views/dashboard_Pri_Usu.php"><i class="fa fa-user fa-3x"></i> Perfil</a></li>
+          <li><a href="../views/dashboard_Fac_Usu.php"><i class="fa fa-file-text-o fa-3x"></i> Mis Inscripciones</a></li>
+          <li><a href="../views/dashboard_Eve_Usu.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
+          <li><a href="../views/dashboard_Cer_Usu.php"><i class="fa fa-certificate fa-3x"></i> Mis Certificados</a></li>
+        <?php endif; ?>
+      </ul>
+    </div>
+  </nav>
 </div>
 
-<?php include("partials/footer_Admin.php"); ?>
+<script>
+  function actualizarHora() {
+    const opciones = {
+      timeZone: "America/Guayaquil",
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    };
+    const ahora = new Date().toLocaleString("es-EC", opciones);
+    document.getElementById("hora").textContent = ahora;
+  }
+  setInterval(actualizarHora, 1000);
+  actualizarHora();
+</script>
+</body>
+</html>
