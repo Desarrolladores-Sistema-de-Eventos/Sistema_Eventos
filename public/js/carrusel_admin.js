@@ -16,9 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
 
       if (data.success) {
-        Swal.fire("Éxito", "Imagen agregada al carrusel", "success");
         form.reset();
-        cargarCarrusel(true); // true para indicar que destaque fila
+        Swal.fire({
+          title: "Éxito",
+          text: "Imagen agregada al carrusel",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          // Destruir DataTable y limpiar tbody antes de recargar
+          const tabla = $('#tabla-carrusel');
+          if ($.fn.DataTable.isDataTable(tabla)) {
+            tabla.DataTable().destroy();
+          }
+          document.getElementById("contenedorCarrusel").innerHTML = "";
+          cargarCarrusel(true); // true para indicar que destaque fila
+        });
       } else {
         Swal.fire("Error", data.mensaje || "No se pudo agregar la imagen", "error");
       }
@@ -50,20 +63,22 @@ async function cargarCarrusel(destacarUltima = false) {
 
     data.forEach((item, index) => {
       const fila = document.createElement("tr");
-      fila.innerHTML = `
-        <td>${index + 1}</td>
-        <td><img src="../${item.URL_IMAGEN}" style="width: 100px; border-radius: 8px;" alt="imagen"></td>
-        <td>${item.TITULO}</td>
-        <td>${item.DESCRIPCION || "-"}</td>
-        <td style="display: flex; justify-content: center; gap: 8px; align-items: center;">
-          <button class="btn btn-secondary d-flex align-items-center justify-content-center" style="background-color: #e0e0e0; color: #333; border-radius: 8px; width: 36px; height: 36px; border: none;" title="Editar" onclick="mostrarEditarCarrusel(${item.SECUENCIAL}, '${item.TITULO}', '${item.DESCRIPCION || ""}')">
-            <i class="fa fa-edit" style="color: #333; font-size: 18px;"></i>
-          </button>
-          <button class="btn btn-secondary d-flex align-items-center justify-content-center" style="background-color: #e0e0e0; color: #333; border-radius: 8px; width: 36px; height: 36px; border: none;" title="Eliminar" onclick="eliminarCarrusel(${item.SECUENCIAL})">
-            <i class="fa fa-trash" style="color: #333; font-size: 18px;"></i>
-          </button>
-        </td>
-      `;
+      // Escapar comillas simples y dobles para atributos HTML JS
+      const safeTitulo = String(item.TITULO).replace(/'/g, "&#39;").replace(/\"/g, '&quot;');
+      const safeDescripcion = String(item.DESCRIPCION || "-").replace(/'/g, "&#39;").replace(/\"/g, '&quot;');
+      fila.innerHTML =
+        `<td>${index + 1}</td>` +
+        `<td><img src="../${item.URL_IMAGEN}" style="width: 100px; border-radius: 8px;" alt="imagen"></td>` +
+        `<td>${safeTitulo}</td>` +
+        `<td>${safeDescripcion}</td>` +
+        `<td style="display: flex; justify-content: center; gap: 8px; align-items: center;">` +
+          `<button class="btn btn-secondary d-flex align-items-center justify-content-center" style="background-color: #e0e0e0; color: #333; border-radius: 8px; width: 36px; height: 36px; border: none;" title="Editar" onclick="mostrarEditarCarrusel(${item.SECUENCIAL}, '${safeTitulo}', '${safeDescripcion}')">` +
+            `<i class=\"fa fa-edit\" style=\"color: #333; font-size: 18px;\"></i>` +
+          `</button>` +
+          `<button class="btn btn-secondary d-flex align-items-center justify-content-center" style="background-color: #e0e0e0; color: #333; border-radius: 8px; width: 36px; height: 36px; border: none;" title="Eliminar" onclick="eliminarCarrusel(${item.SECUENCIAL})">` +
+            `<i class=\"fa fa-trash\" style=\"color: #333; font-size: 18px;\"></i>` +
+          `</button>` +
+        `</td>`;
 
       if (destacarUltima && index === data.length - 1) {
         fila.classList.add("table-success");
@@ -73,19 +88,20 @@ async function cargarCarrusel(destacarUltima = false) {
       contenedor.appendChild(fila);
     });
 
-    // Destruir DataTable si ya está inicializado
+    // Forzar refresco visual de la tabla (reflow)
     const tabla = $('#tabla-carrusel');
     if ($.fn.DataTable.isDataTable(tabla)) {
       tabla.DataTable().destroy();
     }
-    // Inicializar DataTable en la tabla del carrusel con tu archivo local de idioma
-    tabla.DataTable({
-      language: {
-        url: '../public/js/es-ES.json'
-      },
-      lengthChange: true,
-      responsive: true
-    });
+    setTimeout(() => {
+      tabla.DataTable({
+        language: {
+          url: '../public/js/es-ES.json'
+        },
+        lengthChange: true,
+        responsive: true
+      });
+    }, 100); // Pequeño retraso para asegurar el reflow visual
   } catch (err) {
     console.error("Error al cargar carrusel:", err);
     contenedor.innerHTML = "<tr><td colspan='5'>Error al cargar carrusel.</td></tr>";
@@ -115,8 +131,17 @@ function eliminarCarrusel(id) {
         const data = await res.json();
 
         if (data.success) {
-          Swal.fire("Eliminado", "Imagen eliminada del carrusel", "success");
-          cargarCarrusel();
+          // Destruir DataTable ANTES de modificar el DOM
+          const tabla = $('#tabla-carrusel');
+          if ($.fn.DataTable.isDataTable(tabla)) {
+            tabla.DataTable().destroy();
+          }
+          // Limpiar el tbody
+          document.getElementById("contenedorCarrusel").innerHTML = "";
+          // Mostrar alerta y luego reconstruir la tabla
+          Swal.fire("Eliminado", "Imagen eliminada del carrusel", "success").then(() => {
+            cargarCarrusel();
+          });
         } else {
           Swal.fire("Error", data.mensaje || "No se pudo eliminar", "error");
         }
@@ -147,8 +172,21 @@ document.getElementById('formEditarCarrusel').addEventListener('submit', functio
   .then(data => {
     if (data.success) {
       $('#modalEditarCarrusel').modal('hide');
-      Swal.fire("Guardado", "Cambios actualizados correctamente", "success");
-      cargarCarrusel();
+      Swal.fire({
+        title: "Guardado",
+        text: "Cambios actualizados correctamente",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false
+      }).then(() => {
+        // Destruir DataTable y limpiar tbody antes de recargar
+        const tabla = $('#tabla-carrusel');
+        if ($.fn.DataTable.isDataTable(tabla)) {
+          tabla.DataTable().destroy();
+        }
+        document.getElementById("contenedorCarrusel").innerHTML = "";
+        cargarCarrusel();
+      });
     } else {
       Swal.fire("Error", "Error al editar la imagen", "error");
     }

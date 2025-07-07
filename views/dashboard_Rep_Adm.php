@@ -67,20 +67,6 @@ include("../core/auth.php");
           </div>
         </div>
       </div>
-
-      <!-- Panel 5 -->
-      <div class="col-md-6 col-lg-4">
-        <div class="panel panel-default shadow-sm border rounded-2">
-          <div class="panel-heading bg-light p-3 border-bottom">
-            <h5 class="mb-0"><i class="fa fa-tags me-2" style="color: #fff;"></i>Eventos por Categoría</h5>
-          </div>
-          <div class="panel-body p-3">
-            <p>Listado y estado de eventos por categoría.</p>
-            <a href="informeEventosCategoriaView.php" class="btn btn-outline-primary w-100">Ver Reporte</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>

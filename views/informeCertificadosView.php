@@ -14,69 +14,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 <?php include("partials/header_Admin.php"); ?>
 
 <style>
-    /* Eliminamos body y el max-width/margin de .container si ya están en header_Admin.php */
-    /* font-family, background-color, y color del body deberían venir del CSS global */
-    /* margin: 40px auto; y max-width: 1000px; en body ya no son necesarios aquí */
-    /* ya que el layout lo maneja #page-inner y el wrapper principal. */
+    
+        html, body {
+            font-family: Arial, sans-serif;
+            background: var(--uta-blanco);
+            font-size: 14px;
+        }
+    :root {
+        --uta-rojo:rgb(185, 19, 33);
+        --uta-negro: #000000;
+        --uta-blanco: #ffffff;
+        --uta-amarillo:rgb(241, 231, 187);
+    }
 
     h2 {
         text-align: center;
-        color: #004080; /* Usamos el color de los otros reportes para consistencia */
+        color: var(--uta-rojo);
         margin-bottom: 30px;
+        font-weight: bold;
     }
 
-    /* Usamos .card para los formularios de selección y botones como en el reporte de asistencia */
     .card {
-        background: #fff;
+        background: var(--uta-blanco);
         padding: 25px;
         margin-bottom: 30px;
         border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        border: 2px solid var(--uta-rojo);
     }
 
     .form-group {
-        margin-bottom: 20px; /* Separación debajo del grupo de formulario */
+        margin-bottom: 20px;
     }
 
     label {
         font-weight: bold;
-        display: block; /* Para que el label ocupe su propia línea */
-        margin-bottom: 8px; /* Espacio entre label y select */
+        display: block;
+        margin-bottom: 8px;
+        color: var(--uta-negro);
     }
 
     select {
-        width: 100%; /* Ocupa el ancho completo de su contenedor */
-        padding: 10px; /* Padding interno */
-        font-size: 15px; /* Tamaño de fuente consistente */
-        border: 1px solid #ccc;
+        width: 100%;
+        padding: 10px;
+        font-size: 15px;
+        border: 2px solid var(--uta-rojo);
         border-radius: 6px;
+        background: var(--uta-blanco);
+        color: var(--uta-negro);
     }
 
     .action-buttons {
         display: flex;
-        gap: 10px; /* Espacio entre botones */
-        margin-top: 20px; /* Espacio sobre los botones */
-        flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas pequeñas */
-        justify-content: flex-start; /* Alinea los botones a la izquierda en su contenedor */
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
     }
 
-    /* Estilos para los botones consistentes con los otros reportes */
-    .btn-primary { /* Nueva clase para consistencia, o puedes usar 'button' directamente */
-        background-color: #004080;
-        color: #fff;
+    .btn-primary, button[type="submit"] {
+        background: var(--uta-rojo);
+        color: var(--uta-blanco);
         padding: 10px 20px;
         font-size: 14px;
-        border: 2px solid #004080; /* Agregado para hover effect */
+        border: none;
         border-radius: 6px;
         cursor: pointer;
-        transition: all 0.3s ease;
-        min-width: 140px; /* Asegura un ancho mínimo para los botones */
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+        transition: background 0.3s, color 0.3s;
+        min-width: 140px;
         text-align: center;
     }
 
-    .btn-primary:hover {
-        background-color: #fff;
-        color: #004080;
+    .btn-primary:hover, button[type="submit"]:hover {
+        background: var(--uta-negro);
+        color: var(--uta-amarillo);
     }
 
     table {
@@ -84,37 +97,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         border-collapse: collapse;
         margin-top: 20px;
         font-size: 14px;
-        background-color: white;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.05); /* Sombra consistente con .card */
-        border-radius: 8px; /* Bordes redondeados para la tabla */
-        overflow: hidden; /* Asegura que los bordes redondeados se vean bien con el contenido */
+        background: var(--uta-blanco);
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        border-radius: 8px;
+        overflow: hidden;
     }
 
     th, td {
-        padding: 12px 15px; /* Padding ajustado */
-        border: 1px solid #ddd; /* Borde más suave */
+        padding: 12px 15px;
+        border: 1px solid var(--uta-negro);
         text-align: left;
     }
 
     th {
-        background-color: #e6f0ff; /* Fondo de encabezado consistente */
-        color: #004080; /* Color de texto de encabezado consistente */
+        background: var(--uta-rojo);
+        color: var(--uta-blanco);
+        font-weight: bold;
+        border-bottom: 3px solid var(--uta-negro);
     }
 
-    tr:nth-child(even) {
-        background-color: #f8f8f8; /* Un poco más claro que #f2f6fa para consistencia */
+    tr:nth-child(even) td {
+        background: #f9f9f9;
     }
 
-    /* Removido .top-buttons y adaptado su funcionalidad */
-    /* La descarga del PDF ahora irá en el mismo .action-buttons si se desea */
+    tr:hover td {
+        background: var(--uta-amarillo);
+        color: var(--uta-negro);
+    }
 
-    /* Estilos responsivos (ya estaban, pero se ajustan a la nueva estructura) */
     @media (max-width: 768px) {
         .action-buttons {
-            flex-direction: column; /* Apila los botones en pantallas pequeñas */
+            flex-direction: column;
         }
         select {
             font-size: 14px;
+        }
+        table, th, td {
+            font-size: 13px;
         }
     }
 </style>

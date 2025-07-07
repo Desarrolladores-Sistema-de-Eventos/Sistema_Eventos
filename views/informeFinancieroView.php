@@ -14,43 +14,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 <?php include("partials/header_Admin.php"); ?>
 
 <style>
-    /* Eliminamos body y .container con max-width/margin de aquí,
-       asumiendo que #page-inner o tu CSS global ya los maneja */
-    /* font-family, background-color, y color del body deberían venir del CSS global */
-    /* padding: 40px; en body ya no es necesario aquí */
-
-    h2, h3 {
-        color: #004080; /* Color consistente con otros reportes */
+    
+        html, body {
+            font-family: Arial, sans-serif;
+            background: var(--uta-blanco);
+            font-size: 14px;
+        }
+    :root {
+        --uta-rojo:rgb(143, 15, 25);
+        --uta-negro: #000000;
+        --uta-blanco: #ffffff;
+        --uta-amarillo:rgb(243, 236, 202);
     }
 
-    /* .container no es necesario aquí ya que #page-inner es el contenedor principal */
-    /* Si necesitas un max-width específico para el contenido interno de #page-inner,
-       podrías definirlo directamente en #page-inner si no lo tienes globalmente. */
+    h2, h3 {
+        color: var(--uta-rojo);
+        font-weight: bold;
+    }
 
     .card {
-        background: #fff;
+        background: var(--uta-blanco);
         padding: 25px;
         margin-bottom: 30px;
         border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        border: 2px solid var(--uta-rojo);
     }
 
     label {
         font-weight: bold;
         display: block;
         margin-bottom: 8px;
+        color: var(--uta-negro);
     }
 
     select {
         width: 100%;
         padding: 10px;
         font-size: 15px;
-        border: 1px solid #ccc;
+        border: 2px solid var(--uta-rojo);
         border-radius: 6px;
-        margin-bottom: 10px; /* Mantener si el select está solo antes del botón */
+        background: var(--uta-blanco);
+        color: var(--uta-negro);
+        margin-bottom: 10px;
     }
 
-    .form-group { /* Añadido para agrupar el label y select */
+    .form-group {
         margin-bottom: 20px;
     }
 
@@ -58,40 +67,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
-        align-items: flex-end; /* Alinea los elementos al final (parte inferior) */
-        margin-top: 20px; /* Espacio superior para el grupo de botones */
+        align-items: flex-end;
+        margin-top: 20px;
     }
 
     .action-buttons form {
-        margin: 0; /* Reinicia el margen por defecto de los formularios */
-        flex-grow: 1; /* Permite que los formularios crezcan para ocupar espacio */
+        margin: 0;
+        flex-grow: 1;
     }
 
-    .btn-primary {
-        background-color: #004080;
-        color: #fff;
+    .btn-primary, button[type="submit"] {
+        background: var(--uta-rojo);
+        color: var(--uta-blanco);
         padding: 10px 20px;
         font-size: 14px;
-        border: 2px solid #004080;
+        border: none;
         border-radius: 6px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+        transition: background 0.3s, color 0.3s;
         min-width: 140px;
         text-align: center;
-        width: auto; /* Ajustar el ancho automáticamente al contenido */
+        width: auto;
     }
 
-    .btn-primary:hover {
-        background-color: #fff;
-        color: #004080;
+    .btn-primary:hover, button[type="submit"]:hover {
+        background: var(--uta-negro);
+        color: var(--uta-amarillo);
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
-        margin-bottom: 30px; /* Mantener para separación con el siguiente card o final */
-        background-color: #fff;
+        margin-bottom: 30px;
+        background: var(--uta-blanco);
         border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 1px 4px rgba(0,0,0,0.05);
@@ -99,14 +110,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 
     th, td {
         padding: 12px 15px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--uta-negro);
         text-align: left;
-        font-size: 14px; /* Tamaño de fuente para tablas consistente */
+        font-size: 14px;
     }
 
     th {
-        background-color: #e6f0ff;
-        color: #004080;
+        background: var(--uta-rojo);
+        color: var(--uta-blanco);
+        font-weight: bold;
+        border-bottom: 3px solid var(--uta-negro);
+    }
+
+    tr:nth-child(even) td {
+        background: #f9f9f9;
+    }
+
+    tr:hover td {
+        background: var(--uta-amarillo);
+        color: var(--uta-negro);
     }
 
     p.no-data {
@@ -121,13 +143,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             flex-direction: column;
         }
         .action-buttons form {
-            width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+            width: 100%;
         }
         .btn-primary {
-            width: 100%; /* Botones de ancho completo en móviles */
+            width: 100%;
         }
         select {
             font-size: 14px;
+        }
+        table, th, td {
+            font-size: 13px;
         }
     }
 </style>
@@ -225,7 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                                     <td><?= htmlspecialchars($c['NOMBRE_COMPLETO']) ?></td>
                                     <td><?= htmlspecialchars($c['CORREO']) ?></td>
                                     <td>$<?= number_format($c['MONTO'], 2) ?></td>
-                                    <td><a href="<?= htmlspecialchars($c['COMPROBANTE_URL']) ?>" target="_blank">Ver Comprobante</a></td>
+                                    <td><a href="../documents/comprobantes/<?= htmlspecialchars($c['COMPROBANTE_URL']) ?>" target="_blank">Ver Comprobante</a></td>
                                     <td><?= htmlspecialchars($c['ESTADO']) ?></td>
                                 </tr>
                             <?php endforeach; ?>

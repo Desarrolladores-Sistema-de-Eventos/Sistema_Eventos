@@ -11,18 +11,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 
 <?php include("partials/header_Admin.php"); ?>
     <style>
-       
+        /* Colores UTA: Rojo, Negro, Blanco, Amarillo */
+        :root {
+            /* Rojo UTA institucional más claro */
+            --uta-rojo:rgb(167, 18, 30);
+            --uta-negro: #000000;
+            --uta-blanco: #ffffff;
+            --uta-amarillo:rgb(241, 234, 200);
+        }
+
+        html, body {
+            font-family: Arial, sans-serif;
+            background: var(--uta-blanco);
+            font-size: 14px;
+        }
 
         h2, h3, h4 {
-            color: #004080;
+            color: var(--uta-rojo);
+            font-weight: bold;
         }
-        
+
         .card {
-            background: #fff;
+            background: var(--uta-blanco);
             padding: 25px;
             margin-bottom: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            border: 2px solid var(--uta-rojo);
         }
 
         .form-group {
@@ -33,14 +48,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             font-weight: bold;
             display: block;
             margin-bottom: 8px;
+            color: var(--uta-negro);
         }
 
         select {
             width: 100%;
             padding: 10px;
             font-size: 15px;
-            border: 1px solid #ccc;
+            border: 2px solid var(--uta-rojo);
             border-radius: 6px;
+            background: var(--uta-blanco);
+            color: var(--uta-negro);
         }
 
         .action-buttons {
@@ -51,39 +69,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         }
 
         button {
-            background-color: #004080;
-            color: #fff;
+            background: var(--uta-rojo);
+            color: var(--uta-blanco);
             padding: 10px 20px;
             font-size: 14px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+            transition: background 0.3s, color 0.3s;
         }
 
         button:hover {
-            background-color: #003060;
+            background: var(--uta-negro);
+            color: var(--uta-amarillo);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background: var(--uta-blanco);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         th, td {
             padding: 12px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--uta-negro);
             text-align: left;
         }
 
         th {
-            background-color: #e6f0ff;
+            background: var(--uta-rojo);
+            color: var(--uta-blanco);
+            font-weight: bold;
+            border-bottom: 3px solid var(--uta-negro);
+        }
+
+        tr:nth-child(even) td {
+            background: #f9f9f9;
+        }
+
+        tr:hover td {
+            background: var(--uta-amarillo);
+            color: var(--uta-negro);
+        }
+
+        .evento-detalle {
+            border-left: 8px solid var(--uta-rojo);
+            background: #fffbe6;
+        }
+
+        ul {
+            color: var(--uta-negro);
         }
 
         @media (max-width: 768px) {
             .action-buttons {
                 flex-direction: column;
+            }
+            table, th, td {
+                font-size: 13px;
             }
         }
     </style>
@@ -148,8 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                         <tr>
                             <th>Nombre</th>
                             <th>Correo</th>
-                            <th>Facultad</th>
-                            <th>Carrera</th>
                             <th>Estado</th>
                             <th>Ponderación</th>
                         </tr>
@@ -159,8 +206,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                             <tr>
                                 <td><?= htmlspecialchars($a['NOMBRE_COMPLETO']) ?></td>
                                 <td><?= htmlspecialchars($a['CORREO']) ?></td>
-                                <td><?= htmlspecialchars($a['FACULTAD']) ?></td>
-                                <td><?= htmlspecialchars($a['CARRERA']) ?></td>
                                 <td><?= htmlspecialchars($a['ESTADO_PARTICIPACION']) ?></td>
                                 <td><?= is_numeric($a['PONDERACION']) ? $a['PONDERACION'] : '-' ?></td>
                             </tr>

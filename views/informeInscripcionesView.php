@@ -14,41 +14,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 <?php include("partials/header_Admin.php"); ?>
 
 <style>
-    /* Eliminamos body y .container con max-width/margin de aquí,
-       asumiendo que #page-inner o tu CSS global ya los maneja */
-    /* font-family, background-color, y color del body deberían venir del CSS global */
-    /* padding: 40px; en body ya no es necesario aquí */
-
-    h2 {
-        color: #004080; /* Color consistente con otros reportes */
+    
+        html, body {
+            font-family: Arial, sans-serif;
+            background: var(--uta-blanco);
+            font-size: 14px;
+        }
+    :root {
+        --uta-rojo:rgb(122, 10, 19);
+        --uta-negro: #000000;
+        --uta-blanco: #ffffff;
+        --uta-amarillo:rgb(233, 228, 205);
     }
 
-    /* .container no es necesario aquí ya que #page-inner es el contenedor principal */
+    h2 {
+        color: var(--uta-rojo);
+        font-weight: bold;
+    }
 
     .card {
-        background: #fff;
+        background: var(--uta-blanco);
         padding: 25px;
         margin-bottom: 30px;
         border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        border: 2px solid var(--uta-rojo);
     }
 
     label {
         font-weight: bold;
         display: block;
         margin-bottom: 8px;
+        color: var(--uta-negro);
     }
 
     select {
         width: 100%;
         padding: 10px;
         font-size: 15px;
-        border: 1px solid #ccc;
+        border: 2px solid var(--uta-rojo);
         border-radius: 6px;
+        background: var(--uta-blanco);
+        color: var(--uta-negro);
         margin-bottom: 10px;
     }
 
-    .form-group { /* Añadido para agrupar label y select */
+    .form-group {
         margin-bottom: 20px;
     }
 
@@ -57,38 +68,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         gap: 10px;
         flex-wrap: wrap;
         align-items: flex-end;
-        margin-top: 20px; /* Ajuste del margen superior */
+        margin-top: 20px;
     }
 
     .action-buttons form {
         margin: 0;
-        flex-grow: 1; /* Permite que el formulario de selección crezca */
+        flex-grow: 1;
     }
 
-    .btn-primary {
-        background-color: #004080;
-        color: #fff;
+    .btn-primary, button[type="submit"] {
+        background: var(--uta-rojo);
+        color: var(--uta-blanco);
         padding: 10px 20px;
         font-size: 14px;
-        border: 2px solid #004080;
+        border: none;
         border-radius: 6px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+        transition: background 0.3s, color 0.3s;
         min-width: 140px;
         text-align: center;
-        width: auto; /* Asegura que el botón no ocupe todo el ancho sin necesidad */
+        width: auto;
     }
 
-    .btn-primary:hover {
-        background-color: #fff;
-        color: #004080;
+    .btn-primary:hover, button[type="submit"]:hover {
+        background: var(--uta-negro);
+        color: var(--uta-amarillo);
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
-        background-color: #fff;
+        background: var(--uta-blanco);
         border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 1px 4px rgba(0,0,0,0.05);
@@ -96,25 +109,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 
     th, td {
         padding: 12px 15px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--uta-negro);
         text-align: left;
-        font-size: 14px; /* Tamaño de fuente para tablas consistente */
+        font-size: 14px;
     }
 
     th {
-        background-color: #e6f0ff;
-        color: #004080;
+        background: var(--uta-rojo);
+        color: var(--uta-blanco);
+        font-weight: bold;
+        border-bottom: 3px solid var(--uta-negro);
+    }
+
+    tr:nth-child(even) td {
+        background: #f9f9f9;
+    }
+
+    tr:hover td {
+        background: var(--uta-amarillo);
+        color: var(--uta-negro);
     }
 
     .total-count {
         font-weight: bold;
-        margin: 20px 0; /* Ajuste del margen para centrar verticalmente */
+        margin: 20px 0;
         font-size: 16px;
-        text-align: center; /* Centrar el texto */
-        color: #004080; /* Color consistente */
+        text-align: center;
+        color: var(--uta-rojo);
     }
 
-    .no-data-message { /* Nueva clase para el mensaje de "no hay datos" */
+    .no-data-message {
         color: red;
         font-weight: bold;
         text-align: center;
@@ -126,13 +150,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             flex-direction: column;
         }
         .action-buttons form {
-            width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+            width: 100%;
         }
         .btn-primary {
-            width: 100%; /* Botones de ancho completo en móviles */
+            width: 100%;
         }
         select {
             font-size: 14px;
+        }
+        table, th, td {
+            font-size: 13px;
         }
     }
 </style>
@@ -177,8 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                             <tr>
                                 <th>Nombre Completo</th>
                                 <th>Correo</th>
-                                <th>Carrera</th>
-                                <th>Facultad</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -186,8 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                                 <tr>
                                     <td><?= htmlspecialchars($ins['NOMBRE COMPLETO']) ?></td>
                                     <td><?= htmlspecialchars($ins['CORREO']) ?></td>
-                                    <td><?= htmlspecialchars($ins['CARRERA']) ?></td>
-                                    <td><?= htmlspecialchars($ins['FACULTAD']) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
