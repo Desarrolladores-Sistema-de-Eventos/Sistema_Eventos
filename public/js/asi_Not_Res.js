@@ -91,6 +91,15 @@ function verInscritosEvento(idEvento, titulo, fecha, tipo, tipoNombre) {
         const tabla = $('#tablas-notas');
         if ($.fn.DataTable.isDataTable(tabla)) tabla.DataTable().destroy();
         tabla.DataTable({ language: { url: '../public/js/es-ES.json' }, responsive: true });
+        // Bloquear el botón finalizar si no hay registros
+        const btnFinalizar = document.getElementById('btn-finalizar-evento');
+        if (res.data.length === 0) {
+          btnFinalizar.disabled = true;
+          btnFinalizar.classList.add('disabled');
+        } else {
+          btnFinalizar.disabled = false;
+          btnFinalizar.classList.remove('disabled');
+        }
       }, 100);
     });
 }

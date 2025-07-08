@@ -75,15 +75,17 @@ function cargarDatosInscripcion(idEvento) {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             axios.get(`../controllers/EventosController.php?option=validarInscripcion&id=${idEvento}`)
-                .then(response => {
+                .then(function(response) {
                     if (!response.data.disponible) {
                         mostrarAlertaUTA('Atención', response.data.mensaje, 'warning');
                         return;
                     }
                     const formData = new FormData();
                     formData.append('id_evento', idEvento);
+                    const motivacion = document.getElementById('motivacionUsuario') ? document.getElementById('motivacionUsuario').value.trim() : '';
+                    formData.append('motivacion', motivacion);
                     axios.post('../controllers/EventosController.php?option=registrarInscripcionIncompleta', formData)
-                        .then(res => {
+                        .then(function(res) {
                             Swal.fire({
                                 title: res.data.mensaje,
                                 imageUrl: '../public/img/uta/sweet.png',
@@ -101,12 +103,12 @@ function cargarDatosInscripcion(idEvento) {
                                 }
                             });
                         })
-                        .catch(error => {
+                        .catch(function(error) {
                             console.error('Error al registrar inscripción:', error);
                             mostrarAlertaUTA('Error', 'No se pudo registrar la inscripción.', 'error');
                         });
                 })
-                .catch(err => {
+                .catch(function(err) {
                     console.error('Error al validar disponibilidad:', err);
                     mostrarAlertaUTA('Error', 'No se pudo validar la disponibilidad.', 'error');
                 });

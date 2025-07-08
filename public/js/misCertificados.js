@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             className: 'text-center',
             render: function (data) {
               return data
-                ? `<a href="../documents/${data}" target="_blank" class="btn btn-dark btn-sm" style="background:#222; color:#fff; font-size:12px; font-weight:600; padding:4px 10px; border-radius:6px; display:inline-block; min-width:120px;">
+                ? `<a href="../documents/certificados/${data}" target="_blank" class="btn btn-dark btn-sm" style="background:#222; color:#fff; font-size:12px; font-weight:600; padding:4px 10px; border-radius:6px; display:inline-block; min-width:120px;">
                      <i class="fa fa-eye" style="color:#fff; font-size:13px; font-weight:normal;"></i> <span style="font-size:12px; font-weight:600;">Ver Certificado</span>
                    </a>`
                 : '<span style="color:gray">Sin archivo</span>';

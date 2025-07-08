@@ -1,0 +1,28 @@
+2025-07-08 09:22:11 - PRUEBA DE ESCRITURA LOG (inicio metodo)
+2025-07-08 09:22:11 - Antes de registrarInscripcionBasica
+2025-07-08 09:22:11 - Después de registrarInscripcionBasica, valor de ok: true
+2025-07-08 09:22:11 - Entrando a bloque ok==true
+2025-07-08 09:22:11 - Antes de getById2 usuario inscrito
+2025-07-08 09:22:11 - Antes de getEvento
+2025-07-08 09:22:11 - Después de getEvento
+2025-07-08 09:22:11 - ORGANIZADORES existe
+2025-07-08 09:22:11 - ORGANIZADORES es array, count: 2
+2025-07-08 09:22:11 - Recorriendo ORGANIZADOR: {"SECUENCIALUSUARIO":88,"ROL_ORGANIZADOR":"RESPONSABLE","NOMBRES":"Patricio","APELLIDOS":"Jaramillo","CORREO":"cjurado5795@uta.edu.ec"}
+2025-07-08 09:22:11 - Encontrado RESPONSABLE
+2025-07-08 09:22:11 - Entró al if (responsable)
+2025-07-08 09:22:11 - Después de getById2 responsable
+2025-07-08 09:22:11 - Datos responsable: correo=cjurado5795@uta.edu.ec, nombre=Patricio Jaramillo
+2025-07-08 09:22:11 - Intentando enviar correo a responsable: cjurado5795@uta.edu.ec, Nombre: Patricio Jaramillo
+2025-07-08 09:22:14 - Resultado de enviarCorreoResponsable: ÉXITO
+2025-07-08 10:18:42 - [actualizarInscripcion] Actualización exitosa, preparando correo
+2025-07-08 10:18:42 - [actualizarInscripcion] Datos inscrito: {"SECUENCIAL":87,"NOMBRES":"Amalia Analia","APELLIDOS":"Romero","CEDULA":"1500453806","URL_CEDULA":"cedula_6869fa7aa059f.pdf","URL_MATRICULA":"matricula_6869fe7bef0ae.pdf","FECHA_NACIMIENTO":"2002-07-21","TELEFONO":"0996871239","DIRECCION":"Ambato","CORREO":"ernestojurado2004@gmail.com","CONTRASENA":"$2y$10$CwJLT0w0.DLyI\/V.95OvVONE\/UsZc6TsIJkNhlKWO6EzvHyhtd8u2","CODIGOROL":"EST","CODIGOESTADO":"ACTIVO","ES_INTERNO":1,"FOTO_PERFIL":"perfil_6868de163522a.jpg","token_recupera":null,"token_expiracion":null}
+2025-07-08 10:18:42 - [actualizarInscripcion] Datos evento: {"SECUENCIAL":178,"TITULO":"todo bien","CONTENIDO":"<p>ahorita<\/p>","DESCRIPCION":"<p>probarmmlmlmlmlmlmml<\/p>","CODIGOTIPOEVENTO":"CONF","FECHAINICIO":"2025-08-17","FECHAFIN":"2025-09-20","CODIGOMODALIDAD":"ADC","HORAS":20,"NOTAAPROBACION":"20.00","ES_PAGADO":1,"COSTO":"20.00","ES_SOLO_INTERNOS":0,"SECUENCIALCATEGORIA":2,"ESTADO":"DISPONIBLE","CAPACIDAD":20,"ES_DESTACADO":1,"ASISTENCIAMINIMA":"100.00","MODALIDAD":"a Distancia","TIPO":"Conferencia","CATEGORIA":"Cultural","PORTADA":"portada_686b735cbd0bd_images (1).jpg","GALERIA":"galeria_686b735cbd250_images.jpg","CARRERAS":[{"SECUENCIAL":2,"NOMBRE_CARRERA":"Biotecnolog\u00eda"},{"SECUENCIAL":3,"NOMBRE_CARRERA":"Bioqu\u00edmica"},{"SECUENCIAL":5,"NOMBRE_CARRERA":"Mercadotecnia"}],"REQUISITOS":[115,116],"ORGANIZADORES":[{"SECUENCIALUSUARIO":88,"ROL_ORGANIZADOR":"RESPONSABLE","NOMBRES":"Patricio","APELLIDOS":"Jaramillo","CORREO":"cjurado5795@uta.edu.ec"},{"SECUENCIALUSUARIO":88,"ROL_ORGANIZADOR":"ORGANIZADOR","NOMBRES":"Patricio","APELLIDOS":"Jaramillo","CORREO":"cjurado5795@uta.edu.ec"}],"TODOS_REQUISITOS":[{"SECUENCIAL":1,"DESCRIPCION":"C\u00e9dula o documento de identidad","SECUENCIALEVENTO":null},{"SECUENCIAL":2,"DESCRIPCION":"Comprobante de matr\u00edcula vigente","SECUENCIALEVENTO":null},{"SECUENCIAL":4,"DESCRIPCION":"Certificado de vacunaci\u00f3n COVID-19","SECUENCIALEVENTO":null},{"SECUENCIAL":5,"DESCRIPCION":"Carta de autorizaci\u00f3n de la facultad","SECUENCIALEVENTO":null},{"SECUENCIAL":6,"DESCRIPCION":"Ensayo o trabajo previo requerido","SECUENCIALEVENTO":null},{"SECUENCIAL":7,"DESCRIPCION":"Presentaci\u00f3n o diapositivas (para ponentes)","SECUENCIALEVENTO":null},{"SECUENCIAL":9,"DESCRIPCION":"Certificado de conocimiento previo","SECUENCIALEVENTO":null},{"SECUENCIAL":10,"DESCRIPCION":"Carta de invitaci\u00f3n oficial","SECUENCIALEVENTO":null},{"SECUENCIAL":115,"DESCRIPCION":"Carta de autorizaci\u00f3n de la facultad","SECUENCIALEVENTO":178},{"SECUENCIAL":116,"DESCRIPCION":"Ensayo o trabajo previo requerido","SECUENCIALEVENTO":178}]}
+2025-07-08 10:18:42 - [actualizarInscripcion] ORGANIZADORES es array, count: 2
+2025-07-08 10:18:42 - [actualizarInscripcion] Recorriendo ORGANIZADOR: {"SECUENCIALUSUARIO":88,"ROL_ORGANIZADOR":"RESPONSABLE","NOMBRES":"Patricio","APELLIDOS":"Jaramillo","CORREO":"cjurado5795@uta.edu.ec"}
+2025-07-08 10:18:42 - [actualizarInscripcion] Encontrado RESPONSABLE
+2025-07-08 10:18:42 - [actualizarInscripcion] Datos responsable: {"SECUENCIAL":88,"NOMBRES":"Patricio","APELLIDOS":"Jaramillo","CEDULA":"1800034257","URL_CEDULA":null,"URL_MATRICULA":"","FECHA_NACIMIENTO":"2000-06-27","TELEFONO":"0995643234","DIRECCION":"Ambato, Huachi","CORREO":"cjurado5795@uta.edu.ec","CONTRASENA":"$2y$10$JxEajy\/LAlIy1P4qlCPxJeBm917Lw4TGKu6DzBul4KU57uAT6vUu2","CODIGOROL":"DOC","CODIGOESTADO":"ACTIVO","ES_INTERNO":1,"FOTO_PERFIL":"perfil_68542abd32162_perfil_patricio_jaramillo.png","token_recupera":null,"token_expiracion":null}
+2025-07-08 10:18:42 - [actualizarInscripcion] Enviando correo a cjurado5795@uta.edu.ec
+2025-07-08 10:37:28 - [subirCertificado] POST: base64=OK, idUsuario=87, idEvento=178
+2025-07-08 10:37:28 - [subirCertificado] Intentando guardar en: ../documents/certificados/certificado_87_178_1751963848.pdf
+2025-07-08 10:37:28 - [subirCertificado] Certificado existente: SI
+2025-07-08 10:37:28 - [subirCertificado] Resultado BD: success=1, mensaje=Certificado actualizado correctamente.

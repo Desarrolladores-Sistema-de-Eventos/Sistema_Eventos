@@ -10,7 +10,7 @@ $(document).ready(function() {
         $.getJSON('../controllers/EstadisticasController.php?option=usuariosInactivos', function(data) {
             $('#iconoUsuariosInactivos').text(data.total);
         });
-        $.getJSON('../controllers/EstadisticasController.php?option=eventosCanceladosCerrados', function(data) {
+        $.getJSON('../controllers/EstadisticasController.php?option=totalEventos', function(data) {
             $('#iconoEventosCanceladosCerrados').text(data.total);
         });
     }

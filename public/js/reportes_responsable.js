@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formReporte");
   const resultado = document.getElementById("resultado");
 
+
   fetch("../controllers/ReportesController.php?option=eventosResponsable")
     .then(res => res.json())
     .then(eventos => {
@@ -18,6 +19,26 @@ document.addEventListener("DOMContentLoaded", () => {
         option.value = e.SECUENCIAL;
         option.textContent = `${e.TITULO}`;
         eventoSelect.appendChild(option);
+      });
+
+      // Inicializar Select2 con buscador (igual que ins_Res.js)
+      if ($(eventoSelect).hasClass('select2-hidden-accessible')) {
+        $(eventoSelect).select2('destroy');
+      }
+      $(eventoSelect).select2({
+        placeholder: 'Buscar o seleccionar evento...',
+        allowClear: true,
+        width: '100%',
+        language: {
+          noResults: function() {
+            return 'No se encontraron eventos';
+          }
+        }
+      });
+
+      // Cerrar el menú al seleccionar
+      $(eventoSelect).on('select2:select', function() {
+        $(this).select2('close');
       });
     })
     .catch(error => {

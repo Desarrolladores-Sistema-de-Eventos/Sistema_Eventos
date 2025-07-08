@@ -206,18 +206,19 @@ function cargarGraficoEventos() {
     .then(res => {
       const eventos = res.data;
 
-      // Paleta institucional para eventos
+      // Paleta institucional para eventos (solo para barras)
       const coloresEventos = [
         utaColors.rojo,
         utaColors.negro,
         utaColors.blanco,
-        '#bdbdbd', // gris claro extra si hay más eventos
+        '#bdbdbd',
         '#ededed'
       ];
 
       const data = {
         labels: eventos.map(e => e.TITULO),
         datasets: [{
+          label: 'Inscripciones aceptadas',
           data: eventos.map(e => parseInt(e.total)),
           backgroundColor: coloresEventos.slice(0, eventos.length),
           borderColor: utaColors.negro,
@@ -231,19 +232,26 @@ function cargarGraficoEventos() {
       }
 
       graficoEventosChart = new Chart(canvas.getContext('2d'), {
-        type: 'pie',
+        type: 'bar',
         data: data,
         options: {
           responsive: true,
           plugins: {
             title: {
-              display: true
+              display: true,
             },
             legend: {
-              labels: {
-                color: utaColors.negro,
-                font: { weight: 'bold' }
-              }
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: utaColors.negro },
+              title: { display: true, text: 'Mis Eventos', color: utaColors.negro }
+            },
+            y: {
+              ticks: { color: utaColors.negro },
+              title: { display: true, text: 'Inscritos aceptados', color: utaColors.negro }
             }
           }
         }
@@ -258,35 +266,44 @@ function cargarGraficoCertificados() {
   axios.get('../controllers/InscripcionesController.php?option=graficoCertificados')
     .then(res => {
       const eventos = res.data;
+      // Paleta de colores para los eventos (circular)
+      const coloresEventos = [
+        utaColors.rojo,
+        utaColors.negro,
+        utaColors.blanco,
+        '#bdbdbd',
+        '#ededed',
+        '#f4f4f4',
+        '#e57373',
+        '#616161',
+        '#ffb300',
+        '#64b5f6'
+      ];
+
       new Chart(canvas.getContext('2d'), {
-        type: 'line',
+        type: 'pie',
         data: {
           labels: eventos.map(e => e.TITULO),
           datasets: [{
             label: 'Certificados emitidos',
             data: eventos.map(e => parseInt(e.total)),
-            fill: true,
-            borderColor: utaColors.rojo,
-            backgroundColor: 'rgba(155,46,46,0.15)',
-            pointBackgroundColor: utaColors.negro,
-            pointBorderColor: utaColors.rojo
+            backgroundColor: coloresEventos.slice(0, eventos.length),
+            borderColor: utaColors.negro,
+            borderWidth: 2
           }]
         },
         options: {
+          responsive: true,
           plugins: {
+            title: {
+              display: true,
+              text: 'Certificados emitidos por Evento'
+            },
             legend: {
               labels: {
                 color: utaColors.negro,
                 font: { weight: 'bold' }
               }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: utaColors.negro }
-            },
-            y: {
-              ticks: { color: utaColors.negro }
             }
           }
         }
@@ -310,6 +327,8 @@ function verDetalleInscripcion(idInscripcion) {
       document.getElementById('detalleNombre').textContent = data.inscripcion.NOMBRE_COMPLETO;
       document.getElementById('detalleEvento').textContent = data.inscripcion.EVENTO;
       document.getElementById('detalleIdInscripcion').value = data.inscripcion.INSCRIPCION_ID;
+      // Mostrar motivación en el textarea bonito
+      document.getElementById('motivacionParticipanteModal').value = data.inscripcion.MOTIVACION ? data.inscripcion.MOTIVACION : 'No registrada.';
 
       // === Mostrar requisitos ===
       const tbodyReq = document.querySelector('#tabla-requisitos-detalle tbody');

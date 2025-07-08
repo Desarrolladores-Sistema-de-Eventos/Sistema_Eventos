@@ -1,7 +1,7 @@
-<?php include("partials/header_Admin.php"); ?>
 <?php 
+include("partials/header_Admin.php");
 $requiereResponsable = true;
-include("../core/auth.php");
+include("../core/auth.php")
 ?>
 
 <div id="page-wrapper">
@@ -156,6 +156,10 @@ thead {
     box-shadow: none !important;
     outline: none !important;
   }
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color:rgb(184, 46, 46) !important; /* Rojo institucional */
+  color: #fff !important;
+}
 
 
 .dataTables_length label,
@@ -181,6 +185,9 @@ thead {
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
 <!-- Tu JS con fetch -->
 <script src="../public/js/reportes_responsable.js"></script>

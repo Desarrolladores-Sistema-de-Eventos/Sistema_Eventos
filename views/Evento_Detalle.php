@@ -1,3 +1,8 @@
+<?php
+  if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +30,6 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../public/css/style.css" rel="stylesheet">
     <!-- AOS Animate On Scroll CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <style>
     #galeriaEvento {
       max-height: 300px;
@@ -121,9 +125,6 @@
 
 <body>
     <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
     if (!isset($_SESSION['usuario'])) {
         include 'partials/header.php';
     }
@@ -202,7 +203,7 @@
         </div>
     <!-- Modal para Formulario de Inscripción (contenido embebido) -->
     <div class="modal fade" id="modalInscribirse" tabindex="-1" aria-labelledby="modalInscribirseLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalInscribirseLabel">Inscripción</h5>
@@ -278,6 +279,11 @@
                       <ul id="requisitosList" class="list-group mb-0">
                         <li>Cargando requisitos...</li>
                       </ul>
+                    </div>
+                    <h4 class="section-title"><i class="fas fa-comment-dots me-2"></i> Motivación para Inscribirse</h4>
+                    <div class="mb-4">
+                      <label for="motivacionUsuario" class="form-label">¿Por qué deseas participar en este evento? <span class="text-danger">*</span></label>
+                      <textarea class="form-control form-control-lg" id="motivacionUsuario" name="motivacionUsuario" rows="3" required placeholder="Escribe aquí tu motivación..." style="font-size:16px;"></textarea>
                     </div>
                     <h4 class="section-title"><i class="fas fa-university me-2"></i> Información de Pago</h4>
                     <div class="requirements-box p-4 mb-4">
@@ -378,7 +384,6 @@
     offset: 60
   });
 </script>
-<?php include 'partials/footer.php'; ?>
 </body>
 
 </html>

@@ -4,6 +4,26 @@ require_once '../models/Inscripciones.php';
 header('Content-Type: application/json');
 
 class InscripcionesController {
+    // Notificaciones de inscripciones aprobadas para usuario (estudiante, docente, invitado)
+    public function notificacionesAprobadasUsuario() {
+        $idUsuario = $_SESSION['usuario']['SECUENCIAL'] ?? null;
+        if (!$idUsuario) {
+            echo json_encode([]);
+            return;
+        }
+        $data = $this->modelo->listarInscripcionesAprobadasUsuario($idUsuario);
+        echo json_encode($data);
+    }
+    // Notificaciones de certificados generados para usuario (estudiante, docente, invitado)
+    public function notificacionesCertificadosUsuario() {
+        $idUsuario = $_SESSION['usuario']['SECUENCIAL'] ?? null;
+        if (!$idUsuario) {
+            echo json_encode([]);
+            return;
+        }
+        $data = $this->modelo->listarCertificadosGeneradosUsuario($idUsuario);
+        echo json_encode($data);
+    }
     private $modelo;
     private $idUsuario;
 
@@ -20,12 +40,14 @@ class InscripcionesController {
     public function handleRequest() {
         $option = $_GET['option'] ?? '';
         switch ($option) {
+            case 'notificacionesCertificadosUsuario':
+                $this->notificacionesCertificadosUsuario(); break;
             case 'inscribirse':
                 $this->inscribirse(); break;
             case 'listarPorEvento':
                 $this->listarPorEvento(); break;
-             case 'listarPorUsuario':
-                $this->listarPorUsuario();break;
+            case 'listarPorUsuario':
+                $this->listarPorUsuario(); break;
             case 'estadoInscripcion':
                 $this->estadoInscripcion(); break;
             case 'estadoPago':
@@ -36,6 +58,8 @@ class InscripcionesController {
                 $this->estadoRequisito(); break;
             case 'listarPendientesResponsable':
                 $this->listarPendientesResponsable(); break;
+            case 'contarPendientesResponsable':
+                $this->contarPendientesPendienteResponsable(); break;
             case 'graficoEstados':
                 $this->graficoEstados(); break;
             case 'graficoPorEvento':
@@ -63,6 +87,20 @@ class InscripcionesController {
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Opción inválida']);
         }
+    }
+      // Nueva función para contar inscripciones pendientes del responsable
+    public function contarPendientesPendienteResponsable() {
+        $total = 0;
+        if (!isset($_SESSION['usuario']['SECUENCIAL'])) {
+            echo json_encode(['total' => 0]);
+            return;
+        }
+        $idResponsable = $_SESSION['usuario']['SECUENCIAL'];
+        $data = $this->modelo->listarInscripcionesPendientesDelResponsable($idResponsable);
+        if (is_array($data)) {
+            $total = count($data);
+        }
+        echo json_encode(['total' => $total]);
     }
 
     private function inscribirse() {

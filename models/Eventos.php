@@ -583,24 +583,24 @@ public function registrarInscripcion($idUsuario, $idEvento, $monto, $formaPago, 
     }
 }
 
-public function registrarInscripcionBasica($idUsuario, $idEvento)
+public function registrarInscripcionBasica($idUsuario, $idEvento, $motivacion = null)
 {
-    // 1. Insertar inscripción
-    $stmt = $this->pdo->prepare("
-        INSERT INTO inscripcion (SECUENCIALUSUARIO, SECUENCIALEVENTO, FECHAINSCRIPCION, CODIGOESTADOINSCRIPCION)
-        VALUES (?, ?, NOW(), 'PEN')
-    ");
-    $stmt->execute([$idUsuario, $idEvento]);
+    // 1. Insertar inscripción (agregar campo MOTIVACION si se provee)
+    if ($motivacion !== null) {
+        $stmt = $this->pdo->prepare("INSERT INTO inscripcion (SECUENCIALUSUARIO, SECUENCIALEVENTO, FECHAINSCRIPCION, CODIGOESTADOINSCRIPCION, MOTIVACION)
+            VALUES (?, ?, NOW(), 'PEN', ?)");
+        $stmt->execute([$idUsuario, $idEvento, $motivacion]);
+    } else {
+        $stmt = $this->pdo->prepare("INSERT INTO inscripcion (SECUENCIALUSUARIO, SECUENCIALEVENTO, FECHAINSCRIPCION, CODIGOESTADOINSCRIPCION)
+            VALUES (?, ?, NOW(), 'PEN')");
+        $stmt->execute([$idUsuario, $idEvento]);
+    }
 
     // 2. Obtener ID de la inscripción recién creada
     $idInscripcion = $this->pdo->lastInsertId();
 
-    // ✅ 3. Obtener requisitos del evento (sin JOIN)
-    $stmt = $this->pdo->prepare("
-        SELECT SECUENCIAL, DESCRIPCION 
-        FROM requisito_evento 
-        WHERE SECUENCIALEVENTO = ?
-    ");
+    // 3. Obtener requisitos del evento (sin JOIN)
+    $stmt = $this->pdo->prepare("SELECT SECUENCIAL, DESCRIPCION FROM requisito_evento WHERE SECUENCIALEVENTO = ?");
     $stmt->execute([$idEvento]);
     $requisitosEvento = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -623,14 +623,12 @@ public function registrarInscripcionBasica($idUsuario, $idEvento)
         }
 
         if ($archivoExistente) {
-            $stmtArchivo = $this->pdo->prepare("
-                INSERT INTO archivo_requisito (
-                    SECUENCIALINSCRIPCION, 
-                    SECUENCIALREQUISITO, 
-                    URLARCHIVO, 
-                    CODIGOESTADOVALIDACION
-                ) VALUES (?, ?, ?, 'PEN')
-            ");
+            $stmtArchivo = $this->pdo->prepare("INSERT INTO archivo_requisito (
+                SECUENCIALINSCRIPCION, 
+                SECUENCIALREQUISITO, 
+                URLARCHIVO, 
+                CODIGOESTADOVALIDACION
+            ) VALUES (?, ?, ?, 'PEN')");
             $stmtArchivo->execute([$idInscripcion, $idRequisito, $archivoExistente]);
         }
     }

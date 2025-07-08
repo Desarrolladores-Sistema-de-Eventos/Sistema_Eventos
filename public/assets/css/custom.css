@@ -20,7 +20,7 @@
   border-right: 6px solid #8B0000 !important;
   border-radius: 10px !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 /* === TÍTULO DE LA ALERTA === */
@@ -28,8 +28,7 @@
   font-weight: bold;
   color: #8B0000;
   font-family: Arial, sans-serif;
-  font-size: 14px;
-
+  font-size: 14px !important;
 }
 
 /* === BOTONES DE CONFIRMACIÓN Y CANCELACIÓN === */
@@ -40,7 +39,7 @@
   padding: 10px 20px !important;
   font-weight: bold;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 /* === ÍCONO SUCCESS (check) EN NEGRO === */
@@ -48,19 +47,19 @@
   border-color: #141414 !important;
   color: #0f0f0f !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 .swal2-icon.swal2-success .swal2-success-ring {
   border: 4px solid #161616 !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 .swal2-icon.swal2-success [class^='swal2-success-line'] {
   background-color: #131212 !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 /* === ÍCONO ERROR (x) EN NEGRO === */
@@ -68,13 +67,13 @@
   border-color: #111111 !important;
   color: #111111 !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
   background-color: #000 !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 /* === ÍCONO WARNING (⚠️) EN NEGRO === */
@@ -82,7 +81,7 @@
   border-color: #111111 !important;
   color: #141414 !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 /* === ÍCONO INFO (i) EN NEGRO === */
@@ -90,7 +89,7 @@
   border-color: #1a1919 !important;
   color: #252525 !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 /* === ÍCONO QUESTION (?) EN NEGRO === */
@@ -98,7 +97,7 @@
   border-color: #181818 !important;
   color: #161616 !important;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px !important;
 }
 
 .swal2-image {
@@ -109,40 +108,41 @@
 
     html, body {
     height: 100%;
-}
+    }
     body {
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background: #e5e5e5 url('../public/img/uta/background.png') no-repeat center center fixed;
+      background-size: cover;
+    }
 
-  
-}
+    #wrapper {
+      width: 100%;
+      background: #202020 url('../public/img/uta/background.png') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: auto;
+    }
 
- #wrapper {
-    width: 100%;
-    background:#202020;
-    overflow-x: auto;   
-}
-
-#page-wrapper {
-    padding: 2rem 1rem;
-    min-height: 100vh;
-    height: 100%;
-    background-color: #fcfbe7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
-    justify-content: flex-start;
-    
-
-}
+    #page-wrapper {
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: url('../../img/uta/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      /* Si quieres un fondo semitransparente sobre la imagen, descomenta la siguiente línea: */
+      /* background-color: rgba(252,251,231,0.85); */
+      justify-content: flex-start;
+    }
 #page-inner {
     width: 100%;
     height: auto;
     min-height: 85vh;
     margin: 2rem auto;
     padding: 2rem 1.5rem;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     flex: 1 1 auto;
     display: flex;
@@ -385,70 +385,70 @@ font-weight: 700;
 }
 
 .sidebar-collapse , .sidebar-collapse .nav{
-	background:none;
+  background:none;
     
 
 }
 
 .sidebar-collapse .nav > li > a {
-	color:#fff;
-	background:#202020;
-	text-shadow:none;	
+  color:#fff;
+  background:#202020;
+  text-shadow:none;	
 }
 .sidebar-collapse > .nav > li > a {
-	padding:15px 10px;
+  padding:15px 10px;
     
 }
 .sidebar-collapse > .nav > li {
-	border-bottom: 1px solid rgba(107, 108, 109, 0.19);
+  border-bottom: 1px solid rgba(107, 108, 109, 0.19);
     
 }
 .sidebar-collapse .nav > li > a:hover,
 .sidebar-collapse .nav > li > a:focus {
-	
-	background:#0A0A0A;
-	outline:0;
+  
+  background:#0A0A0A;
+  outline:0;
 }
 
 .nav-second-level > li > a:before ,
 .nav-third-level > li > a:before {
-	content:"";
-	display:block;
-	position:absolute;
-	left:20px;
-	width:15px;
-	height:1px;
-	background:#ff0000;
-	top:20px;
+  content:"";
+  display:block;
+  position:absolute;
+  left:20px;
+  width:15px;
+  height:1px;
+  background:#ff0000;
+  top:20px;
 }
 .nav-second-level > li > a:after,
 .nav-third-level > li > a:after {
-	content:"";
-	display:block;
-	position:absolute;
-	left:20px;
-	width:1px;
-	height:100%;
-	background:#ff0000;
-	top:0px;
-	z-index:10;
+  content:"";
+  display:block;
+  position:absolute;
+  left:20px;
+  width:1px;
+  height:100%;
+  background:#ff0000;
+  top:0px;
+  z-index:10;
 }
 .nav-second-level  > li:last-child > a:after,
 .nav-third-level  > li:last-child > a:after {
-	height:50%;
+  height:50%;
 }
 .nav-third-level > li > a:after,
 .nav-third-level > li > a:before  {
-	left:40px;
+  left:40px;
 }
 .navbar-side {
-	border:none;
-	background-color: #202020;	
+  border:none;
+  background-color: #202020;	
      
 }
 .navbar-cls-top {
-	background:#4D4D4D;
-	border-bottom:none;
+  background:#4D4D4D;
+  border-bottom:none;
 }
 .navbar-cls-top .navbar-brand:hover {
 
@@ -515,8 +515,8 @@ line-height: 1.428571429;
         min-height: 100vh;
         overflow-y: auto;
     }
-	
-	
+  
+  
     .navbar-side {
         z-index: 1;
         position: absolute;
@@ -529,9 +529,7 @@ line-height: 1.428571429;
    
 }
 
-body, #page-wrapper {
-    background-color: #e5e5e5 !important;
-}
+
 
 /* Tarjetas con fondo blanco para contraste */
 .panel {

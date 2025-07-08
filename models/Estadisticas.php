@@ -1,3 +1,4 @@
+
 <?php
 require_once '../core/Conexion.php';
 
@@ -11,6 +12,12 @@ class Estadisticas {
     // Total de usuarios activos
     public function totalUsuariosActivos() {
         $sql = "SELECT COUNT(*) as total FROM usuario WHERE CODIGOESTADO = 'ACTIVO'";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+        // Total de todos los eventos (sin importar estado)
+    public function totalEventos() {
+        $sql = "SELECT COUNT(*) as total FROM evento";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }

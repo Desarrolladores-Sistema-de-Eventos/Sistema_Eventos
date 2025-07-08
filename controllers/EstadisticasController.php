@@ -29,6 +29,8 @@ class EstadisticasController {
                 $this->usuariosInactivos(); break;
             case 'eventosCanceladosCerrados':
                 $this->eventosCanceladosCerrados(); break;
+            case 'totalEventos':
+                $this->totalEventos(); break;
             case 'usuariosPorTipo':
                 $this->usuariosPorTipo(); break;
             case 'inscripcionesActivasCompletadasPorEvento':
@@ -36,6 +38,10 @@ class EstadisticasController {
             default:
                 $this->json(['tipo' => 'error', 'mensaje' => 'Opción inválida']);
         }
+    }
+    private function totalEventos() {
+        $total = $this->modelo->totalEventos();
+        $this->json(['total' => $total]);
     }
 
     private function totalUsuariosActivos() {

@@ -19,9 +19,9 @@ include("../core/auth.php"); ?>
           <!-- Sidebar: Selector de eventos -->
           <div class="col-md-4 col-lg-3" id="sidebar-evento">
             <div class="evento-select-sidebar" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(155,46,46,0.08); padding: 24px 18px; margin-bottom: 20px;">
-              <label for="eventoSeleccionado" class="evento-label" style="font-size: 16px; font-weight: 600; color: #9b2e2e;">
+                <label for="eventoSeleccionado" class="evento-label" style="font-size: 14px; font-weight: normal; color: #9b2e2e;">
                 <i class="fa fa-search"></i> Seleccione Evento:
-              </label>
+                </label>
               <select id="eventoSeleccionado" class="form-control select2-evento" style="width: 100%; margin-top: 10px;"></select>
             </div>
           </div>
@@ -71,6 +71,13 @@ include("../core/auth.php"); ?>
                   </thead>
                   <tbody id="tablaRequisitosModal"></tbody>
                 </table>
+
+                <!-- Motivación de la inscripción -->
+                <div id="seccionMotivacionModal" style="margin-bottom: 18px;">
+                  <hr>
+                  <h5><i class="fa fa-comment"></i> Motivación del Participante</h5>
+                  <div class="alert alert-info" id="motivacionParticipanteModal" style="font-size:14px; min-height:40px; background-color: #f2f3f5; color: #222; border-color: #d3d6db;"></div>
+                </div>
 
                 <div id="seccionPagosModal">
                   <hr>

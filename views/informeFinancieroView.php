@@ -27,9 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         --uta-amarillo:rgb(243, 236, 202);
     }
 
-    h2, h3 {
-        color: var(--uta-rojo);
+    h2{
+        font-size: 24px;
+        color: rgb(23, 23, 23);
         font-weight: bold;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .linea-roja-uta {
+        width: 100%;
+        height: 8px;
+        background: #ae0c22;
+        border-radius: 3px;
+        margin-top: 0px;
+        margin-bottom: 18px;
     }
 
     .card {
@@ -137,6 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         text-align: center;
         margin-top: 20px;
     }
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color:rgb(184, 46, 46) !important; /* Rojo institucional */
+  color: #fff !important;
+}
+
 
     @media (max-width: 768px) {
         .action-buttons {
@@ -160,6 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 <div id="page-wrapper">
     <div id="page-inner">
         <h2>Reporte Financiero por Evento</h2>
+        <div class="linea-roja-uta"></div>
 
         <div class="card">
             <div class="action-buttons">
@@ -168,10 +187,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                         <select name="evento" id="evento" required>
                             <option value="">-- Seleccione --</option>
                             <?php foreach ($eventos as $evento): ?>
-                                <option value="<?= $evento['SECUENCIAL'] ?>" <?= (isset($_POST['evento']) && $_POST['evento'] == $evento['SECUENCIAL']) ? 'selected' : '' ?>>
+                                <option value="<?= $evento['SECUENCIAL'] ?>" <?= (isset($_POST['evento']) && $_POST['evento'] == $evento['SECUENCIAL']) ? 'selected' : '' ?> >
                                     <?= htmlspecialchars($evento['TITULO']) ?>
                                 </option>
                             <?php endforeach; ?>
+</style>
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<!-- jQuery y Select2 JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#evento').select2({
+    placeholder: 'Buscar evento...',
+    allowClear: true,
+    width: '100%',
+    language: {
+      noResults: function() { return 'No se encontraron eventos'; }
+    }
+  });
+});
+</script>
                         </select>
                     </div>
                     <button type="submit" class="btn-primary">Ver Reporte</button>

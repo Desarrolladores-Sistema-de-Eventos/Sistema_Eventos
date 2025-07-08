@@ -104,7 +104,7 @@ h2 {
           </span>
           <div class="text-box">
             <p class="main-text"><span id="iconoTotalUsuarios">0</span></p>
-            <p class="text-muted">Usuarios Activos</p>
+            <p class="text-muted"> Activos</p>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ h2 {
           </span>
           <div class="text-box">
             <p class="main-text"><span id="iconoTotalEventos">0</span></p>
-            <p class="text-muted">Eventos Disponibles</p>
+            <p class="text-muted"> Disponibles</p>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ h2 {
           </span>
           <div class="text-box">
             <p class="main-text"><span id="iconoUsuariosInactivos">0</span></p>
-            <p class="text-muted">Usuarios Inactivos</p>
+            <p class="text-muted">Inactivos</p>
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@ h2 {
           </span>
           <div class="text-box">
             <p class="main-text"><span id="iconoEventosCanceladosCerrados">0</span></p>
-            <p class="text-muted">Eventos Cancelados/Cerrados</p>
+            <p class="text-muted">Eventos Totales</p>
           </div>
         </div>
       </div>

@@ -17,9 +17,9 @@ include("../core/auth.php"); ?>
       <!-- Sidebar: Selector de eventos -->
       <div class="col-md-4 col-lg-3" id="sidebar-evento">
         <div class="evento-select-sidebar" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(155,46,46,0.08); padding: 24px 18px; margin-bottom: 20px;">
-          <label for="selectEvento" class="evento-label" style="font-size: 16px; font-weight: 600; color: #9b2e2e;">
+            <label for="selectEvento" class="evento-label" style="font-size: 14px; font-weight: normal; color: #9b2e2e;">
             <i class="fa fa-search"></i> Seleccione Evento:
-          </label>
+            </label>
           <select id="selectEvento" class="selectEvento" style="width: 100%; margin-top: 10px;"></select>
         </div>
       </div>
@@ -204,6 +204,7 @@ label{
   color: #fff !important;
   opacity: 0.7;
   cursor: not-allowed;
+  font-weight: normal; /* Quita la negrilla */
 }
 </style>
 
@@ -216,7 +217,11 @@ label{
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+
 <script src="../public/js/certificado.js"></script>
+<script>
+
+</script>
 
 <?php include("partials/footer_Admin.php"); ?>
 

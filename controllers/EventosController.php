@@ -585,6 +585,8 @@ if ($ok === true) {
     }
 
     $idEvento = $_POST['id_evento'] ?? null;
+    $motivacion = $_POST['motivacion'] ?? null;
+
 
     if (!$idEvento) {
         $this->json(['tipo' => 'error', 'mensaje' => 'ID del evento faltante']);
@@ -604,7 +606,7 @@ if ($ok === true) {
     file_put_contents(__DIR__ . '/../correo.log', date('Y-m-d H:i:s') . " - Antes de registrarInscripcionBasica\n", FILE_APPEND);
     try {
         // Este método ahora también guarda automáticamente los archivos ya existentes (cédula, matrícula)
-        $ok = $this->eventoModelo->registrarInscripcionBasica($this->idUsuario, $idEvento);
+        $ok = $this->eventoModelo->registrarInscripcionBasica($this->idUsuario, $idEvento, $motivacion);
         // Log después de llamar a registrarInscripcionBasica
         file_put_contents(__DIR__ . '/../correo.log', date('Y-m-d H:i:s') . " - Después de registrarInscripcionBasica, valor de ok: " . var_export($ok, true) . "\n", FILE_APPEND);
         if ($ok) {

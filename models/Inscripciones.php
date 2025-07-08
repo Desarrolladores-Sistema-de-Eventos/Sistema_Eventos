@@ -18,6 +18,23 @@ class Inscripciones {
     ");
     return $stmt->execute([$idEvento, $idUsuario, $facturaUrl]);
 }
+// Inscripciones aprobadas para usuario (estudiante, docente, invitado)
+public function listarInscripcionesAprobadasUsuario($idUsuario) {
+    $sql = "
+        SELECT i.SECUENCIAL AS INSCRIPCION_ID,
+               e.TITULO AS EVENTO,
+               i.FECHAINSCRIPCION
+        FROM inscripcion i
+        INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        WHERE i.SECUENCIALUSUARIO = ?
+          AND i.CODIGOESTADOINSCRIPCION = 'ACE'
+        ORDER BY i.FECHAINSCRIPCION DESC
+        LIMIT 10
+    ";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
 public function listarInscripcionesPorEvento($idEvento, $idResponsable) {
@@ -116,7 +133,8 @@ public function listarInscripcionesPendientesDelResponsable($idResponsable) {
             CONCAT(u.NOMBRES, ' ', u.APELLIDOS) AS NOMBRE_COMPLETO,
             e.TITULO AS EVENTO,
             i.CODIGOESTADOINSCRIPCION,
-            i.FACTURA_URL AS FACTURA
+            i.FACTURA_URL AS FACTURA,
+            i.SECUENCIALEVENTO
         FROM inscripcion i
         INNER JOIN usuario u ON u.SECUENCIAL = i.SECUENCIALUSUARIO
         INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
@@ -190,7 +208,8 @@ public function detalleInscripcion($idInscripcion, $idResponsable) {
             i.FECHAINSCRIPCION,
             i.CODIGOESTADOINSCRIPCION,
             i.FACTURA_URL AS FACTURA,
-            e.ES_PAGADO
+            e.ES_PAGADO,
+            i.MOTIVACION
         FROM inscripcion i
         JOIN usuario u ON u.SECUENCIAL = i.SECUENCIALUSUARIO
         JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
@@ -447,5 +466,27 @@ public function esEventoPagadoPorInscripcion($idInscripcion) {
     $stmt = $this->pdo->prepare("SELECT e.ES_PAGADO FROM inscripcion i INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO WHERE i.SECUENCIAL = ?");
     $stmt->execute([$idInscripcion]);
     return $stmt->fetchColumn();
+}
+
+// Notificaciones: certificados generados para usuario
+public function listarCertificadosGeneradosUsuario($idUsuario) {
+    $sql = "
+        SELECT i.SECUENCIAL AS INSCRIPCION_ID,
+               e.TITULO AS EVENTO,
+               c.FECHA_EMISION AS FECHA_CERTIFICADO,
+               c.URL_CERTIFICADO AS URL_CERTIFICADO
+        FROM inscripcion i
+        INNER JOIN evento e ON e.SECUENCIAL = i.SECUENCIALEVENTO
+        INNER JOIN certificado c ON c.SECUENCIALINSCRIPCION = i.SECUENCIAL
+        WHERE i.SECUENCIALUSUARIO = ?
+          AND i.CODIGOESTADOINSCRIPCION = 'ACE'
+          AND c.URL_CERTIFICADO IS NOT NULL AND c.URL_CERTIFICADO != ''
+          AND DATE(c.FECHA_EMISION) = CURDATE()
+        ORDER BY c.FECHA_EMISION DESC
+        LIMIT 10
+    ";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$idUsuario]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 }

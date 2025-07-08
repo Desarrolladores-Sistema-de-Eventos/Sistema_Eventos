@@ -1,3 +1,40 @@
+// --- Selección automática de evento e inscripción desde parámetros URL ---
+document.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  const idEvento = params.get('idEvento');
+  const idInscripcion = params.get('idInscripcion');
+  if (idEvento) {
+    const select = document.getElementById('eventoSeleccionado');
+    // Esperar a que el select esté cargado (por si es asíncrono)
+    const intentarSeleccionar = () => {
+      if (select && select.options.length > 1) {
+        select.value = idEvento;
+        $(select).trigger('change');
+        // Si quieres resaltar la fila de la inscripción, puedes hacerlo aquí
+        if (idInscripcion) {
+          // Esperar a que la tabla esté cargada
+          setTimeout(() => {
+            const tabla = $('#tabla-inscripciones').DataTable();
+            if (tabla) {
+              tabla.rows().every(function() {
+                const row = this.node();
+                // Buscar por el botón de validar que contiene el id de inscripción
+                if ($(row).find(`button[onclick*="${idInscripcion}"]`).length > 0) {
+                  $(row).addClass('table-success');
+                  // Scroll hacia la fila
+                  row.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+              });
+            }
+          }, 1200);
+        }
+      } else {
+        setTimeout(intentarSeleccionar, 200);
+      }
+    };
+    intentarSeleccionar();
+  }
+});
 document.addEventListener('DOMContentLoaded', cargarEventosSeleccion);
 
 function cargarEventosSeleccion() {
@@ -203,6 +240,12 @@ function verRequisitosPagos(idInscripcion, nombreParticipante = '') {
   document.getElementById('nombreParticipanteModal').textContent = nombreParticipante;
   const reqUrl = `../controllers/InscripcionesController.php?option=requisitosPorInscripcion&id=${idInscripcion}`;
   const pagosUrl = `../controllers/InscripcionesController.php?option=pagosPorInscripcion&id=${idInscripcion}`;
+  // Obtener motivación antes de mostrar el modal
+  axios.get(`../controllers/InscripcionesController.php?option=detalleInscripcion&id=${idInscripcion}`)
+    .then(resMot => {
+      const motivacion = resMot.data && resMot.data.inscripcion && resMot.data.inscripcion.MOTIVACION ? resMot.data.inscripcion.MOTIVACION : 'No registrada.';
+      document.getElementById('motivacionParticipanteModal').textContent = motivacion;
+    });
 
   axios.get(reqUrl).then(resReq => {
     const tbodyReq = document.getElementById('tablaRequisitosModal');

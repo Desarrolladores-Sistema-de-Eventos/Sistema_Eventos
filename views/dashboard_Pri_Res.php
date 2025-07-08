@@ -124,6 +124,13 @@ include("../core/auth.php")
                 <tbody></tbody>
               </table>
             </div>
+                     <!-- Motivación de la inscripción -->
+                <div id="detalleMotivacion" style="margin-bottom: 18px;">
+                  <hr>
+                  <h5><i class="fa fa-comment"></i> Motivación del Participante</h5>
+                  <textarea id="motivacionParticipanteModal" class="form-control" style="font-size:15px; min-height:60px; background-color: #f2f3f5; color: #222; border: 1.5px solid #d3d6db; border-radius: 8px; resize: none; box-shadow: 0 2px 8px #0001; padding: 12px 14px; font-weight: 500;" readonly></textarea>
+                </div>
+
           </div>
           <div class="form-group" id="grupo-pagos-registrados">
             <label id="label-pagos-registrados">Pagos Registrados:</label>

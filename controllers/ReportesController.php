@@ -150,8 +150,8 @@ private function generarPDF($tipo, $idEvento) {
         $pdf->AddPage();
         $pdf->SetFont('Arial', '', 11);
 
-        if (file_exists('../public/img/factura_logo.png')) {
-            $pdf->Image('../public/img/factura_logo.png', 10, 10, 30);
+        if (file_exists('../public/img/uta/EPA.jpg')) {
+            $pdf->Image('../public/img/uta/EPA.jpg', 10, 10, 30);
         }
 
         $pdf->SetXY(50, 10);
