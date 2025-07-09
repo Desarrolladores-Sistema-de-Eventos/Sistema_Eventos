@@ -29,6 +29,8 @@ if ($esResponsable || in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menú Administrativo</title>
+  <link href="../public/img/uta/logo1.png" rel="icon">
+
   <link href="../public/assets/css/bootstrap.css" rel="stylesheet" />
   <link href="../public/assets/css/font-awesome.css" rel="stylesheet" />
   <link href="../public/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
@@ -94,7 +96,6 @@ if ($esResponsable || in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])) {
           <div id="listaAprobaciones" style="max-height: 320px; overflow-y: auto;"></div>
         </div>
       </div>
-      <img id="fotoPerfilHeader" src="<?php echo htmlspecialchars($fotoPerfil); ?>" alt="Foto de perfil" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 8px #0002;">
       <a href="../controllers/logout.php" class="btn btn-danger square-btn-adjust">Cerrar Sesión</a>
     </div>
   <?php else: ?>
@@ -133,10 +134,10 @@ if ($esResponsable || in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])) {
 
         
         <?php if (!$esResponsable && in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
+          <li><a href="../views/dashboard_Pri_Usu.php"><i class="fa fa-user fa-3x"></i> Perfil</a></li>
           <li><a href="../views/dashboard_Fac_Usu.php"><i class="fa fa-file-text-o fa-3x"></i> Mis Inscripciones</a></li>
           <li><a href="../views/dashboard_Eve_Usu.php"><i class="fa fa-calendar fa-3x"></i> Mis Eventos</a></li>
           <li><a href="../views/dashboard_Cer_Usu.php"><i class="fa fa-certificate fa-3x"></i> Mis Certificados</a></li>
-          <li><a href="../views/dashboard_Pri_Usu.php"><i class="fa fa-user fa-3x"></i> Perfil</a></li>
         <?php endif; ?>
 
       </ul>

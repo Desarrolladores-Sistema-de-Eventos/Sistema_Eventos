@@ -102,7 +102,23 @@ class EventoController {
     $data['asistenciaMinima'] = isset($data['asistenciaMinima']) && $data['asistenciaMinima'] !== '' ? $data['asistenciaMinima'] : null;
 
     // Validar campos requeridos
-    $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
+    $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
+    // Solo exigir notaAprobacion si el tipo de evento es curso
+    $tipoCurso = null;
+    $tipos = $this->eventoModelo->getTiposEvento();
+    foreach ($tipos as $t) {
+        if (strtolower($t['NOMBRE']) === 'curso') {
+            $tipoCurso = $t['CODIGO'];
+            break;
+        }
+    }
+    if (isset($data['tipoEvento']) && $data['tipoEvento'] == $tipoCurso) {
+        $required[] = 'notaAprobacion';
+    }
+    // Asegurar que notaAprobacion exista aunque sea null
+    if (!isset($data['notaAprobacion'])) {
+        $data['notaAprobacion'] = null;
+    }
     foreach ($required as $campo) {
         if (!isset($data[$campo]) || $data[$campo] === '') {
             $this->json(['success' => false, 'mensaje' => "El campo $campo es obligatorio"]);
@@ -140,7 +156,8 @@ class EventoController {
         }
     }
 
-    $data['estado'] = 'DISPONIBLE';
+    // Tomar el estado del POST si viene, si no, por defecto 'CREADO'
+    $data['estado'] = isset($data['estado']) && $data['estado'] !== '' ? $data['estado'] : 'CREADO';
 
     $idEvento = $this->eventoModelo->crear($data);
     // Guardar requisitos asociados si se creó el evento
@@ -154,6 +171,8 @@ class EventoController {
 }
 
     private function editar() {
+    // Tomar el estado del POST si viene, si no, por defecto 'CREADO'
+    $data['estado'] = isset($data['estado']) && $data['estado'] !== '' ? $data['estado'] : 'CREADO';
     if ($this->rol !== 'ADM') {
         $this->json(['success' => false, 'mensaje' => 'No autorizado']);
         return;
@@ -176,6 +195,30 @@ class EventoController {
     // Normalizar campos nuevos
     $data['contenido'] = isset($data['contenido']) ? $data['contenido'] : '';
     $data['asistenciaMinima'] = isset($data['asistenciaMinima']) && $data['asistenciaMinima'] !== '' ? $data['asistenciaMinima'] : null;
+
+    // Validar campos requeridos (igual que en crear)
+    $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'esSoloInternos', 'esPagado', 'categoria', 'tipoEvento', 'carrera', 'capacidad', 'responsable', 'organizador'];
+    $tipoCurso = null;
+    $tipos = $this->eventoModelo->getTiposEvento();
+    foreach ($tipos as $t) {
+        if (strtolower($t['NOMBRE']) === 'curso') {
+            $tipoCurso = $t['CODIGO'];
+            break;
+        }
+    }
+    if (isset($data['tipoEvento']) && $data['tipoEvento'] == $tipoCurso) {
+        $required[] = 'notaAprobacion';
+    }
+    // Asegurar que notaAprobacion exista aunque sea null
+    if (!isset($data['notaAprobacion'])) {
+        $data['notaAprobacion'] = null;
+    }
+    foreach ($required as $campo) {
+        if (!isset($data[$campo]) || $data[$campo] === '') {
+            $this->json(['success' => false, 'mensaje' => "El campo $campo es obligatorio"]);
+            return;
+        }
+    }
 
     // Procesar imagen de portada
     $data['urlPortada'] = null;

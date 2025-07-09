@@ -173,6 +173,13 @@ private function archivosUsuario() {
                 $_POST['fecha_nacimiento'],
                 $cedula_pdf
             );
+            // Si la edición fue exitosa y el usuario editado es el de la sesión, refrescar la sesión
+            if ($resp['success'] && isset($_SESSION['usuario']) && $_SESSION['usuario']['SECUENCIAL'] == $_POST['id']) {
+                $usuarioActualizado = $this->usuarioModelo->getById($_POST['id']);
+                if ($usuarioActualizado) {
+                    $_SESSION['usuario'] = $usuarioActualizado;
+                }
+            }
             $this->json($resp);
         } catch (Exception $e) {
             $this->json([
@@ -445,6 +452,13 @@ if (
             $matriculaNombre
         );
 
+        // Refrescar la sesión si la actualización fue exitosa
+        if ($resp['success'] && isset($_SESSION['usuario'])) {
+            $usuarioActualizado = $this->usuarioModelo->getById($this->idUsuario);
+            if ($usuarioActualizado) {
+                $_SESSION['usuario'] = $usuarioActualizado;
+            }
+        }
         $this->json($resp);
     } catch (Exception $e) {
         $this->json([

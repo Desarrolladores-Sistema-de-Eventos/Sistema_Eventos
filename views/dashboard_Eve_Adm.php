@@ -18,7 +18,8 @@ include("../core/auth.php")?>
 
         <!-- Nav tabs para filtrar por estado -->
         <ul class="nav nav-tabs" id="navEstadosEventos" style="margin-bottom: 15px;">
-          <li class="active"><a href="#" data-estado="DISPONIBLE">Disponible</a></li>
+          <li class="active"><a href="#" data-estado="CREADO">Creados</a></li>
+          <li><a href="#" data-estado="DISPONIBLE">Disponible</a></li>
           <li><a href="#" data-estado="EN CURSO">En Curso</a></li>
           <li><a href="#" data-estado="FINALIZADO">Finalizado</a></li>
           <li><a href="#" data-estado="CANCELADO">Cancelado</a></li>
@@ -90,9 +91,9 @@ include("../core/auth.php")?>
         <label for="costo"><i class="fa fa-dollar"></i> Costo</label>
         <input type="number" class="form-control input-sm" id="costo" name="costo" min="0" step="0.01" value="0" readonly>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" id="notaAprobacionGroup" style="display:none;">
         <label for="notaAprobacion"><i class="fa fa-check-circle"></i> Nota mín.</label>
-        <input type="number" class="form-control input-sm" id="notaAprobacion" name="notaAprobacion" min="0" step="0.1">
+        <input type="number" class="form-control input-sm" id="notaAprobacion" name="notaAprobacion" min="0" step="0.1" disabled>
       </div>
       <div class="col-md-2">
         <label for="asistenciaMinima"><i class=""></i> % Por. Mín.</label>
@@ -102,27 +103,35 @@ include("../core/auth.php")?>
         <label for="capacidad"><i class="fa fa-users"></i> Capacidad</label>
         <input type="number" class="form-control input-sm" id="capacidad" name="capacidad" min="1" step="1" required>
       </div>
-      <div class="col-md-2" style="display:flex; align-items:center; gap:12px; margin-top:18px;">
-        
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <label for="tipoEvento"><i class="fa fa-folder-open"></i> Tipo de Evento</label>
-        <select class="form-control input-sm" id="tipoEvento" name="tipoEvento" required style="max-width: 220px;">
+        <select class="form-control input-sm" id="tipoEvento" name="tipoEvento" required>
           <option value="">Seleccione</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <label for="modalidad"><i class="fa fa-random"></i> Modalidad</label>
-        <select class="form-control input-sm" id="modalidad" name="modalidad" required style="max-width: 220px;">
+        <select class="form-control input-sm" id="modalidad" name="modalidad" required>
           <option value="">Seleccione</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <label for="categoria"><i class="fa fa-tags"></i> Categoría</label>
-        <select class="form-control input-sm" id="categoria" name="categoria" required style="max-width: 220px;">
+        <select class="form-control input-sm" id="categoria" name="categoria" required>
           <option value="">Seleccione</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="estado"><i class="fa fa-flag"></i> Estado</label>
+        <select class="form-control input-sm" id="estado" name="estado" required>
+          <option value="">Seleccione</option>
+          <option value="DISPONIBLE">Disponible</option>
+          <option value="EN CURSO">En Curso</option>
+          <option value="FINALIZADO">Finalizado</option>
+          <option value="CANCELADO">Cancelado</option>
+          <option value="CREADO">Creado</option>
         </select>
       </div>
     </div><br>
@@ -141,7 +150,7 @@ include("../core/auth.php")?>
       </div>
       <div class="col-md-4">
         <label for="esSoloInternos"><i class="fa fa-users"></i> Inscripción</label>
-        <select id="esSoloInternos" name="esSoloInternos" class="form-control input-sm" style="max-width: 140px;">
+        <select id="esSoloInternos" name="esSoloInternos" class="form-control input-sm" style="max-width: 220px;">
           <option value="1">Internos</option>
           <option value="0">Externos</option>
         </select>
@@ -436,5 +445,28 @@ ul.nav.nav-tabs {
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script src="../public/js/eventoAdmin.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var tipoEvento = document.getElementById('tipoEvento');
+      var notaAprobacion = document.getElementById('notaAprobacion');
+      var notaAprobacionGroup = document.getElementById('notaAprobacionGroup');
+      if (tipoEvento && notaAprobacion && notaAprobacionGroup) {
+        function toggleNotaAprobacion() {
+          var selected = tipoEvento.options[tipoEvento.selectedIndex]?.text?.toLowerCase() || '';
+          if (selected.includes('curso')) {
+            notaAprobacionGroup.style.display = '';
+            notaAprobacion.disabled = false;
+          } else {
+            notaAprobacionGroup.style.display = 'none';
+            notaAprobacion.disabled = true;
+            notaAprobacion.value = '';
+          }
+        }
+        tipoEvento.addEventListener('change', toggleNotaAprobacion);
+        // Llamar al cargar por si ya hay valor
+        toggleNotaAprobacion();
+      }
+    });
+    </script>
 
 <?php include("partials/footer_Admin.php"); ?>

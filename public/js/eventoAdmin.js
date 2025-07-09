@@ -123,6 +123,11 @@ function cargarDatosEvento(id) {
                     $(organizadorSelect).trigger('change');
                 }
 
+                // Asignar estado
+                if (e.ESTADO) {
+                    document.getElementById('estado').value = e.ESTADO;
+                }
+
                 const costoInput = document.getElementById('costo');
                 if (e.ES_PAGADO == 1) {
                     costoInput.removeAttribute('readonly');
@@ -228,7 +233,7 @@ function mostrarAlertaUTA(titulo, texto = '', tipo = 'info') {
 }
 
 // Estado seleccionado para el filtro de eventos
-let estadoSeleccionado = 'DISPONIBLE';
+let estadoSeleccionado = 'CREADO';
 
 function inicializarTablaEventos() {
     if (tablaEventos) tablaEventos.destroy();
@@ -411,10 +416,20 @@ document.addEventListener('DOMContentLoaded', function () {
     cargarSelectOrganizadores();
     cargarSelectsEvento();
 
-    // Inicializar select2 para carreras
+    // Inicializar select2 para carreras, responsable y organizador
     $("#carrera").select2({
         placeholder: "Seleccione una o varias carreras",
         width: '100%'
+    });
+    $("#responsable").select2({
+        placeholder: "Seleccione responsable",
+        width: '100%',
+        allowClear: true
+    });
+    $("#organizador").select2({
+        placeholder: "Seleccione organizador",
+        width: '100%',
+        allowClear: true
     });
 
 
@@ -495,7 +510,9 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.set('esPagado', esPagado ? 1 : 0);
             formData.set('esDestacado', esDestacado ? 1 : 0);
             formData.set('costo', esPagado ? costoInput.value : '0');
-            formData.set('estado', 'DISPONIBLE');
+            // Tomar el estado seleccionado del formulario
+            const estado = document.getElementById('estado').value;
+            formData.set('estado', estado);
             formData.set('asistenciaMinima', isNaN(asistenciaMinima) ? '' : asistenciaMinima);
             // Elimina posibles valores vacíos
             formData.delete('carrera');
@@ -542,6 +559,32 @@ document.addEventListener('DOMContentLoaded', function () {
           document.getElementById('costo').setAttribute('readonly', true);
           // Limpiar select2 visualmente
           $('#carrera').val(null).trigger('change');
+          // Limpiar selects de responsable y organizador
+          $('#responsable').val('').trigger('change');
+          $('#organizador').val('').trigger('change');
+          // Limpiar CKEditor de descripción
+          if (window.CKEDITOR && CKEDITOR.instances['descripcion']) {
+            CKEDITOR.instances['descripcion'].setData('');
+          } else if (window.ClassicEditor && document.getElementById('descripcion').ckeditorInstance) {
+            document.getElementById('descripcion').ckeditorInstance.setData('');
+          } else {
+            document.getElementById('descripcion').value = '';
+          }
+          // Limpiar CKEditor de contenido
+          if (window.CKEDITOR && CKEDITOR.instances['contenido']) {
+            CKEDITOR.instances['contenido'].setData('');
+          } else if (window.ClassicEditor && document.getElementById('contenido').ckeditorInstance) {
+            document.getElementById('contenido').ckeditorInstance.setData('');
+          } else if (document.getElementById('contenido')) {
+            document.getElementById('contenido').value = '';
+          }
+          // Limpiar nombres y miniaturas de imágenes
+          if (document.getElementById('nombrePortada')) document.getElementById('nombrePortada').textContent = '';
+          if (document.getElementById('nombreGaleria')) document.getElementById('nombreGaleria').textContent = '';
+          if (document.getElementById('miniaturaPortada')) document.getElementById('miniaturaPortada').innerHTML = '';
+          if (document.getElementById('miniaturaGaleria')) document.getElementById('miniaturaGaleria').innerHTML = '';
+          if (document.getElementById('urlPortada')) document.getElementById('urlPortada').value = '';
+          if (document.getElementById('urlGaleria')) document.getElementById('urlGaleria').value = '';
           cargarRequisitosGenerales();
           $('#modalEvento').modal('show');
       });
@@ -572,3 +615,24 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
+document.addEventListener('DOMContentLoaded', function () {
+  // Mostrar/ocultar y habilitar/deshabilitar notaAprobacion según tipo de evento
+  var tipoEvento = document.getElementById('tipoEvento');
+  var notaAprobacion = document.getElementById('notaAprobacion');
+  var notaAprobacionGroup = document.getElementById('notaAprobacionGroup');
+  if (tipoEvento && notaAprobacion && notaAprobacionGroup) {
+    function toggleNotaAprobacion() {
+      var selected = tipoEvento.options[tipoEvento.selectedIndex]?.text?.toLowerCase() || '';
+      if (selected.includes('curso')) {
+        notaAprobacionGroup.style.display = '';
+        notaAprobacion.disabled = false;
+      } else {
+        notaAprobacionGroup.style.display = 'none';
+        notaAprobacion.disabled = true;
+        notaAprobacion.value = '';
+      }
+    }
+    tipoEvento.addEventListener('change', toggleNotaAprobacion);
+    toggleNotaAprobacion();
+  }
+});

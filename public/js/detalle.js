@@ -29,40 +29,70 @@ function cargarDatosInscripcion(idEvento) {
             document.getElementById('idEvento').value = idEvento;
 
             // 2. Cargar usuario
-            axios.get('../controllers/UsuarioController.php?option=miPerfil')
-                .then(user => {
-                    const u = user.data;
-                    document.getElementById('nombreUsuario').value = `${u.NOMBRES} ${u.APELLIDOS}`;
-                    document.getElementById('cedulaUsuario').value = u.CEDULA;
-                    document.getElementById('correoUsuario').value = u.CORREO;
-                    document.getElementById('telefonoUsuario').value = u.TELEFONO;
+    axios.get('../controllers/UsuarioController.php?option=miPerfil')
+        .then(user => {
+            const u = user.data;
+            document.getElementById('nombreUsuario').value = `${u.NOMBRES} ${u.APELLIDOS}`;
+            document.getElementById('cedulaUsuario').value = u.CEDULA;
+            document.getElementById('correoUsuario').value = u.CORREO;
+            document.getElementById('telefonoUsuario').value = u.TELEFONO;
 
-                    // 3. Verificar requisitos
-                    axios.get(`../controllers/EventosController.php?option=requisitosUsuarioEvento&idEvento=${idEvento}`)
-                        .then(resp => {
-                            const requisitos = Array.isArray(resp.data) ? resp.data : [];
-                            let html = '';
-                            if (requisitos.length) {
-                                requisitos.forEach(req => {
-                                    const badge = req.cumplido
-                                        ? '<span class="badge rounded-pill bg-success px-3">✔ Subido</span>'
-                                        : '<span class="badge rounded-pill bg-secondary px-3">✖ No Subido</span>';
-                                    html += `<li class="list-group-item d-flex justify-content-between align-items-center">${req.descripcion}${badge}</li>`;
-                                });
-                            } else {
-                                html = "<li class='list-group-item'>No hay requisitos para este evento.</li>";
-                            }
-                            document.getElementById('requisitosList').innerHTML = html;
-                        })
-                        .catch(error => {
-                            console.error("Error al verificar requisitos:", error);
-                            document.getElementById('requisitosList').innerHTML = "<li class='list-group-item'>Error al cargar requisitos.</li>";
-                        });
-                })
-                .catch(err => {
-                    console.error('Error al obtener usuario', err);
-                    mostrarAlertaUTA('Error', 'No se pudo cargar los datos del usuario.', 'error');
+            // Validar que ningún campo esté vacío
+            const camposObligatorios = [u.NOMBRES, u.APELLIDOS, u.CEDULA, u.CORREO, u.TELEFONO];
+            const camposNombres = ['Nombres', 'Apellidos', 'Cédula', 'Correo', 'Teléfono'];
+            let camposVacios = [];
+            camposObligatorios.forEach((valor, idx) => {
+                if (!valor || valor.toString().trim() === '') {
+                    camposVacios.push(camposNombres[idx]);
+                }
+            });
+            if (camposVacios.length > 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Actualiza tu perfil',
+                    html: `Para inscribirte debes completar todos los datos de tu perfil.<br><b>Campos incompletos:</b><br>${camposVacios.join(', ')}<br><br>Haz clic en Aceptar para actualizar tu perfil.`,
+                    confirmButtonText: 'Aceptar',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    customClass: {
+                        popup: 'swal2-popup custom-popup',
+                        confirmButton: 'swal2-confirm'
+                    }
+                }).then(() => {
+                    window.location.href = '../views/dashboard_Pri_Usu.php';
                 });
+                // Deshabilita el botón de inscripción si existe
+                const btn = document.getElementById('btnInscribirseEnviar');
+                if (btn) btn.disabled = true;
+                return;
+            }
+
+            // 3. Verificar requisitos
+            axios.get(`../controllers/EventosController.php?option=requisitosUsuarioEvento&idEvento=${idEvento}`)
+                .then(resp => {
+                    const requisitos = Array.isArray(resp.data) ? resp.data : [];
+                    let html = '';
+                    if (requisitos.length) {
+                        requisitos.forEach(req => {
+                            const badge = req.cumplido
+                                ? '<span class="badge rounded-pill bg-success px-3">✔ Subido</span>'
+                                : '<span class="badge rounded-pill bg-secondary px-3">✖ No Subido</span>';
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">${req.descripcion}${badge}</li>`;
+                        });
+                    } else {
+                        html = "<li class='list-group-item'>No hay requisitos para este evento.</li>";
+                    }
+                    document.getElementById('requisitosList').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error("Error al verificar requisitos:", error);
+                    document.getElementById('requisitosList').innerHTML = "<li class='list-group-item'>Error al cargar requisitos.</li>";
+                });
+        })
+        .catch(err => {
+            console.error('Error al obtener usuario', err);
+            mostrarAlertaUTA('Error', 'No se pudo cargar los datos del usuario.', 'error');
+        });
         })
         .catch(err => {
             console.error('Error al cargar el evento:', err);
@@ -88,6 +118,7 @@ function cargarDatosInscripcion(idEvento) {
                         .then(function(res) {
                             Swal.fire({
                                 title: res.data.mensaje,
+                                html: '<div style="margin-top:10px;font-size:16px;">Suba los requisitos y el comprobante desde su dashboard en <b>Mis Inscripciones</b>.</div>',
                                 imageUrl: '../public/img/uta/sweet.png',
                                 imageAlt: 'Icono UTA',
                                 imageWidth: 100,
@@ -99,7 +130,7 @@ function cargarDatosInscripcion(idEvento) {
                                 }
                             }).then(() => {
                                 if (res.data.tipo === 'success') {
-                                    window.location.href = '../views/dashboard_Fac_Usu.php';
+                                        window.location.href = '../views/Eventos_Publico.php';
                                 }
                             });
                         })
@@ -146,8 +177,38 @@ document.addEventListener('DOMContentLoaded', function () {
             // Interpretar HTML en la descripción (por ejemplo, si se usó CKEditor o similar)
             setHTML('descripcionEvento', ev.DESCRIPCION);
             setText('horasEvento', ev.HORAS);
-            setText('costoEvento', ev.COSTO ? parseFloat(ev.COSTO).toFixed(2) : '');
-            setText('notaAprobacion', ev.NOTAAPROBACION);
+            // Mostrar "Gratis" si el costo es null, vacío, 0 o 0.00
+            let mostrarGratis = false;
+            if (
+                ev.COSTO === null ||
+                ev.COSTO === undefined ||
+                ev.COSTO === '' ||
+                parseFloat(ev.COSTO) === 0
+            ) {
+                mostrarGratis = true;
+            }
+            setText('costoEvento', mostrarGratis ? 'Gratis' : parseFloat(ev.COSTO).toFixed(2));
+
+            // Nota de aprobación: ocultar h6 y p si es null, vacío, 0 o 0.00
+            const notaAprobacionP = document.getElementById('notaAprobacion');
+            // Buscar el h6 anterior (hermano previo)
+            let notaAprobacionH6 = notaAprobacionP ? notaAprobacionP.previousElementSibling : null;
+            let mostrarNota = true;
+            if (
+                ev.NOTAAPROBACION === null ||
+                ev.NOTAAPROBACION === undefined ||
+                ev.NOTAAPROBACION === '' ||
+                parseFloat(ev.NOTAAPROBACION) === 0
+            ) {
+                mostrarNota = false;
+            }
+            if (notaAprobacionP) {
+                notaAprobacionP.style.display = mostrarNota ? '' : 'none';
+            }
+            if (notaAprobacionH6) {
+                notaAprobacionH6.style.display = mostrarNota ? '' : 'none';
+            }
+            setText('notaAprobacion', mostrarNota ? ev.NOTAAPROBACION : '');
             setText('publicoObjetivo', ev.ES_SOLO_INTERNOS ? 'Solo público interno' : 'Público externo e interno');
             setText('fechaInicio', ev.FECHAINICIO);
             setText('fechaFin', ev.FECHAFIN);

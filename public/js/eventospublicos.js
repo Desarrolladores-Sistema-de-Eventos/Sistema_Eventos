@@ -20,6 +20,16 @@ function cargarEventosPublicos(page = 1) {
                 return;
             }
             data.eventos.forEach(ev => {
+                // Mostrar "Gratis" si el costo es null, vacío, 0 o 0.00
+                let mostrarGratis = false;
+                if (
+                    ev.COSTO === null ||
+                    ev.COSTO === undefined ||
+                    ev.COSTO === '' ||
+                    parseFloat(ev.COSTO) === 0
+                ) {
+                    mostrarGratis = true;
+                }
                 contenedor.innerHTML += `
                 <div class="col-md-6 mb-4">
                     <div class="evento-card package-item bg-white mb-2" data-aos="fade-up" data-aos-delay="100">
@@ -34,7 +44,7 @@ function cargarEventosPublicos(page = 1) {
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
-                                    <h5 class="m-0">$${parseFloat(ev.COSTO).toFixed(2)}</h5>
+                                    <h5 class="m-0">${mostrarGratis ? 'Gratis' : ('$' + parseFloat(ev.COSTO).toFixed(2))}</h5>
                                 </div>
                             </div>
                         </div>
@@ -315,6 +325,15 @@ function aplicarFiltros(page = 1) {
             return;
         }
         data.eventos.forEach(ev => {
+            let mostrarGratis = false;
+            if (
+                ev.COSTO === null ||
+                ev.COSTO === undefined ||
+                ev.COSTO === '' ||
+                parseFloat(ev.COSTO) === 0
+            ) {
+                mostrarGratis = true;
+            }
             contenedor.innerHTML += `
             <div class="col-md-6 mb-4">
                 <div class="package-item bg-white mb-2">
@@ -329,7 +348,7 @@ function aplicarFiltros(page = 1) {
                         <div class="border-top mt-4 pt-4">
                             <div class="d-flex justify-content-between">
                                 <h6 class="m-0" style="font-weight: bold; color:rgb(119, 23, 20); font-size: 14px;">${ev.ESTADO}</h6>
-                                <h5 class="m-0">$${parseFloat(ev.COSTO).toFixed(2)}</h5>
+                                <h5 class="m-0">${mostrarGratis ? 'Gratis' : ('$' + parseFloat(ev.COSTO).toFixed(2))}</h5>
                             </div>
                         </div>
                     </div>

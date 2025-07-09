@@ -79,6 +79,26 @@ $(document).ready(function() {
     window.estadoSeleccionado = $(this).data('estado');
     window.tablaEventos.ajax.reload();
   });
+
+  // Mostrar/ocultar y habilitar/deshabilitar notaAprobacion según tipo de evento
+  const tipoEvento = document.getElementById('tipoEvento');
+  const notaAprobacion = document.getElementById('notaAprobacion');
+  const notaAprobacionGroup = notaAprobacion?.closest('.col-md-2') || null;
+  if (tipoEvento && notaAprobacion && notaAprobacionGroup) {
+    function toggleNotaAprobacion() {
+      var selected = tipoEvento.options[tipoEvento.selectedIndex]?.text?.toLowerCase() || '';
+      if (selected.includes('curso')) {
+        notaAprobacionGroup.style.display = '';
+        notaAprobacion.disabled = false;
+      } else {
+        notaAprobacionGroup.style.display = 'none';
+        notaAprobacion.disabled = true;
+        notaAprobacion.value = '';
+      }
+    }
+    tipoEvento.addEventListener('change', toggleNotaAprobacion);
+    toggleNotaAprobacion();
+  }
 });
 
 
@@ -119,6 +139,9 @@ function toggleCosto() {
     inputCosto.value = 0;
   }
 }
+
+// ================== GESTIÓN DE REQUISITOS ASOCIADOS (EDICIÓN) ==================
+let requisitosAsociadosOriginal = [];
 
 // Editar evento: llena el formulario y muestra el modal
 function editarEvento(id) {
@@ -234,7 +257,7 @@ function editarEvento(id) {
             const label = document.createElement('label');
             label.className = 'form-check-label';
             label.htmlFor = input.id;
-            label.textContent = req.DESCRIPCION + ' (asociado solo a este evento)';
+            label.textContent = req.DESCRIPCION;
             label.style.color = '#222';
             label.style.fontWeight = 'normal';
             div.appendChild(input);
@@ -243,6 +266,52 @@ function editarEvento(id) {
           });
         }
       }
+      // Guardar los requisitos asociados originales (para validación de duplicados y control de desasociación)
+      requisitosAsociadosOriginal = [];
+      if (Array.isArray(e.REQUISITOS_ASOCIADOS)) {
+        requisitosAsociadosOriginal = e.REQUISITOS_ASOCIADOS.map(r => typeof r === 'object' && r !== null ? String(r.SECUENCIAL) : String(r));
+      }
+      // Añadir listeners para prevenir duplicados y advertir si ya estaba asociado
+      setTimeout(() => {
+        document.querySelectorAll('input[name="requisitos[]"]').forEach(chk => {
+          chk.addEventListener('change', function (ev) {
+            const val = String(this.value);
+            // Buscar todos los checkboxes con el mismo valor
+            const allSame = Array.from(document.querySelectorAll('input[name="requisitos[]"][value="' + val + '"]'));
+            // Si ya hay uno marcado (además de este), no permitir marcar otro
+            const checkedCount = allSame.filter(c => c.checked).length;
+            if (this.checked && checkedCount > 1) {
+              this.checked = false;
+              Swal.fire({
+                icon: 'warning',
+                title: 'Requisito duplicado',
+                text: 'Ya seleccionaste este requisito para este evento. No puedes asociarlo más de una vez.',
+                confirmButtonText: 'Aceptar',
+                customClass: { popup: 'swal2-popup', confirmButton: 'swal2-confirm' }
+              });
+              return;
+            }
+            // Si el usuario intenta marcar un requisito general que ya tiene una copia asociada
+            // (es decir, si existe un asociado con la misma descripción y este checkbox es general)
+            const label = this.parentElement.querySelector('label');
+            const desc = label ? label.textContent.trim() : '';
+            // Buscar si hay un asociado (checkbox con outline rojo y misma descripción)
+            const asociados = Array.from(document.querySelectorAll('.req-dinamico label'));
+            const yaAsociado = asociados.some(lab => lab.textContent.trim() === desc);
+            if (this.checked && yaAsociado && this.parentElement.className.indexOf('req-dinamico') === -1) {
+              this.checked = false;
+              Swal.fire({
+                icon: 'warning',
+                title: 'Requisito ya asociado',
+                text: 'Este requisito general ya está asociado a este evento como exclusivo. No puedes volver a seleccionarlo.',
+                confirmButtonText: 'Aceptar',
+                customClass: { popup: 'swal2-popup', confirmButton: 'swal2-confirm' }
+              });
+              return;
+            }
+          });
+        });
+      }, 200);
       // Mostrar nombres de imágenes si existen
       const nombrePortada = document.getElementById('nombrePortada');
       const nombreGaleria = document.getElementById('nombreGaleria');

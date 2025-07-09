@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
-    <link href="../public/img/favicon.ico" rel="icon">
+    <link href="../public/img/uta/logo1.png" rel="icon">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 

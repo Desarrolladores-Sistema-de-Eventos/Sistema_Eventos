@@ -325,12 +325,25 @@ if ($ok === true) {
 
     private function guardar()
     {
-        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'notaAprobacion', 'categoria', 'tipoEvento', 'carrera', 'estado', 'capacidad'];
+        // Validación condicional de notaAprobacion solo para cursos
+        $required = ['titulo', 'descripcion', 'horas', 'fechaInicio', 'fechaFin', 'modalidad', 'categoria', 'tipoEvento', 'carrera', 'estado', 'capacidad'];
         foreach ($required as $campo) {
             if (empty($_POST[$campo])) {
                 $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
                 return;
             }
+        }
+        // Si es curso, notaAprobacion es obligatoria
+        $tipoEventoTexto = strtolower(trim($_POST['tipoEvento'] ?? ''));
+        if (strpos($tipoEventoTexto, 'curso') !== false) {
+            if (!isset($_POST['notaAprobacion']) || $_POST['notaAprobacion'] === '' || $_POST['notaAprobacion'] === null) {
+                $this->json(['tipo' => 'error', 'mensaje' => "El campo 'notaAprobacion' es obligatorio para cursos."]);
+                return;
+            }
+        }
+        // Siempre definir el índice para evitar warnings
+        if (!isset($_POST['notaAprobacion'])) {
+            $_POST['notaAprobacion'] = null;
         }
 
 
@@ -480,6 +493,18 @@ if ($ok === true) {
                 return;
             }
 
+            // Validación condicional de notaAprobacion solo para cursos
+            $tipoEventoTexto = strtolower(trim($_POST['tipoEvento'] ?? ''));
+            if (strpos($tipoEventoTexto, 'curso') !== false) {
+                if (!isset($_POST['notaAprobacion']) || $_POST['notaAprobacion'] === '' || $_POST['notaAprobacion'] === null) {
+                    $this->json(['tipo' => 'error', 'mensaje' => "El campo 'notaAprobacion' es obligatorio para cursos."]);
+                    return;
+                }
+            }
+            // Siempre definir el índice para evitar warnings
+            if (!isset($_POST['notaAprobacion'])) {
+                $_POST['notaAprobacion'] = null;
+            }
             $requisitosSeleccionados = $_POST['requisitos'] ?? [];
             $resultado = $this->eventoModelo->actualizarEvento(
                 $_POST['titulo'],
@@ -680,7 +705,7 @@ if ($ok === true) {
             }
             $this->json([
                 'tipo' => 'success',
-                'mensaje' => 'Inscripción registrada exitosamente.'
+                'mensaje' => 'Se ha inscrito de manera correcta al evento'
             ]);
         } else {
             $this->json([

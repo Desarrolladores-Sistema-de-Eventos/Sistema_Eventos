@@ -133,7 +133,7 @@
 
 <!-- Banner institucional -->
 <div class="banner-uta">
-  <img src="../public/img/header.png" alt="Banner UTA" style="width: 100%; height: auto; display: block;">
+  <img src="../public/img/uta/header.png" alt="Banner UTA" style="width: 100%; height: auto; display: block;">
 </div>
 
 <!-- Contenido -->

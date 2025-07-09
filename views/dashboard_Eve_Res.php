@@ -20,7 +20,8 @@ include("../core/auth.php")
 
         <!-- Nav tabs para filtrar por estado -->
         <ul class="nav nav-tabs" id="navEstadosEventos" style="margin-bottom: 15px;">
-          <li class="active"><a href="#" data-estado="DISPONIBLE">Disponible</a></li>
+          <li class="active"><a href="#" data-estado="CREADO">Creado</a></li>
+          <li><a href="#" data-estado="DISPONIBLE">Disponible</a></li>
           <li><a href="#" data-estado="EN CURSO">En Curso</a></li>
           <li><a href="#" data-estado="FINALIZADO">Finalizado</a></li>
           <li><a href="#" data-estado="CANCELADO">Cancelado</a></li>
@@ -93,7 +94,7 @@ include("../core/auth.php")
         <label for="costo"><i class="fa fa-dollar"></i> Costo</label>
         <input type="number" class="form-control input-sm" id="costo" name="costo" min="0" step="0.01" value="0" disabled>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" id="notaAprobacionGroup">
         <label for="notaAprobacion"><i class="fa fa-check-circle"></i> Nota mín.</label>
         <input type="number" class="form-control input-sm" id="notaAprobacion" name="notaAprobacion" min="0" step="0.1">
       </div>
@@ -135,6 +136,7 @@ include("../core/auth.php")
           <option value="EN CURSO">En Curso</option>
           <option value="FINALIZADO">Finalizado</option>
           <option value="CANCELADO">Cancelado</option>
+          <option value="CREADO">Creado</option>
         </select>
       </div>
     </div><br>
@@ -461,6 +463,28 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <script src="../public/js/eve_Res.js"></script>
 <?php include("partials/footer_Admin.php"); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var tipoEvento = document.getElementById('tipoEvento');
+      var notaAprobacion = document.getElementById('notaAprobacion');
+      var notaAprobacionGroup = document.getElementById('notaAprobacionGroup');
+      if (tipoEvento && notaAprobacion && notaAprobacionGroup) {
+        function toggleNotaAprobacion() {
+          var selected = tipoEvento.options[tipoEvento.selectedIndex]?.text?.toLowerCase() || '';
+          if (selected.includes('curso')) {
+            notaAprobacionGroup.style.display = '';
+            notaAprobacion.disabled = false;
+          } else {
+            notaAprobacionGroup.style.display = 'none';
+            notaAprobacion.disabled = true;
+            notaAprobacion.value = '';
+          }
+        }
+        tipoEvento.addEventListener('change', toggleNotaAprobacion);
+        toggleNotaAprobacion();
+      }
+    });
+    </script>
 
 
 </body>

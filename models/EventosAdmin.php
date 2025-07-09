@@ -329,8 +329,10 @@ public function getCategorias() {
 public function getEstados() {
     return [
         ['value' => 'DISPONIBLE', 'text' => 'Disponible'],
-        ['value' => 'CERRADO', 'text' => 'Cerrado'],
-        ['value' => 'CANCELADO', 'text' => 'Cancelado']
+        ['value' => 'EN CURSO', 'text' => 'En Curso'],
+        ['value' => 'FINALIZADO', 'text' => 'Finalizado'],
+        ['value' => 'CANCELADO', 'text' => 'Cancelado'],
+        ['value' => 'CREADO', 'text' => 'Creado']
     ];
 }
 

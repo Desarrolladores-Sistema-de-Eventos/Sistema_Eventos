@@ -126,7 +126,7 @@ if (!$token) {
 
   <!-- Banner -->
   <div class="banner-uta">
-    <img src="../public/img/header.png" alt="Banner UTA">
+    <img src="../public/img/uta/header.png" alt="Banner UTA">
   </div>
 
   <!-- Formulario -->

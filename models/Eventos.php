@@ -45,7 +45,7 @@ class Evento {
             LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
             WHERE oe.SECUENCIALUSUARIO = ?
               AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
-              AND e.ESTADO IN ('DISPONIBLE', 'EN CURSO', 'FINALIZADO', 'CANCELADO')
+              AND e.ESTADO IN ('DISPONIBLE', 'EN CURSO', 'FINALIZADO', 'CANCELADO', 'CREADO')
             ORDER BY e.FECHAINICIO DESC
         ";
         $stmt = $this->pdo->prepare($sql);
@@ -224,7 +224,6 @@ public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaF
                             $urlPortada, $urlGaleria, $capacidad, $contenido, $asistenciaMinima, $esDestacado = 0) // $carreras es un array de IDs
 {
     try {
-        file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] INICIO" . PHP_EOL, FILE_APPEND);
         $this->pdo->beginTransaction();
 
         // Insertar evento (sin SECUENCIALCARRERA)
@@ -243,7 +242,6 @@ public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaF
         ]);
 
         $idEvento = $this->pdo->lastInsertId();
-        file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] Evento insertado ID: $idEvento" . PHP_EOL, FILE_APPEND);
 
         // Insertar relación evento-carrera (muchos a muchos)
         if (is_array($carreras)) {
@@ -251,7 +249,6 @@ public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaF
             foreach ($carrerasUnicas as $idCarrera) {
                 $stmtCarr = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
                 $stmtCarr->execute([$idEvento, $idCarrera]);
-                file_put_contents(__DIR__ . '/../log_carreras.txt', date('Y-m-d H:i:s') . " [crearEvento] Carrera asociada: $idCarrera" . PHP_EOL, FILE_APPEND);
             }
         }
 
@@ -346,19 +343,60 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
             }
         }
 
-        // --- NUEVO: Actualizar requisitos asociados (muchos a muchos) ---
-        $this->pdo->prepare("DELETE FROM requisito_evento WHERE SECUENCIALEVENTO = ?")->execute([$idEvento]);
-        if (!empty($requisitos) && is_array($requisitos)) {
-            $requisitosUnicos = array_unique(array_filter($requisitos, function($v) { return $v !== '' && $v !== null; }));
-            foreach ($requisitosUnicos as $idRequisito) {
-                // Obtener la descripción del requisito general o asociado
+        // --- NUEVA LÓGICA: Al marcar un general, se asocia como exclusivo (copia) para el evento ---
+        // 1. Obtener todos los requisitos generales (SECUENCIALEVENTO IS NULL) y asociados (SECUENCIALEVENTO = idEvento)
+        $stmtReqs = $this->pdo->prepare("SELECT SECUENCIAL, SECUENCIALEVENTO, DESCRIPCION FROM requisito_evento WHERE SECUENCIALEVENTO IS NULL OR SECUENCIALEVENTO = ?");
+        $stmtReqs->execute([$idEvento]);
+        $requisitosActuales = $stmtReqs->fetchAll(PDO::FETCH_ASSOC);
+        $requisitosGenerales = array_filter($requisitosActuales, function($r) { return $r['SECUENCIALEVENTO'] === null; });
+        $requisitosAsociados = array_filter($requisitosActuales, function($r) use ($idEvento) { return $r['SECUENCIALEVENTO'] == $idEvento; });
+
+        $requisitosEnviados = array_unique(array_filter($requisitos, function($v) { return $v !== '' && $v !== null; }));
+        $idsGenerales = array_map(function($r) { return (string)$r['SECUENCIAL']; }, $requisitosGenerales);
+        $idsAsociados = array_map(function($r) { return (string)$r['SECUENCIAL']; }, $requisitosAsociados);
+
+        // a) Eliminar los asociados que ya no están en el array enviado
+        foreach ($requisitosAsociados as $req) {
+            if (!in_array((string)$req['SECUENCIAL'], $requisitosEnviados)) {
+                $this->pdo->prepare("DELETE FROM requisito_evento WHERE SECUENCIAL = ?")->execute([$req['SECUENCIAL']]);
+            }
+        }
+
+        // b) Insertar nuevos asociados (incluyendo los generales marcados)
+        foreach ($requisitosEnviados as $idReq) {
+            // Si ya existe como asociado, no hacer nada
+            if (in_array((string)$idReq, $idsAsociados)) continue;
+            // Si es un general, crear copia asociada solo si no existe ya una con la misma descripción para este evento
+            if (in_array((string)$idReq, $idsGenerales)) {
+                // Buscar la descripción del general
+                $desc = null;
+                foreach ($requisitosGenerales as $rg) {
+                    if ((string)$rg['SECUENCIAL'] === (string)$idReq) {
+                        $desc = $rg['DESCRIPCION'];
+                        break;
+                    }
+                }
+                if ($desc !== null) {
+                    // Verificar si ya existe un asociado con la misma descripción para este evento
+                    $stmtCheck = $this->pdo->prepare("SELECT COUNT(*) FROM requisito_evento WHERE SECUENCIALEVENTO = ? AND DESCRIPCION = ?");
+                    $stmtCheck->execute([$idEvento, $desc]);
+                    if ($stmtCheck->fetchColumn() == 0) {
+                        $stmtInsert = $this->pdo->prepare("INSERT INTO requisito_evento (SECUENCIALEVENTO, DESCRIPCION) VALUES (?, ?)");
+                        $stmtInsert->execute([$idEvento, $desc]);
+                    }
+                }
+            } else {
+                // Si no es general ni asociado, buscar descripción y asociar solo si no existe ya una igual
                 $stmtDesc = $this->pdo->prepare("SELECT DESCRIPCION FROM requisito_evento WHERE SECUENCIAL = ?");
-                $stmtDesc->execute([$idRequisito]);
+                $stmtDesc->execute([$idReq]);
                 $desc = $stmtDesc->fetchColumn();
                 if ($desc !== false) {
-                    // Insertar nuevo requisito asociado (NO copiar el SECUENCIAL, dejar que sea autoincremental)
-                    $stmtInsert = $this->pdo->prepare("INSERT INTO requisito_evento (SECUENCIALEVENTO, DESCRIPCION) VALUES (?, ?)");
-                    $stmtInsert->execute([$idEvento, $desc]);
+                    $stmtCheck = $this->pdo->prepare("SELECT COUNT(*) FROM requisito_evento WHERE SECUENCIALEVENTO = ? AND DESCRIPCION = ?");
+                    $stmtCheck->execute([$idEvento, $desc]);
+                    if ($stmtCheck->fetchColumn() == 0) {
+                        $stmtInsert = $this->pdo->prepare("INSERT INTO requisito_evento (SECUENCIALEVENTO, DESCRIPCION) VALUES (?, ?)");
+                        $stmtInsert->execute([$idEvento, $desc]);
+                    }
                 }
             }
         }

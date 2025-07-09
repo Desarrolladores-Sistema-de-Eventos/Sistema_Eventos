@@ -4,6 +4,8 @@
   <title>Login - UTA</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../public/img/uta/logo1.png" rel="icon">
+
 
   <!-- Fuentes e íconos -->
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
@@ -14,10 +16,11 @@
 html, body {
     overflow-x: hidden;
     width: 100%;
-    font-family: 'Lato', sans-serif;
     background: #f6f7f9 url('../public/img/uta/background.jpg') center center no-repeat;
     background-size: cover;
     margin: 0;
+    font-family: "Poppins", sans-serif !important;
+
 }
 
     .main-content {
@@ -108,70 +111,6 @@ html, body {
       text-decoration: underline;
     }
 
-    /* SweetAlert personalizado */
-    .swal2-popup {
-      border-left: 6px solid #8B0000 !important;
-      border-right: 6px solid #8B0000 !important;
-      border-radius: 10px !important;
-      font-family: 'Open Sans', sans-serif;
-    }
-
-    .swal2-title {
-      font-weight: bold;
-      color: #8B0000;
-    }
-
-    .swal2-confirm, .swal2-cancel {
-      background-color: #1a1919 !important;
-      color: #fff !important;
-      border-radius: 5px !important;
-      padding: 10px 20px !important;
-      font-weight: bold;
-    }
-
-    .swal2-icon.swal2-success {
-      border-color: #141414 !important;
-      color: #0f0f0f !important;
-    }
-
-    .swal2-success-ring {
-      border: 4px solid #161616 !important;
-    }
-
-    .swal2-success-line-tip,
-    .swal2-success-line-long {
-      background-color: #131212 !important;
-    }
-
-    .swal2-icon.swal2-error {
-      border-color: #111111 !important;
-      color: #111111 !important;
-    }
-
-    .swal2-x-mark-line {
-      background-color: #000 !important;
-    }
-
-    .swal2-icon.swal2-warning {
-      border-color: #111111 !important;
-      color: #141414 !important;
-    }
-
-    .swal2-icon.swal2-info {
-      border-color: #1a1919 !important;
-      color: #252525 !important;
-    }
-
-    .swal2-icon.swal2-question {
-      border-color: #181818 !important;
-      color: #161616 !important;
-    }
-
-    .swal2-image {
-      margin-top: 10px;
-      max-width: 80px;
-    }
- 
 .banner-uta {
   width: 100vw;        
   overflow: hidden;

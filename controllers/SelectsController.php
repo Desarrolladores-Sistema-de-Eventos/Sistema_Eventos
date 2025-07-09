@@ -20,7 +20,8 @@ echo json_encode([
     ['value' => 'EN CURSO', 'text' => 'En curso'],
     ['value' => 'FINALIZADO', 'text' => 'Finalizado'],
     ['value' => 'CERRADO', 'text' => 'Cerrado'],
-    ['value' => 'CANCELADO', 'text' => 'Cancelado']
+    ['value' => 'CANCELADO', 'text' => 'Cancelado'],
+    ['value' => 'CREADO', 'text' => 'Creado']
 
     ],
     'requisitos'  => cargar('requisito_evento', 'SECUENCIAL', 'DESCRIPCION')
