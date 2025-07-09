@@ -38,7 +38,7 @@ if (!$ok) {
     exit;
 }
 
-$enlace = 'http://' . $_SERVER['HTTP_HOST'] . '/Sistema_Eventos/views/restablacer_contrasena.php?token=' . $token;
+$enlace = 'http://' . $_SERVER['HTTP_HOST'] . '/views/restablacer_contrasena.php?token=' . $token;
 $asunto = 'Recuperación de contraseña - ' . date('d/m/Y H:i');
 $mensaje = "Hola " . $usuario['NOMBRES'] . ",\n\n" .
     "Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en el Sistema de Eventos.\n" .

@@ -1,0 +1,33 @@
+# Archivos de Git
+.git
+.gitignore
+
+# Archivos de Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Archivos de desarrollo
+*.log
+*.tmp
+*.cache
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de Composer (se instalarán en el contenedor)
+vendor/
+
+# Archivos de documentación
+README.md
+CONTRIBUTING.txt
+
+# Archivos de configuración local
+.env 

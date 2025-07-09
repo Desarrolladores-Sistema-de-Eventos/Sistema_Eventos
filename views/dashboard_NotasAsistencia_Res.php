@@ -1,4 +1,3 @@
-
 <?php include("partials/header_Admin.php"); ?>
 <?php 
 $requiereResponsable = true;

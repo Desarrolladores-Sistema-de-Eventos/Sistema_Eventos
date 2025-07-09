@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-07-2025 a las 19:43:53
+-- Tiempo de generación: 09-07-2025 a las 13:15:16
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -40,12 +40,7 @@ CREATE TABLE `archivo_requisito` (
 --
 
 INSERT INTO `archivo_requisito` (`SECUENCIAL`, `SECUENCIALINSCRIPCION`, `SECUENCIALREQUISITO`, `URLARCHIVO`, `CODIGOESTADOVALIDACION`) VALUES
-(70, 1048, 72, 'cedula_685a43a297fb0.pdf', 'VAL'),
-(71, 1048, 73, 'matricula_685a43a298776.pdf', 'VAL'),
-(73, 1048, 12, 'req_685a4561c9b73_REGLAMENTO.pdf', 'VAL'),
-(131, 1077, 79, 'cedula_6869fa7aa059f.pdf', 'VAL'),
-(132, 1077, 80, 'matricula_6869fe7bef0ae.pdf', 'VAL'),
-(133, 1077, 81, 'req_686a1defc5c0f_Informe_Tercer_Sprint final (1).pdf', 'VAL');
+(160, 1092, 146, 'requisito_686e49478951d.pdf', 'VAL');
 
 -- --------------------------------------------------------
 
@@ -68,9 +63,7 @@ CREATE TABLE `asistencia_nota` (
 --
 
 INSERT INTO `asistencia_nota` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `ASISTIO`, `PORCENTAJE_ASISTENCIA`, `NOTAFINAL`, `OBSERVACION`) VALUES
-(29, 167, 87, 1, 95.00, 9.00, NULL),
-(30, 168, 87, 1, 100.00, NULL, NULL),
-(31, 172, 87, 1, 100.00, 10.00, NULL);
+(34, 181, 95, 1, 80.00, 8.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -189,9 +182,15 @@ CREATE TABLE `carrusel` (
 
 INSERT INTO `carrusel` (`SECUENCIAL`, `TITULO`, `SUBTITULO`, `URL_IMAGEN`, `ENLACE`, `ORDEN`, `ACTIVO`, `FECHACREACION`, `DESCRIPCION`) VALUES
 (11, 'Desarrollo de software en entornos reales', NULL, 'public/img/carrusel/68685bc67ea14_ChatGPT Image 4 jul 2025, 17_51_41.png', NULL, 0, 1, '2025-07-04 22:55:02', 'Python y Java Soluciones del mundo real'),
-(12, 'Programación web interactiva', NULL, 'public/img/carrusel/6868601652ab6_ChatGPT Image 4 jul 2025, 18_12_39.png', NULL, 0, 1, '2025-07-04 23:13:26', 'HTML, CSS y lógica en acción'),
+(12, 'Programación web Alto Nivel', NULL, 'public/img/carrusel/6868601652ab6_ChatGPT Image 4 jul 2025, 18_12_39.png', NULL, 0, 1, '2025-07-04 23:13:26', 'HTML, CSS y lógica en acción'),
 (13, 'Lenguajes esenciales para desarrollo web', NULL, 'public/img/carrusel/686864af2ca50_ChatGPT Image 4 jul 2025, 18_32_53.png', NULL, 0, 0, '2025-07-04 23:33:03', 'HTML, CSS y JavaScript en acción'),
-(14, 'softaer', NULL, 'public/img/carrusel/6868b0667036e_webnair galeria.jpg', NULL, 0, 0, '2025-07-05 04:56:06', 'mkmcksmd');
+(14, 'softaer', NULL, 'public/img/carrusel/6868b0667036e_webnair galeria.jpg', NULL, 0, 0, '2025-07-05 04:56:06', 'mkmcksmd'),
+(15, 'prueba', NULL, 'public/img/carrusel/686b23352363a_portada_686947237534f.jpg', NULL, 0, 0, '2025-07-07 01:30:29', 'smkdmskmskd'),
+(16, 'mkmdkmd', NULL, 'public/img/carrusel/686b243362d8b_portada_686b1d8470feb.jpg', NULL, 0, 0, '2025-07-07 01:34:43', 'sdmksmdksdm'),
+(17, 'Taller de Desarrollo Web Frontend', NULL, 'public/img/carrusel/686b257c62eba_portada_68542c2a2f47a_python1.jpg', NULL, 0, 0, '2025-07-07 01:40:12', 'sdsdsd'),
+(18, 'mkmkm', NULL, 'public/img/carrusel/686b26938818c_portada_686b1d8470feb.jpg', NULL, 0, 0, '2025-07-07 01:44:51', 'mkmkmkm'),
+(19, 'mmkmk', NULL, 'public/img/carrusel/686b26ae813cd_portada_686aeca728445.png', NULL, 0, 0, '2025-07-07 01:45:18', 'mkmkmkm'),
+(20, 'mkmkmkm', NULL, 'public/img/carrusel/686b270f9e775_portada_686aeca728445.png', NULL, 0, 0, '2025-07-07 01:46:55', 'mkmkmkmk');
 
 -- --------------------------------------------------------
 
@@ -230,15 +229,6 @@ CREATE TABLE `certificado` (
   `URL_CERTIFICADO` varchar(255) DEFAULT NULL,
   `FECHA_EMISION` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Volcado de datos para la tabla `certificado`
---
-
-INSERT INTO `certificado` (`SECUENCIAL`, `SECUENCIALUSUARIO`, `SECUENCIALEVENTO`, `TIPO_CERTIFICADO`, `URL_CERTIFICADO`, `FECHA_EMISION`) VALUES
-(13, 87, 167, 'Aprobación', 'certificado_87_167_1751211264.pdf', '2025-06-29 10:34:24'),
-(30, 87, 168, 'Participación', 'certificado_87_168_1751171449.pdf', '2025-06-28 23:30:49'),
-(31, 87, 172, 'Aprobación', 'certificado_87_172_1751815462.pdf', '2025-07-06 10:24:22');
 
 -- --------------------------------------------------------
 
@@ -319,12 +309,12 @@ CREATE TABLE `evento` (
   `FECHAFIN` date NOT NULL,
   `CODIGOMODALIDAD` varchar(20) DEFAULT NULL,
   `HORAS` int(11) NOT NULL,
-  `NOTAAPROBACION` decimal(4,2) NOT NULL,
+  `NOTAAPROBACION` decimal(4,2) DEFAULT NULL,
   `ES_PAGADO` tinyint(1) NOT NULL,
   `COSTO` decimal(10,2) NOT NULL DEFAULT 0.00,
   `ES_SOLO_INTERNOS` tinyint(1) NOT NULL DEFAULT 0,
   `SECUENCIALCATEGORIA` int(11) DEFAULT NULL,
-  `ESTADO` enum('DISPONIBLE','CERRADO','CANCELADO','EN CURSO','FINALIZADO') NOT NULL DEFAULT 'DISPONIBLE',
+  `ESTADO` enum('DISPONIBLE','CERRADO','CANCELADO','EN CURSO','FINALIZADO','CREADO') NOT NULL,
   `CAPACIDAD` int(11) DEFAULT NULL,
   `ES_DESTACADO` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Indica si el evento es destacado (1) o no (0)',
   `ASISTENCIAMINIMA` decimal(5,2) DEFAULT NULL
@@ -335,13 +325,12 @@ CREATE TABLE `evento` (
 --
 
 INSERT INTO `evento` (`SECUENCIAL`, `TITULO`, `CONTENIDO`, `DESCRIPCION`, `CODIGOTIPOEVENTO`, `FECHAINICIO`, `FECHAFIN`, `CODIGOMODALIDAD`, `HORAS`, `NOTAAPROBACION`, `ES_PAGADO`, `COSTO`, `ES_SOLO_INTERNOS`, `SECUENCIALCATEGORIA`, `ESTADO`, `CAPACIDAD`, `ES_DESTACADO`, `ASISTENCIAMINIMA`) VALUES
-(167, 'FUNDAMENTOS DE PYTHON 1', '• Módulo 1: Introducción a Python y programación informática\no Introducción a la programación\no Introducción a Python\no Evaluación\n• Módulo 2: Tipos de datos, variables, operaciones básicas de entradasalida y operadores básicos\no El programa “Hola, Mundo”\no Literales de Python\no Operadores – herramientas de manipulación de datos\no Variables\no Comentarios\no Interacción con el usuario\no Evaluación\n• Módulo 3: Valores booleanos, ejecución condicional, bucles, listas y procesamiento de listas, operaciones lógicas y bit a bit\no Toma de decisiones en Python\no Bucles en Python\no Operadores lógicos y operacionales bit a bit en Python.\no Listas\no Operaciones con listas\no Aplicaciones avanzadas de listas\no Evaluación\n• Módulo 4: Funciones, tuplas, diccionarios, excepciones y procesamiento de datos.\no Funciones\no Comunicación de las funciones con su entorno\no Resultados de funciones\no Alcances en Python', 'El curso Fundamentos de Python 1 de Cisco NetAcad es una introducción esencial al mundo de la programación, diseñado para enseñar los conceptos básicos de Python de forma práctica y accesible. A través de actividades interactivas y ejercicios basados en problemas reales, los estudiantes desarrollarán habilidades fundamentales en lógica de programación, estructuras de control, manejo de datos y uso de funciones básicas. Este curso está dirigido tanto a principiantes como a personas interesadas en dar sus primeros pasos en el campo de la programación, proporcionando una base sólida para avanzar hacia niveles más complejos y para explorar su aplicación en áreas como redes, ciberseguridad e inteligencia artificial.', 'CUR', '2025-06-24', '2025-06-26', 'VIRT', 32, 7.00, 1, 25.00, 0, 4, 'FINALIZADO', 30, 1, NULL),
-(168, 'Congreso de FISEI', NULL, 'El Congreso de la FISEI es un evento académico organizado por la Universidad Técnica de Ambato que promueve la investigación, innovación y el intercambio de conocimientos en las áreas de sistemas, electrónica e ingeniería industrial, reuniendo a expertos, estudiantes y profesionales del sector.', 'CONF', '2025-06-29', '2025-06-30', 'VIRT', 3, 7.00, 0, 0.00, 0, 1, 'FINALIZADO', 30, 1, NULL),
-(169, 'CONCURSO PYTHON', NULL, 'REALIZAR PRUEBAS CON LA BASE DE DATOS', 'CONF', '2025-07-01', '2025-10-10', 'PRES', 120, 7.00, 1, 120.00, 1, 1, 'FINALIZADO', 120, 1, NULL),
-(170, 'V CONGRESO DE SOFTWARE', NULL, 'PROYECTOS DE TEGNOLOGIA', 'CONF', '2025-07-01', '2025-07-05', 'VIRT', 20, 7.00, 0, 0.00, 1, 1, 'FINALIZADO', 120, 1, NULL),
-(171, 'Taller de Desarrollo Web Frontend', NULL, 'En este taller práctico, los participantes aprenderán a crear interfaces web modernas usando tecnologías esenciales del desarrollo frontend.', 'TALL', '2025-07-05', '2025-08-22', 'PRES', 30, 8.00, 1, 120.00, 0, 1, 'DISPONIBLE', 30, 1, NULL),
-(172, 'Curso Intensivo de Python para Ciencia de Datos', NULL, 'Aprende Python desde cero con un enfoque práctico orientado a la ciencia de datos.\r\n\r\n', 'CUR', '2025-07-06', '2025-10-18', 'VIRT', 50, 8.00, 1, 50.00, 0, 1, 'FINALIZADO', 50, 1, NULL),
-(173, 'Conferencia sobre Ciberseguridad en la Nube', NULL, 'Expertos compartirán experiencias y técnicas sobre cómo proteger sistemas y datos en infraestructuras cloud.', 'CONF', '2025-07-05', '2025-07-31', 'PRES', 120, 0.00, 0, 0.00, 1, 5, 'DISPONIBLE', 200, 1, NULL);
+(179, 'Administración de Amenazas Cibernéticas', '<ul><li><strong>Módulo 1: Defensa de la Red</strong><ul><li>Capítulo 1:Comprendiendo la Defensa</li><li>Capítulo 2: Defensa de Sistemas y Redes</li><li>Capítulo 3:Control de Acceso</li><li>Capítulo 4: Listas de Control de Acceso</li><li>Capítulo 5: Tecnologías de Firewall</li><li>Capítulo 6: Firewalls de Política Basados en Zonas</li><li>Capítulo 7: Seguridad en la Nube</li><li>Capítulo 8: Criptografía</li><li>Capítulo 9: Tecnologías y Protocolos</li><li>Capítulo 10: Datos de Seguridad de la Red</li><li>Capítulo 11: Evaluación de Alertas</li></ul></li><li><strong>Módulo 2: Administración de Amenazas Cibernéticas</strong><ul><li>Capítulo 1: Gobernanza y Cumplimiento</li><li>Capítulo 2: Pruebas de seguridad de red</li><li>Capítulo 3: Inteligencia de amenazas</li><li>Capítulo 4: Evaluación de la vulnerabilidad de los endpoints</li><li>Capítulo 5: Gestión de Riesgos y Controles de Seguridad</li><li>Capítulo 6: Forense digital y Análisis y respuesta a incidentes</li></ul></li></ul>', '<p>Este curso cubre diferentes métodos para monitorear la red y cómo evaluar las alertas de seguridad. Se profundiza en las herramientas y técnicas utilizadas para proteger la red, incluido el control de acceso, firewalls, seguridad en la nube y criptografía. Permite explorar la gobernanza en la ciberseguridad y la gestión de amenazas, mediante el desarrollo de políticas para que la organización cumpla con los estándares de ética y los marcos legales y regulatorios.</p><h2>OBJETIVOS</h2><ul><li>Explicar los enfoques para la defensa de la seguridad de la red.</li><li>Implementar listas de control de acceso (ACL), firewall para filtrar el tráfico y mitigar los ataques a la red.</li><li>Determinar las técnicas criptográficas que se requieren para garantizar la confidencialidad, la integridad y la autenticidad.</li><li>Impulsar el desarrollo de proyectos de mejora continua dentro del campo empresarial.</li></ul><h2><strong>LUGAR DE CELEBRACIÓN</strong></h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li><li><a href=\"https://ctt-talleresfisei.uta.edu.ec/edu/login/index.php\">Aula virtual de los Talleres Tecnológicos – FISEI</a></li></ul><p>&nbsp;</p>', 'CUR', '2025-09-09', '2025-09-12', 'VIRT', 48, NULL, 1, 40.00, 0, 4, 'DISPONIBLE', 20, 1, 70.00),
+(180, 'JavaScript Essentials 2', '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>', '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>', 'CUR', '2025-09-09', '2025-09-10', 'PRES', 5, NULL, 1, 10.00, 0, 4, 'DISPONIBLE', 40, 1, 70.00),
+(181, ' ETHICAL HACKER', '<ul><li><strong>Módulo 1: Introducción al hacking ético y a las pruebas de penetración</strong><br>1.1 Entendiendo el Hacking Ético y la Penetración Pruebas<br>1.2 Exploración de metodologías de pruebas de penetración<br>1.3 Construir su propio laboratorio</li><li><strong>Módulo 2: Planificación y alcance de una prueba de penetración Evaluación</strong><br>2.1 Comparación y contraste de los conceptos de gobernanza, riesgo y cumplimiento normativo<br>2.2 Explicar la importancia del alcance y los requisitos de la organización o del cliente<br>2.3 Demostrar una mentalidad de hacking ético manteniendo el profesionalismo y la integridad</li><li><strong>Módulo 3: Recopilación de información y exploración de vulnerabilidades</strong><br>3.1 Realización de un reconocimiento pasivo<br>3.2 Realización de un reconocimiento activo<br>3.3 Entender el arte de realizar escaneos de vulnerabilidades<br>3.4 Cómo analizar los resultados de la exploración de vulnerabilidades</li><li><strong>Módulo 4: Ataques de Ingeniería Social</strong><br>4.1 Pretexto para un acercamiento y suplantación de identidad<br>4.2 Ataques de ingeniería social<br>4.3 Ataques físicos<br>4.4 Herramientas de ingeniería social<br>4.5 Métodos de influencia</li><li><strong>Módulo 5: Ataques de Ingeniería Social</strong><br>5.1 Explotación de vulnerabilidades basadas en la red<br>5.2 Explotación de vulnerabilidades inalámbricas.</li><li><strong>Módulo 6: Explotación de vulnerabilidades basadas en aplicaciones</strong><br>6.1 Visión general de los ataques basados en aplicaciones web para profesionales de seguridad y los 10 principales de OWASP<br>6.2 Cómo construir su propio laboratorio de aplicaciones web<br>6.3 Entendiendo las fallas en la lógica del negocio<br>6.4 Entender las vulnerabilidades basadas en inyección<br>6.5 Explotación de vulnerabilidades basadas en autenticación<br>6.6 Explotación de vulnerabilidades basadas en autorización<br>6.7 Descripción de vulnerabilidades de secuencias de comandos en sitios cruzados (XSS)<br>6.8 Entender la Falsificación de Peticiones en Sitios Cruzados (CSRF/XSRF)(CSRF/XSRF) y Ataques de Falsificación de Peticiones del Lado del Servidor<br>6.9 Entendiendo Clickjacking<br>6.10 Explotación de vulnerabilidades de inclusión de archivos<br>6.11 Explotación de prácticas de código inseguro</li><li><strong>Módulo 7: Seguridad en la nube, móvil e IoT</strong><br>7.1 Investigación de vectores de ataque y realización de ataques en tecnologías de nube<br>7.2 Explicación de ataques y vulnerabilidades comunes contra sistemas especializados</li><li><strong>Módulo 8: Realización de técnicas de post-explotación</strong><br>8.1 Creación de un punto de apoyo y mantener la persistencia después de comprometer un sistema<br>8.2 Realización de movimientos laterales, evasión de detección y enumeración</li><li><strong>Módulo 9:Informes y comunicación</strong><br>9.1 Comparación y contraste de los componentes importantes de los informes escritos<br>9.2 Análisis de los hallazgos y recomendar la remediación apropiada dentro de un informe<br>9.3 Explicación de la importancia de la comunicación durante el proceso de pruebas de penetración<br>9.4 Explicación de las actividades posteriores a la entrega del informe</li><li><strong>Módulo 10: Ataques de Ingeniería Social</strong><br>10.1 Conceptos Básicos de Scripting y Desarrollo de Software.<br>10.2 Comprensión de los Diferentes Casos de Uso de las Herramientas de Pruebas de Penetración y Análisis de Código Exploit.</li></ul>', '<p>El panorama digital está evolucionando a un ritmo sin precedentes y las amenazas cibernéticas acechan en cada esquina. La resiliencia de la ciberseguridad en el mundo moderno no puede ser sólo un complemento: es una necesidad. Los profesionales de seguridad ofensivos, como los piratas informáticos éticos y los evaluadores de penetración, pueden ayudar a descubrir de forma proactiva amenazas desconocidas y abordarlas antes de que lo hagan los ciberdelincuentes.<br>El curso Ethical Hacker prepara a los alumnos para descubrir vulnerabilidades de forma proactiva antes de que lo hagan los ciberdelincuentes. Los alumnos dominarán el arte de determinar el alcance, ejecutar e informar sobre las evaluaciones de vulnerabilidades, al tiempo que recomiendan estrategias de mitigación.</p><h2>OBJETIVOS</h2><ul><li>Analizar la mentalidad y las tácticas de los cibercriminales para fortalecer sus habilidades defensivas.</li><li>Implementar controles de seguridad de manera más efectiva y monitorear, analizar y responder a las amenazas de seguridad actuales.</li><li>Adquirir las habilidades necesarias para implementar seguridad y monitorear, analizar y y responder a las amenazas de seguridad actuales.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industria, Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>', 'CUR', '2025-08-17', '2025-08-19', 'PRES', 23, NULL, 1, 10.00, 1, 4, 'FINALIZADO', 30, 1, 70.00),
+(182, 'LA LEY DE PROTECCIÓN DE DATOS ', '<ul><li><strong>Clase 1:</strong>&nbsp;Fundamentos de la Protección de Datos Personales: Contexto Nacional e Internacional</li><li><strong>Clase 2:</strong>&nbsp;Derechos del Titular y Obligaciones de los Responsables del Tratamiento</li><li><strong>Clase 3:</strong>&nbsp;Gestión y Seguridad de los Datos en Organizaciones</li><li><strong>Clase 4:</strong>&nbsp;Aplicación Práctica y Casos Reales</li></ul>', '<p>Este curso tiene como objetivo ofrecer a estudiantes, docentes y al público en general una comprensión sólida sobre la Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador y su reglamento. A través de un análisis de los fundamentos legales, principios clave y casos prácticos, los participantes aprenderán a identificar los derechos que tienen como titulares de datos, así como las responsabilidades que deben cumplir las instituciones, tanto públicas como privadas, al manejar información personal.<br><br>La propuesta académica se basa en ejemplos reales de políticas internas, normativas internacionales y estándares como el GDPR europeo. El curso promueve una perspectiva humanista sobre la protección de datos, fomentando el uso responsable de la información como un derecho fundamental y un aspecto esencial en nuestra sociedad digital.</p><h2>OBJETIVOS</h2><h3>Objetivo Principal</h3><p>Capacitar a estudiantes, docentes y ciudadanía en general en los principios, derechos y obligaciones establecidos por la Ley Orgánica de Protección de Datos Personales del Ecuador, promoviendo una cultura de respeto a la privacidad, responsabilidad en el tratamiento de datos y cumplimiento normativo en contextos educativos, laborales y sociales.</p><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Centro de Transferencia y Desarrollo de Tecnologías CTT-FISEI.</li><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li></ul>', 'CUR', '2025-09-17', '2025-09-18', 'PRES', 7, NULL, 1, 60.00, 1, 3, 'DISPONIBLE', 20, 1, 100.00),
+(183, 'CONCEPTOS BÁSICOS DE REDES', '<p>&nbsp;</p><ul><li><strong>Módulo 1: Comunicación en un mundo conectado</strong><br>Tipos de red<br>Transmisión de datos<br>Ancho de banda y rendimiento</li><li><strong>Módulo 2:Componentes, tipos y conexiones de red</strong><br>Clientes y Servidores<br>Componentes de la red<br>Opciones de conectividad al ISP</li><li><strong>Módulo 3: Redes inalámbricas y móviles</strong><br>Redes inalámbricas<br>Conectividad de dispositivos móviles</li><li><strong>Módulo 4:Crear una red domestica</strong><br>Conceptos básicos de redes domesticas<br>Tecnologías de red en el hogar<br>Estándares inalámbricos<br>Configurar un enrutador domestico</li><li><strong>Módulo 5: Principios de comunicación</strong><br>Protocolo de comunicación<br>Estándares de comunicación<br>Modelos de comunicación de red</li><li><strong>Módulo 6: Medios de red</strong><br>Tipos de medios de red</li><li><strong>Módulo 7: La capa de acceso</strong><br>Encapsulación y la trama de Ethernet<br>La capa de acceso</li><li><strong>Módulo 8: El protocolo de internet</strong><br>Propósito de una dirección IPv4<br>La estructura de la dirección IPv4</li><li><strong>Módulo 9: IPv4 y segmentación de redes</strong><br>Unidifusión, difusión y multidifusión de IPv4<br>Tipos de direcciones IPv4<br>Segmentación de la red</li><li><strong>Módulo 10: Formatos y reglas de direccionamiento IPv6</strong><br>Problemas con IPv4<br>Direccionamiento IPv6</li><li><strong>Módulo 11: Direccionamiento dinámico con DHCP</strong><br>Direccionamiento estático y dinámico<br>Configuración de DHCPv4</li><li><strong>Módulo 12: Puertas de enlace a otras redes</strong><br>Límites de la Red<br>Traducción de direcciones de red</li><li><strong>Módulo 13: El proceso ARP</strong><br>MAC e IP<br>Contención de difusiones</li><li><strong>Módulo 14: Enrutamiento entre redes</strong><br>La necesidad del enrutamiento<br>La tabla de enrutamiento<br>Crear una LAN</li></ul>', '<p>Este curso cubre la base de redes y dispositivos de red, medios y protocolos. Observará datos que fluyen a través de una red y configurará dispositivos para conectarse a redes. Por último, aprenderá a usar diferentes aplicaciones y protocolos de red para realizar tareas de red. El conocimiento y las habilidades que obtenga le pueden dar un punto de partida para encontrar una carrera gratificante en tecnología.</p><h2>OBJETIVOS DEL CURSO</h2><ul><li>Comprender cómo las redes conectan el mundo, identificando los diferentes tipos de redes, cómo se transmiten los datos, y el impacto del ancho de banda y el rendimiento en la comunicación.</li><li>Adquirir conocimientos prácticos para diseñar y gestionar redes, tanto inalámbricas como móviles, incluyendo la creación de redes domésticas, con un enfoque en los componentes de la red, opciones de conectividad y configuraciones de enrutadores.</li><li>Dominar los fundamentos de la comunicación en red, incluyendo los principios de la comunicación, los medios de red, la capa de acceso, el protocolo de Internet (IPv4 e IPv6), y comprender la importancia del direccionamiento dinámico con DHCP, el enrutamiento entre redes, y los servicios de la capa de aplicación.</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial., Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>', 'CUR', '2025-09-10', '2025-10-11', 'VIRT', 60, NULL, 0, 0.00, 0, 4, 'DISPONIBLE', 50, 0, 70.00),
+(188, 'Descubre tu Poder Personal', '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>', '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>', 'TALL', '2025-09-19', '2025-09-22', 'VIRT', 20, NULL, 1, 5.00, 1, 5, 'DISPONIBLE', 20, 0, 70.00);
 
 -- --------------------------------------------------------
 
@@ -354,6 +343,58 @@ CREATE TABLE `evento_carrera` (
   `SECUENCIALEVENTO` int(11) NOT NULL,
   `SECUENCIALCARRERA` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `evento_carrera`
+--
+
+INSERT INTO `evento_carrera` (`ID`, `SECUENCIALEVENTO`, `SECUENCIALCARRERA`) VALUES
+(87, 168, 2),
+(88, 168, 2),
+(89, 176, 40),
+(90, 176, 42),
+(91, 176, 43),
+(92, 176, 40),
+(93, 176, 42),
+(94, 176, 43),
+(95, 171, 3),
+(96, 171, 3),
+(97, 173, 5),
+(98, 173, 5),
+(99, 167, 3),
+(100, 167, 3),
+(101, 172, 3),
+(174, 177, 4),
+(175, 177, 5),
+(176, 178, 2),
+(177, 178, 3),
+(178, 178, 5),
+(190, 184, 16),
+(191, 184, 45),
+(192, 185, 16),
+(193, 185, 45),
+(194, 186, 16),
+(195, 186, 45),
+(196, 187, 16),
+(197, 187, 45),
+(270, 182, 38),
+(271, 182, 43),
+(272, 183, 4),
+(273, 183, 37),
+(274, 179, 37),
+(275, 179, 40),
+(276, 179, 43),
+(277, 180, 40),
+(278, 180, 43),
+(279, 181, 37),
+(280, 181, 43),
+(311, 188, 16),
+(312, 188, 45),
+(313, 189, 3),
+(314, 189, 5),
+(318, 190, 3),
+(319, 190, 4),
+(320, 190, 5);
 
 -- --------------------------------------------------------
 
@@ -406,6 +447,7 @@ CREATE TABLE `forma_pago` (
 --
 
 INSERT INTO `forma_pago` (`CODIGO`, `NOMBRE`) VALUES
+('DEP', 'Deposito'),
 ('EFEC', 'Efectivo'),
 ('TRANS', 'Transferencia');
 
@@ -427,18 +469,18 @@ CREATE TABLE `imagen_evento` (
 --
 
 INSERT INTO `imagen_evento` (`SECUENCIAL`, `SECUENCIALEVENTO`, `URL_IMAGEN`, `TIPO_IMAGEN`) VALUES
-(46, 167, '', 'PORTADA'),
-(47, 167, '', 'GALERIA'),
-(48, 168, '', 'PORTADA'),
-(49, 168, '', 'GALERIA'),
-(52, 170, '', 'PORTADA'),
-(53, 170, '', 'GALERIA'),
-(64, 173, 'portada_6869468fc5e50.jpg', 'PORTADA'),
-(65, 173, 'galeria_6869468fc61d4.jpg', 'GALERIA'),
-(66, 172, 'portada_686947237534f.jpg', 'PORTADA'),
-(67, 172, 'galeria_686947237576b.png', 'GALERIA'),
-(68, 171, 'portada_68694751ad3d7.jpg', 'PORTADA'),
-(69, 171, 'galeria_68694751ad622.jpg', 'GALERIA');
+(92, 179, 'portada_686de2e9959f4.jpg', 'PORTADA'),
+(93, 179, 'galeria_686de2e996527.jpg', 'GALERIA'),
+(94, 180, 'portada_686de83b995b3.png', 'PORTADA'),
+(95, 180, 'galeria_686de83b9a4e4.png', 'GALERIA'),
+(96, 181, 'portada_686de9f6c3ee2.jpg', 'PORTADA'),
+(97, 181, 'galeria_686de9f6c4a90.jpg', 'GALERIA'),
+(98, 182, 'portada_686dec5911ae6.jpg', 'PORTADA'),
+(99, 182, 'galeria_686dec5912522.jpg', 'GALERIA'),
+(100, 183, 'portada_686dedf86e040.jpg', 'PORTADA'),
+(101, 183, 'galeria_686dedf86ec05.jpg', 'GALERIA'),
+(110, 188, 'portada_686df5bdf3e2f.jpg', 'PORTADA'),
+(111, 188, 'galeria_686df5bdf4173.jpg', 'GALERIA');
 
 -- --------------------------------------------------------
 
@@ -453,17 +495,15 @@ CREATE TABLE `inscripcion` (
   `FECHAINSCRIPCION` datetime DEFAULT NULL,
   `FACTURA_URL` varchar(255) DEFAULT NULL,
   `CODIGOESTADOINSCRIPCION` varchar(20) DEFAULT NULL,
-  `motivacion` text DEFAULT NULL
+  `MOTIVACION` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `inscripcion`
 --
 
-INSERT INTO `inscripcion` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `FECHAINSCRIPCION`, `FACTURA_URL`, `CODIGOESTADOINSCRIPCION`, `motivacion`) VALUES
-(1048, 167, 87, '2025-06-24 01:27:14', NULL, 'ACE', NULL),
-(1049, 168, 87, '2025-06-28 19:14:19', NULL, 'ACE', NULL),
-(1077, 172, 87, '2025-07-06 01:55:03', NULL, 'ACE', NULL);
+INSERT INTO `inscripcion` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `FECHAINSCRIPCION`, `FACTURA_URL`, `CODIGOESTADOINSCRIPCION`, `MOTIVACION`) VALUES
+(1092, 182, 95, '2025-07-09 05:20:23', NULL, 'ACE', 'EJEMPLO DE COMO UTULIZARRRRRR');
 
 -- --------------------------------------------------------
 
@@ -523,19 +563,18 @@ CREATE TABLE `organizador_evento` (
 --
 
 INSERT INTO `organizador_evento` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `ROL_ORGANIZADOR`) VALUES
-(97, 167, 88, 'RESPONSABLE'),
-(98, 167, 88, 'ORGANIZADOR'),
-(99, 168, 88, 'RESPONSABLE'),
-(106, 169, 89, 'RESPONSABLE'),
-(107, 169, 90, 'ORGANIZADOR'),
-(108, 170, 89, 'RESPONSABLE'),
-(109, 170, 89, 'ORGANIZADOR'),
-(120, 173, 88, 'RESPONSABLE'),
-(121, 173, 88, 'ORGANIZADOR'),
-(122, 172, 88, 'RESPONSABLE'),
-(123, 172, 88, 'ORGANIZADOR'),
-(124, 171, 88, 'RESPONSABLE'),
-(125, 171, 88, 'ORGANIZADOR');
+(216, 179, 92, 'RESPONSABLE'),
+(217, 179, 92, 'ORGANIZADOR'),
+(218, 180, 92, 'RESPONSABLE'),
+(219, 180, 92, 'ORGANIZADOR'),
+(220, 181, 92, 'RESPONSABLE'),
+(221, 181, 92, 'ORGANIZADOR'),
+(222, 182, 92, 'RESPONSABLE'),
+(223, 182, 92, 'ORGANIZADOR'),
+(224, 183, 92, 'RESPONSABLE'),
+(225, 183, 92, 'ORGANIZADOR'),
+(236, 188, 92, 'RESPONSABLE'),
+(237, 188, 92, 'ORGANIZADOR');
 
 -- --------------------------------------------------------
 
@@ -560,7 +599,7 @@ CREATE TABLE `pago` (
 --
 
 INSERT INTO `pago` (`SECUENCIAL`, `SECUENCIALINSCRIPCION`, `CODIGOFORMADEPAGO`, `COMPROBANTE_URL`, `CODIGOESTADOPAGO`, `SECUENCIAL_USUARIO_APROBADOR`, `FECHA_PAGO`, `FECHA_APROBACION`, `MONTO`) VALUES
-(40, 1077, 'TRANS', 'comprobante_686a1defc5f46_prueba_backend.pdf', 'VAL', 88, '2025-07-06 01:55:43', '2025-07-06 01:56:41', 50.00);
+(48, 1092, 'TRANS', 'comprobante_686e4817908be_prueba_backend.pdf', 'VAL', 92, '2025-07-09 05:44:39', '2025-07-09 05:45:12', 60.00);
 
 -- --------------------------------------------------------
 
@@ -584,6 +623,13 @@ CREATE TABLE `recepcion_cambio` (
   `FECHA_DECISION` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `recepcion_cambio`
+--
+
+INSERT INTO `recepcion_cambio` (`SECUENCIAL`, `SECUENCIAL_CAMBIO`, `TIPO_ITIL`, `PRIORIDAD`, `CATEGORIA_TECNICA`, `EVALUACION`, `BENEFICIOS`, `IMPACTO_NEGATIVO`, `ACCIONES`, `DECISION`, `OBSERVACIONES`, `RESPONSABLE_TECNICO`, `FECHA_DECISION`) VALUES
+(2, 4, 'Normal', 'Media', 'Frontend / Interfaz', 'Es de impacto alto por lo tanto requiere análisis', 'Mejor visualizacion de solciitud de cambio', 'reclamos por usuarios finales.', '-Cambiar Front, css, y js.', 'Rechazado', 'No se puede implementar en este momento por el proyecto.', 'Josue Llumitasig', '2025-07-07 00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -604,22 +650,28 @@ CREATE TABLE `requisito_evento` (
 INSERT INTO `requisito_evento` (`SECUENCIAL`, `SECUENCIALEVENTO`, `DESCRIPCION`, `ES_OBLIGATORIO`) VALUES
 (1, NULL, 'Cédula o documento de identidad', NULL),
 (2, NULL, 'Comprobante de matrícula vigente', NULL),
-(4, NULL, 'Certificado de vacunación COVID-19', NULL),
+(4, NULL, 'Aval Institucional', NULL),
 (5, NULL, 'Carta de autorización de la facultad', NULL),
 (6, NULL, 'Ensayo o trabajo previo requerido', NULL),
-(7, NULL, 'Presentación o diapositivas (para ponentes)', NULL),
-(9, NULL, 'Certificado de conocimiento previo', NULL),
+(7, NULL, 'Certificado de Aprobación Inglés B1', NULL),
+(9, NULL, 'Ticket de descuento', NULL),
 (10, NULL, 'Carta de invitación oficial', NULL),
-(12, 167, 'Aval académico', NULL),
-(72, 167, 'Cédula o documento de identidad', NULL),
-(73, 167, 'Comprobante de matrícula vigente', NULL),
-(74, 168, 'Carta de invitación oficial', NULL),
-(75, 168, 'Aval académico', NULL),
-(76, NULL, 'Certificado de estar matriculado', NULL),
-(78, NULL, 'ACTA DE MATRIMONIO', NULL),
-(79, 172, 'Cédula o documento de identidad', NULL),
-(80, 172, 'Comprobante de matrícula vigente', NULL),
-(81, 172, 'Certificado de vacunación COVID-19', NULL);
+(142, NULL, 'Acta de Matrimonio', NULL),
+(146, 182, 'Cédula o documento de identidad', NULL),
+(147, 182, 'Comprobante de matrícula vigente', NULL),
+(148, 182, 'Aval Institucional', NULL),
+(149, 183, 'Cédula o documento de identidad', NULL),
+(150, 183, 'Comprobante de matrícula vigente', NULL),
+(151, 183, 'Carta de autorización de la facultad', NULL),
+(152, 179, 'Cédula o documento de identidad', NULL),
+(153, 179, 'Comprobante de matrícula vigente', NULL),
+(154, 179, 'Certificado de Aprobación Inglés B1', NULL),
+(155, 180, 'Cédula o documento de identidad', NULL),
+(156, 180, 'Comprobante de matrícula vigente', NULL),
+(157, 180, 'Ensayo o trabajo previo requerido', NULL),
+(158, 181, 'Cédula o documento de identidad', NULL),
+(159, 181, 'Comprobante de matrícula vigente', NULL),
+(160, 181, 'Ensayo o trabajo previo requerido', NULL);
 
 -- --------------------------------------------------------
 
@@ -651,7 +703,7 @@ INSERT INTO `rol_usuario` (`CODIGO`, `NOMBRE`) VALUES
 
 CREATE TABLE `solicitud_cambio` (
   `SECUENCIAL` int(11) NOT NULL,
-  `SECUENCIAL_USUARIO` int(11) NOT NULL,
+  `SECUENCIAL_USUARIO` int(11) DEFAULT NULL,
   `MODULO_AFECTADO` varchar(100) NOT NULL,
   `TIPO_SOLICITUD` enum('Problema','Mejora','Idea') NOT NULL,
   `DESCRIPCION` text NOT NULL,
@@ -661,6 +713,14 @@ CREATE TABLE `solicitud_cambio` (
   `ESTADO` enum('Pendiente','Evaluado','Rechazado') DEFAULT 'Pendiente',
   `FECHA_ENVIO` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `solicitud_cambio`
+--
+
+INSERT INTO `solicitud_cambio` (`SECUENCIAL`, `SECUENCIAL_USUARIO`, `MODULO_AFECTADO`, `TIPO_SOLICITUD`, `DESCRIPCION`, `JUSTIFICACION`, `URGENCIA`, `ARCHIVO_EVIDENCIA`, `ESTADO`, `FECHA_ENVIO`) VALUES
+(3, NULL, 'Cambiar los eventos Académicos', 'Mejora', 'No se puede saber si un evento es gratis o  no,  solo nos indica el precio que es 0.0 pero al inscribise pide el comprobante de pago.', 'Porque es algo importante para las personas que desea inscribirse', 'Media', 'evidencia_686b19259185f.pdf', 'Pendiente', '2025-07-06 19:47:33'),
+(4, NULL, 'Corregir error de formulario', 'Problema', 'No se puede abrir el formulariod de soliticitud de cambio en el home', 'Es importante para reportar los cambios que deberian ir en esa parte.', 'Alta', 'evidencia_686b19e091907.pdf', 'Rechazado', '2025-07-06 19:50:40');
 
 -- --------------------------------------------------------
 
@@ -682,7 +742,7 @@ INSERT INTO `tipo_evento` (`CODIGO`, `NOMBRE`, `DESCRIPCION`) VALUES
 ('CONF', 'Conferencia', 'Evento académico con expositores'),
 ('CUR', 'Curso', 'Capacitación estructurada'),
 ('EXP', 'Exposición', 'Presentación de proyectos'),
-('SEM', 'Seminario', 'Espacio de exposición académica'),
+('SEM', 'Seminario', 'Evento para todo publico'),
 ('TALL', 'Taller', 'Sesión práctica sobre un tema específico');
 
 -- --------------------------------------------------------
@@ -716,11 +776,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`SECUENCIAL`, `NOMBRES`, `APELLIDOS`, `CEDULA`, `URL_CEDULA`, `URL_MATRICULA`, `FECHA_NACIMIENTO`, `TELEFONO`, `DIRECCION`, `CORREO`, `CONTRASENA`, `CODIGOROL`, `CODIGOESTADO`, `ES_INTERNO`, `FOTO_PERFIL`, `token_recupera`, `token_expiracion`) VALUES
-(73, 'Cristian', 'Jurado', NULL, NULL, NULL, '2004-06-29', '0982184126', 'Tena', 'ernestojurado2005@gmail.com', '$2y$10$5DqomY0n029e2viMtabJZOF3zm2EGervyNM9sLTOLR6xefxbpWbv2', 'ADM', 'ACTIVO', 0, NULL, NULL, NULL),
-(87, 'Amalia Analia', 'Romero', '1500453806', 'cedula_6869fa7aa059f.pdf', 'matricula_6869fe7bef0ae.pdf', '2002-07-21', '0996871239', 'Ambato', 'ernestojurado2004@gmail.com', '$2y$10$CwJLT0w0.DLyI/V.95OvVONE/UsZc6TsIJkNhlKWO6EzvHyhtd8u2', 'EST', 'ACTIVO', 1, 'perfil_6868de163522a.jpg', NULL, NULL),
-(88, 'Patricio', 'Jaramillo', '1800034257', NULL, '', '2000-06-27', '0995643234', 'Ambato, Huachi', 'cjurado5795@uta.edu.ec', '$2y$10$JxEajy/LAlIy1P4qlCPxJeBm917Lw4TGKu6DzBul4KU57uAT6vUu2', 'DOC', 'ACTIVO', 1, 'perfil_68542abd32162_perfil_patricio_jaramillo.png', NULL, NULL),
-(89, 'Josue', 'Llumitasig', '1500453808', NULL, 'matricula_68630880e9291.pdf', '2002-09-29', '0999335938', 'El Panecillo', 'jllumitasig2280@uta.edu.ec', '$2y$10$5l7HO2wZamUE/R3Wm9RteOR6kq2TBvIdqGjHs5WrfV4wAHZb1QSuy', 'EST', 'ACTIVO', 1, 'perfil_6868e1c18da58.png', NULL, NULL),
-(90, 'Daniel', 'Bastidas ', '1223498498', NULL, NULL, '2000-09-19', '0999950930', 'Quisapincha', 'dbastidas@uta.edu.ec', '$2y$10$ok8u/VBfL27tQuFjcdfOCOOlu.f01acfsgnwl.pYyrtyDkkPCgTwO', 'DOC', 'ACTIVO', 1, 'perfil_6868e1dfa5e59.png', NULL, NULL);
+(91, 'Cristian', 'Jurado', '1501185795', 'cedula_686dd1b9b17b6.pdf', NULL, '2005-06-17', '0982184126', 'Tena', 'ernestojurado2004@gmail.com', '$2y$10$qNgMoMsGM9OL6Nkfczp.p.YDeRSyRpxVSuCL4Q465cO1VBktNrcn2', 'ADM', 'ACTIVO', 0, 'perfil_686dd1b9b0ccd.jpg', NULL, NULL),
+(92, 'Andres', 'Pérez', '1500028987', NULL, NULL, '1991-09-17', '0982184126', 'Ambato-Huachi', 'cjurado5795@uta.edu.ec', '$2y$10$jI31D2optgFl2TNubsnwKOXk0b/xqMlFNZBWRqzKsxXhkoJykIx1C', 'DOC', 'ACTIVO', 1, 'perfil_686dd5a85f483.png', NULL, NULL),
+(95, 'Juan', 'Jurado', '1500453806', 'cedula_686e2c6d014d2.pdf', NULL, '2005-07-17', '0982184189', 'Tena', 'juradojuan344@gmail.com', '$2y$10$MgszLjdZIgAyHAXCx7CN0OM5kME1DkoxJq7A0XS9b.C10cOhDNmRq', 'INV', 'ACTIVO', 0, 'perfil_686e2c6d01180.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -733,15 +791,6 @@ CREATE TABLE `usuario_carrera` (
   `SECUENCIALUSUARIO` int(11) NOT NULL,
   `SECUENCIALCARRERA` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Volcado de datos para la tabla `usuario_carrera`
---
-
-INSERT INTO `usuario_carrera` (`SECUENCIAL`, `SECUENCIALUSUARIO`, `SECUENCIALCARRERA`) VALUES
-(9, 87, 16),
-(10, 89, 43),
-(11, 90, 44);
 
 --
 -- Índices para tablas volcadas
@@ -948,13 +997,13 @@ ALTER TABLE `usuario_carrera`
 -- AUTO_INCREMENT de la tabla `archivo_requisito`
 --
 ALTER TABLE `archivo_requisito`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencia_nota`
 --
 ALTER TABLE `asistencia_nota`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `autoridades`
@@ -972,7 +1021,7 @@ ALTER TABLE `carrera`
 -- AUTO_INCREMENT de la tabla `carrusel`
 --
 ALTER TABLE `carrusel`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria_evento`
@@ -984,19 +1033,19 @@ ALTER TABLE `categoria_evento`
 -- AUTO_INCREMENT de la tabla `certificado`
 --
 ALTER TABLE `certificado`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
 
 --
 -- AUTO_INCREMENT de la tabla `evento_carrera`
 --
 ALTER TABLE `evento_carrera`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
 
 --
 -- AUTO_INCREMENT de la tabla `facultad`
@@ -1008,13 +1057,13 @@ ALTER TABLE `facultad`
 -- AUTO_INCREMENT de la tabla `imagen_evento`
 --
 ALTER TABLE `imagen_evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1078;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1093;
 
 --
 -- AUTO_INCREMENT de la tabla `noticia`
@@ -1026,37 +1075,37 @@ ALTER TABLE `noticia`
 -- AUTO_INCREMENT de la tabla `organizador_evento`
 --
 ALTER TABLE `organizador_evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `recepcion_cambio`
 --
 ALTER TABLE `recepcion_cambio`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `requisito_evento`
 --
 ALTER TABLE `requisito_evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_cambio`
 --
 ALTER TABLE `solicitud_cambio`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_carrera`

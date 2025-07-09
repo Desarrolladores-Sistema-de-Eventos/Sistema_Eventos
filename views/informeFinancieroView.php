@@ -1,6 +1,9 @@
 <?php
 require_once '../controllers/FinancieroController.php';
 
+// Incluir el header de admin inmediatamente después de abrir PHP
+include("partials/header_Admin.php");
+
 $controller = new FinancieroController();
 $eventos = $controller->listarEventos();
 $reporte = ['montos' => [], 'pendientes' => [], 'comprobantes' => []];
@@ -11,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 }
 ?>
 
-<?php include("partials/header_Admin.php"); ?>
 
 <style>
     

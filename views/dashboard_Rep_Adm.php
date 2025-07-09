@@ -16,6 +16,32 @@ include("../core/auth.php");
 
     <div class="row g-4">
 
+     <!-- Panel 1 -->
+     <div class="col-md-6 col-lg-4">
+        <div class="panel panel-default shadow-sm border rounded-2">
+          <div class="panel-heading bg-light p-3 border-bottom">
+            <h5 class="mb-0"><i class="fa fa-certificate me-2" style="color: #fff;"></i>Certificados Emitidos</h5>
+          </div>
+          <div class="panel-body p-3">
+            <p>Consulta y descarga los certificados emitidos por evento.</p>
+            <a href="informeCertificadosView.php" class="btn btn-outline-primary w-100">Ver Reporte</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="panel panel-default shadow-sm border rounded-2">
+          <div class="panel-heading bg-light p-3 border-bottom">
+            <h5 class="mb-0"><i class="fa fa-user-check me-2" style="color: #fff;"></i>Inscripciones por Evento</h5>
+          </div>
+          <div class="panel-body p-3">
+            <p>Revisa cuántos estudiantes se han inscrito por evento.</p>
+            <a href="informeInscripcionesView.php" class="btn btn-outline-primary w-100">Ver Reporte</a>
+          </div>
+        </div>
+      </div>
+      
       <!-- Panel 3 -->
       <div class="col-md-6 col-lg-4">
         <div class="panel panel-default shadow-sm border rounded-2">

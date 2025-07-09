@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Cargar info de la facultad
-    fetch('/Sistema_Eventos/controllers/FacultadController.php')
+    fetch('/controllers/FacultadController.php')
         .then(response => response.json())
         .then(data => {
             if (data) {
@@ -61,7 +61,7 @@ fetch('../controllers/ConfiguracionesController.php?option=carrera_fisei')
 
 //Cargar descripción de la facultad
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('../controllers/FacultadController.php')
+    fetch('/controllers/FacultadController.php?option=listar')
         .then(response => response.json())
         .then(data => {
             if (data && data.ABOUT) {

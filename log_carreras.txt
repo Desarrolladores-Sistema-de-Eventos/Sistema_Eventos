@@ -4677,3 +4677,1161 @@
     ),
   ),
 )
+2025-07-09 18:10:35 [editar] ID recibido: '191'
+2025-07-09 18:10:35 [getEvento] ID recibido: '191'
+2025-07-09 18:10:35 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 18:10:35 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'todo bien',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-09 18:10:35 [getEvento] Evento final: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'todo bien',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => false,
+  'GALERIA' => false,
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)
+2025-07-09 18:10:35 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'todo bien',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => false,
+  'GALERIA' => false,
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)
+2025-07-09 18:10:40 [editar] ID recibido: '191'
+2025-07-09 18:10:40 [getEvento] ID recibido: '191'
+2025-07-09 18:10:40 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 18:10:40 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'todo bien',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-09 18:10:40 [getEvento] Evento final: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'todo bien',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => false,
+  'GALERIA' => false,
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)
+2025-07-09 18:10:40 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'todo bien',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => false,
+  'GALERIA' => false,
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)
+2025-07-09 18:12:54 [getEvento] ID recibido: '191'
+2025-07-09 18:12:54 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 18:12:54 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-09 18:12:54 [getEvento] Evento final: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686eb0b8773d6_diagramaApelacion.jpg',
+  'GALERIA' => 'galeria_686eb0b8796a5_dashboardsEstadisticas.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)
+2025-07-09 18:13:25 [getEvento] ID recibido: '191'
+2025-07-09 18:13:25 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 18:13:25 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-09 18:13:25 [getEvento] Evento final: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686eb0b8773d6_diagramaApelacion.jpg',
+  'GALERIA' => 'galeria_686eb0b8796a5_dashboardsEstadisticas.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)
+2025-07-09 18:13:27 [getEvento] ID recibido: '191'
+2025-07-09 18:13:27 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 18:13:27 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-09 18:13:27 [getEvento] Evento final: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686eb0b8773d6_diagramaApelacion.jpg',
+  'GALERIA' => 'galeria_686eb0b8796a5_dashboardsEstadisticas.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)
+2025-07-09 18:13:29 [getEvento] ID recibido: '191'
+2025-07-09 18:13:29 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 18:13:29 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-09 18:13:29 [getEvento] Evento final: array (
+  'SECUENCIAL' => 191,
+  'TITULO' => 'Nuevo curso',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'CONF',
+  'FECHAINICIO' => '2025-07-10',
+  'FECHAFIN' => '2025-07-16',
+  'CODIGOMODALIDAD' => 'ADC',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '5.00',
+  'MODALIDAD' => 'a Distancia',
+  'TIPO' => 'Conferencia',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686eb0b8773d6_diagramaApelacion.jpg',
+  'GALERIA' => 'galeria_686eb0b8796a5_dashboardsEstadisticas.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 2,
+      'NOMBRE_CARRERA' => 'Biotecnología',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 170,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 170,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 191,
+    ),
+  ),
+)

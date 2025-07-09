@@ -1,5 +1,7 @@
 <?php
 require_once '../controllers/EventoAsistenciaController.php';
+// Incluir el header de admin inmediatamente después de abrir PHP
+include("partials/header_Admin.php");
 $controller = new EventoAsistenciaController();
 $eventos = $controller->listarEventos();
 $reporte = ['responsables' => [], 'asistentes' => []];
@@ -9,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 }
 ?>
 
-<?php include("partials/header_Admin.php"); ?>
     <style>
         /* Colores UTA: Rojo, Negro, Blanco, Amarillo */
         :root {

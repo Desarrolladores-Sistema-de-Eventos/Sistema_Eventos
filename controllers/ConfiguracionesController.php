@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 
 class ConfiguracionesController
 {
+    private $pdo;
     private $configuracionesModelo;
     private $idUsuario;
     

@@ -1,6 +1,9 @@
 <?php
 require_once '../controllers/InscripcionController.php';
 
+// Incluir el header de admin inmediatamente después de abrir PHP
+include("partials/header_Admin.php");
+
 $controller = new InscripcionController();
 $eventos = $controller->listarEventos();
 $reporte = ['total' => 0, 'datos' => []];
@@ -10,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
     $reporte = $controller->obtenerReporte($idEvento);
 }
 ?>
-
-<?php include("partials/header_Admin.php"); ?>
 
 <style>
     

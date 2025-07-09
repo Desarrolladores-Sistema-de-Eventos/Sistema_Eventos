@@ -1,4 +1,3 @@
-
 <?php
 require_once '../core/roles.php';
 if (session_status() === PHP_SESSION_NONE) {
