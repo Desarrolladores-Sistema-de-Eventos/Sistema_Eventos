@@ -94,7 +94,7 @@ function cargarInscripciones(idEvento) {
   // Animación de cargando con spinner Bootstrap
   tbody.html(`
     <tr>
-      <td colspan="5" style="text-align:center;">
+      <td colspan="6" style="text-align:center;">
         <div class="spinner-border text-primary" role="status">
           <span class="sr-only">Cargando...</span>
         </div>
@@ -111,6 +111,15 @@ function cargarInscripciones(idEvento) {
         // Prepara los datos como array de arrays para DataTables
         const data = datos.map(i => [
           `${i.NOMBRES} ${i.APELLIDOS}`,
+          // Traducción de rol
+          (function() {
+            switch (i.CODIGOROL) {
+              case 'DOC': return 'Docente';
+              case 'EST': return 'Estudiante';
+              case 'INV': return 'Invitado';
+              default: return i.CODIGOROL || '-';
+            }
+          })(),
           i.FECHAINSCRIPCION,
           (() => {
             switch (i.CODIGOESTADOINSCRIPCION) {
@@ -135,6 +144,7 @@ function cargarInscripciones(idEvento) {
           data: data,
           columns: [
             { title: "Nombres y Apellidos" },
+            { title: "Rol" },
             { title: "Fecha de Inscripción" },
             { title: "Estado Inscripción" },
             { title: "Factura" },
@@ -147,20 +157,20 @@ function cargarInscripciones(idEvento) {
           responsive: true,
           createdRow: function(row, data, dataIndex) {
             // Permite que los botones HTML y badges se rendericen correctamente
-            $(row).find('td').eq(2).html(data[2]);
             $(row).find('td').eq(3).html(data[3]);
             $(row).find('td').eq(4).html(data[4]);
+            $(row).find('td').eq(5).html(data[5]);
           }
         });
       } else {
         // Si no hay datos, destruye DataTable (ya destruido arriba) y solo muestra el mensaje
-        tbody.html('<tr><td colspan="5">No hay inscripciones para este evento.</td></tr>');
+        tbody.html('<tr><td colspan="6">No hay inscripciones para este evento.</td></tr>');
       }
     })
     .catch(err => {
       console.error('Error al cargar inscripciones:', err);
       // Si hay error, destruye DataTable (ya destruido arriba) y solo muestra el mensaje
-      tbody.html('<tr><td colspan="5">Error al cargar inscripciones.</td></tr>');
+      tbody.html('<tr><td colspan="6">Error al cargar inscripciones.</td></tr>');
       Swal.fire('Error', 'No se pudieron cargar las inscripciones', 'error');
     });
 }

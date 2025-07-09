@@ -85,17 +85,6 @@ if ($esResponsable || in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])) {
     </div>
   <?php elseif (in_array($rol, ['DOCENTE', 'ESTUDIANTE', 'INVITADO'])): ?>
     <div style="display: flex; align-items: center; gap: 18px;">
-      <div id="notificacionAprobaciones" style="position: relative;">
-        <i class="fa fa-bell" style="font-size: 22px; color: #fff; cursor: pointer; position: relative; z-index: 10001;"></i>
-        <span id="badgeAprobacion" style="display:none; position: absolute; top: -7px; right: -7px; background: #e74c3c; color: #fff; border-radius: 50%; padding: 2px 7px; font-size: 12px; font-weight: bold; min-width: 22px; text-align: center; z-index: 10002;"></span>
-        <div id="panelAprobaciones" style="display:none; position: fixed; right: 32px; top: 68px; width: 340px; background: #fff; color: #222; border-radius: 10px; box-shadow: 0 8px 32px #0003; z-index: 20000; border: 1.5px solid #d3d6db;">
-          <div style="padding: 12px 16px; border-bottom: 1px solid #eee; font-weight: bold; font-size: 15px; display: flex; align-items: center; justify-content: space-between;">
-            <span>Notificaciones</span>
-            <i class="fa fa-check" style="color: #2ecc71;"></i>
-          </div>
-          <div id="listaAprobaciones" style="max-height: 320px; overflow-y: auto;"></div>
-        </div>
-      </div>
       <a href="../controllers/logout.php" class="btn btn-danger square-btn-adjust">Cerrar Sesión</a>
     </div>
   <?php else: ?>

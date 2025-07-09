@@ -15,24 +15,29 @@ include("../core/auth.php"); ?>
       <div class="panel-heading"><i class="fa fa-calendar"></i> Eventos</div>
       <div class="panel-body">
 
+
+        <!-- Selector de eventos arriba -->
         <div class="row" style="margin-top: 10px;">
-          <!-- Sidebar: Selector de eventos -->
-          <div class="col-md-4 col-lg-3" id="sidebar-evento">
-            <div class="evento-select-sidebar" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(155,46,46,0.08); padding: 24px 18px; margin-bottom: 20px;">
-                <label for="eventoSeleccionado" class="evento-label" style="font-size: 14px; font-weight: normal; color: #9b2e2e;">
+          <div class="col-md-12">
+            <div class="evento-select-sidebar" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(155,46,46,0.08); padding: 24px 18px; margin-bottom: 20px; max-width: 400px;">
+              <label for="eventoSeleccionado" class="evento-label" style="font-size: 14px; font-weight: normal; color: #9b2e2e;">
                 <i class="fa fa-search"></i> Seleccione Evento:
-                </label>
+              </label>
               <select id="eventoSeleccionado" class="form-control select2-evento" style="width: 100%; margin-top: 10px;"></select>
             </div>
           </div>
-          <!-- Contenido principal: Tabla -->
-          <div class="col-md-8 col-lg-9">
+        </div>
+
+        <!-- Tabla de inscripciones abajo -->
+        <div class="row">
+          <div class="col-md-12">
             <div class="table-responsive mt-2">
               <h4><i class="fa fa-users"></i> Lista de Inscripciones</h4>
               <table class="table table-bordered table-striped" id="tabla-inscripciones">
                 <thead>
                   <tr>
                     <th>Nombres y Apellidos</th>
+                    <th>Rol</th>
                     <th>Fecha de Inscripción</th>
                     <th>Estado Inscripción</th>
                     <th>Factura</th>

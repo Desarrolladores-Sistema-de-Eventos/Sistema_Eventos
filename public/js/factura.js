@@ -52,7 +52,7 @@ function renderFactura(factura) {
 
     <div id="factura-html">
         <div class="text-center header">
-            <img src="../public/img/factura_logo.png" class="logo"><br>
+            <img src="../public/img/uta/factura_logo.png" class="logo"><br>
             <div class="text-bold">EMPRESA PUBLICA DE LA UNIVERSIDAD TÉCNICA DE AMBATO UTA EP</div>
             RUC: 1865042910001<br>
             DIR. MATRIZ: QUITO 02-45 Y ENTRE BOLIVAR Y ROCAFUERTE<br>

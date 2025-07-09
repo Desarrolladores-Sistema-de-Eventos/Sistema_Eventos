@@ -913,3 +913,1695 @@
     ),
   ),
 )
+2025-07-09 10:47:28 [getEvento] ID recibido: '181'
+2025-07-09 10:47:28 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 10:47:28 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 181,
+  'TITULO' => ' ETHICAL HACKER',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Introducción al hacking ético y a las pruebas de penetración</strong><br>1.1 Entendiendo el Hacking Ético y la Penetración Pruebas<br>1.2 Exploración de metodologías de pruebas de penetración<br>1.3 Construir su propio laboratorio</li><li><strong>Módulo 2: Planificación y alcance de una prueba de penetración Evaluación</strong><br>2.1 Comparación y contraste de los conceptos de gobernanza, riesgo y cumplimiento normativo<br>2.2 Explicar la importancia del alcance y los requisitos de la organización o del cliente<br>2.3 Demostrar una mentalidad de hacking ético manteniendo el profesionalismo y la integridad</li><li><strong>Módulo 3: Recopilación de información y exploración de vulnerabilidades</strong><br>3.1 Realización de un reconocimiento pasivo<br>3.2 Realización de un reconocimiento activo<br>3.3 Entender el arte de realizar escaneos de vulnerabilidades<br>3.4 Cómo analizar los resultados de la exploración de vulnerabilidades</li><li><strong>Módulo 4: Ataques de Ingeniería Social</strong><br>4.1 Pretexto para un acercamiento y suplantación de identidad<br>4.2 Ataques de ingeniería social<br>4.3 Ataques físicos<br>4.4 Herramientas de ingeniería social<br>4.5 Métodos de influencia</li><li><strong>Módulo 5: Ataques de Ingeniería Social</strong><br>5.1 Explotación de vulnerabilidades basadas en la red<br>5.2 Explotación de vulnerabilidades inalámbricas.</li><li><strong>Módulo 6: Explotación de vulnerabilidades basadas en aplicaciones</strong><br>6.1 Visión general de los ataques basados en aplicaciones web para profesionales de seguridad y los 10 principales de OWASP<br>6.2 Cómo construir su propio laboratorio de aplicaciones web<br>6.3 Entendiendo las fallas en la lógica del negocio<br>6.4 Entender las vulnerabilidades basadas en inyección<br>6.5 Explotación de vulnerabilidades basadas en autenticación<br>6.6 Explotación de vulnerabilidades basadas en autorización<br>6.7 Descripción de vulnerabilidades de secuencias de comandos en sitios cruzados (XSS)<br>6.8 Entender la Falsificación de Peticiones en Sitios Cruzados (CSRF/XSRF)(CSRF/XSRF) y Ataques de Falsificación de Peticiones del Lado del Servidor<br>6.9 Entendiendo Clickjacking<br>6.10 Explotación de vulnerabilidades de inclusión de archivos<br>6.11 Explotación de prácticas de código inseguro</li><li><strong>Módulo 7: Seguridad en la nube, móvil e IoT</strong><br>7.1 Investigación de vectores de ataque y realización de ataques en tecnologías de nube<br>7.2 Explicación de ataques y vulnerabilidades comunes contra sistemas especializados</li><li><strong>Módulo 8: Realización de técnicas de post-explotación</strong><br>8.1 Creación de un punto de apoyo y mantener la persistencia después de comprometer un sistema<br>8.2 Realización de movimientos laterales, evasión de detección y enumeración</li><li><strong>Módulo 9:Informes y comunicación</strong><br>9.1 Comparación y contraste de los componentes importantes de los informes escritos<br>9.2 Análisis de los hallazgos y recomendar la remediación apropiada dentro de un informe<br>9.3 Explicación de la importancia de la comunicación durante el proceso de pruebas de penetración<br>9.4 Explicación de las actividades posteriores a la entrega del informe</li><li><strong>Módulo 10: Ataques de Ingeniería Social</strong><br>10.1 Conceptos Básicos de Scripting y Desarrollo de Software.<br>10.2 Comprensión de los Diferentes Casos de Uso de las Herramientas de Pruebas de Penetración y Análisis de Código Exploit.</li></ul>',
+  'DESCRIPCION' => '<p>El panorama digital está evolucionando a un ritmo sin precedentes y las amenazas cibernéticas acechan en cada esquina. La resiliencia de la ciberseguridad en el mundo moderno no puede ser sólo un complemento: es una necesidad. Los profesionales de seguridad ofensivos, como los piratas informáticos éticos y los evaluadores de penetración, pueden ayudar a descubrir de forma proactiva amenazas desconocidas y abordarlas antes de que lo hagan los ciberdelincuentes.<br>El curso Ethical Hacker prepara a los alumnos para descubrir vulnerabilidades de forma proactiva antes de que lo hagan los ciberdelincuentes. Los alumnos dominarán el arte de determinar el alcance, ejecutar e informar sobre las evaluaciones de vulnerabilidades, al tiempo que recomiendan estrategias de mitigación.</p><h2>OBJETIVOS</h2><ul><li>Analizar la mentalidad y las tácticas de los cibercriminales para fortalecer sus habilidades defensivas.</li><li>Implementar controles de seguridad de manera más efectiva y monitorear, analizar y responder a las amenazas de seguridad actuales.</li><li>Adquirir las habilidades necesarias para implementar seguridad y monitorear, analizar y y responder a las amenazas de seguridad actuales.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industria, Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-08-19',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 23,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 30,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 10:47:28 [getEvento] Evento final: array (
+  'SECUENCIAL' => 181,
+  'TITULO' => ' ETHICAL HACKER',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Introducción al hacking ético y a las pruebas de penetración</strong><br>1.1 Entendiendo el Hacking Ético y la Penetración Pruebas<br>1.2 Exploración de metodologías de pruebas de penetración<br>1.3 Construir su propio laboratorio</li><li><strong>Módulo 2: Planificación y alcance de una prueba de penetración Evaluación</strong><br>2.1 Comparación y contraste de los conceptos de gobernanza, riesgo y cumplimiento normativo<br>2.2 Explicar la importancia del alcance y los requisitos de la organización o del cliente<br>2.3 Demostrar una mentalidad de hacking ético manteniendo el profesionalismo y la integridad</li><li><strong>Módulo 3: Recopilación de información y exploración de vulnerabilidades</strong><br>3.1 Realización de un reconocimiento pasivo<br>3.2 Realización de un reconocimiento activo<br>3.3 Entender el arte de realizar escaneos de vulnerabilidades<br>3.4 Cómo analizar los resultados de la exploración de vulnerabilidades</li><li><strong>Módulo 4: Ataques de Ingeniería Social</strong><br>4.1 Pretexto para un acercamiento y suplantación de identidad<br>4.2 Ataques de ingeniería social<br>4.3 Ataques físicos<br>4.4 Herramientas de ingeniería social<br>4.5 Métodos de influencia</li><li><strong>Módulo 5: Ataques de Ingeniería Social</strong><br>5.1 Explotación de vulnerabilidades basadas en la red<br>5.2 Explotación de vulnerabilidades inalámbricas.</li><li><strong>Módulo 6: Explotación de vulnerabilidades basadas en aplicaciones</strong><br>6.1 Visión general de los ataques basados en aplicaciones web para profesionales de seguridad y los 10 principales de OWASP<br>6.2 Cómo construir su propio laboratorio de aplicaciones web<br>6.3 Entendiendo las fallas en la lógica del negocio<br>6.4 Entender las vulnerabilidades basadas en inyección<br>6.5 Explotación de vulnerabilidades basadas en autenticación<br>6.6 Explotación de vulnerabilidades basadas en autorización<br>6.7 Descripción de vulnerabilidades de secuencias de comandos en sitios cruzados (XSS)<br>6.8 Entender la Falsificación de Peticiones en Sitios Cruzados (CSRF/XSRF)(CSRF/XSRF) y Ataques de Falsificación de Peticiones del Lado del Servidor<br>6.9 Entendiendo Clickjacking<br>6.10 Explotación de vulnerabilidades de inclusión de archivos<br>6.11 Explotación de prácticas de código inseguro</li><li><strong>Módulo 7: Seguridad en la nube, móvil e IoT</strong><br>7.1 Investigación de vectores de ataque y realización de ataques en tecnologías de nube<br>7.2 Explicación de ataques y vulnerabilidades comunes contra sistemas especializados</li><li><strong>Módulo 8: Realización de técnicas de post-explotación</strong><br>8.1 Creación de un punto de apoyo y mantener la persistencia después de comprometer un sistema<br>8.2 Realización de movimientos laterales, evasión de detección y enumeración</li><li><strong>Módulo 9:Informes y comunicación</strong><br>9.1 Comparación y contraste de los componentes importantes de los informes escritos<br>9.2 Análisis de los hallazgos y recomendar la remediación apropiada dentro de un informe<br>9.3 Explicación de la importancia de la comunicación durante el proceso de pruebas de penetración<br>9.4 Explicación de las actividades posteriores a la entrega del informe</li><li><strong>Módulo 10: Ataques de Ingeniería Social</strong><br>10.1 Conceptos Básicos de Scripting y Desarrollo de Software.<br>10.2 Comprensión de los Diferentes Casos de Uso de las Herramientas de Pruebas de Penetración y Análisis de Código Exploit.</li></ul>',
+  'DESCRIPCION' => '<p>El panorama digital está evolucionando a un ritmo sin precedentes y las amenazas cibernéticas acechan en cada esquina. La resiliencia de la ciberseguridad en el mundo moderno no puede ser sólo un complemento: es una necesidad. Los profesionales de seguridad ofensivos, como los piratas informáticos éticos y los evaluadores de penetración, pueden ayudar a descubrir de forma proactiva amenazas desconocidas y abordarlas antes de que lo hagan los ciberdelincuentes.<br>El curso Ethical Hacker prepara a los alumnos para descubrir vulnerabilidades de forma proactiva antes de que lo hagan los ciberdelincuentes. Los alumnos dominarán el arte de determinar el alcance, ejecutar e informar sobre las evaluaciones de vulnerabilidades, al tiempo que recomiendan estrategias de mitigación.</p><h2>OBJETIVOS</h2><ul><li>Analizar la mentalidad y las tácticas de los cibercriminales para fortalecer sus habilidades defensivas.</li><li>Implementar controles de seguridad de manera más efectiva y monitorear, analizar y responder a las amenazas de seguridad actuales.</li><li>Adquirir las habilidades necesarias para implementar seguridad y monitorear, analizar y y responder a las amenazas de seguridad actuales.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industria, Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-08-19',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 23,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 30,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de9f6c3ee2.jpg',
+  'GALERIA' => 'galeria_686de9f6c4a90.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 37,
+      'NOMBRE_CARRERA' => 'Sistemas Computacionales e Informáticos',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 158,
+    1 => 159,
+    2 => 160,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 158,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 181,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 159,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 181,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 160,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 181,
+    ),
+  ),
+)
+2025-07-09 10:49:31 [getEvento] ID recibido: '181'
+2025-07-09 10:49:31 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 10:49:31 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 181,
+  'TITULO' => ' ETHICAL HACKER',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Introducción al hacking ético y a las pruebas de penetración</strong><br>1.1 Entendiendo el Hacking Ético y la Penetración Pruebas<br>1.2 Exploración de metodologías de pruebas de penetración<br>1.3 Construir su propio laboratorio</li><li><strong>Módulo 2: Planificación y alcance de una prueba de penetración Evaluación</strong><br>2.1 Comparación y contraste de los conceptos de gobernanza, riesgo y cumplimiento normativo<br>2.2 Explicar la importancia del alcance y los requisitos de la organización o del cliente<br>2.3 Demostrar una mentalidad de hacking ético manteniendo el profesionalismo y la integridad</li><li><strong>Módulo 3: Recopilación de información y exploración de vulnerabilidades</strong><br>3.1 Realización de un reconocimiento pasivo<br>3.2 Realización de un reconocimiento activo<br>3.3 Entender el arte de realizar escaneos de vulnerabilidades<br>3.4 Cómo analizar los resultados de la exploración de vulnerabilidades</li><li><strong>Módulo 4: Ataques de Ingeniería Social</strong><br>4.1 Pretexto para un acercamiento y suplantación de identidad<br>4.2 Ataques de ingeniería social<br>4.3 Ataques físicos<br>4.4 Herramientas de ingeniería social<br>4.5 Métodos de influencia</li><li><strong>Módulo 5: Ataques de Ingeniería Social</strong><br>5.1 Explotación de vulnerabilidades basadas en la red<br>5.2 Explotación de vulnerabilidades inalámbricas.</li><li><strong>Módulo 6: Explotación de vulnerabilidades basadas en aplicaciones</strong><br>6.1 Visión general de los ataques basados en aplicaciones web para profesionales de seguridad y los 10 principales de OWASP<br>6.2 Cómo construir su propio laboratorio de aplicaciones web<br>6.3 Entendiendo las fallas en la lógica del negocio<br>6.4 Entender las vulnerabilidades basadas en inyección<br>6.5 Explotación de vulnerabilidades basadas en autenticación<br>6.6 Explotación de vulnerabilidades basadas en autorización<br>6.7 Descripción de vulnerabilidades de secuencias de comandos en sitios cruzados (XSS)<br>6.8 Entender la Falsificación de Peticiones en Sitios Cruzados (CSRF/XSRF)(CSRF/XSRF) y Ataques de Falsificación de Peticiones del Lado del Servidor<br>6.9 Entendiendo Clickjacking<br>6.10 Explotación de vulnerabilidades de inclusión de archivos<br>6.11 Explotación de prácticas de código inseguro</li><li><strong>Módulo 7: Seguridad en la nube, móvil e IoT</strong><br>7.1 Investigación de vectores de ataque y realización de ataques en tecnologías de nube<br>7.2 Explicación de ataques y vulnerabilidades comunes contra sistemas especializados</li><li><strong>Módulo 8: Realización de técnicas de post-explotación</strong><br>8.1 Creación de un punto de apoyo y mantener la persistencia después de comprometer un sistema<br>8.2 Realización de movimientos laterales, evasión de detección y enumeración</li><li><strong>Módulo 9:Informes y comunicación</strong><br>9.1 Comparación y contraste de los componentes importantes de los informes escritos<br>9.2 Análisis de los hallazgos y recomendar la remediación apropiada dentro de un informe<br>9.3 Explicación de la importancia de la comunicación durante el proceso de pruebas de penetración<br>9.4 Explicación de las actividades posteriores a la entrega del informe</li><li><strong>Módulo 10: Ataques de Ingeniería Social</strong><br>10.1 Conceptos Básicos de Scripting y Desarrollo de Software.<br>10.2 Comprensión de los Diferentes Casos de Uso de las Herramientas de Pruebas de Penetración y Análisis de Código Exploit.</li></ul>',
+  'DESCRIPCION' => '<p>El panorama digital está evolucionando a un ritmo sin precedentes y las amenazas cibernéticas acechan en cada esquina. La resiliencia de la ciberseguridad en el mundo moderno no puede ser sólo un complemento: es una necesidad. Los profesionales de seguridad ofensivos, como los piratas informáticos éticos y los evaluadores de penetración, pueden ayudar a descubrir de forma proactiva amenazas desconocidas y abordarlas antes de que lo hagan los ciberdelincuentes.<br>El curso Ethical Hacker prepara a los alumnos para descubrir vulnerabilidades de forma proactiva antes de que lo hagan los ciberdelincuentes. Los alumnos dominarán el arte de determinar el alcance, ejecutar e informar sobre las evaluaciones de vulnerabilidades, al tiempo que recomiendan estrategias de mitigación.</p><h2>OBJETIVOS</h2><ul><li>Analizar la mentalidad y las tácticas de los cibercriminales para fortalecer sus habilidades defensivas.</li><li>Implementar controles de seguridad de manera más efectiva y monitorear, analizar y responder a las amenazas de seguridad actuales.</li><li>Adquirir las habilidades necesarias para implementar seguridad y monitorear, analizar y y responder a las amenazas de seguridad actuales.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industria, Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-08-19',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 23,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 30,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 10:49:31 [getEvento] Evento final: array (
+  'SECUENCIAL' => 181,
+  'TITULO' => ' ETHICAL HACKER',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Introducción al hacking ético y a las pruebas de penetración</strong><br>1.1 Entendiendo el Hacking Ético y la Penetración Pruebas<br>1.2 Exploración de metodologías de pruebas de penetración<br>1.3 Construir su propio laboratorio</li><li><strong>Módulo 2: Planificación y alcance de una prueba de penetración Evaluación</strong><br>2.1 Comparación y contraste de los conceptos de gobernanza, riesgo y cumplimiento normativo<br>2.2 Explicar la importancia del alcance y los requisitos de la organización o del cliente<br>2.3 Demostrar una mentalidad de hacking ético manteniendo el profesionalismo y la integridad</li><li><strong>Módulo 3: Recopilación de información y exploración de vulnerabilidades</strong><br>3.1 Realización de un reconocimiento pasivo<br>3.2 Realización de un reconocimiento activo<br>3.3 Entender el arte de realizar escaneos de vulnerabilidades<br>3.4 Cómo analizar los resultados de la exploración de vulnerabilidades</li><li><strong>Módulo 4: Ataques de Ingeniería Social</strong><br>4.1 Pretexto para un acercamiento y suplantación de identidad<br>4.2 Ataques de ingeniería social<br>4.3 Ataques físicos<br>4.4 Herramientas de ingeniería social<br>4.5 Métodos de influencia</li><li><strong>Módulo 5: Ataques de Ingeniería Social</strong><br>5.1 Explotación de vulnerabilidades basadas en la red<br>5.2 Explotación de vulnerabilidades inalámbricas.</li><li><strong>Módulo 6: Explotación de vulnerabilidades basadas en aplicaciones</strong><br>6.1 Visión general de los ataques basados en aplicaciones web para profesionales de seguridad y los 10 principales de OWASP<br>6.2 Cómo construir su propio laboratorio de aplicaciones web<br>6.3 Entendiendo las fallas en la lógica del negocio<br>6.4 Entender las vulnerabilidades basadas en inyección<br>6.5 Explotación de vulnerabilidades basadas en autenticación<br>6.6 Explotación de vulnerabilidades basadas en autorización<br>6.7 Descripción de vulnerabilidades de secuencias de comandos en sitios cruzados (XSS)<br>6.8 Entender la Falsificación de Peticiones en Sitios Cruzados (CSRF/XSRF)(CSRF/XSRF) y Ataques de Falsificación de Peticiones del Lado del Servidor<br>6.9 Entendiendo Clickjacking<br>6.10 Explotación de vulnerabilidades de inclusión de archivos<br>6.11 Explotación de prácticas de código inseguro</li><li><strong>Módulo 7: Seguridad en la nube, móvil e IoT</strong><br>7.1 Investigación de vectores de ataque y realización de ataques en tecnologías de nube<br>7.2 Explicación de ataques y vulnerabilidades comunes contra sistemas especializados</li><li><strong>Módulo 8: Realización de técnicas de post-explotación</strong><br>8.1 Creación de un punto de apoyo y mantener la persistencia después de comprometer un sistema<br>8.2 Realización de movimientos laterales, evasión de detección y enumeración</li><li><strong>Módulo 9:Informes y comunicación</strong><br>9.1 Comparación y contraste de los componentes importantes de los informes escritos<br>9.2 Análisis de los hallazgos y recomendar la remediación apropiada dentro de un informe<br>9.3 Explicación de la importancia de la comunicación durante el proceso de pruebas de penetración<br>9.4 Explicación de las actividades posteriores a la entrega del informe</li><li><strong>Módulo 10: Ataques de Ingeniería Social</strong><br>10.1 Conceptos Básicos de Scripting y Desarrollo de Software.<br>10.2 Comprensión de los Diferentes Casos de Uso de las Herramientas de Pruebas de Penetración y Análisis de Código Exploit.</li></ul>',
+  'DESCRIPCION' => '<p>El panorama digital está evolucionando a un ritmo sin precedentes y las amenazas cibernéticas acechan en cada esquina. La resiliencia de la ciberseguridad en el mundo moderno no puede ser sólo un complemento: es una necesidad. Los profesionales de seguridad ofensivos, como los piratas informáticos éticos y los evaluadores de penetración, pueden ayudar a descubrir de forma proactiva amenazas desconocidas y abordarlas antes de que lo hagan los ciberdelincuentes.<br>El curso Ethical Hacker prepara a los alumnos para descubrir vulnerabilidades de forma proactiva antes de que lo hagan los ciberdelincuentes. Los alumnos dominarán el arte de determinar el alcance, ejecutar e informar sobre las evaluaciones de vulnerabilidades, al tiempo que recomiendan estrategias de mitigación.</p><h2>OBJETIVOS</h2><ul><li>Analizar la mentalidad y las tácticas de los cibercriminales para fortalecer sus habilidades defensivas.</li><li>Implementar controles de seguridad de manera más efectiva y monitorear, analizar y responder a las amenazas de seguridad actuales.</li><li>Adquirir las habilidades necesarias para implementar seguridad y monitorear, analizar y y responder a las amenazas de seguridad actuales.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industria, Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-08-17',
+  'FECHAFIN' => '2025-08-19',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 23,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 30,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de9f6c3ee2.jpg',
+  'GALERIA' => 'galeria_686de9f6c4a90.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 37,
+      'NOMBRE_CARRERA' => 'Sistemas Computacionales e Informáticos',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 158,
+    1 => 159,
+    2 => 160,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 158,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 181,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 159,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 181,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 160,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 181,
+    ),
+  ),
+)
+2025-07-09 11:04:21 [editar] ID recibido: '188'
+2025-07-09 11:04:21 [getEvento] ID recibido: '188'
+2025-07-09 11:04:21 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:04:21 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+)
+2025-07-09 11:04:21 [getEvento] Evento final: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 11:04:21 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 11:08:12 [getEvento] ID recibido: '179'
+2025-07-09 11:08:12 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:08:12 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 179,
+  'TITULO' => 'Administración de Amenazas Cibernéticas',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Defensa de la Red</strong><ul><li>Capítulo 1:Comprendiendo la Defensa</li><li>Capítulo 2: Defensa de Sistemas y Redes</li><li>Capítulo 3:Control de Acceso</li><li>Capítulo 4: Listas de Control de Acceso</li><li>Capítulo 5: Tecnologías de Firewall</li><li>Capítulo 6: Firewalls de Política Basados en Zonas</li><li>Capítulo 7: Seguridad en la Nube</li><li>Capítulo 8: Criptografía</li><li>Capítulo 9: Tecnologías y Protocolos</li><li>Capítulo 10: Datos de Seguridad de la Red</li><li>Capítulo 11: Evaluación de Alertas</li></ul></li><li><strong>Módulo 2: Administración de Amenazas Cibernéticas</strong><ul><li>Capítulo 1: Gobernanza y Cumplimiento</li><li>Capítulo 2: Pruebas de seguridad de red</li><li>Capítulo 3: Inteligencia de amenazas</li><li>Capítulo 4: Evaluación de la vulnerabilidad de los endpoints</li><li>Capítulo 5: Gestión de Riesgos y Controles de Seguridad</li><li>Capítulo 6: Forense digital y Análisis y respuesta a incidentes</li></ul></li></ul>',
+  'DESCRIPCION' => '<p>Este curso cubre diferentes métodos para monitorear la red y cómo evaluar las alertas de seguridad. Se profundiza en las herramientas y técnicas utilizadas para proteger la red, incluido el control de acceso, firewalls, seguridad en la nube y criptografía. Permite explorar la gobernanza en la ciberseguridad y la gestión de amenazas, mediante el desarrollo de políticas para que la organización cumpla con los estándares de ética y los marcos legales y regulatorios.</p><h2>OBJETIVOS</h2><ul><li>Explicar los enfoques para la defensa de la seguridad de la red.</li><li>Implementar listas de control de acceso (ACL), firewall para filtrar el tráfico y mitigar los ataques a la red.</li><li>Determinar las técnicas criptográficas que se requieren para garantizar la confidencialidad, la integridad y la autenticidad.</li><li>Impulsar el desarrollo de proyectos de mejora continua dentro del campo empresarial.</li></ul><h2><strong>LUGAR DE CELEBRACIÓN</strong></h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li><li><a href="https://ctt-talleresfisei.uta.edu.ec/edu/login/index.php">Aula virtual de los Talleres Tecnológicos – FISEI</a></li></ul><p>&nbsp;</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-12',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 48,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '40.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 11:08:12 [getEvento] Evento final: array (
+  'SECUENCIAL' => 179,
+  'TITULO' => 'Administración de Amenazas Cibernéticas',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Defensa de la Red</strong><ul><li>Capítulo 1:Comprendiendo la Defensa</li><li>Capítulo 2: Defensa de Sistemas y Redes</li><li>Capítulo 3:Control de Acceso</li><li>Capítulo 4: Listas de Control de Acceso</li><li>Capítulo 5: Tecnologías de Firewall</li><li>Capítulo 6: Firewalls de Política Basados en Zonas</li><li>Capítulo 7: Seguridad en la Nube</li><li>Capítulo 8: Criptografía</li><li>Capítulo 9: Tecnologías y Protocolos</li><li>Capítulo 10: Datos de Seguridad de la Red</li><li>Capítulo 11: Evaluación de Alertas</li></ul></li><li><strong>Módulo 2: Administración de Amenazas Cibernéticas</strong><ul><li>Capítulo 1: Gobernanza y Cumplimiento</li><li>Capítulo 2: Pruebas de seguridad de red</li><li>Capítulo 3: Inteligencia de amenazas</li><li>Capítulo 4: Evaluación de la vulnerabilidad de los endpoints</li><li>Capítulo 5: Gestión de Riesgos y Controles de Seguridad</li><li>Capítulo 6: Forense digital y Análisis y respuesta a incidentes</li></ul></li></ul>',
+  'DESCRIPCION' => '<p>Este curso cubre diferentes métodos para monitorear la red y cómo evaluar las alertas de seguridad. Se profundiza en las herramientas y técnicas utilizadas para proteger la red, incluido el control de acceso, firewalls, seguridad en la nube y criptografía. Permite explorar la gobernanza en la ciberseguridad y la gestión de amenazas, mediante el desarrollo de políticas para que la organización cumpla con los estándares de ética y los marcos legales y regulatorios.</p><h2>OBJETIVOS</h2><ul><li>Explicar los enfoques para la defensa de la seguridad de la red.</li><li>Implementar listas de control de acceso (ACL), firewall para filtrar el tráfico y mitigar los ataques a la red.</li><li>Determinar las técnicas criptográficas que se requieren para garantizar la confidencialidad, la integridad y la autenticidad.</li><li>Impulsar el desarrollo de proyectos de mejora continua dentro del campo empresarial.</li></ul><h2><strong>LUGAR DE CELEBRACIÓN</strong></h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li><li><a href="https://ctt-talleresfisei.uta.edu.ec/edu/login/index.php">Aula virtual de los Talleres Tecnológicos – FISEI</a></li></ul><p>&nbsp;</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-12',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 48,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '40.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de2e9959f4.jpg',
+  'GALERIA' => 'galeria_686de2e996527.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 37,
+      'NOMBRE_CARRERA' => 'Sistemas Computacionales e Informáticos',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 40,
+      'NOMBRE_CARRERA' => 'Tecnologías de la Información',
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 152,
+    1 => 153,
+    2 => 154,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 152,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 179,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 153,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 179,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 154,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => 179,
+    ),
+  ),
+)
+2025-07-09 11:10:56 [getEvento] ID recibido: '180'
+2025-07-09 11:10:56 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:10:56 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 11:10:56 [getEvento] Evento final: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de83b995b3.png',
+  'GALERIA' => 'galeria_686de83b9a4e4.png',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 40,
+      'NOMBRE_CARRERA' => 'Tecnologías de la Información',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 155,
+    1 => 156,
+    2 => 157,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 155,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 156,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 157,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 180,
+    ),
+  ),
+)
+2025-07-09 11:12:19 [getEvento] ID recibido: '180'
+2025-07-09 11:12:19 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:12:19 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 11:12:19 [getEvento] Evento final: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de83b995b3.png',
+  'GALERIA' => 'galeria_686de83b9a4e4.png',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 40,
+      'NOMBRE_CARRERA' => 'Tecnologías de la Información',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 155,
+    1 => 156,
+    2 => 157,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 155,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 156,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 157,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 180,
+    ),
+  ),
+)
+2025-07-09 11:19:32 [getEvento] ID recibido: '180'
+2025-07-09 11:19:32 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:19:32 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 11:19:33 [getEvento] Evento final: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de83b995b3.png',
+  'GALERIA' => 'galeria_686de83b9a4e4.png',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 40,
+      'NOMBRE_CARRERA' => 'Tecnologías de la Información',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 155,
+    1 => 156,
+    2 => 157,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 155,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 156,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 157,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 180,
+    ),
+  ),
+)
+2025-07-09 11:24:12 [getEvento] ID recibido: '183'
+2025-07-09 11:24:12 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:24:12 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 183,
+  'TITULO' => 'CONCEPTOS BÁSICOS DE REDES',
+  'CONTENIDO' => '<p>&nbsp;</p><ul><li><strong>Módulo 1: Comunicación en un mundo conectado</strong><br>Tipos de red<br>Transmisión de datos<br>Ancho de banda y rendimiento</li><li><strong>Módulo 2:Componentes, tipos y conexiones de red</strong><br>Clientes y Servidores<br>Componentes de la red<br>Opciones de conectividad al ISP</li><li><strong>Módulo 3: Redes inalámbricas y móviles</strong><br>Redes inalámbricas<br>Conectividad de dispositivos móviles</li><li><strong>Módulo 4:Crear una red domestica</strong><br>Conceptos básicos de redes domesticas<br>Tecnologías de red en el hogar<br>Estándares inalámbricos<br>Configurar un enrutador domestico</li><li><strong>Módulo 5: Principios de comunicación</strong><br>Protocolo de comunicación<br>Estándares de comunicación<br>Modelos de comunicación de red</li><li><strong>Módulo 6: Medios de red</strong><br>Tipos de medios de red</li><li><strong>Módulo 7: La capa de acceso</strong><br>Encapsulación y la trama de Ethernet<br>La capa de acceso</li><li><strong>Módulo 8: El protocolo de internet</strong><br>Propósito de una dirección IPv4<br>La estructura de la dirección IPv4</li><li><strong>Módulo 9: IPv4 y segmentación de redes</strong><br>Unidifusión, difusión y multidifusión de IPv4<br>Tipos de direcciones IPv4<br>Segmentación de la red</li><li><strong>Módulo 10: Formatos y reglas de direccionamiento IPv6</strong><br>Problemas con IPv4<br>Direccionamiento IPv6</li><li><strong>Módulo 11: Direccionamiento dinámico con DHCP</strong><br>Direccionamiento estático y dinámico<br>Configuración de DHCPv4</li><li><strong>Módulo 12: Puertas de enlace a otras redes</strong><br>Límites de la Red<br>Traducción de direcciones de red</li><li><strong>Módulo 13: El proceso ARP</strong><br>MAC e IP<br>Contención de difusiones</li><li><strong>Módulo 14: Enrutamiento entre redes</strong><br>La necesidad del enrutamiento<br>La tabla de enrutamiento<br>Crear una LAN</li></ul>',
+  'DESCRIPCION' => '<p>Este curso cubre la base de redes y dispositivos de red, medios y protocolos. Observará datos que fluyen a través de una red y configurará dispositivos para conectarse a redes. Por último, aprenderá a usar diferentes aplicaciones y protocolos de red para realizar tareas de red. El conocimiento y las habilidades que obtenga le pueden dar un punto de partida para encontrar una carrera gratificante en tecnología.</p><h2>OBJETIVOS DEL CURSO</h2><ul><li>Comprender cómo las redes conectan el mundo, identificando los diferentes tipos de redes, cómo se transmiten los datos, y el impacto del ancho de banda y el rendimiento en la comunicación.</li><li>Adquirir conocimientos prácticos para diseñar y gestionar redes, tanto inalámbricas como móviles, incluyendo la creación de redes domésticas, con un enfoque en los componentes de la red, opciones de conectividad y configuraciones de enrutadores.</li><li>Dominar los fundamentos de la comunicación en red, incluyendo los principios de la comunicación, los medios de red, la capa de acceso, el protocolo de Internet (IPv4 e IPv6), y comprender la importancia del direccionamiento dinámico con DHCP, el enrutamiento entre redes, y los servicios de la capa de aplicación.</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial., Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-10-11',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 60,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 50,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 11:24:12 [getEvento] Evento final: array (
+  'SECUENCIAL' => 183,
+  'TITULO' => 'CONCEPTOS BÁSICOS DE REDES',
+  'CONTENIDO' => '<p>&nbsp;</p><ul><li><strong>Módulo 1: Comunicación en un mundo conectado</strong><br>Tipos de red<br>Transmisión de datos<br>Ancho de banda y rendimiento</li><li><strong>Módulo 2:Componentes, tipos y conexiones de red</strong><br>Clientes y Servidores<br>Componentes de la red<br>Opciones de conectividad al ISP</li><li><strong>Módulo 3: Redes inalámbricas y móviles</strong><br>Redes inalámbricas<br>Conectividad de dispositivos móviles</li><li><strong>Módulo 4:Crear una red domestica</strong><br>Conceptos básicos de redes domesticas<br>Tecnologías de red en el hogar<br>Estándares inalámbricos<br>Configurar un enrutador domestico</li><li><strong>Módulo 5: Principios de comunicación</strong><br>Protocolo de comunicación<br>Estándares de comunicación<br>Modelos de comunicación de red</li><li><strong>Módulo 6: Medios de red</strong><br>Tipos de medios de red</li><li><strong>Módulo 7: La capa de acceso</strong><br>Encapsulación y la trama de Ethernet<br>La capa de acceso</li><li><strong>Módulo 8: El protocolo de internet</strong><br>Propósito de una dirección IPv4<br>La estructura de la dirección IPv4</li><li><strong>Módulo 9: IPv4 y segmentación de redes</strong><br>Unidifusión, difusión y multidifusión de IPv4<br>Tipos de direcciones IPv4<br>Segmentación de la red</li><li><strong>Módulo 10: Formatos y reglas de direccionamiento IPv6</strong><br>Problemas con IPv4<br>Direccionamiento IPv6</li><li><strong>Módulo 11: Direccionamiento dinámico con DHCP</strong><br>Direccionamiento estático y dinámico<br>Configuración de DHCPv4</li><li><strong>Módulo 12: Puertas de enlace a otras redes</strong><br>Límites de la Red<br>Traducción de direcciones de red</li><li><strong>Módulo 13: El proceso ARP</strong><br>MAC e IP<br>Contención de difusiones</li><li><strong>Módulo 14: Enrutamiento entre redes</strong><br>La necesidad del enrutamiento<br>La tabla de enrutamiento<br>Crear una LAN</li></ul>',
+  'DESCRIPCION' => '<p>Este curso cubre la base de redes y dispositivos de red, medios y protocolos. Observará datos que fluyen a través de una red y configurará dispositivos para conectarse a redes. Por último, aprenderá a usar diferentes aplicaciones y protocolos de red para realizar tareas de red. El conocimiento y las habilidades que obtenga le pueden dar un punto de partida para encontrar una carrera gratificante en tecnología.</p><h2>OBJETIVOS DEL CURSO</h2><ul><li>Comprender cómo las redes conectan el mundo, identificando los diferentes tipos de redes, cómo se transmiten los datos, y el impacto del ancho de banda y el rendimiento en la comunicación.</li><li>Adquirir conocimientos prácticos para diseñar y gestionar redes, tanto inalámbricas como móviles, incluyendo la creación de redes domésticas, con un enfoque en los componentes de la red, opciones de conectividad y configuraciones de enrutadores.</li><li>Dominar los fundamentos de la comunicación en red, incluyendo los principios de la comunicación, los medios de red, la capa de acceso, el protocolo de Internet (IPv4 e IPv6), y comprender la importancia del direccionamiento dinámico con DHCP, el enrutamiento entre redes, y los servicios de la capa de aplicación.</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial., Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-10-11',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 60,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 50,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686dedf86e040.jpg',
+  'GALERIA' => 'galeria_686dedf86ec05.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 37,
+      'NOMBRE_CARRERA' => 'Sistemas Computacionales e Informáticos',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 149,
+    1 => 150,
+    2 => 151,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 149,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 183,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 150,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 183,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 151,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => 183,
+    ),
+  ),
+)
+2025-07-09 11:25:53 [getEvento] ID recibido: '183'
+2025-07-09 11:25:53 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:25:53 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 183,
+  'TITULO' => 'CONCEPTOS BÁSICOS DE REDES',
+  'CONTENIDO' => '<p>&nbsp;</p><ul><li><strong>Módulo 1: Comunicación en un mundo conectado</strong><br>Tipos de red<br>Transmisión de datos<br>Ancho de banda y rendimiento</li><li><strong>Módulo 2:Componentes, tipos y conexiones de red</strong><br>Clientes y Servidores<br>Componentes de la red<br>Opciones de conectividad al ISP</li><li><strong>Módulo 3: Redes inalámbricas y móviles</strong><br>Redes inalámbricas<br>Conectividad de dispositivos móviles</li><li><strong>Módulo 4:Crear una red domestica</strong><br>Conceptos básicos de redes domesticas<br>Tecnologías de red en el hogar<br>Estándares inalámbricos<br>Configurar un enrutador domestico</li><li><strong>Módulo 5: Principios de comunicación</strong><br>Protocolo de comunicación<br>Estándares de comunicación<br>Modelos de comunicación de red</li><li><strong>Módulo 6: Medios de red</strong><br>Tipos de medios de red</li><li><strong>Módulo 7: La capa de acceso</strong><br>Encapsulación y la trama de Ethernet<br>La capa de acceso</li><li><strong>Módulo 8: El protocolo de internet</strong><br>Propósito de una dirección IPv4<br>La estructura de la dirección IPv4</li><li><strong>Módulo 9: IPv4 y segmentación de redes</strong><br>Unidifusión, difusión y multidifusión de IPv4<br>Tipos de direcciones IPv4<br>Segmentación de la red</li><li><strong>Módulo 10: Formatos y reglas de direccionamiento IPv6</strong><br>Problemas con IPv4<br>Direccionamiento IPv6</li><li><strong>Módulo 11: Direccionamiento dinámico con DHCP</strong><br>Direccionamiento estático y dinámico<br>Configuración de DHCPv4</li><li><strong>Módulo 12: Puertas de enlace a otras redes</strong><br>Límites de la Red<br>Traducción de direcciones de red</li><li><strong>Módulo 13: El proceso ARP</strong><br>MAC e IP<br>Contención de difusiones</li><li><strong>Módulo 14: Enrutamiento entre redes</strong><br>La necesidad del enrutamiento<br>La tabla de enrutamiento<br>Crear una LAN</li></ul>',
+  'DESCRIPCION' => '<p>Este curso cubre la base de redes y dispositivos de red, medios y protocolos. Observará datos que fluyen a través de una red y configurará dispositivos para conectarse a redes. Por último, aprenderá a usar diferentes aplicaciones y protocolos de red para realizar tareas de red. El conocimiento y las habilidades que obtenga le pueden dar un punto de partida para encontrar una carrera gratificante en tecnología.</p><h2>OBJETIVOS DEL CURSO</h2><ul><li>Comprender cómo las redes conectan el mundo, identificando los diferentes tipos de redes, cómo se transmiten los datos, y el impacto del ancho de banda y el rendimiento en la comunicación.</li><li>Adquirir conocimientos prácticos para diseñar y gestionar redes, tanto inalámbricas como móviles, incluyendo la creación de redes domésticas, con un enfoque en los componentes de la red, opciones de conectividad y configuraciones de enrutadores.</li><li>Dominar los fundamentos de la comunicación en red, incluyendo los principios de la comunicación, los medios de red, la capa de acceso, el protocolo de Internet (IPv4 e IPv6), y comprender la importancia del direccionamiento dinámico con DHCP, el enrutamiento entre redes, y los servicios de la capa de aplicación.</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial., Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-10-11',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 60,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 50,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 11:25:53 [getEvento] Evento final: array (
+  'SECUENCIAL' => 183,
+  'TITULO' => 'CONCEPTOS BÁSICOS DE REDES',
+  'CONTENIDO' => '<p>&nbsp;</p><ul><li><strong>Módulo 1: Comunicación en un mundo conectado</strong><br>Tipos de red<br>Transmisión de datos<br>Ancho de banda y rendimiento</li><li><strong>Módulo 2:Componentes, tipos y conexiones de red</strong><br>Clientes y Servidores<br>Componentes de la red<br>Opciones de conectividad al ISP</li><li><strong>Módulo 3: Redes inalámbricas y móviles</strong><br>Redes inalámbricas<br>Conectividad de dispositivos móviles</li><li><strong>Módulo 4:Crear una red domestica</strong><br>Conceptos básicos de redes domesticas<br>Tecnologías de red en el hogar<br>Estándares inalámbricos<br>Configurar un enrutador domestico</li><li><strong>Módulo 5: Principios de comunicación</strong><br>Protocolo de comunicación<br>Estándares de comunicación<br>Modelos de comunicación de red</li><li><strong>Módulo 6: Medios de red</strong><br>Tipos de medios de red</li><li><strong>Módulo 7: La capa de acceso</strong><br>Encapsulación y la trama de Ethernet<br>La capa de acceso</li><li><strong>Módulo 8: El protocolo de internet</strong><br>Propósito de una dirección IPv4<br>La estructura de la dirección IPv4</li><li><strong>Módulo 9: IPv4 y segmentación de redes</strong><br>Unidifusión, difusión y multidifusión de IPv4<br>Tipos de direcciones IPv4<br>Segmentación de la red</li><li><strong>Módulo 10: Formatos y reglas de direccionamiento IPv6</strong><br>Problemas con IPv4<br>Direccionamiento IPv6</li><li><strong>Módulo 11: Direccionamiento dinámico con DHCP</strong><br>Direccionamiento estático y dinámico<br>Configuración de DHCPv4</li><li><strong>Módulo 12: Puertas de enlace a otras redes</strong><br>Límites de la Red<br>Traducción de direcciones de red</li><li><strong>Módulo 13: El proceso ARP</strong><br>MAC e IP<br>Contención de difusiones</li><li><strong>Módulo 14: Enrutamiento entre redes</strong><br>La necesidad del enrutamiento<br>La tabla de enrutamiento<br>Crear una LAN</li></ul>',
+  'DESCRIPCION' => '<p>Este curso cubre la base de redes y dispositivos de red, medios y protocolos. Observará datos que fluyen a través de una red y configurará dispositivos para conectarse a redes. Por último, aprenderá a usar diferentes aplicaciones y protocolos de red para realizar tareas de red. El conocimiento y las habilidades que obtenga le pueden dar un punto de partida para encontrar una carrera gratificante en tecnología.</p><h2>OBJETIVOS DEL CURSO</h2><ul><li>Comprender cómo las redes conectan el mundo, identificando los diferentes tipos de redes, cómo se transmiten los datos, y el impacto del ancho de banda y el rendimiento en la comunicación.</li><li>Adquirir conocimientos prácticos para diseñar y gestionar redes, tanto inalámbricas como móviles, incluyendo la creación de redes domésticas, con un enfoque en los componentes de la red, opciones de conectividad y configuraciones de enrutadores.</li><li>Dominar los fundamentos de la comunicación en red, incluyendo los principios de la comunicación, los medios de red, la capa de acceso, el protocolo de Internet (IPv4 e IPv6), y comprender la importancia del direccionamiento dinámico con DHCP, el enrutamiento entre redes, y los servicios de la capa de aplicación.</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial., Avda. Los Chasquis entre Río Payamino y Río Guayllabamba, Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-10',
+  'FECHAFIN' => '2025-10-11',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 60,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 50,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686dedf86e040.jpg',
+  'GALERIA' => 'galeria_686dedf86ec05.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 37,
+      'NOMBRE_CARRERA' => 'Sistemas Computacionales e Informáticos',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 149,
+    1 => 150,
+    2 => 151,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 149,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 183,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 150,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 183,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 151,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => 183,
+    ),
+  ),
+)

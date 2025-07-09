@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const estados = {
             'ACE': ['ACEPTADO', 'blue'],
             'PEN': ['PENDIENTE', 'orange'],
-            'RECH': ['RECHAZADO', 'red'],
+            'REC': ['RECHAZADO', 'red'],
             'COM': ['COMPLETADO', 'blue']
           };
           const [texto, color] = estados[estado] || ['Desconocido', 'gray'];

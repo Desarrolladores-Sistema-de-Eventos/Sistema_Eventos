@@ -55,6 +55,7 @@ public function listarInscripcionesPorEvento($idEvento, $idResponsable) {
             i.SECUENCIAL AS INSCRIPCION_ID,
             u.NOMBRES,
             u.APELLIDOS,
+            u.CODIGOROL,
             i.FECHAINSCRIPCION,
             i.CODIGOESTADOINSCRIPCION,
             i.FACTURA_URL AS FACTURA,        

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
       tarjeta.classList.add('tarjeta-evento', 'activo', 'shadow-sm');
 
      tarjeta.innerHTML = `
-  <img src="../${evento.PORTADA || 'assets/img/default.jpg'}" alt="Evento" class="evento-img rounded-top" style="height: 170px; object-fit: cover;">
+  <img src="../public/img/eventos/portadas/${evento.PORTADA || 'assets/img/default.jpg'}" alt="Evento" class="evento-img rounded-top" style="height: 170px; object-fit: cover;">
   <div class="p-3 bg-white rounded-bottom">
 
     <h5 class="text-dark font-weight-bold mb-3">
