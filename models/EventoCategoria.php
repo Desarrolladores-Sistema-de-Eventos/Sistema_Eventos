@@ -26,23 +26,26 @@ class EventoCategoria {
         $query = "
             SELECT
                 e.TITULO AS EVENTO,
-                GROUP_CONCAT(DISTINCT c.NOMBRE_CARRERA SEPARATOR ', ') AS CARRERAS,
+                c.NOMBRE_CARRERA AS CARRERA,
                 e.FECHAINICIO,
                 e.FECHAFIN,
                 e.ESTADO,
                 CASE WHEN e.ES_PAGADO = 1 THEN 'Sí' ELSE 'No' END AS PAGADO,
                 (SELECT COUNT(*) FROM " . $this->table_inscripcion . " WHERE SECUENCIALEVENTO = e.SECUENCIAL AND CODIGOESTADOINSCRIPCION = 'ACE') AS INSCRITOS,
-                'N/A' AS CAPACIDAD,
+                'N/A' AS CAPACIDAD, -- La capacidad no está definida en el esquema de la tabla 'evento'
                 GROUP_CONCAT(DISTINCT CONCAT(u.NOMBRES, ' ', u.APELLIDOS) SEPARATOR ', ') AS ORGANIZADORES
             FROM
                 " . $this->table_evento . " e
-            LEFT JOIN EVENTO_CARRERA ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO
-            LEFT JOIN " . $this->table_organizador . " oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO
-            LEFT JOIN " . $this->table_usuario . " u ON oe.SECUENCIALUSUARIO = u.SECUENCIAL
+            LEFT JOIN
+                " . $this->table_carrera . " c ON e.SECUENCIALCARRERA = c.SECUENCIAL
+            LEFT JOIN
+                " . $this->table_organizador . " oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO
+            LEFT JOIN
+                " . $this->table_usuario . " u ON oe.SECUENCIALUSUARIO = u.SECUENCIAL
             WHERE
                 e.SECUENCIALCATEGORIA = :idCategoria
             GROUP BY
-                e.SECUENCIAL, e.TITULO, e.FECHAINICIO, e.FECHAFIN, e.ESTADO, e.ES_PAGADO
+                e.SECUENCIAL, e.TITULO, c.NOMBRE_CARRERA, e.FECHAINICIO, e.FECHAFIN, e.ESTADO, e.ES_PAGADO
             ORDER BY
                 e.FECHAINICIO DESC
         ";
@@ -59,14 +62,14 @@ class EventoCategoria {
                 try {
                     $evento['FECHAINICIO'] = new DateTime($evento['FECHAINICIO']);
                 } catch (Exception $e) {
-                    $evento['FECHAINICIO'] = null;
+                    $evento['FECHAINICIO'] = null; // O manejar el error como prefieras
                 }
             }
             if (isset($evento['FECHAFIN'])) {
                 try {
                     $evento['FECHAFIN'] = new DateTime($evento['FECHAFIN']);
                 } catch (Exception $e) {
-                    $evento['FECHAFIN'] = null;
+                    $evento['FECHAFIN'] = null; // O manejar el error como prefieras
                 }
             }
         }

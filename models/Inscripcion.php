@@ -60,29 +60,6 @@ class Inscripcion {
         return $reporte;
     }
 
-    public function obtenerInscripcionesPorCarrera($idCarrera) {
-        $stmt = $this->conn->prepare("
-            SELECT
-                i.SECUENCIAL AS ID_INSCRIPCION,
-                u.NOMBRES,
-                u.APELLIDOS,
-                u.CORREO,
-                e.TITULO AS EVENTO,
-                e.FECHAINICIO,
-                e.FECHAFIN
-            FROM
-                inscripcion i
-            JOIN usuario u ON i.SECUENCIALUSUARIO = u.SECUENCIAL
-            JOIN evento e ON i.SECUENCIALEVENTO = e.SECUENCIAL
-            JOIN EVENTO_CARRERA ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO
-            WHERE ec.SECUENCIALCARRERA = :idCarrera
-            ORDER BY e.FECHAINICIO DESC
-        ");
-        $stmt->bindParam(':idCarrera', $idCarrera, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
-
     public function obtenerTituloEvento($idEvento) {
         $stmt = $this->conn->prepare("SELECT TITULO FROM evento WHERE SECUENCIAL = :idEvento");
         $stmt->bindParam(':idEvento', $idEvento, PDO::PARAM_INT);

@@ -2,118 +2,6 @@
 <?php 
 $rolRequerido = 'ADMIN';
 include("../core/auth.php")?>
-<style>
-  /* Encabezados principales */
-  h2, #modalUsuarioLabel {
-    color: #8B0000;
-    font-weight: 600;
-  }
-
-  .panel-heading {
-    background-color: #8B0000;
-    color: #fff;
-    font-weight: bold;
-  }
-
-  /* Botones */
-  .btn-primary {
-    background-color: #006699;
-    border: none;
-  }
-
-  .btn-primary:hover {
-    background-color: #004466;
-  }
-
-  .btn-success {
-    background-color: #2e7d32;
-    border: none;
-  }
-
-  .btn-success:hover {
-    background-color: #1b5e20;
-  }
-
-  .btn-danger {
-    background-color: #c62828;
-    border: none;
-  }
-
-  .btn-danger:hover {
-    background-color: #8e0000;
-  }
-
-  .btn-secondary {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-  }
-
-  .btn-secondary:hover {
-    background-color: #565e64;
-  }
-
-  /* Tabla */
-  #tabla-usuarios {
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-
-  #tabla-usuarios thead {
-    background-color: #8B0000;
-    color: white;
-  }
-
-  #tabla-usuarios tbody tr:hover {
-    background-color: #f9f5ef;
-  }
-
-  /* Formularios */
-  label {
-    font-weight: 600;
-    color: #333;
-  }
-
-  .form-control {
-    border-radius: 5px;
-  }
-
-  .form-group {
-    margin-bottom: 1rem;
-  }
-
-  .modal-content {
-    border: 2px solid #DAA520;
-    border-radius: 12px;
-  }
-
-  .modal-header {
-    background-color: #8B0000;
-    color: white;
-    border-bottom: 2px solid #DAA520;
-  }
-
-  .modal-footer {
-    border-top: 1px solid #ccc;
-  }
-
-  .form-check-label {
-    font-size: 14px;
-    color: #555;
-  }
-
-  .form-check-input {
-    transform: scale(1.2);
-    margin-right: 5px;
-  }
-
-  .form-text.text-muted {
-    font-size: 12px;
-    color: #777;
-  }
-</style>
 
 <div id="page-wrapper">
   <div id="page-inner">
@@ -129,7 +17,6 @@ include("../core/auth.php")?>
         <button class="btn btn-primary mb-3" id="btn-nuevo-usuario" data-toggle="modal" data-target="#modalUsuario">
           <i class="fa fa-user-plus"></i> Nuevo Usuario
         </button>
-        <BR></BR>
         <div class="form-check mb-2">
           <label class="form-check-label">
             <input type="checkbox" id="mostrarInactivos" class="form-check-input"> Mostrar usuarios inactivos

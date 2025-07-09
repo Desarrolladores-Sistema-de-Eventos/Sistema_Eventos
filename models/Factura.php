@@ -86,20 +86,4 @@ class Factura {
             'numero_factura' => $numero_factura
         ];
     }
-
-    public function getFacturasPorCarrera($idCarrera) {
-        $sql = "SELECT 
-                    f.*, 
-                    e.TITULO, 
-                    e.FECHAINICIO, 
-                    e.FECHAFIN
-                FROM pago f
-                INNER JOIN inscripcion i ON f.SECUENCIALINSCRIPCION = i.SECUENCIAL
-                INNER JOIN evento e ON i.SECUENCIALEVENTO = e.SECUENCIAL
-                INNER JOIN evento_carrera ec ON e.SECUENCIAL = ec.secuencial_evento
-                WHERE ec.secuencial_carrera = ?";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$idCarrera]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 }

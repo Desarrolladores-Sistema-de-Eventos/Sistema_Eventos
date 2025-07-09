@@ -53,24 +53,16 @@ class UsuarioController {
             case 'miPerfil':
                 $this->miPerfil();
                 break;
-            case 'archivos':
-                $this->archivosUsuario(); 
-                break;
             default:
                 $this->json(['success' => false, 'mensaje' => 'Acción no válida']);
         }
     }
-    
     private function miPerfil() {
     if (!isset($_SESSION['usuario'])) {
         echo json_encode(['error' => 'No autenticado']);
         return;
     }
     echo json_encode($_SESSION['usuario']);
-}
-private function archivosUsuario() {
-    $data = $this->modelo->getArchivosUsuario($this->idUsuario);
-    $this->json($data);
 }
 
     // Guardar (insertar) usuario
@@ -308,7 +300,7 @@ private function registrarUsuario() {
     private function procesarFotoPerfil() {
         if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
             $nombreArchivo = uniqid('perfil_') . '_' . basename($_FILES['foto_perfil']['name']);
-            $rutaDestino = __DIR__ . '/public/img/' . $nombreArchivo;
+            $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
             if (move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $rutaDestino)) {
                 return $nombreArchivo;
             }
@@ -318,7 +310,7 @@ private function registrarUsuario() {
     private function procesarCedulaPDF() {
     if (isset($_FILES['cedula_pdf']) && $_FILES['cedula_pdf']['error'] === UPLOAD_ERR_OK) {
         $nombreArchivo = uniqid('cedula_') . '_' . basename($_FILES['cedula_pdf']['name']);
-        $rutaDestino = __DIR__ . '/public/img/' . $nombreArchivo;
+        $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
         if (move_uploaded_file($_FILES['cedula_pdf']['tmp_name'], $rutaDestino)) {
             return $nombreArchivo;
         }
@@ -344,68 +336,48 @@ private function actualizarPerfilUsuario() {
             return;
         }
     }
+    // Validar teléfono: solo números y 10 dígitos
+if (!preg_match('/^\d{10}$/', $_POST['telefono'])) {
+    $this->json(['success' => false, 'mensaje' => 'El teléfono debe tener 10 dígitos numéricos.']);
+    return;
+}
 
-    // Validar teléfono
-    if (!empty($_POST['telefono']) && !preg_match('/^\d{10}$/', $_POST['telefono'])) {
-        $this->json(['success' => false, 'mensaje' => 'El teléfono debe tener 10 dígitos numéricos.']);
+// Validar cédula: solo números y 10 dígitos (puedes personalizar si usas otro formato)
+if (!preg_match('/^\d{10}$/', $_POST['identificacion'])) {
+    $this->json(['success' => false, 'mensaje' => 'La cédula debe tener 10 dígitos numéricos.']);
+    return;
+}
+
+// Validar edad mínima: 18 años
+if (!empty($_POST['fecha_nacimiento'])) {
+    $fechaNacimiento = new DateTime($_POST['fecha_nacimiento']);
+    $hoy = new DateTime();
+    $edad = $hoy->diff($fechaNacimiento)->y;
+
+    if ($edad < 18) {
+        $this->json(['success' => false, 'mensaje' => 'Debes tener al menos 18 años.']);
         return;
     }
-
-    // Validar cédula
-    if (!preg_match('/^\d{10}$/', $_POST['identificacion'])) {
-        $this->json(['success' => false, 'mensaje' => 'La cédula debe tener 10 dígitos numéricos.']);
-        return;
-    }
-
-    // Validar edad
-    if (!empty($_POST['fecha_nacimiento'])) {
-        $fechaNacimiento = new DateTime($_POST['fecha_nacimiento']);
-        $hoy = new DateTime();
-        $edad = $hoy->diff($fechaNacimiento)->y;
-        if ($edad < 18) {
-            $this->json(['success' => false, 'mensaje' => 'Debes tener al menos 18 años.']);
-            return;
-        }
-    }
+}
 
     try {
-        // Foto de perfil
-$fotoNombre = !empty($_POST['foto_perfil_actual']) ? basename($_POST['foto_perfil_actual']) : null;
-if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
-    $ext = strtolower(pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, ['jpg', 'jpeg', 'png'])) throw new Exception('Formato de imagen inválido');
-    $fotoNombre = 'perfil_' . uniqid() . '.' . $ext;
-    $rutaDestino = dirname(__DIR__) . '/public/img/' . $fotoNombre;
-    move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $rutaDestino);
-}
+        $fotoNombre = null;
+        if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
+            $ext = strtolower(pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, ['jpg', 'jpeg', 'png'])) throw new Exception('Formato de imagen inválido');
+            $fotoNombre = 'perfil_' . uniqid() . '.' . $ext;
+            $rutaDestino = dirname(__DIR__) . '/public/img/' . $fotoNombre;
+            move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $rutaDestino);
+        }
 
-
-
-// Cédula PDF
-$cedulaNombre = !empty($_POST['cedula_pdf_actual']) ? basename($_POST['cedula_pdf_actual']) : null;
-if (isset($_FILES['cedula_pdf']) && $_FILES['cedula_pdf']['error'] === UPLOAD_ERR_OK) {
-    $ext = strtolower(pathinfo($_FILES['cedula_pdf']['name'], PATHINFO_EXTENSION));
-    if ($ext !== 'pdf') throw new Exception('El archivo de cédula debe ser PDF');
-    $cedulaNombre = 'cedula_' . uniqid() . '.' . $ext;
-    $rutaDestino = dirname(__DIR__) . '/public/img/' . $cedulaNombre;
-    move_uploaded_file($_FILES['cedula_pdf']['tmp_name'], $rutaDestino);
-}
-
-// Matrícula PDF (solo si es estudiante)
-$matriculaNombre = !empty($_POST['matricula_pdf_actual']) ? basename($_POST['matricula_pdf_actual']) : null;
-if (
-    isset($_FILES['matricula_pdf']) &&
-    $_FILES['matricula_pdf']['error'] === UPLOAD_ERR_OK &&
-    $_SESSION['usuario']['CODIGOROL'] === 'EST'
-) {
-    $ext = strtolower(pathinfo($_FILES['matricula_pdf']['name'], PATHINFO_EXTENSION));
-    if ($ext !== 'pdf') throw new Exception('El archivo de matrícula debe ser PDF');
-    $matriculaNombre = 'matricula_' . uniqid() . '.' . $ext;
-    $rutaDestino = dirname(__DIR__) . '/public/img/' . $matriculaNombre;
-    move_uploaded_file($_FILES['matricula_pdf']['tmp_name'], $rutaDestino);
-}
-
-
+        $cedulaNombre = null;
+        if (isset($_FILES['cedula_pdf']) && $_FILES['cedula_pdf']['error'] === UPLOAD_ERR_OK) {
+            $ext = strtolower(pathinfo($_FILES['cedula_pdf']['name'], PATHINFO_EXTENSION));
+            if ($ext !== 'pdf') throw new Exception('El archivo de cédula debe ser PDF');
+            $cedulaNombre = 'cedula_' . uniqid() . '.' . $ext;
+            $rutaDestino = dirname(__DIR__) . '/public/img/' . $cedulaNombre;
+            move_uploaded_file($_FILES['cedula_pdf']['tmp_name'], $rutaDestino);
+        }
 
         $carreraId = $_POST['carrera'] ?? null;
 
@@ -419,8 +391,7 @@ if (
             $_POST['direccion'] ?? '',
             $fotoNombre,
             $cedulaNombre,
-            $carreraId,
-            $matriculaNombre
+            $carreraId
         );
 
         $this->json($resp);
@@ -446,10 +417,10 @@ private function perfilUsuario() {
         $this->json(['success' => false, 'mensaje' => 'Usuario no encontrado']);
         return;
     }
-    $usuario['FOTO_PERFIL_URL'] = !empty($usuario['FOTO_PERFIL']) ? '../public/img/' . basename($usuario['FOTO_PERFIL']) : '';
-$usuario['CEDULA_PDF_URL'] = !empty($usuario['URL_CEDULA']) ? '../public/img/' . basename($usuario['URL_CEDULA']) : '';
-$usuario['MATRICULA_PDF_URL'] = !empty($usuario['URL_MATRICULA']) ? '../public/img/' . basename($usuario['URL_MATRICULA']) : '';
 
+    // Preparar URLs
+    $usuario['FOTO_PERFIL_URL'] = !empty($usuario['FOTO_PERFIL']) ? '../public/img/' . $usuario['FOTO_PERFIL'] : '';
+    $usuario['CEDULA_PDF_URL'] = !empty($usuario['URL_CEDULA']) ? '../public/img/' . $usuario['URL_CEDULA'] : '';
 
     // Enviar al frontend todo lo necesario
     $this->json([

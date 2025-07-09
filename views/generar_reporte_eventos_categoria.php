@@ -1,10 +1,4 @@
 <?php
-// Habilitar la visualización de errores para depuración.
-// ¡Recuerda eliminar o comentar estas líneas en un entorno de producción!
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require_once '../vendor/autoload.php';
 require_once '../controllers/EventoCategoriaController.php';
 
@@ -36,117 +30,67 @@ if (empty($eventos)) {
 // Construcción del HTML
 $html = '
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        font-size: 12px;
-        margin: 0;
-        padding: 0;
-    }
-    h2 {
+    body { font-family: Arial, sans-serif; font-size: 12px; }
+    h2 { text-align: center; margin-top: 10px; }
+    .header {
         text-align: center;
-        margin-top: 25px; /* Un poco más de margen para que no se pegue al encabezado */
-        margin-bottom: 15px;
-        color: #B71C1C; /* Color rojo */
-        font-size: 18px;
+        margin-bottom: 20px;
     }
-    .main-header { /* Nuevo contenedor para la cabecera principal */
-        background-color: #B71C1C; /* Fondo rojo para la cabecera */
-        color: white; /* Texto blanco en la cabecera */
-        padding: 10px 20px; /* Padding interno */
+    .uta-header {
         display: flex;
+        justify-content: center;
         align-items: center;
-        justify-content: center; /* Centrar el contenido */
-        width: 100%;
-        box-sizing: border-box; /* Incluye padding en el ancho total */
+        gap: 20px;
     }
-    .main-header-text {
-        text-align: center; /* Centrar el texto */
+    .header img {
+        height: 70px;
     }
-    .main-header-text h3, .main-header-text h4, .main-header-text p {
-        margin: 0;
-        line-height: 1.2;
-        color: white; /* Texto blanco */
-    }
-    .section-title { /* Para "RESUMEN DEL REPORTE" o "Listado de Eventos" */
-        background-color: #f2f2f2; /* Color de fondo gris claro */
-        color: #333; /* Texto oscuro */
+    .section-title {
+        background-color: #004080;
+        color: white;
         padding: 6px 10px;
         font-weight: bold;
         margin-top: 20px;
-        border-bottom: 1px solid #ccc; /* Línea debajo */
     }
-    .stats-table { /* Para el resumen del reporte */
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 5px;
-        font-size: 11px;
-    }
-    .stats-table td {
-        padding: 4px;
-        border: none; /* Sin bordes en esta tabla de resumen */
-        background-color: #f2f2f2;
-    }
-    .stats-table td:first-child {
-        font-weight: bold;
-        width: 150px; /* Ancho fijo para las etiquetas */
-    }
-
-    p {
-        margin: 4px 0;
-    }
-    table { /* Tabla de datos principal (Listado de Eventos) */
+    p { margin: 4px 0; }
+    table {
         border-collapse: collapse;
         width: 100%;
         margin-top: 10px;
         font-size: 11px;
     }
     th {
-        background-color: #B71C1C; /* Color rojo para los encabezados de tabla */
+        background-color: #004080;
         color: white;
         padding: 6px;
-        border: 1px solid #B71C1C; /* Borde rojo para celdas */
+        border: 1px solid #ccc;
         text-align: left;
     }
     td {
         border: 1px solid #ccc;
         padding: 5px;
-        background-color: #fff;
     }
     tbody tr:nth-child(even) {
-        background-color: #f8d7da; /* Color para filas pares (similar al rojo claro) */
+        background-color: #f2f2f2;
     }
     tbody tr:nth-child(odd) {
         background-color: #ffffff;
     }
 </style>
 
-<div class="main-header">
-    <div class="main-header-text">
-        <h3>UNIVERSIDAD TÉCNICA DE AMBATO</h3>
-        <h4>FACULTAD DE INGENIERÍA EN SISTEMAS</h4>
-        <p>SISTEMA DE GESTIÓN ESTUDIANTIL</p>
+<div class="header">
+    <div class="uta-header">
+        <div>
+            <h3>UNIVERSIDAD TÉCNICA DE AMBATO</h3>
+            <h4>Facultad de Ingeniería en Sistemas, Electrónica e Industrial - FISEI</h4>
+        </div>
     </div>
 </div>
 
 <h2>Reporte de Eventos por Categoría</h2>
+<p><strong>Categoría:</strong> ' . htmlspecialchars($categoriaNombre) . '</p>
+<p><strong>Fecha de Generación:</strong> ' . $fechaGeneracion . '</p>
 
-<div class="section-title">RESUMEN DEL REPORTE</div>
-<table class="stats-table">
-    <tr>
-        <td><strong>Categoría Seleccionada:</strong></td>
-        <td>' . htmlspecialchars($categoriaNombre) . '</td>
-    </tr>
-    <tr>
-        <td><strong>Fecha de Generación:</strong></td>
-        <td>' . $fechaGeneracion . '</td>
-    </tr>
-    <tr>
-        <td><strong>Total de Eventos:</strong></td>
-        <td>' . count($eventos) . '</td>
-    </tr>
-</table>
-
-<br>
 <div class="section-title">Listado de Eventos</div>
 <table>
     <thead>
@@ -183,11 +127,9 @@ $html .= '</tbody></table>';
 // Generar PDF
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
-$dompdf->setPaper('A4', 'landscape'); // Manteniendo landscape como en tu código original
+$dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
 $nombreArchivo = preg_replace('/[^a-zA-Z0-9_-]/', '_', $categoriaNombre);
 $dompdf->stream("reporte_eventos_" . $nombreArchivo . ".pdf", ["Attachment" => true]);
 exit;
-
-?>

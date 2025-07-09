@@ -1,9 +1,11 @@
-const CARRERA_CTRL = '../controllers/CarreraController.php';
 const CONFIG_CTRL = '../controllers/ConfiguracionesController.php';
 
-
-
-async function postConfigFormData(option, formData) {
+// Utilidad para peticiones POST
+async function postConfig(option, data = {}) {
+    const formData = new FormData();
+    for (const key in data) {
+        formData.append(key, data[key]);
+    }
     const res = await fetch(`${CONFIG_CTRL}?option=${option}`, {
         method: 'POST',
         body: formData
@@ -11,31 +13,24 @@ async function postConfigFormData(option, formData) {
     return res.json();
 }
 
-
+// Utilidad para peticiones GET
 async function getConfig(option) {
     const res = await fetch(`${CONFIG_CTRL}?option=${option}`);
     return res.json();
 }
 
-
-
 // ================= CRUD CARRERA =================
 async function listarCarreras() {
     return await getConfig('carrera_listar');
 }
-
-async function guardarCarrera(formData) {
-    return await postConfigFormData('carrera_guardar', formData);
+async function guardarCarrera(carrera) {
+    return await postConfig('carrera_guardar', carrera);
 }
-
-async function actualizarCarrera(formData) {
-    return await postConfigFormData('carrera_actualizar', formData);
+async function actualizarCarrera(carrera) {
+    return await postConfig('carrera_actualizar', carrera);
 }
-
 async function eliminarCarrera(id) {
-    const formData = new FormData();
-    formData.append('id', id);
-    return await postConfigFormData('carrera_eliminar', formData);
+    return await postConfig('carrera_eliminar', { id });
 }
 
 // ================= FACULTADES =================
@@ -71,19 +66,13 @@ async function renderFacultadesSelect() {
     const facultades = await listarFacultades();
     const select = document.getElementById('facultadCarrera');
     select.innerHTML = '<option value="">Seleccione...</option>';
-    console.log('Facultades:', facultades);
-    if (Array.isArray(facultades)) {
-        facultades.forEach(f => {
-            select.innerHTML += `<option value="${f.SECUENCIAL}">${f.NOMBRE}</option>`;
-        });
-    } else {
-        console.error('Facultades no es un array:', facultades);
-    }
-
+    facultades.forEach(f => {
+        select.innerHTML += `<option value="${f.SECUENCIAL}">${f.NOMBRE}</option>`;
+    });
 }
 
 // Abrir modal para agregar carrera
-document.getElementById('btnAgregarCarrera').addEventListener('click', async function () {
+document.getElementById('btnAgregarCarrera').addEventListener('click', async function() {
     document.getElementById('modalCarreraLabel').textContent = 'Agregar Carrera';
     document.getElementById('formCarrera').reset();
     document.getElementById('carreraId').value = '';
@@ -92,87 +81,58 @@ document.getElementById('btnAgregarCarrera').addEventListener('click', async fun
 });
 
 // Guardar o actualizar carrera
-document.getElementById('formCarrera').addEventListener('submit', async function (e) {
+document.getElementById('formCarrera').addEventListener('submit', async function(e) {
     e.preventDefault();
-
-    const form = document.getElementById('formCarrera');
-    const formData = new FormData(form);
-    const id = formData.get('id');
-    const imagen = formData.get('imagen');
-
-    if (!formData.get('nombre') || !formData.get('facultad')) {
-        Swal.fire("Campos requeridos", "Todos los campos son obligatorios", "warning");
+    const id = document.getElementById('carreraId').value;
+    const nombre = document.getElementById('nombreCarrera').value;
+    const idFacultad = document.getElementById('facultadCarrera').value;
+    if (!nombre || !idFacultad) {
+        alert('Todos los campos son obligatorios');
         return;
     }
-
-    if (!id && (!imagen || imagen.name.trim() === '')) {
-        Swal.fire("Imagen requerida", "Debe seleccionar una imagen para la nueva carrera", "warning");
-        return;
-    }
-
+    const data = { nombre, idFacultad };
     let res;
-    try {
-        if (id) {
-            res = await actualizarCarrera(formData);
-        } else {
-            res = await guardarCarrera(formData);
-        }
-
-        if (res.tipo === 'success') {
-            $('#modalCarrera').modal('hide');
-            await renderCarrerasTable();
-            Swal.fire("Éxito", res.mensaje || "Carrera guardada correctamente", "success");
-        } else {
-            Swal.fire("Error", res.mensaje || "Ocurrió un error", "error");
-        }
-    } catch (err) {
-        console.error("Error al guardar/actualizar carrera:", err);
-        Swal.fire("Error", "Problema al guardar los datos", "error");
+    if (id) {
+        data.id = id;
+        res = await actualizarCarrera(data);
+    } else {
+        res = await guardarCarrera(data);
+    }
+    if (res.tipo === 'success') {
+        $('#modalCarrera').modal('hide');
+        renderCarrerasTable();
+    } else {
+        alert(res.mensaje);
     }
 });
 
-// Eliminar carrera
-window.eliminarCarreraConfirm = async function (id) {
-    const result = await Swal.fire({
-        title: "¿Está seguro?",
-        text: "Esta acción eliminará la carrera",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí, eliminar",
-        cancelButtonText: "Cancelar"
-    });
-
-    if (result.isConfirmed) {
-        try {
-            const res = await eliminarCarrera(id);
-            if (res.tipo === 'success') {
-                await renderCarrerasTable();
-                Swal.fire("Eliminado", res.mensaje || "Carrera eliminada exitosamente", "success");
-            } else {
-                Swal.fire("Error", res.mensaje || "No se pudo eliminar la carrera", "error");
-            }
-        } catch (err) {
-            console.error("Error al eliminar carrera:", err);
-            Swal.fire("Error", "Problema al intentar eliminar la carrera", "error");
-        }
-    }
-};
-window.editarCarrera = async function (id) {
+// Editar carrera
+window.editarCarrera = async function(id) {
     const carreras = await listarCarreras();
     const carrera = carreras.find(c => c.SECUENCIAL == id);
     if (!carrera) return;
-
     document.getElementById('modalCarreraLabel').textContent = 'Editar Carrera';
     document.getElementById('carreraId').value = carrera.SECUENCIAL;
     document.getElementById('nombreCarrera').value = carrera.NOMBRE_CARRERA;
-
     await renderFacultadesSelect();
     document.getElementById('facultadCarrera').value = carrera.SECUENCIALFACULTAD;
-
     $('#modalCarrera').modal('show');
 }
+
+// Eliminar carrera
+window.eliminarCarreraConfirm = async function(id) {
+    if (confirm('¿Está seguro de eliminar esta carrera?')) {
+        const res = await eliminarCarrera(id);
+        if (res.tipo === 'success') {
+            renderCarrerasTable();
+        } else {
+            alert(res.mensaje);
+        }
+    }
+}
+
 // Inicializar
-$(document).ready(function () {
+$(document).ready(function() {
     renderCarrerasTable().then(() => {
         if ($.fn.DataTable.isDataTable('#tablaCarreras')) {
             $('#tablaCarreras').DataTable().destroy();

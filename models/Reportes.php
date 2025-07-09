@@ -28,15 +28,11 @@ class ReporteEvento {
     $stmt->execute([$idUsuario]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-    /**
-     * Obtiene los detalles del evento básico (título, fecha, tipo y si es pagado)
-     */
 public function getEventoBasico($idEvento) {
     $sql = "SELECT 
                 e.TITULO,
                 e.FECHAINICIO,
-                te.NOMBRE AS TIPO_EVENTO,
-                e.ES_PAGADO
+                te.NOMBRE AS TIPO_EVENTO
             FROM evento e
             LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
             WHERE e.SECUENCIAL = ?";
@@ -72,43 +68,19 @@ public function getEventoBasico($idEvento) {
      * Reporte de asistencia y nota final por evento
      */
     public function getAsistenciaYNotasPorEvento($idUsuario, $idEvento) {
-        // Consultar el tipo de evento para saber si es curso o no
-        $sqlTipo = "SELECT te.NOMBRE AS TIPO_EVENTO FROM evento e LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO WHERE e.SECUENCIAL = ?";
-        $stmtTipo = $this->pdo->prepare($sqlTipo);
-        $stmtTipo->execute([$idEvento]);
-        $tipoEvento = strtolower($stmtTipo->fetchColumn() ?? '');
-
-        if ($tipoEvento === 'curso') {
-            // Si es curso, mostrar nota final
-            $sql = "
-                SELECT u.CEDULA, u.NOMBRES, u.APELLIDOS, 
-                u.CORREO, 
-                CASE WHEN an.ASISTIO = 1 THEN 'Sí' ELSE 'No' END AS ASISTIO,
-                an.NOTAFINAL
-                FROM asistencia_nota an
-                INNER JOIN usuario u ON u.SECUENCIAL = an.SECUENCIALUSUARIO
-                INNER JOIN organizador_evento oe ON oe.SECUENCIALEVENTO = an.SECUENCIALEVENTO
-                WHERE an.SECUENCIALEVENTO = ?
-                  AND oe.SECUENCIALUSUARIO = ?
-                  AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
-                ORDER BY u.APELLIDOS, u.NOMBRES
-            ";
-        } else {
-            // Si NO es curso, mostrar porcentaje de asistencia
-            $sql = "
-                SELECT u.CEDULA, u.NOMBRES, u.APELLIDOS, 
-                u.CORREO, 
-                CASE WHEN an.ASISTIO = 1 THEN 'Sí' ELSE 'No' END AS ASISTIO,
-                an.PORCENTAJE_ASISTENCIA
-                FROM asistencia_nota an
-                INNER JOIN usuario u ON u.SECUENCIAL = an.SECUENCIALUSUARIO
-                INNER JOIN organizador_evento oe ON oe.SECUENCIALEVENTO = an.SECUENCIALEVENTO
-                WHERE an.SECUENCIALEVENTO = ?
-                  AND oe.SECUENCIALUSUARIO = ?
-                  AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
-                ORDER BY u.APELLIDOS, u.NOMBRES
-            ";
-        }
+        $sql = "
+            SELECT u.CEDULA, u.NOMBRES, u.APELLIDOS, 
+            u.CORREO, 
+            CASE WHEN an.ASISTIO = 1 THEN 'Sí' ELSE 'No' END AS ASISTIO,
+            an.NOTAFINAL
+            FROM asistencia_nota an
+            INNER JOIN usuario u ON u.SECUENCIAL = an.SECUENCIALUSUARIO
+            INNER JOIN organizador_evento oe ON oe.SECUENCIALEVENTO = an.SECUENCIALEVENTO
+            WHERE an.SECUENCIALEVENTO = ?
+              AND oe.SECUENCIALUSUARIO = ?
+              AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
+            ORDER BY u.APELLIDOS, u.NOMBRES
+        ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$idEvento, $idUsuario]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -27,19 +27,16 @@ class Evento {
                 e.ESTADO,
                 me.NOMBRE AS MODALIDAD,
                 te.NOMBRE AS TIPO,
-                ce.NOMBRE AS CATEGORIA,
-                (SELECT GROUP_CONCAT(c.NOMBRE_CARRERA SEPARATOR ', ')
-                 FROM evento_carrera ec
-                 JOIN carrera c ON ec.SECUENCIALCARRERA = c.SECUENCIAL
-                 WHERE ec.SECUENCIALEVENTO = e.SECUENCIAL) AS CARRERAS
+                ca.NOMBRE_CARRERA AS CARRERA,
+                ce.NOMBRE AS CATEGORIA
             FROM evento e
             INNER JOIN organizador_evento oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO
             LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
             LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+            LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
             LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
             WHERE oe.SECUENCIALUSUARIO = ?
               AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'
-              AND e.ESTADO IN ('DISPONIBLE', 'EN CURSO', 'FINALIZADO', 'CANCELADO')
             ORDER BY e.FECHAINICIO DESC
         ";
         $stmt = $this->pdo->prepare($sql);
@@ -47,71 +44,63 @@ class Evento {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getEventosPublicos($filtros = []) {
-        $sql = "SELECT DISTINCT
-                    e.SECUENCIAL,
-                    e.TITULO,
-                    e.DESCRIPCION,
-                    e.FECHAINICIO,
-                    e.FECHAFIN,
-                    e.HORAS,
-                    e.COSTO,
-                    e.ESTADO,
-                    e.CAPACIDAD,
-                    me.NOMBRE AS MODALIDAD,
-                    te.NOMBRE AS TIPO,
-                    ce.NOMBRE AS CATEGORIA,
-                    (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA,
-                    (SELECT GROUP_CONCAT(c.NOMBRE_CARRERA SEPARATOR ', ')
-                     FROM evento_carrera ec_inner
-                     JOIN carrera c ON ec_inner.SECUENCIALCARRERA = c.SECUENCIAL
-                     WHERE ec_inner.SECUENCIALEVENTO = e.SECUENCIAL) AS CARRERAS
-                FROM evento e
-                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
-                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
-                ";
-    
-        $params = [];
-        $where = ["e.ESTADO = 'DISPONIBLE'"];
-    
-        if (!empty($filtros['carrera'])) {
-            $sql .= " JOIN evento_carrera ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO ";
-            $where[] = "ec.SECUENCIALCARRERA = ?";
-            $params[] = $filtros['carrera'];
-        }
-        if (!empty($filtros['tipo'])) {
-            $where[] = "e.CODIGOTIPOEVENTO = ?";
-            $params[] = $filtros['tipo'];
-        }
-        if (!empty($filtros['categoria'])) {
-            $where[] = "e.SECUENCIALCATEGORIA = ?";
-            $params[] = $filtros['categoria'];
-        }
-        if (!empty($filtros['modalidad'])) {
-            $where[] = "e.CODIGOMODALIDAD = ?";
-            $params[] = $filtros['modalidad'];
-        }
-        if (!empty($filtros['fecha'])) {
-            $where[] = "e.FECHAINICIO >= ?";
-            $params[] = $filtros['fecha'];
-        }
-        if (!empty($filtros['busqueda'])) {
-            $where[] = "(e.TITULO LIKE ? OR e.DESCRIPCION LIKE ?)";
-            $params[] = '%' . $filtros['busqueda'] . '%';
-            $params[] = '%' . $filtros['busqueda'] . '%';
-        }
-    
-        if (count($where) > 0) {
-            $sql .= " WHERE " . implode(' AND ', $where);
-        }
-    
-        $sql .= " ORDER BY e.FECHAINICIO DESC";
-    
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+public function getEventosPublicos($filtros = []) {
+    $sql = "SELECT 
+                e.SECUENCIAL,
+                e.TITULO,
+                e.DESCRIPCION,
+                e.FECHAINICIO,
+                e.FECHAFIN,
+                e.HORAS,
+                e.COSTO,
+                e.ESTADO,
+                me.NOMBRE AS MODALIDAD,
+                te.NOMBRE AS TIPO,
+                ca.NOMBRE_CARRERA AS CARRERA,
+                ce.NOMBRE AS CATEGORIA,
+                (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
+            FROM evento e
+            LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+            LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+            LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
+            LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+            WHERE e.ESTADO = 'DISPONIBLE'";
+
+    $params = [];
+
+    // Filtros dinámicos
+    if (!empty($filtros['tipo'])) {
+        $sql .= " AND e.CODIGOTIPOEVENTO = ?";
+        $params[] = $filtros['tipo'];
     }
+    if (!empty($filtros['categoria'])) {
+        $sql .= " AND e.SECUENCIALCATEGORIA = ?";
+        $params[] = $filtros['categoria'];
+    }
+    if (!empty($filtros['modalidad'])) {
+        $sql .= " AND e.CODIGOMODALIDAD = ?";
+        $params[] = $filtros['modalidad'];
+    }
+    if (!empty($filtros['carrera'])) {
+        $sql .= " AND e.SECUENCIALCARRERA = ?";
+        $params[] = $filtros['carrera'];
+    }
+    if (!empty($filtros['fecha'])) {
+        $sql .= " AND e.FECHAINICIO >= ?";
+        $params[] = $filtros['fecha'];
+    }
+    if (!empty($filtros['busqueda'])) {
+        $sql .= " AND (e.TITULO LIKE ? OR e.DESCRIPCION LIKE ?)";
+        $params[] = '%' . $filtros['busqueda'] . '%';
+        $params[] = '%' . $filtros['busqueda'] . '%';
+    }
+
+    $sql .= " ORDER BY e.FECHAINICIO DESC";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
     
 public function getEventosConPortadaPorResponsable($idUsuario) {
     $sql = "
@@ -137,69 +126,42 @@ public function getEventosConPortadaPorResponsable($idUsuario) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-    public function getEvento($idEvento, $idUsuarioResponsable = null){
-        if ($idUsuarioResponsable) {
-            // Verificar que el usuario sea responsable de este evento
-            $stmt = $this->pdo->prepare("SELECT * FROM EVENTO e INNER JOIN organizador_evento oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO WHERE e.SECUENCIAL = ? AND oe.SECUENCIALUSUARIO = ? AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'");
-            $stmt->execute([$idEvento, $idUsuarioResponsable]);
-            $evento = $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
-            $stmt = $this->pdo->prepare("SELECT * FROM EVENTO WHERE SECUENCIAL = ?");
-            $stmt->execute([$idEvento]);
-            $evento = $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-        if (!$evento) return false;
-        // Obtener requisitos asociados
-        $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM REQUISITO_EVENTO WHERE SECUENCIALEVENTO = ?");
-        $stmtReq->execute([$idEvento]);
-        $requisitos = $stmtReq->fetchAll(PDO::FETCH_COLUMN); // devuelve array de SECUENCIAL
-        $evento['REQUISITOS'] = $requisitos;
-        // Obtener carreras asociadas (como array de IDs)
-        $stmtCarreras = $this->pdo->prepare("SELECT SECUENCIALCARRERA FROM EVENTO_CARRERA WHERE SECUENCIALEVENTO = ?");
-        $stmtCarreras->execute([$idEvento]);
-        $evento['carreras'] = $stmtCarreras->fetchAll(PDO::FETCH_COLUMN);
-        // Público destino (ES_SOLO_INTERNOS)
-        $evento['publicoDestino'] = $evento['ES_SOLO_INTERNOS'] ?? null;
-        return $evento;
-    }
+    public function getEvento($idEvento){
+        
+    $stmt = $this->pdo->prepare("SELECT * FROM EVENTO WHERE SECUENCIAL = ?");
+    $stmt->execute([$idEvento]);
+    $evento = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Obtener requisitos asociados
+    $stmtReq = $this->pdo->prepare("SELECT SECUENCIAL FROM REQUISITO_EVENTO WHERE SECUENCIALEVENTO = ?");
+    $stmtReq->execute([$idEvento]);
+    $requisitos = $stmtReq->fetchAll(PDO::FETCH_COLUMN); // devuelve array de SECUENCIAL
+
+    $evento['REQUISITOS'] = $requisitos;
+
+    return $evento;
+}
 
 public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaFin, $modalidad,
                             $notaAprobacion, $costo, $publicoDestino, $esPagado,
-                            $categoria, $tipo, $carreras, $estado, $idUsuario,
-                            $urlPortada, $urlGaleria, $capacidad)
+                            $categoria, $tipo, $carrera, $estado, $idUsuario,
+                            $urlPortada, $urlGaleria, $capacidad) // galería es solo una imagen
 {
     $sql = "INSERT INTO evento (
         TITULO, DESCRIPCION, HORAS, FECHAINICIO, FECHAFIN, 
         CODIGOMODALIDAD, NOTAAPROBACION, COSTO, ES_SOLO_INTERNOS, 
         ES_PAGADO, SECUENCIALCATEGORIA, CODIGOTIPOEVENTO, 
-        ESTADO, CAPACIDAD
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
+        SECUENCIALCARRERA, ESTADO, CAPACIDAD
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
 
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([
         $titulo, $descripcion, $horas, $fechaInicio, $fechaFin, 
         $modalidad, $notaAprobacion, $costo, $publicoDestino, 
-        $esPagado, $categoria, $tipo, $estado, $capacidad
+        $esPagado, $categoria, $tipo, $carrera, $estado, $capacidad
     ]);
 
     $idEvento = $this->pdo->lastInsertId();
-
-    // Guardar carreras en la tabla intermedia
-    if (!empty($carreras) && is_array($carreras)) {
-        // Si se selecciona 'Todas las carreras' (ID 0), solo guardar esa opción
-        if (in_array('0', $carreras) || in_array(0, $carreras)) {
-            $stmtCarrera = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
-            $stmtCarrera->execute([$idEvento, 0]);
-        } else {
-            // Si no, guardar solo las carreras seleccionadas (sin 0)
-            foreach ($carreras as $idCarrera) {
-                if ($idCarrera !== '0' && $idCarrera !== 0) {
-                    $stmtCarrera = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
-                    $stmtCarrera->execute([$idEvento, $idCarrera]);
-                }
-            }
-        }
-    }
 
     // Asociar al usuario como RESPONSABLE
     $orgStmt = $this->pdo->prepare("INSERT INTO organizador_evento 
@@ -213,7 +175,7 @@ public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaF
         $imgStmt->execute([$idEvento, $urlPortada]);
     }
 
-    // Insertar imagen de galería si existe
+    // Insertar imagen de galería si existe (igual que portada)
     if ($urlGaleria) {
         $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')");
         $imgStmt->execute([$idEvento, $urlGaleria]);
@@ -224,8 +186,8 @@ public function crearEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaF
 
 public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $fechaFin, $modalidad,
                                  $notaAprobacion, $costo, $publicoDestino, $esPagado,
-                                 $categoria, $tipo, $carreras, $estado, $idEvento, $idUsuario,
-                                 $urlPortada, $urlGaleria, $capacidad)
+                                 $categoria, $tipo, $carrera, $estado, $idEvento, $idUsuario,
+                                 $urlPortada, $urlGaleria, $capacidad) // galería es solo una imagen
 {
     // Verificar si el usuario es responsable del evento
     $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM organizador_evento 
@@ -250,6 +212,7 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
                 ES_PAGADO = ?, 
                 SECUENCIALCATEGORIA = ?, 
                 CODIGOTIPOEVENTO = ?, 
+                SECUENCIALCARRERA = ?, 
                 ESTADO = ?, 
                 CAPACIDAD = ?
             WHERE SECUENCIAL = ?";
@@ -258,39 +221,26 @@ public function actualizarEvento($titulo, $descripcion, $horas, $fechaInicio, $f
     $stmt->execute([
         $titulo, $descripcion, $horas, $fechaInicio, $fechaFin,
         $modalidad, $notaAprobacion, $costo, $publicoDestino,
-        $esPagado, $categoria, $tipo, $estado, $capacidad, $idEvento
+        $esPagado, $categoria, $tipo, $carrera,
+        $estado, $capacidad, $idEvento
     ]);
-
-    // Actualizar carreras en la tabla intermedia
-    $this->pdo->prepare("DELETE FROM evento_carrera WHERE SECUENCIALEVENTO = ?")->execute([$idEvento]);
-    if (!empty($carreras) && is_array($carreras)) {
-        // Si se selecciona 'Todas las carreras' (valor 0), solo guardar esa opción
-        if (in_array('0', $carreras) || in_array(0, $carreras)) {
-            $stmtCarrera = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
-            $stmtCarrera->execute([$idEvento, 0]);
-        } else {
-            // Si no, guardar solo las carreras seleccionadas (sin 0)
-            foreach ($carreras as $idCarrera) {
-                if ($idCarrera !== '0' && $idCarrera !== 0) {
-                    $stmtCarrera = $this->pdo->prepare("INSERT INTO evento_carrera (SECUENCIALEVENTO, SECUENCIALCARRERA) VALUES (?, ?)");
-                    $stmtCarrera->execute([$idEvento, $idCarrera]);
-                }
-            }
-        }
-    }
 
     // Actualizar imagen de portada si se recibe una nueva
     if ($urlPortada) {
+        // Elimina la portada anterior
         $delStmt = $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'PORTADA'");
         $delStmt->execute([$idEvento]);
+        // Inserta la nueva portada
         $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'PORTADA')");
         $imgStmt->execute([$idEvento, $urlPortada]);
     }
 
     // Actualizar imagen de galería si se recibe una nueva
     if ($urlGaleria) {
+        // Elimina la galería anterior
         $delStmt = $this->pdo->prepare("DELETE FROM imagen_evento WHERE SECUENCIALEVENTO = ? AND TIPO_IMAGEN = 'GALERIA'");
         $delStmt->execute([$idEvento]);
+        // Inserta la nueva galería
         $imgStmt = $this->pdo->prepare("INSERT INTO imagen_evento (SECUENCIALEVENTO, URL_IMAGEN, TIPO_IMAGEN) VALUES (?, ?, 'GALERIA')");
         $imgStmt->execute([$idEvento, $urlGaleria]);
     }
@@ -309,45 +259,37 @@ public function eliminarEvento($idEvento, $idUsuario) {
                                   AND ROL_ORGANIZADOR = 'RESPONSABLE'");
     $stmt1->execute([$idEvento, $idUsuario]);
 
-    // Eliminar el evento (ON DELETE CASCADE se encargará de evento_carrera)
+    // Eliminar el evento
     $stmt2 = $this->pdo->prepare("DELETE FROM evento WHERE SECUENCIAL = ?");
     return $stmt2->execute([$idEvento]);
 }
 
-public function cancelarEvento($idEvento) {
-    $sql = "UPDATE evento SET ESTADO = 'CANCELADO' WHERE SECUENCIAL = ?";
+public function cancelarEvento($idEvento, $idUsuario) {
+    $sql = "UPDATE evento e
+            JOIN organizador_evento oe ON e.SECUENCIAL = oe.SECUENCIALEVENTO
+            SET e.ESTADO = 'CANCELADO'
+            WHERE e.SECUENCIAL = ? AND oe.SECUENCIALUSUARIO = ? AND oe.ROL_ORGANIZADOR = 'RESPONSABLE'";
+
     $stmt = $this->pdo->prepare($sql);
-    return $stmt->execute([$idEvento]);
+    return $stmt->execute([$idEvento, $idUsuario]);
 }
 
 public function getEventoDetallePublico($idEvento) {
     $sql = "SELECT e.*, 
                    me.NOMBRE AS MODALIDAD,
                    te.NOMBRE AS TIPO,
+                   ca.NOMBRE_CARRERA AS CARRERA,
                    ce.NOMBRE AS CATEGORIA,
                    (SELECT URL_IMAGEN FROM imagen_evento WHERE SECUENCIALEVENTO = e.SECUENCIAL AND TIPO_IMAGEN = 'PORTADA' LIMIT 1) AS PORTADA
             FROM evento e
             LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
             LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+            LEFT JOIN carrera ca ON e.SECUENCIALCARRERA = ca.SECUENCIAL
             LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
             WHERE e.SECUENCIAL = ?";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([$idEvento]);
     $evento = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$evento) {
-        return null;
-    }
-
-    // Carreras
-    $stmtCarreras = $this->pdo->prepare("
-        SELECT c.NOMBRE_CARRERA
-        FROM carrera c
-        JOIN evento_carrera ec ON c.SECUENCIAL = ec.SECUENCIALCARRERA
-        WHERE ec.SECUENCIALEVENTO = ?
-    ");
-    $stmtCarreras->execute([$idEvento]);
-    $evento['CARRERAS'] = $stmtCarreras->fetchAll(PDO::FETCH_COLUMN);
 
     // Organizadores
     $stmtOrg = $this->pdo->prepare("SELECT u.NOMBRES, u.APELLIDOS FROM usuario u
@@ -373,28 +315,22 @@ public function getEventosEnCursoInscrito($idUsuario) {
             e.FECHAINICIO,
             e.FECHAFIN,
             e.ESTADO,
-            e.CONTENIDO,
-            t.NOMBRE AS TIPO_EVENTO,
-            (
-                SELECT URL_IMAGEN 
-                FROM imagen_evento 
-                WHERE SECUENCIALEVENTO = e.SECUENCIAL 
-                  AND TIPO_IMAGEN = 'PORTADA' 
-                LIMIT 1
-            ) AS PORTADA
+            (SELECT URL_IMAGEN 
+             FROM imagen_evento 
+             WHERE SECUENCIALEVENTO = e.SECUENCIAL 
+               AND TIPO_IMAGEN = 'PORTADA' 
+             LIMIT 1) AS PORTADA
         FROM evento e
         INNER JOIN inscripcion i ON e.SECUENCIAL = i.SECUENCIALEVENTO
-        INNER JOIN tipo_evento t ON e.CODIGOTIPOEVENTO = t.CODIGO
         WHERE i.SECUENCIALUSUARIO = ?
-          AND i.CODIGOESTADOINSCRIPCION = 'ACE'
-          AND e.ESTADO IN ('DISPONIBLE', 'EN CURSO', 'FINALIZADO')
+          AND CURDATE() BETWEEN e.FECHAINICIO AND e.FECHAFIN
+          AND e.ESTADO = 'DISPONIBLE'
         ORDER BY e.FECHAINICIO DESC
     ";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([$idUsuario]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
 
 public function validarDisponibilidadInscripcion($idEvento, $idUsuario) {
     $stmt = $this->pdo->prepare("SELECT FECHAFIN, CAPACIDAD FROM evento WHERE SECUENCIAL = ?");
@@ -495,217 +431,8 @@ public function registrarInscripcion($idUsuario, $idEvento, $monto, $formaPago, 
     }
 }
 
-public function registrarInscripcionBasica($idUsuario, $idEvento)
-{
-    // 1. Insertar inscripción
-    $stmt = $this->pdo->prepare("
-        INSERT INTO inscripcion (SECUENCIALUSUARIO, SECUENCIALEVENTO, FECHAINSCRIPCION, CODIGOESTADOINSCRIPCION)
-        VALUES (?, ?, NOW(), 'PEN')
-    ");
-    $stmt->execute([$idUsuario, $idEvento]);
 
-    // 2. Obtener ID de la inscripción recién creada
-    $idInscripcion = $this->pdo->lastInsertId();
 
-    // ✅ 3. Obtener requisitos del evento (sin JOIN)
-    $stmt = $this->pdo->prepare("
-        SELECT SECUENCIAL, DESCRIPCION 
-        FROM requisito_evento 
-        WHERE SECUENCIALEVENTO = ?
-    ");
-    $stmt->execute([$idEvento]);
-    $requisitosEvento = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // 4. Obtener los documentos del usuario
-    require_once '../models/Usuarios.php';
-    $usuarioModel = new Usuario();
-    $usuario = $usuarioModel->getById2($idUsuario); // debe contener URL_CEDULA y URL_MATRICULA
-
-    // 5. Registrar archivos ya existentes en la tabla archivo_requisito
-    foreach ($requisitosEvento as $req) {
-        $descripcion = strtolower($req['DESCRIPCION']);
-        $idRequisito = $req['SECUENCIAL'];
-
-        $archivoExistente = null;
-
-        if (str_contains($descripcion, 'cédula') && !empty($usuario['URL_CEDULA'])) {
-            $archivoExistente = $usuario['URL_CEDULA'];
-        } elseif (str_contains($descripcion, 'matrícula') && !empty($usuario['URL_MATRICULA'])) {
-            $archivoExistente = $usuario['URL_MATRICULA'];
-        }
-
-        if ($archivoExistente) {
-            $stmtArchivo = $this->pdo->prepare("
-                INSERT INTO archivo_requisito (
-                    SECUENCIALINSCRIPCION, 
-                    SECUENCIALREQUISITO, 
-                    URLARCHIVO, 
-                    CODIGOESTADOVALIDACION
-                ) VALUES (?, ?, ?, 'PEN')
-            ");
-            $stmtArchivo->execute([$idInscripcion, $idRequisito, $archivoExistente]);
-        }
-    }
-
-    return true;
-}
-
-public function actualizarArchivosInscripcion($idInscripcion, $archivosRequisitos, $esPagado, $formaPago, $monto, $comprobanteNombre)
-{
-    try {
-        $this->pdo->beginTransaction();
-
-        // Guardar o actualizar archivos de requisitos
-        foreach ($archivosRequisitos as $idRequisito => $archivoNombre) {
-            // Verificar si ya existe
-            $stmtCheck = $this->pdo->prepare("
-                SELECT COUNT(*) AS total 
-                FROM archivo_requisito 
-                WHERE SECUENCIALINSCRIPCION = ? AND SECUENCIALREQUISITO = ?
-            ");
-            $stmtCheck->execute([$idInscripcion, $idRequisito]);
-            $existe = $stmtCheck->fetchColumn();
-
-            if ($existe > 0) {
-                // Actualizar
-                $stmtUpdate = $this->pdo->prepare("
-                    UPDATE archivo_requisito 
-                    SET URLARCHIVO = ?, CODIGOESTADOVALIDACION = 'PEN' 
-                    WHERE SECUENCIALINSCRIPCION = ? AND SECUENCIALREQUISITO = ?
-                ");
-                $stmtUpdate->execute([$archivoNombre, $idInscripcion, $idRequisito]);
-            } else {
-                // Insertar
-                $stmtInsert = $this->pdo->prepare("
-                    INSERT INTO archivo_requisito 
-                    (SECUENCIALINSCRIPCION, SECUENCIALREQUISITO, URLARCHIVO, CODIGOESTADOVALIDACION) 
-                    VALUES (?, ?, ?, 'PEN')
-                ");
-                $stmtInsert->execute([$idInscripcion, $idRequisito, $archivoNombre]);
-            }
-        }
-
-        // Procesar comprobante de pago
-        if ($esPagado && $comprobanteNombre) {
-            // Verificar si ya existe pago
-            $stmtCheckPago = $this->pdo->prepare("
-                SELECT COUNT(*) AS total FROM pago WHERE SECUENCIALINSCRIPCION = ?
-            ");
-            $stmtCheckPago->execute([$idInscripcion]);
-            $existePago = $stmtCheckPago->fetchColumn();
-
-            if ($existePago > 0) {
-                // Update pago
-                $stmtPago = $this->pdo->prepare("
-                    UPDATE pago 
-                    SET CODIGOFORMADEPAGO = ?, COMPROBANTE_URL = ?, MONTO = ?, FECHA_PAGO = NOW(), CODIGOESTADOPAGO = 'PEN' 
-                    WHERE SECUENCIALINSCRIPCION = ?
-                ");
-                $stmtPago->execute([$formaPago, $comprobanteNombre, $monto, $idInscripcion]);
-            } else {
-                // Insert pago
-                $stmtPago = $this->pdo->prepare("
-                    INSERT INTO pago 
-                    (SECUENCIALINSCRIPCION, CODIGOFORMADEPAGO, COMPROBANTE_URL, MONTO, FECHA_PAGO, CODIGOESTADOPAGO) 
-                    VALUES (?, ?, ?, ?, NOW(), 'PEN')
-                ");
-                $stmtPago->execute([$idInscripcion, $formaPago, $comprobanteNombre, $monto]);
-            }
-        }
-
-        $this->pdo->commit();
-        return true;
-
-    } catch (Exception $e) {
-    $this->pdo->rollBack();
-    $this->ultimoError = $e->getMessage(); // ← Captura el mensaje
-    error_log("Error actualizando inscripción: " . $e->getMessage());
-    return false;
-}
-}
-
-public function getRequisitosPorEvento($idEvento)
-{
-    $stmt = $this->pdo->prepare("SELECT r.SECUENCIAL, r.DESCRIPCION FROM requisito_evento re
-                                 INNER JOIN requisito r ON re.SECUENCIALREQUISITO = r.SECUENCIAL
-                                 WHERE re.SECUENCIALEVENTO = ?");
-    $stmt->execute([$idEvento]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-public function getRequisitosEventoDetallado($idEvento)
-{
-    $sql = "SELECT SECUENCIAL, DESCRIPCION 
-            FROM requisito_evento 
-            WHERE SECUENCIALEVENTO = ?";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([$idEvento]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-public function getArchivoRequisito($idUsuario, $idRequisito, $idEvento)
-{
-    $sql = "SELECT ar.URLARCHIVO 
-            FROM archivo_requisito ar
-            JOIN inscripcion i ON i.SECUENCIAL = ar.SECUENCIALINSCRIPCION
-            WHERE ar.SECUENCIALREQUISITO = ?
-              AND i.SECUENCIALUSUARIO = ?
-              AND i.SECUENCIALEVENTO = ?
-            LIMIT 1";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([$idRequisito, $idUsuario, $idEvento]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-public function getComprobantePago($idInscripcion)
-{
-    $stmt = $this->pdo->prepare("SELECT COMPROBANTE_URL FROM pago WHERE SECUENCIALINSCRIPCION = ?");
-    $stmt->execute([$idInscripcion]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-
-public function getEventosPorCarrera($idCarrera) {
-    $sql = "SELECT 
-                e.SECUENCIAL,
-                e.TITULO,
-                e.FECHAINICIO,
-                e.FECHAFIN,
-                e.HORAS,
-                e.COSTO,
-                e.ESTADO,
-                me.NOMBRE AS MODALIDAD,
-                te.NOMBRE AS TIPO,
-                ce.NOMBRE AS CATEGORIA
-            FROM evento e
-            LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
-            LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-            LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
-            JOIN evento_carrera ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO
-            WHERE ec.SECUENCIALCARRERA = ?
-            ORDER BY e.FECHAINICIO DESC";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([$idCarrera]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-public function getEventosPorCategoriaYCarrera($idCategoria, $idCarrera) {
-    $sql = "SELECT 
-                e.SECUENCIAL,
-                e.TITULO,
-                e.FECHAINICIO,
-                e.FECHAFIN,
-                e.HORAS,
-                e.COSTO,
-                e.ESTADO,
-                me.NOMBRE AS MODALIDAD,
-                te.NOMBRE AS TIPO
-            FROM evento e
-            LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
-            LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
-            JOIN evento_carrera ec ON e.SECUENCIAL = ec.SECUENCIALEVENTO
-            WHERE e.SECUENCIALCATEGORIA = ?
-              AND ec.SECUENCIALCARRERA = ?
-            ORDER BY e.FECHAINICIO DESC";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([$idCategoria, $idCarrera]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
 
 }

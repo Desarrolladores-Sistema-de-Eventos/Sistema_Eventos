@@ -17,7 +17,7 @@ class Conexion {
             return $pdo;
         } catch (PDOException $e) {
             // Mensaje útil durante desarrollo (puedes ocultarlo en producción)
-            die(" Error al conectar a la base de datos: " . $e->getMessage());
+            die("❌ Error al conectar a la base de datos: " . $e->getMessage());
         }
 
     }

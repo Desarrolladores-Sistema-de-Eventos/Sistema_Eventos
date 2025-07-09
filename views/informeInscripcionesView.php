@@ -14,220 +14,132 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
 <?php include("partials/header_Admin.php"); ?>
 
 <style>
-    /* Definición de colores principales para asegurar consistencia */
-    :root {
-        --uta-rojo: #b10024; /* Rojo principal de UTA */
-        --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
-        --uta-negro: #000000;
-        --uta-blanco: #ffffff;
-        --uta-gris-claro: #f5f5f5; /* Para fondos sutiles */
-        --uta-gris-medio: #e0e0e0; /* Para bordes */
-        --uta-gris-oscuro: #333; /* Para texto principal */
-    }
-
-    /* Títulos */
-    h2, h3, h4 {
-        color: var(--uta-rojo); /* Cambiado de azul a rojo */
-        font-weight: bold; /* Asegurar negrita */
-        margin-bottom: 15px; /* Espaciado uniforme */
-    }
+    /* Eliminamos body y .container con max-width/margin de aquí,
+       asumiendo que #page-inner o tu CSS global ya los maneja */
+    /* font-family, background-color, y color del body deberían venir del CSS global */
+    /* padding: 40px; en body ya no es necesario aquí */
 
     h2 {
-        text-align: center;
-        margin-bottom: 25px;
-        color: var(--uta-negro); /* Título principal en negro */
+        color: #004080; /* Color consistente con otros reportes */
     }
 
-    h2 i {
-        color: var(--uta-rojo); /* Icono en rojo */
-        margin-right: 10px;
-    }
+    /* .container no es necesario aquí ya que #page-inner es el contenedor principal */
 
-    /* Contenedores de tarjetas/paneles */
     .card {
-        background: var(--uta-blanco);
+        background: #fff;
         padding: 25px;
         margin-bottom: 30px;
         border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sombra mejorada */
-        border: 1px solid var(--uta-gris-medio); /* Borde sutil */
-    }
-
-    /* Grupos de formulario */
-    .form-group {
-        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     label {
         font-weight: bold;
         display: block;
         margin-bottom: 8px;
-        color: var(--uta-gris-oscuro); /* Color de etiqueta */
     }
 
-    /* Selectores de formulario */
     select {
         width: 100%;
-        padding: 12px; /* Aumentar padding */
-        font-size: 16px; /* Tamaño de fuente legible */
-        border: 1px solid var(--uta-gris-medio); /* Borde en gris */
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
         border-radius: 6px;
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); /* Sombra interna sutil */
-        appearance: none; /* Eliminar estilo nativo del select */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23b10024'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Icono de flecha personalizado en rojo */
-        background-repeat: no-repeat;
-        background-position: right 10px center;
-        background-size: 20px;
-        cursor: pointer;
+        margin-bottom: 10px;
     }
 
-    /* Botones de acción */
+    .form-group { /* Añadido para agrupar label y select */
+        margin-bottom: 20px;
+    }
+
     .action-buttons {
         display: flex;
-        gap: 15px; /* Aumentar espacio entre botones y elementos */
-        margin-top: 20px;
+        gap: 10px;
         flex-wrap: wrap;
-        align-items: flex-end; /* Alinea los elementos al final (abajo) */
+        align-items: flex-end;
+        margin-top: 20px; /* Ajuste del margen superior */
     }
 
     .action-buttons form {
-        display: flex;
-        flex-direction: column; /* Apila label y select/button */
-        flex-grow: 1; /* Permite que el formulario crezca */
-        gap: 8px; /* Espacio entre label y select/button */
+        margin: 0;
+        flex-grow: 1; /* Permite que el formulario de selección crezca */
     }
 
-    .btn-primary { /* Aplicar a ambos tipos de botones */
-        background-color: var(--uta-rojo); /* Cambiado de azul a rojo */
-        color: var(--uta-blanco);
-        padding: 12px 25px; /* Aumentar padding */
-        font-size: 16px; /* Tamaño de fuente legible */
-        border: none; /* Eliminado borde, ya que el background es el color principal */
-        border-radius: 8px; /* Bordes más redondeados */
+    .btn-primary {
+        background-color: #004080;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 14px;
+        border: 2px solid #004080;
+        border-radius: 6px;
         cursor: pointer;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        font-weight: 600; /* Negrita para el texto del botón */
-        min-width: 140px; /* Asegura un ancho mínimo para los botones */
+        transition: all 0.3s ease;
+        min-width: 140px;
         text-align: center;
+        width: auto; /* Asegura que el botón no ocupe todo el ancho sin necesidad */
     }
 
     .btn-primary:hover {
-        background-color: var(--uta-rojo-oscuro); /* Cambiado de azul oscuro a rojo oscuro */
-        box-shadow: 0 6px 15px rgba(var(--uta-rojo), 0.3); /* Sombra al pasar el ratón */
+        background-color: #fff;
+        color: #004080;
     }
 
-    /* Tablas */
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 25px; /* Más espacio superior */
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* Sombra para la tabla */
-        border-radius: 8px; /* Bordes redondeados para la tabla */
-        overflow: hidden; /* Para que los bordes redondeados se apliquen al contenido */
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
 
     th, td {
-        padding: 15px; /* Aumentar padding */
-        border: 1px solid var(--uta-gris-medio); /* Bordes en gris */
+        padding: 12px 15px;
+        border: 1px solid #ddd;
         text-align: left;
-        color: var(--uta-gris-oscuro); /* Color de texto para celdas */
+        font-size: 14px; /* Tamaño de fuente para tablas consistente */
     }
 
     th {
-        background-color: var(--uta-gris-claro); /* Fondo gris claro para cabecera (antes azul claro) */
-        color: var(--uta-negro); /* Texto de cabecera en negro */
-        font-weight: 700; /* Negrita para cabeceras */
-        text-transform: uppercase; /* Mayúsculas para cabeceras */
-        font-size: 0.95rem; /* Tamaño de fuente ligeramente menor para cabeceras */
+        background-color: #e6f0ff;
+        color: #004080;
     }
 
-    /* Estilos para filas impares/pares */
-    tbody tr:nth-child(odd) {
-        background-color: var(--uta-blanco);
-    }
-    tbody tr:nth-child(even) {
-        background-color: var(--uta-gris-claro); /* Fondo ligeramente gris para filas pares */
-    }
-
-    /* Conteo total */
     .total-count {
         font-weight: bold;
-        margin: 20px 0;
-        font-size: 1.2rem; /* Tamaño de fuente ligeramente más grande */
-        text-align: center;
-        color: var(--uta-negro); /* Color en negro */
-        padding: 10px;
-        background-color: var(--uta-gris-claro); /* Fondo sutil */
-        border-radius: 8px;
-        border: 1px solid var(--uta-gris-medio);
+        margin: 20px 0; /* Ajuste del margen para centrar verticalmente */
+        font-size: 16px;
+        text-align: center; /* Centrar el texto */
+        color: #004080; /* Color consistente */
     }
 
-    /* Mensaje sin datos */
-    .no-data-message {
-        color: var(--uta-rojo); /* Color en rojo */
+    .no-data-message { /* Nueva clase para el mensaje de "no hay datos" */
+        color: red;
         font-weight: bold;
         text-align: center;
         margin-top: 20px;
-        padding: 10px;
-        background-color: var(--uta-gris-claro);
-        border-radius: 8px;
-        border: 1px solid var(--uta-gris-medio);
     }
 
-    /* Responsividad */
     @media (max-width: 768px) {
         .action-buttons {
-            flex-direction: column; /* Apila los botones en pantallas pequeñas */
-            align-items: stretch; /* Estira los elementos para ocupar el ancho completo */
-            gap: 10px;
+            flex-direction: column;
         }
         .action-buttons form {
-            width: 100%; /* Las formas ocupan todo el ancho */
+            width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
         }
         .btn-primary {
-            width: 100%; /* Botones ocupan todo el ancho en móviles */
+            width: 100%; /* Botones de ancho completo en móviles */
         }
         select {
             font-size: 14px;
         }
-        table, thead, tbody, th, td, tr {
-            display: block; /* Convertir tabla a bloques para móviles */
-        }
-        thead tr {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-        }
-        tr { border: 1px solid var(--uta-gris-medio); margin-bottom: 15px; border-radius: 8px; } /* Borde y margen para filas en móviles */
-        td {
-            border: none;
-            border-bottom: 1px solid var(--uta-gris-medio);
-            position: relative;
-            padding-left: 50%; /* Espacio para la etiqueta */
-            text-align: right;
-        }
-        td:before {
-            position: absolute;
-            top: 0;
-            left: 6px;
-            width: 45%;
-            padding-right: 10px;
-            white-space: nowrap;
-            text-align: left;
-            font-weight: bold;
-            color: var(--uta-rojo); /* Etiqueta en rojo */
-        }
-        /* Etiquetas para celdas en móvil (ejemplo, necesitarías añadir data-label en tu HTML) */
-        td:nth-of-type(1):before { content: "Nombre Completo:"; }
-        td:nth-of-type(2):before { content: "Correo:"; }
-        td:nth-of-type(3):before { content: "Carrera:"; }
-        td:nth-of-type(4):before { content: "Facultad:"; }
     }
 </style>
 
 <div id="page-wrapper">
     <div id="page-inner">
-        <h2><i class="fa fa-users"></i> Reporte de Inscripciones</h2> <!-- Icono de usuarios para inscripciones -->
+        <h2>Reporte de Inscripciones</h2>
 
         <div class="card">
             <div class="action-buttons">
@@ -247,11 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                 </form>
 
                 <?php if (!empty($reporte['datos'])): ?>
-                    <form method="post" action="generar_reporte_inscripciones.php" target="_blank">
-                        <!-- La etiqueta label con el punto oculto es para alinear el botón con el select -->
-                        <label style="visibility:hidden; height: 0; margin: 0; padding: 0;">.</label>
+                    <form method="post" action="generar_reporte_inscripciones.php" target="_blank" style="margin-top: 0;">
                         <input type="hidden" name="evento" value="<?= htmlspecialchars($_POST['evento']) ?>">
-                        <button type="submit" class="btn-primary">Descargar PDF</button>
+                        <label style="visibility:hidden;">Descargar</label> <button type="submit" class="btn-primary">Descargar PDF</button>
                     </form>
                 <?php endif; ?>
             </div>

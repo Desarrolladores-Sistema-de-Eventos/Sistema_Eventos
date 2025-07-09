@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
   cargarPerfilUsuario();
   cargarCarrerasYSeleccionar();
@@ -46,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (file && file.type === 'application/pdf') {
       const url = URL.createObjectURL(file);
       btnAbrirPDF.href = url;
+
       inputPDF.style.display = 'none';
       pdfPreview.style.display = 'block';
     }
@@ -56,30 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     inputPDF.style.display = 'block';
     pdfPreview.style.display = 'none';
   });
-
-  // PDF MATRÍCULA
-  const inputMatricula = document.getElementById('matricula_pdf');
-  const matPreview = document.getElementById('matricula-preview');
-  const btnMatriculaAbrir = document.getElementById('btn-abrir-matricula');
-  const btnMatriculaEditar = document.getElementById('btn-matricula-editar');
-
-  if (inputMatricula) {
-    inputMatricula.addEventListener('change', () => {
-      const file = inputMatricula.files[0];
-      if (file && file.type === 'application/pdf') {
-        const url = URL.createObjectURL(file);
-        btnMatriculaAbrir.href = url;
-        inputMatricula.style.display = 'none';
-        matPreview.style.display = 'block';
-      }
-    });
-
-    btnMatriculaEditar?.addEventListener('click', () => {
-      inputMatricula.value = '';
-      inputMatricula.style.display = 'block';
-      matPreview.style.display = 'none';
-    });
-  }
 });
 
 function cargarPerfilUsuario() {
@@ -98,40 +74,29 @@ function cargarPerfilUsuario() {
       document.getElementById('correo').value = usuario.CORREO || '';
       document.getElementById('rol').value = usuario.CODIGOROL || '';
       document.getElementById('estado_usuario').value = usuario.CODIGOESTADO || '';
-      document.getElementById('foto_perfil_actual').value = usuario.FOTO_PERFIL_URL || '';
-      document.getElementById('cedula_pdf_actual').value = usuario.CEDULA_PDF_URL || '';
-      document.getElementById('matricula_pdf_actual').value = usuario.URL_MATRICULA || '';
 
-      // Rol - mostrar campos condicionalmente
-      const carreraDiv = document.getElementById('carrera')?.closest('div');
-      const matriculaDiv = document.querySelector('.matricula-upload');
-      if (usuario.CODIGOROL === 'INV') {
-        carreraDiv.style.display = 'none';
-        matriculaDiv.style.display = 'none';
-      } else if (usuario.CODIGOROL === 'DOC') {
-        carreraDiv.style.display = 'block';
-        matriculaDiv.style.display = 'none';
-      } else if (usuario.CODIGOROL === 'EST') {
-        carreraDiv.style.display = 'block';
-        matriculaDiv.style.display = 'flex';
-      }
-
+      
       // Imagen
-      const img = document.getElementById('img-perfil-preview');
-      const inputFoto = document.getElementById('foto_perfil');
-      const btnFotoEditar = document.getElementById('btn-foto-editar');
+const img = document.getElementById('img-perfil-preview');
+const inputFoto = document.getElementById('foto_perfil');
+const btnFotoEditar = document.getElementById('btn-foto-editar');
 
-      if (usuario.FOTO_PERFIL_URL?.trim()) {
-        img.src = usuario.FOTO_PERFIL_URL;
-        inputFoto.style.display = 'none';
-        btnFotoEditar.style.display = 'inline-block';
-      } else {
-        img.src = 'assets/img/profile_placeholder.png';
-        inputFoto.style.display = 'block';
-        btnFotoEditar.style.display = 'none';
-      }
+if (usuario.FOTO_PERFIL_URL?.trim()) {
+  img.src = usuario.FOTO_PERFIL_URL;
+  if (inputFoto && btnFotoEditar) {
+    inputFoto.style.display = 'none';
+    btnFotoEditar.style.display = 'inline-block';
+  }
+} else {
+  img.src = 'assets/img/profile_placeholder.png';
+  if (inputFoto && btnFotoEditar) {
+    inputFoto.style.display = 'block';
+    btnFotoEditar.style.display = 'none';
+  }
+}
 
-      // CÉDULA
+
+      // PDF
       const pdfLink = document.getElementById('btn-abrir-pdf');
       const pdfBlock = document.getElementById('pdf-preview');
       const inputPDF = document.getElementById('cedula_pdf');
@@ -142,19 +107,6 @@ function cargarPerfilUsuario() {
       } else {
         pdfBlock.style.display = 'none';
         inputPDF.style.display = 'block';
-      }
-
-      // MATRÍCULA
-      const matLink = document.getElementById('btn-abrir-matricula');
-      const matBlock = document.getElementById('matricula-preview');
-      const inputMat = document.getElementById('matricula_pdf');
-      if (usuario.URL_MATRICULA?.trim()) {
-        matLink.href = usuario.MATRICULA_PDF_URL;
-        matBlock.style.display = 'block';
-        inputMat.style.display = 'none';
-      } else {
-        matBlock.style.display = 'none';
-        inputMat.style.display = 'block';
       }
 
       // Carrera
@@ -211,38 +163,61 @@ function actualizarPerfil() {
   formData.append('rol', document.getElementById('rol').value);
   formData.append('estado_usuario', document.getElementById('estado_usuario').value);
 
+  const nombres = document.getElementById('nombres').value.trim();
+  const apellidos = document.getElementById('apellidos').value.trim();
+  const identificacion = document.getElementById('identificacion').value.trim();
+  const telefono = document.getElementById('telefono').value.trim();
+  const fechaNacimiento = document.getElementById('fecha_nacimiento').value;
+
+  // Validaciones
+  if (!nombres || !apellidos || !identificacion) {
+    Swal.fire('⚠️ Atención', 'Por favor, complete todos los campos obligatorios.', 'warning');
+    return;
+  }
+
+  if (!/^\d{10}$/.test(identificacion)) {
+    Swal.fire('⚠️ Atención', 'La cédula debe tener 10 dígitos numéricos.', 'warning');
+    return;
+  }
+
+  if (telefono && !/^\d{10}$/.test(telefono)) {
+    Swal.fire('⚠️ Atención', 'El teléfono debe tener 10 dígitos numéricos.', 'warning');
+    return;
+  }
+
+  if (fechaNacimiento) {
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+      edad--;
+    }
+    if (edad < 18) {
+      Swal.fire('⚠️ Atención', 'Debes tener al menos 18 años.', 'warning');
+      return;
+    }
+  }
+
+
   const carrera = document.getElementById('carrera');
   if (carrera) formData.append('carrera', carrera.value);
 
   const foto = document.getElementById('foto_perfil');
-  const fotoActual = document.getElementById('foto_perfil_actual').value;
   if (foto && foto.files.length > 0) {
     formData.append('foto_perfil', foto.files[0]);
-  } else {
-    formData.append('foto_perfil_actual', fotoActual);
   }
 
   const cedula = document.getElementById('cedula_pdf');
-  const cedulaActual = document.getElementById('cedula_pdf_actual').value;
   if (cedula && cedula.files.length > 0) {
     formData.append('cedula_pdf', cedula.files[0]);
-  } else {
-    formData.append('cedula_pdf_actual', cedulaActual);
-  }
-
-  const matricula = document.getElementById('matricula_pdf');
-  const matriculaActual = document.getElementById('matricula_pdf_actual').value;
-  if (matricula && matricula.files.length > 0) {
-    formData.append('matricula_pdf', matricula.files[0]);
-  } else {
-    formData.append('matricula_pdf_actual', matriculaActual);
   }
 
   axios.post('../controllers/UsuarioController.php?option=actualizarPerfilUsuario', formData)
     .then(res => {
       if (res.data.success) {
-        Swal.fire('Éxito', 'Perfil actualizado correctamente.', 'success');
-        //cargarPerfilUsuario(); // Recargar datos actualizados
+        Swal.fire('✅ Éxito', 'Perfil actualizado correctamente.', 'success');
+        cargarPerfilUsuario(); // Recargar vista
       } else {
         throw new Error(res.data.mensaje || 'Error al actualizar perfil');
       }

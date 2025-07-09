@@ -8,19 +8,10 @@ class ConfiguracionesController
 {
     private $configuracionesModelo;
     private $idUsuario;
-    
 
-public function __construct()
-{
-    $this->pdo = Conexion::getConexion();
-    $this->configuracionesModelo = new Configuraciones();
-
-    // Acciones públicas permitidas sin sesión
-    $opcion = $_GET['option'] ?? '';
-    $accionesPublicas = ['carrera_fisei'];
-
-    // Verificamos sesión solo si NO es una acción pública
-    if (!in_array($opcion, $accionesPublicas)) {
+    public function __construct()
+    {
+        $this->configuracionesModelo = new Configuraciones();
         $this->idUsuario = $_SESSION['usuario']['SECUENCIAL'] ?? null;
 
         if (!$this->idUsuario) {
@@ -28,7 +19,6 @@ public function __construct()
             exit;
         }
     }
-}
 
     public function handleRequest()
     {
@@ -40,10 +30,6 @@ public function __construct()
             case 'facultad_guardar': $this->guardarFacultad(); break;
             case 'facultad_actualizar': $this->actualizarFacultad(); break;
             case 'facultad_eliminar': $this->eliminarFacultad(); break;
-            //CARRERAS DE LA FISEI
-            case 'carrera_fisei':$this->listarCarrerasFISEI(); break;
-            // AUTORIDADES PÚBLICAS
-            case 'autoridades_publicas': $this->listarAutoridadesPublic(); break;
             // CARRERA
             case 'carrera_listar': $this->listarCarreras(); break;
             case 'carrera_guardar': $this->guardarCarrera(); break;
@@ -83,244 +69,96 @@ public function __construct()
                 $this->json(['tipo' => 'error', 'mensaje' => 'Acción no válida']);
         }
     }
-//===================== CARRERAS DE LA FISEI =================
-private function listarCarrerasFISEI() {
-    try {
-        $stmt = $this->pdo->prepare("
-            SELECT carrera.SECUENCIAL, carrera.NOMBRE_CARRERA, carrera.IMAGEN, facultad.NOMBRE
-            FROM carrera
-            INNER JOIN facultad ON carrera.SECUENCIALFACULTAD = facultad.SECUENCIAL
-            WHERE facultad.SECUENCIAL = 9
-            ORDER BY carrera.SECUENCIAL DESC
-        ");
-        $stmt->execute();
-        $carreras = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($carreras);
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Error al obtener carreras FISEI']);
+
+    // ================= FACULTAD =================
+    private function listarFacultades() {
+        $data = $this->configuracionesModelo->obtenerFacultades();
+        $this->json($data);
     }
-}
-
-//===================== AUTORIDADES DE LA FISEI =================
-private function listarAutoridadesPublic() {
-    try {
-        $stmt = $this->pdo->prepare("
-            SELECT 
-                SECUENCIAL AS identificador,
-                NOMBRE AS nombre,
-                CARGO AS cargo,
-                CORREO AS correo,
-                TELEFONO AS telefono,
-                FOTO_URL AS imagen
-            FROM autoridades
-            ORDER BY SECUENCIAL DESC
-        ");
-        $stmt->execute();
-        $autoridades = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($autoridades);
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Error al obtener autoridades públicas']);
+    private function guardarFacultad() {
+        $required = ['nombre', 'mision', 'vision', 'ubicacion'];
+        foreach ($required as $campo) {
+            if (empty($_POST[$campo])) {
+                $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
+                return;
+            }
+        }
+        try {
+            $id = $this->configuracionesModelo->crearFacultad(
+                $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion']
+            );
+            $this->json(['tipo' => 'success', 'mensaje' => 'Facultad creada', 'id' => $id]);
+        } catch (Exception $e) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Error al crear facultad', 'debug' => $e->getMessage()]);
+        }
     }
-}
-
-
-// ================= FACULTAD =================
-private function listarFacultades() {
-    $data = $this->configuracionesModelo->obtenerFacultades();
-    $this->json($data);
-}
-
-private function guardarFacultad() {
-    $required = ['nombre', 'mision', 'vision', 'ubicacion'];
-    foreach ($required as $campo) {
-        if (empty($_POST[$campo])) {
-            $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
-            return;
+    private function actualizarFacultad() {
+        $id = $_POST['id'] ?? null;
+        if (!$id) { $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']); return; }
+        try {
+            $ok = $this->configuracionesModelo->actualizarFacultad(
+                $id, $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion']
+            );
+            $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad actualizada' : 'No se pudo actualizar']);
+        } catch (Exception $e) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Error al actualizar facultad', 'debug' => $e->getMessage()]);
+        }
+    }
+    private function eliminarFacultad() {
+        $id = $_POST['id'] ?? null;
+        if (!$id) { $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']); return; }
+        try {
+            $ok = $this->configuracionesModelo->eliminarFacultad($id);
+            $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad eliminada' : 'No se pudo eliminar']);
+        } catch (Exception $e) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Error al eliminar facultad', 'debug' => $e->getMessage()]);
         }
     }
 
-    $sigla = $_POST['sigla'] ?? null;
-    $about = $_POST['about'] ?? null;
-    $urlLogo = $_FILES['urlLogo'] ?? null;
-    $urlPortada = $_FILES['urlPortada'] ?? null;
-
-    $rutaLogo = $urlLogo && $urlLogo['tmp_name'] ? $this->guardarArchivo($urlLogo) : null;
-    $rutaPortada = $urlPortada && $urlPortada['tmp_name'] ? $this->guardarArchivo($urlPortada) : null;
-
-    try {
-        $id = $this->configuracionesModelo->crearFacultad(
-            $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion'],
-            $sigla, $about, $rutaLogo, $rutaPortada
-        );
-        $this->json(['tipo' => 'success', 'mensaje' => 'Facultad creada', 'id' => $id]);
-    } catch (Exception $e) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al crear facultad', 'debug' => $e->getMessage()]);
+    // ================= CARRERA =================
+    private function listarCarreras() {
+        $data = $this->configuracionesModelo->obtenerCarreras();
+        $this->json($data);
     }
-}
-
-private function actualizarFacultad() {
-    $id = $_POST['id'] ?? null;
-    if (!$id) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']);
-        return;
-    }
-
-    $sigla = $_POST['sigla'] ?? null;
-    $about = $_POST['about'] ?? null;
-    $rutaLogo = $_POST['urlLogo'] ?? null;    
-    $rutaPortada = $_POST['urlPortada'] ?? null;
-
-    try {
-        $ok = $this->configuracionesModelo->actualizarFacultad(
-            $id, $_POST['nombre'], $_POST['mision'], $_POST['vision'], $_POST['ubicacion'],
-            $sigla, $about, $rutaLogo, $rutaPortada
-        );
-        $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad actualizada' : 'No se pudo actualizar']);
-    } catch (Exception $e) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al actualizar facultad', 'debug' => $e->getMessage()]);
-    }
-}
-
-private function eliminarFacultad() {
-    $id = $_POST['id'] ?? null;
-    if (!$id) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']);
-        return;
-    }
-
-    try {
-        $ok = $this->configuracionesModelo->eliminarFacultad($id);
-        $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Facultad eliminada' : 'No se pudo eliminar']);
-    } catch (Exception $e) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al eliminar facultad', 'debug' => $e->getMessage()]);
-    }
-}
-
-private function guardarArchivo($archivo) {
-    $directorio = '../uploads/';
-    if (!file_exists($directorio)) {
-        mkdir($directorio, 0777, true);
-    }
-
-    $nombreArchivo = uniqid() . '_' . basename($archivo['name']);
-    $rutaDestino = $directorio . $nombreArchivo;
-
-    if (move_uploaded_file($archivo['tmp_name'], $rutaDestino)) {
-        return $rutaDestino;
-    }
-
-    return null;
-}
-
-// ================= CARRERA =================
-private function guardarCarrera() {
-    $required = ['nombre', 'facultad'];
-    file_put_contents('debug_carrera.txt', print_r($_POST, true) . "\n" . print_r($_FILES, true));
-    foreach ($required as $campo) {
-        if (empty($_POST[$campo])) {
-            $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
-            return;
+    private function guardarCarrera() {
+        $required = ['nombre', 'idFacultad'];
+        foreach ($required as $campo) {
+            if (empty($_POST[$campo])) {
+                $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
+                return;
+            }
+        }
+        try {
+            $id = $this->configuracionesModelo->crearCarrera(
+                $_POST['nombre'], $_POST['idFacultad']
+            );
+            $this->json(['tipo' => 'success', 'mensaje' => 'Carrera creada', 'id' => $id]);
+        } catch (Exception $e) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Error al crear carrera', 'debug' => $e->getMessage()]);
         }
     }
-
-    // Validar imagen
-    if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'La imagen es obligatoria o no se pudo subir.']);
-        return;
-    }
-
-    // Procesar imagen
-    $imgDir = '../public/img/carreras/';
-    if (!is_dir($imgDir)) {
-        mkdir($imgDir, 0777, true);
-    }
-
-    $nombreArchivo = basename($_FILES['imagen']['name']);
-    $rutaRelativa = 'public/img/carreras/' . $nombreArchivo;
-    $rutaAbsoluta = $imgDir . $nombreArchivo;
-
-    if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaAbsoluta)) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al guardar la imagen.']);
-        return;
-    }
-
-    try {
-        $id = $this->configuracionesModelo->crearCarrera(
-            $_POST['nombre'],
-            $_POST['facultad'],
-            $rutaRelativa
-        );
-        $this->json(['tipo' => 'success', 'mensaje' => 'Carrera creada', 'id' => $id]);
-    } catch (Exception $e) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al crear carrera', 'debug' => $e->getMessage()]);
-    }
-}
-
-private function listarCarreras() {
-    require_once '../models/CarreraModelo.php';
-    $modelo = new CarreraModelo();
-    $carreras = $modelo->getCarreras();
-    echo json_encode($carreras);
-}
-
-private function actualizarCarrera() {
-    $required = ['id', 'nombre', 'facultad'];
-    foreach ($required as $campo) {
-        if (empty($_POST[$campo])) {
-            $this->json(['tipo' => 'error', 'mensaje' => "El campo '$campo' es obligatorio."]);
-            return;
+    private function actualizarCarrera() {
+        $id = $_POST['id'] ?? null;
+        if (!$id) { $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']); return; }
+        try {
+            $ok = $this->configuracionesModelo->actualizarCarrera(
+                $id, $_POST['nombre'], $_POST['idFacultad']
+            );
+            $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Carrera actualizada' : 'No se pudo actualizar']);
+        } catch (Exception $e) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Error al actualizar carrera', 'debug' => $e->getMessage()]);
         }
     }
-
-    $imagenRuta = null;
-
-    // Si se sube nueva imagen
-    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $imgDir = '../public/img/carreras/';
-        if (!is_dir($imgDir)) {
-            mkdir($imgDir, 0777, true);
-        }
-
-        $nombreArchivo = basename($_FILES['imagen']['name']);
-        $rutaRelativa = 'public/img/carreras/' . $nombreArchivo;
-        $rutaAbsoluta = $imgDir . $nombreArchivo;
-
-        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaAbsoluta)) {
-            $imagenRuta = $rutaRelativa;
+    private function eliminarCarrera() {
+        $id = $_POST['id'] ?? null;
+        if (!$id) { $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido.']); return; }
+        try {
+            $ok = $this->configuracionesModelo->eliminarCarrera($id);
+            $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Carrera eliminada' : 'No se pudo eliminar']);
+        } catch (Exception $e) {
+            $this->json(['tipo' => 'error', 'mensaje' => 'Error al eliminar carrera', 'debug' => $e->getMessage()]);
         }
     }
-
-    try {
-        $this->configuracionesModelo->actualizarCarrera(
-            $_POST['id'],
-            $_POST['nombre'],
-            $_POST['facultad'],
-            $imagenRuta
-        );
-        $this->json(['tipo' => 'success', 'mensaje' => 'Carrera actualizada']);
-    } catch (Exception $e) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al actualizar carrera', 'debug' => $e->getMessage()]);
-    }
-}
-
-private function eliminarCarrera() {
-    if (empty($_POST['id'])) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'ID no proporcionado']);
-        return;
-    }
-
-    try {
-        $this->configuracionesModelo->eliminarCarrera($_POST['id']);
-        $this->json(['tipo' => 'success', 'mensaje' => 'Carrera eliminada']);
-    } catch (Exception $e) {
-        $this->json(['tipo' => 'error', 'mensaje' => 'Error al eliminar carrera', 'debug' => $e->getMessage()]);
-    }
-}
-
-
-
 
     // ================= TIPO EVENTO =================
     private function listarTiposEvento() {
@@ -337,8 +175,7 @@ private function eliminarCarrera() {
         }
         try {
             $codigo = $this->configuracionesModelo->crearTipoEvento(
-                $_POST['codigo'], $_POST['nombre'], $_POST['descripcion'],
-                $_POST['REQUIERENOTA'] ?? 0, $_POST['REQUIEREASISTENCIA'] ?? 0
+                $_POST['codigo'], $_POST['nombre'], $_POST['descripcion']
             );
             $this->json(['tipo' => 'success', 'mensaje' => 'Tipo de evento creado', 'codigo' => $codigo]);
         } catch (Exception $e) {
@@ -350,8 +187,7 @@ private function eliminarCarrera() {
         if (!$codigo) { $this->json(['tipo' => 'error', 'mensaje' => 'Código requerido.']); return; }
         try {
             $ok = $this->configuracionesModelo->actualizarTipoEvento(
-                $codigo, $_POST['nombre'], $_POST['descripcion'],
-                $_POST['REQUIERENOTA'] ?? 0, $_POST['REQUIEREASISTENCIA'] ?? 0
+                $codigo, $_POST['nombre'], $_POST['descripcion']
             );
             $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Tipo de evento actualizado' : 'No se pudo actualizar']);
         } catch (Exception $e) {
@@ -555,45 +391,6 @@ private function eliminarCarrera() {
         } catch (Exception $e) {
             $this->json(['tipo' => 'error', 'mensaje' => 'Error al eliminar forma de pago', 'debug' => $e->getMessage()]);
         }
-    }
-    
-    // ========== CARRUSEL ==========
-    private function listarCarrusel() {
-        $data = $this->configuracionesModelo->obtenerCarrusel();
-        $this->json($data);
-    }
-
-    private function guardarCarrusel() {
-        $titulo = $_POST['titulo'] ?? '';
-        $descripcion = $_POST['descripcion'] ?? '';
-        $file = $_FILES['imagen'] ?? null;
-
-        if (!$titulo || !$file) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'Título e imagen son obligatorios.']);
-            return;
-        }
-
-        $nombreImagen = 'carrusel_' . uniqid() . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
-        $ruta = '../uploads/' . $nombreImagen;
-        move_uploaded_file($file['tmp_name'], $ruta);
-
-        try {
-            $id = $this->configuracionesModelo->crearCarrusel($titulo, $descripcion, $nombreImagen);
-            $this->json(['tipo' => 'success', 'mensaje' => 'Imagen guardada', 'id' => $id]);
-        } catch (Exception $e) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'Error al guardar imagen']);
-        }
-    }
-
-    private function eliminarCarrusel() {
-        $id = $_POST['id'] ?? null;
-        if (!$id) {
-            $this->json(['tipo' => 'error', 'mensaje' => 'ID requerido']);
-            return;
-        }
-
-        $ok = $this->configuracionesModelo->eliminarCarrusel($id);
-        $this->json(['tipo' => $ok ? 'success' : 'error', 'mensaje' => $ok ? 'Imagen eliminada' : 'No se pudo eliminar']);
     }
 
     // ================= ROL USUARIO =================

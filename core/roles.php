@@ -31,5 +31,3 @@ function esResponsable()
 {
     return !empty($_SESSION['usuario']['ES_RESPONSABLE']);
 }
-
-?>

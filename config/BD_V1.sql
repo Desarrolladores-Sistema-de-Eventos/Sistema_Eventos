@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-07-2025 a las 00:59:55
+-- Tiempo de generación: 08-06-2025 a las 19:19:17
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -40,11 +40,8 @@ CREATE TABLE `archivo_requisito` (
 --
 
 INSERT INTO `archivo_requisito` (`SECUENCIAL`, `SECUENCIALINSCRIPCION`, `SECUENCIALREQUISITO`, `URLARCHIVO`, `CODIGOESTADOVALIDACION`) VALUES
-(70, 1048, 72, 'cedula_685a43a297fb0.pdf', 'VAL'),
-(71, 1048, 73, 'matricula_685a43a298776.pdf', 'VAL'),
-(73, 1048, 12, 'req_685a4561c9b73_REGLAMENTO.pdf', 'VAL'),
-(74, 1049, 74, 'req_686086389d4e2_reporte_certificados_FUNDAMENTOS_DE_PYTHON_1.pdf', 'VAL'),
-(75, 1049, 75, 'req_686086389d833_reporte_certificados_FUNDAMENTOS_DE_PYTHON_1.pdf', 'VAL');
+(12, 1007, 1, 'requisito_683a6794e8a5e.pdf', 'VAL'),
+(13, 1007, 2, 'requisito_683a67a5b1dee.pdf', 'VAL');
 
 -- --------------------------------------------------------
 
@@ -57,18 +54,16 @@ CREATE TABLE `asistencia_nota` (
   `SECUENCIALEVENTO` int(11) DEFAULT NULL,
   `SECUENCIALUSUARIO` int(11) DEFAULT NULL,
   `ASISTIO` tinyint(1) DEFAULT NULL,
-  `PORCENTAJE_ASISTENCIA` decimal(5,2) DEFAULT NULL,
-  `NOTAFINAL` decimal(5,2) DEFAULT NULL,
-  `OBSERVACION` text DEFAULT NULL
+  `NOTAFINAL` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `asistencia_nota`
 --
 
-INSERT INTO `asistencia_nota` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `ASISTIO`, `PORCENTAJE_ASISTENCIA`, `NOTAFINAL`, `OBSERVACION`) VALUES
-(29, 167, 87, 1, 95.00, 9.00, NULL),
-(30, 168, 87, 1, 100.00, NULL, NULL);
+INSERT INTO `asistencia_nota` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `ASISTIO`, `NOTAFINAL`) VALUES
+(7, 152, 11, 1, 8.00),
+(9, 152, 21, 1, 90.00);
 
 -- --------------------------------------------------------
 
@@ -168,7 +163,7 @@ CREATE TABLE `certificado` (
   `SECUENCIAL` int(11) NOT NULL,
   `SECUENCIALUSUARIO` int(11) NOT NULL,
   `SECUENCIALEVENTO` int(11) NOT NULL,
-  `TIPO_CERTIFICADO` enum('Participación','Aprobación') DEFAULT 'Participación',
+  `TIPO_CERTIFICADO` varchar(20) DEFAULT NULL,
   `URL_CERTIFICADO` varchar(255) DEFAULT NULL,
   `FECHA_EMISION` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -178,8 +173,8 @@ CREATE TABLE `certificado` (
 --
 
 INSERT INTO `certificado` (`SECUENCIAL`, `SECUENCIALUSUARIO`, `SECUENCIALEVENTO`, `TIPO_CERTIFICADO`, `URL_CERTIFICADO`, `FECHA_EMISION`) VALUES
-(13, 87, 167, 'Aprobación', 'certificado_87_167_1751211264.pdf', '2025-06-29 10:34:24'),
-(30, 87, 168, 'Participación', 'certificado_87_168_1751171449.pdf', '2025-06-28 23:30:49');
+(6, 11, 152, NULL, 'certificado_11_152_1749372524.pdf', '2025-06-08 03:48:44'),
+(7, 21, 152, NULL, 'certificado_21_152_1749372530.pdf', '2025-06-08 03:48:50');
 
 -- --------------------------------------------------------
 
@@ -199,6 +194,7 @@ CREATE TABLE `estado_inscripcion` (
 INSERT INTO `estado_inscripcion` (`CODIGO`, `NOMBRE`) VALUES
 ('ACE', 'Aceptado'),
 ('ANU', 'Anulado'),
+('COM', 'Completado'),
 ('PEN', 'Pendiente'),
 ('REC', 'Rechazado');
 
@@ -253,53 +249,31 @@ INSERT INTO `estado_validacion_requisito` (`CODIGO`, `NOMBRE`) VALUES
 CREATE TABLE `evento` (
   `SECUENCIAL` int(11) NOT NULL,
   `TITULO` varchar(150) NOT NULL,
-  `CONTENIDO` text DEFAULT NULL,
   `DESCRIPCION` text DEFAULT NULL,
   `CODIGOTIPOEVENTO` varchar(20) DEFAULT NULL,
   `FECHAINICIO` date NOT NULL,
   `FECHAFIN` date NOT NULL,
   `CODIGOMODALIDAD` varchar(20) DEFAULT NULL,
   `HORAS` int(11) NOT NULL,
-  `NOTAAPROBACION` decimal(4,2) DEFAULT NULL,
+  `NOTAAPROBACION` decimal(4,2) NOT NULL,
   `ES_PAGADO` tinyint(1) NOT NULL CHECK (`ES_PAGADO` in (0,1)),
   `COSTO` decimal(10,2) NOT NULL DEFAULT 0.00 CHECK (`COSTO` >= 0),
   `SECUENCIALCARRERA` int(11) DEFAULT NULL,
   `ES_SOLO_INTERNOS` tinyint(1) NOT NULL DEFAULT 0 CHECK (`ES_SOLO_INTERNOS` in (0,1)),
   `SECUENCIALCATEGORIA` int(11) DEFAULT NULL,
-  `ESTADO` enum('DISPONIBLE','CERRADO','CANCELADO','EN CURSO','FINALIZADO') NOT NULL DEFAULT 'DISPONIBLE',
-  `CAPACIDAD` int(11) DEFAULT NULL,
-  `ES_DESTACADO` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Indica si el evento es destacado (1) o no (0)',
-  `ASISTENCIAMINIMA` decimal(5,2) DEFAULT NULL
+  `ESTADO` enum('DISPONIBLE','CERRADO','CANCELADO') NOT NULL DEFAULT 'DISPONIBLE',
+  `CAPACIDAD` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `evento`
 --
 
-INSERT INTO `evento` (`SECUENCIAL`, `TITULO`, `CONTENIDO`, `DESCRIPCION`, `CODIGOTIPOEVENTO`, `FECHAINICIO`, `FECHAFIN`, `CODIGOMODALIDAD`, `HORAS`, `NOTAAPROBACION`, `ES_PAGADO`, `COSTO`, `SECUENCIALCARRERA`, `ES_SOLO_INTERNOS`, `SECUENCIALCATEGORIA`, `ESTADO`, `CAPACIDAD`, `ES_DESTACADO`, `ASISTENCIAMINIMA`) VALUES
-(167, 'FUNDAMENTOS DE PYTHON 1', '• Módulo 1: Introducción a Python y programación informática\no Introducción a la programación\no Introducción a Python\no Evaluación\n• Módulo 2: Tipos de datos, variables, operaciones básicas de entradasalida y operadores básicos\no El programa “Hola, Mundo”\no Literales de Python\no Operadores – herramientas de manipulación de datos\no Variables\no Comentarios\no Interacción con el usuario\no Evaluación\n• Módulo 3: Valores booleanos, ejecución condicional, bucles, listas y procesamiento de listas, operaciones lógicas y bit a bit\no Toma de decisiones en Python\no Bucles en Python\no Operadores lógicos y operacionales bit a bit en Python.\no Listas\no Operaciones con listas\no Aplicaciones avanzadas de listas\no Evaluación\n• Módulo 4: Funciones, tuplas, diccionarios, excepciones y procesamiento de datos.\no Funciones\no Comunicación de las funciones con su entorno\no Resultados de funciones\no Alcances en Python', 'El curso Fundamentos de Python 1 de Cisco NetAcad es una introducción esencial al mundo de la programación, diseñado para enseñar los conceptos básicos de Python de forma práctica y accesible. A través de actividades interactivas y ejercicios basados en problemas reales, los estudiantes desarrollarán habilidades fundamentales en lógica de programación, estructuras de control, manejo de datos y uso de funciones básicas. Este curso está dirigido tanto a principiantes como a personas interesadas en dar sus primeros pasos en el campo de la programación, proporcionando una base sólida para avanzar hacia niveles más complejos y para explorar su aplicación en áreas como redes, ciberseguridad e inteligencia artificial.', 'CUR', '2025-06-24', '2025-06-26', 'VIRT', 32, 7.00, 1, 25.00, 37, 0, 4, 'FINALIZADO', 30, 0, NULL),
-(168, 'Congreso de FISEI', NULL, 'El Congreso de la FISEI es un evento académico organizado por la Universidad Técnica de Ambato que promueve la investigación, innovación y el intercambio de conocimientos en las áreas de sistemas, electrónica e ingeniería industrial, reuniendo a expertos, estudiantes y profesionales del sector.', 'CONF', '2025-06-29', '2025-06-30', 'VIRT', 3, 7.00, 0, 0.00, 43, 0, 1, 'FINALIZADO', 30, 0, NULL),
-(169, 'Congreso', NULL, 'juojiikiiluloo', 'EXP', '2025-07-13', '2025-07-20', 'HIBR', 10, 0.00, 0, 0.00, NULL, 0, 1, 'DISPONIBLE', 40, 1, NULL),
-(171, 'Curso nuevo ', NULL, 'nuevo curso de vacaciones', 'CUR', '2025-07-13', '2025-07-20', 'HIBR', 10, 0.00, 0, 0.00, NULL, 0, 2, 'DISPONIBLE', 40, 0, NULL),
-(172, 'Congreso', NULL, 'dcxxcvcxcxcx', 'CUR', '2025-07-13', '2025-07-20', 'HIBR', 10, 0.00, 0, 0.00, NULL, 0, 1, 'DISPONIBLE', 40, 1, NULL),
-(173, 'Curso ', NULL, 'curso nuevo ', 'CUR', '2025-07-13', '2025-07-20', 'PRES', 10, 0.00, 0, 0.00, NULL, 0, 1, 'DISPONIBLE', 40, 1, NULL),
-(177, 'Calculo Integral', NULL, 'calculo integral ', 'TALL', '2025-07-05', '2025-07-06', 'PRES', 20, 0.00, 0, 0.00, NULL, 0, 3, 'FINALIZADO', 20, 0, NULL),
-(181, 'fisica', NULL, 'nuevo curso fisica', 'CUR', '2025-07-05', '2025-07-17', 'HIBR', 20, 0.00, 0, 0.00, NULL, 0, 1, 'CANCELADO', 5, 0, NULL),
-(182, 'fisica', NULL, 'nuevo curso ', 'CUR', '2025-07-05', '2025-07-12', 'HIBR', 40, 0.00, 0, 0.00, NULL, 0, 1, 'CANCELADO', 50, 0, NULL),
-(183, 'fisica', NULL, 'nuevo curso fisica', 'CUR', '2025-07-05', '2025-07-06', 'HIBR', 5, 0.00, 0, 0.00, NULL, 0, 1, 'CANCELADO', 5, 0, NULL),
-(187, 'Estructura de datos', NULL, 'nuevo curso de estructura de datos', 'CONF', '2025-07-07', '2025-07-09', 'HIBR', 40, 8.00, 0, 0.00, NULL, 0, 1, 'DISPONIBLE', 40, 0, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `evento_carrera`
---
-
-CREATE TABLE `evento_carrera` (
-  `ID` int(11) NOT NULL,
-  `SECUENCIALEVENTO` int(11) NOT NULL,
-  `SECUENCIALCARRERA` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `evento` (`SECUENCIAL`, `TITULO`, `DESCRIPCION`, `CODIGOTIPOEVENTO`, `FECHAINICIO`, `FECHAFIN`, `CODIGOMODALIDAD`, `HORAS`, `NOTAAPROBACION`, `ES_PAGADO`, `COSTO`, `SECUENCIALCARRERA`, `ES_SOLO_INTERNOS`, `SECUENCIALCATEGORIA`, `ESTADO`, `CAPACIDAD`) VALUES
+(152, ' semFYC', '🩺 ¡Actualízate con los mejores expertos en medicina desde donde estés! 🌐\r\n\r\nTe invitamos a participar en nuestra serie de webinarios médicos diseñados para profesionales de la salud, estudiantes y especialistas que buscan mantenerse al día con los últimos avances científicos, diagnósticos y tratamientos en diversas áreas de la medicina.\r\n\r\n📚 ¿Qué ofrecemos?\r\n✔️ Charlas en vivo con ponentes nacionales e internacionales\r\n✔️ Casos clínicos interactivos y análisis de evidencia actual\r\n✔️ Certificados de participación\r\n✔️ Espacio para preguntas y networking virtual\r\n\r\n🔍 Temáticas destacadas:\r\n\r\n    Medicina interna\r\n\r\n    Pediatría y ginecología\r\n\r\n    Cardiología y neurología\r\n\r\n    Salud pública y atención primaria\r\n\r\n    Innovaciones tecnológicas en el ámbito clínico.', 'SEM', '2025-06-05', '2025-06-10', 'PRES', 20, 0.00, 1, 15.00, 10, 0, 1, 'DISPONIBLE', NULL),
+(155, '31º Congreso de Pediatría (IPA) ', 'Organizado por la International Pediatric Association (IPA), en colaboración con la Asociación Mexicana de Pediatría (AMP) y la Confederación Nacional de Pediatría de México (CONAPEME), el congreso ofreció un espacio para compartir conocimientos, experiencias e innovaciones en el cuidado de la salud infantil.\r\n31° CONGRESO IPA\r\n🧠 Temáticas Destacadas\r\n\r\nEl programa académico abordó una amplia gama de temas, incluyendo:\r\n\r\n    Nutrición y desarrollo infantil\r\n\r\n    Salud mental en la infancia y adolescencia\r\n\r\n    Avances en enfermedades infecciosas pediátricas\r\n\r\n    Innovaciones en tratamientos y tecnologías médicas\r\n\r\n    Prevención y manejo de enfermedades crónicas en niños\r\n    Sociedad Argentina de Pediatría+3Cadena SER+3plandeactividades.com+3\r\n\r\nAdemás, se llevaron a cabo simposios, talleres prácticos y sesiones interactivas con expertos internacionales, fomentando el intercambio de conocimientos y experiencias entre los asistentes.\r\n🌍 Participación Internacional\r\n\r\nEl congreso contó con la participación de destacados ponentes y profesionales de la pediatría a nivel mundial, promoviendo la colaboración internacional y el fortalecimiento de redes profesionales en pro de la salud infantil.', 'CONF', '2025-06-05', '2025-06-05', 'PRES', 3, 0.00, 1, 5.00, 16, 0, 5, 'DISPONIBLE', NULL),
+(156, 'Java', '¿Quieres dominar uno de los lenguajes de programación más solicitados por las empresas? ¡Este curso de Java es para ti! 🌐💻\r\n\r\nEn nuestro curso aprenderás desde los fundamentos hasta conceptos intermedios y avanzados, con un enfoque 100% práctico. Aprenderás a desarrollar aplicaciones sólidas, seguras y multiplataforma, y te prepararás para el mundo laboral o proyectos propios.', 'CUR', '2025-06-01', '2025-06-06', 'VIRT', 32, 7.50, 1, 30.00, 43, 0, 1, 'DISPONIBLE', NULL),
+(157, 'JavaScript 1', 'Este curso de JavaScript está diseñado para introducir a los estudiantes en uno de los lenguajes de programación más utilizados en el desarrollo web. A lo largo del curso, los participantes aprenderán desde los fundamentos básicos de JavaScript hasta conceptos intermedios y avanzados que les permitirán crear sitios web interactivos y dinámicos.\r\n\r\nEl contenido incluye variables, estructuras de control, funciones, eventos, manipulación del DOM, manejo de errores, y el uso de APIs. Además, se abordarán principios modernos de desarrollo como ES6+, programación orientada a objetos y buenas prácticas de codificación.', 'CUR', '2025-06-01', '2025-06-15', 'VIRT', 90, 7.00, 1, 45.00, 43, 0, 1, 'DISPONIBLE', NULL);
 
 -- --------------------------------------------------------
 
@@ -348,6 +322,8 @@ CREATE TABLE `forma_pago` (
 
 INSERT INTO `forma_pago` (`CODIGO`, `NOMBRE`) VALUES
 ('EFEC', 'Efectivo'),
+('PYP', 'PayPal'),
+('TARJ', 'Tarjeta de Crédito'),
 ('TRANS', 'Transferencia');
 
 -- --------------------------------------------------------
@@ -368,12 +344,14 @@ CREATE TABLE `imagen_evento` (
 --
 
 INSERT INTO `imagen_evento` (`SECUENCIAL`, `SECUENCIALEVENTO`, `URL_IMAGEN`, `TIPO_IMAGEN`) VALUES
-(46, 167, 'public/img/portada_68542c2a2f47a_python1.jpg', 'PORTADA'),
-(47, 167, 'public/img/galeria_68542c2a2fa01_galeriaPython.png', 'GALERIA'),
-(48, 168, 'public/img/portada_68608505c9c01_portada.png', 'PORTADA'),
-(49, 168, 'public/img/galeria_68608505ca16e_galerai.jpg', 'GALERIA'),
-(50, 187, 'public/img/portada_6869ade52cff3_diarmaFlujo.png', 'PORTADA'),
-(51, 187, 'public/img/galeria_6869ade52d790_diagramEntidadRelacion.png', 'GALERIA');
+(18, 157, 'public/img/portada_683ce572e3b06_js.jpg', 'PORTADA'),
+(19, 157, 'public/img/galeria_683ce572e4340_galeria js.png', 'GALERIA'),
+(20, 156, 'public/img/portada_683ce6a8cbb15_java.jpg', 'PORTADA'),
+(21, 156, 'public/img/galeria_683ce6a8cc4fd_galeria java.jpg', 'GALERIA'),
+(22, 155, 'public/img/portada_683ce7ab48674_congreso.png', 'PORTADA'),
+(23, 155, 'public/img/galeria_683ce7ab49091_galeria congreso.png', 'GALERIA'),
+(24, 152, 'public/img/portada_683ce8dfa6ac1_webnaris.jpg', 'PORTADA'),
+(25, 152, 'public/img/galeria_683ce8dfa75a1_galeria Webnairs.jpg', 'GALERIA');
 
 -- --------------------------------------------------------
 
@@ -395,9 +373,7 @@ CREATE TABLE `inscripcion` (
 --
 
 INSERT INTO `inscripcion` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `FECHAINSCRIPCION`, `FACTURA_URL`, `CODIGOESTADOINSCRIPCION`) VALUES
-(1048, 167, 87, '2025-06-24 01:27:14', NULL, 'ACE'),
-(1049, 168, 87, '2025-06-28 19:14:19', NULL, 'ACE'),
-(1050, 169, 89, '2025-07-04 00:21:19', NULL, 'PEN');
+(1007, 152, 21, '2025-05-30 12:00:00', '', 'ACE');
 
 -- --------------------------------------------------------
 
@@ -438,17 +414,12 @@ CREATE TABLE `organizador_evento` (
 --
 
 INSERT INTO `organizador_evento` (`SECUENCIAL`, `SECUENCIALEVENTO`, `SECUENCIALUSUARIO`, `ROL_ORGANIZADOR`) VALUES
-(97, 167, 88, 'RESPONSABLE'),
-(98, 167, 88, 'ORGANIZADOR'),
-(99, 168, 88, 'RESPONSABLE'),
-(135, 169, 91, 'ORGANIZADOR'),
-(137, 172, 91, 'ORGANIZADOR'),
-(139, 173, 91, 'ORGANIZADOR'),
-(141, 171, 91, 'ORGANIZADOR'),
-(149, 181, 91, 'RESPONSABLE'),
-(150, 182, 91, 'RESPONSABLE'),
-(151, 183, 91, 'RESPONSABLE'),
-(155, 187, 91, 'RESPONSABLE');
+(52, 155, 12, 'RESPONSABLE'),
+(53, 156, 12, 'RESPONSABLE'),
+(54, 157, 12, 'RESPONSABLE'),
+(70, 157, 12, 'ORGANIZADOR'),
+(71, 152, 12, 'RESPONSABLE'),
+(72, 152, 12, 'ORGANIZADOR');
 
 -- --------------------------------------------------------
 
@@ -473,7 +444,7 @@ CREATE TABLE `pago` (
 --
 
 INSERT INTO `pago` (`SECUENCIAL`, `SECUENCIALINSCRIPCION`, `CODIGOFORMADEPAGO`, `COMPROBANTE_URL`, `CODIGOESTADOPAGO`, `SECUENCIAL_USUARIO_APROBADOR`, `FECHA_PAGO`, `FECHA_APROBACION`, `MONTO`) VALUES
-(32, 1048, 'TRANS', 'comprobante_685a4698198e1_REGLAMENTO.pdf', 'VAL', 88, '2025-06-24 01:32:56', '2025-06-29 13:40:32', 0.00);
+(1, 1007, 'EFEC', 'comprobante_6844682713e78.pdf', 'VAL', 12, '2025-06-01 19:43:20', '2025-06-07 11:26:28', 15.00);
 
 -- --------------------------------------------------------
 
@@ -517,6 +488,7 @@ CREATE TABLE `requisito_evento` (
 INSERT INTO `requisito_evento` (`SECUENCIAL`, `SECUENCIALEVENTO`, `DESCRIPCION`, `ES_OBLIGATORIO`) VALUES
 (1, NULL, 'Cédula o documento de identidad', NULL),
 (2, NULL, 'Comprobante de matrícula vigente', NULL),
+(3, NULL, 'Comprobante de pago', NULL),
 (4, NULL, 'Certificado de vacunación COVID-19', NULL),
 (5, NULL, 'Carta de autorización de la facultad', NULL),
 (6, NULL, 'Ensayo o trabajo previo requerido', NULL),
@@ -524,23 +496,17 @@ INSERT INTO `requisito_evento` (`SECUENCIAL`, `SECUENCIALEVENTO`, `DESCRIPCION`,
 (8, NULL, 'Formulario de inscripción firmado', NULL),
 (9, NULL, 'Certificado de conocimiento previo', NULL),
 (10, NULL, 'Carta de invitación oficial', NULL),
-(12, 167, 'Aval académico', NULL),
-(72, 167, 'Cédula o documento de identidad', NULL),
-(73, 167, 'Comprobante de matrícula vigente', NULL),
-(74, 168, 'Carta de invitación oficial', NULL),
-(75, 168, 'Aval académico', NULL),
-(76, NULL, 'Carta de motivación', NULL),
-(81, 177, 'Cédula o documento de identidad', NULL),
-(82, 177, 'Carta de motivación', NULL),
-(86, 181, 'Cédula o documento de identidad', NULL),
-(87, 181, 'Carta de motivación', NULL),
-(88, 182, 'Cédula o documento de identidad', NULL),
-(89, 182, 'Carta de motivación', NULL),
-(90, 183, 'Cédula o documento de identidad', NULL),
-(91, 183, 'Carta de motivación', NULL),
-(96, 187, 'Cédula o documento de identidad', NULL),
-(97, 187, 'Certificado de vacunación COVID-19', NULL),
-(98, 187, 'Carta de motivación', NULL);
+(11, NULL, 'Foto tipo carnet actualizada', NULL),
+(12, NULL, 'Aval académico', NULL),
+(13, NULL, 'Contrato o acuerdo de participación', NULL),
+(14, NULL, 'Permiso de salida institucional', NULL),
+(19, NULL, 'Constancia de asistencia a módulo anterior', NULL),
+(20, NULL, 'Historial académico actualizado', NULL),
+(41, 156, 'Cédula o documento de identidad', NULL),
+(42, 156, 'Comprobante de pago', NULL),
+(43, 156, 'Formulario de inscripción firmado', NULL),
+(44, 156, 'Resumen o abstract del tema propuesto', NULL),
+(56, NULL, 'matricula vigente FACK', NULL);
 
 -- --------------------------------------------------------
 
@@ -596,21 +562,19 @@ CREATE TABLE `solicitud_cambio` (
 CREATE TABLE `tipo_evento` (
   `CODIGO` varchar(20) NOT NULL,
   `NOMBRE` varchar(100) DEFAULT NULL,
-  `DESCRIPCION` varchar(500) DEFAULT NULL,
-  `REQUIERENOTA` tinyint(1) NOT NULL DEFAULT 0,
-  `REQUIEREASISTENCIA` tinyint(1) NOT NULL DEFAULT 0
+  `DESCRIPCION` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tipo_evento`
 --
 
-INSERT INTO `tipo_evento` (`CODIGO`, `NOMBRE`, `DESCRIPCION`, `REQUIERENOTA`, `REQUIEREASISTENCIA`) VALUES
-('CONF', 'Conferencia', 'Evento académico con expositores', 1, 1),
-('CUR', 'Curso', 'Capacitación estructurada', 0, 0),
-('EXP', 'Exposición', 'Presentación de proyectos', 0, 0),
-('SEM', 'Seminario', 'Espacio de exposición académica', 0, 0),
-('TALL', 'Taller', 'Sesión práctica sobre un tema específico', 0, 0);
+INSERT INTO `tipo_evento` (`CODIGO`, `NOMBRE`, `DESCRIPCION`) VALUES
+('CONF', 'Conferencia', 'Evento académico con expositores'),
+('CUR', 'Curso', 'Capacitación estructurada'),
+('EXP', 'Exposición', 'Presentación de proyectos'),
+('SEM', 'Seminario', 'Espacio de exposición académica'),
+('TALL', 'Taller', 'Sesión práctica sobre un tema específico');
 
 -- --------------------------------------------------------
 
@@ -624,7 +588,6 @@ CREATE TABLE `usuario` (
   `APELLIDOS` varchar(100) NOT NULL,
   `CEDULA` varchar(20) DEFAULT NULL,
   `URL_CEDULA` varchar(255) DEFAULT NULL,
-  `URL_MATRICULA` varchar(255) DEFAULT NULL,
   `FECHA_NACIMIENTO` date DEFAULT NULL,
   `TELEFONO` varchar(20) NOT NULL,
   `DIRECCION` varchar(255) DEFAULT NULL,
@@ -642,16 +605,16 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`SECUENCIAL`, `NOMBRES`, `APELLIDOS`, `CEDULA`, `URL_CEDULA`, `URL_MATRICULA`, `FECHA_NACIMIENTO`, `TELEFONO`, `DIRECCION`, `CORREO`, `CONTRASENA`, `CODIGOROL`, `CODIGOESTADO`, `ES_INTERNO`, `FOTO_PERFIL`, `token_recupera`, `token_expiracion`) VALUES
-(17, 'Ing. Luis', 'Morales', NULL, NULL, NULL, NULL, '0982184126', 'Ambato', 'luisamorales@uta.edu.ec', '$2y$10$zhHNQdBczuYUGPyug01NYunxM9NA9E6jn/vSa15ZdXXdrvBUUbppq', 'SUBDECANO', 'INACTIVO', 1, 'perfil_684537231ab49_luis_morales.png', NULL, NULL),
-(18, 'Ing. Daniel', 'Jerez', NULL, NULL, NULL, NULL, '09784334934', 'Ambato', 'jerezD@uta.edu.ec', '$2y$10$ENH1c55NGiQYlIoN.YXcHee50cDBv.wfgNYLzn3KNi44y1YZr6adW', 'COORDINADOR', 'INACTIVO', 1, 'perfil_684536f4b3c0f_daniel_jerez.jpeg', NULL, NULL),
-(19, 'Ing. Marco', 'Guachimboza', NULL, NULL, NULL, NULL, '0984384394', 'Ambato', 'marcovguachimboza@uta.edu.ec', '$2y$10$sAskvAiElJ8xegl8RJa/qeMSeRz8siV7D5lrQLjbGaoTou4rHs8CC', 'RECTOR', 'INACTIVO', 1, 'perfil_6845373c24875_marcoG.png', NULL, NULL),
-(73, 'Cristian', 'Jurado', NULL, NULL, NULL, '2004-06-29', '0982184126', 'Tena', 'ernestojurado2004@gmail.com', '$2y$10$5DqomY0n029e2viMtabJZOF3zm2EGervyNM9sLTOLR6xefxbpWbv2', 'ADM', 'ACTIVO', 0, NULL, NULL, NULL),
-(86, 'Ing. Franklin ', 'Mayorga', NULL, NULL, NULL, NULL, '0385798467', 'FISEI', 'fmayorga@uta.edu.ec', '$2y$10$VkHbS.77pNdqEYp7dgkNxe/h/rPGQw8Ux1V8V2Y9dgKHf7/RfClU.', 'DECANO', 'INACTIVO', 1, 'perfil_68532e628f45d_franklin_mayorga.png', NULL, NULL),
-(87, 'Amalia Analia', 'Romero', '1601185795', 'cedula_685a43a297fb0.pdf', 'matricula_685a43a298776.pdf', '2003-06-10', '0996871239', 'Ambato', 'amaliaR@uta.edu.ec', '$2y$10$CwJLT0w0.DLyI/V.95OvVONE/UsZc6TsIJkNhlKWO6EzvHyhtd8u2', 'EST', 'ACTIVO', 1, 'perfil_685a43a2979e7.jpg', NULL, NULL),
-(88, 'Patricio', 'Jaramillo', '1800034257', '', '', '2000-06-27', '0995643234', 'Ambato, Huachi', 'patricio.jar@uta.edu.ec', '$2y$10$JxEajy/LAlIy1P4qlCPxJeBm917Lw4TGKu6DzBul4KU57uAT6vUu2', 'DOC', 'ACTIVO', 1, 'perfil_68542abd32162_perfil_patricio_jaramillo.png', NULL, NULL),
-(89, 'Javier', 'Quisaguano', NULL, NULL, NULL, '2005-01-13', '0993459583', 'squisili', 'dquisaguano6335@uta.edu.ec', '$2y$10$cyj3klJO9GEueKQFGc6s4OtKs5UQHy2Qd6btc9139IqPEncA936TO', 'EST', 'ACTIVO', 1, NULL, NULL, NULL),
-(91, 'Dennis', 'Quisaguano', '0550236335', NULL, NULL, '2005-01-13', '0993459583', 'saquisili', 'dennis@uta.edu.ec', '$2y$10$VaQZEWUvHdCaUrJ8ccpocu8nECsPCW10mhE98onk26Sm2YMPu.SfC', 'DOC', 'ACTIVO', 1, NULL, NULL, NULL);
+INSERT INTO `usuario` (`SECUENCIAL`, `NOMBRES`, `APELLIDOS`, `CEDULA`, `URL_CEDULA`, `FECHA_NACIMIENTO`, `TELEFONO`, `DIRECCION`, `CORREO`, `CONTRASENA`, `CODIGOROL`, `CODIGOESTADO`, `ES_INTERNO`, `FOTO_PERFIL`, `token_recupera`, `token_expiracion`) VALUES
+(11, 'Juan', 'Jurado', '180292823', NULL, '2000-05-10', '0992222222', 'Dirección estudiante', 'juan@uta.edu.ec', 'juan123', 'EST', 'ACTIVO', 1, 'foto_est.jpg', NULL, NULL),
+(12, 'Lucía', 'Rivas', NULL, NULL, '1990-03-15', '0993333333', 'Dirección docente', 'lucia@uta.edu.ec', '$2y$10$HMdTkyEy1uXQ04Q3piAZkOnqS5hRF7UWqkqyk2hFdcQWf.t8psBBy', 'DOC', 'ACTIVO', 1, 'Cris.jpg', NULL, NULL),
+(13, 'Marco', 'López', NULL, NULL, '1988-07-22', '0994444444', 'Dirección invitado', 'marco@gmail.com', '$2y$10$kqR7ELnnF8TPwLvT.Vuua.sY42HPhSx5kZnP4PDHppEcRH4ENYlhS', 'INV', 'ACTIVO', 1, 'foto_inv.jpg', NULL, NULL),
+(14, 'Cristian', 'Jurado', NULL, NULL, NULL, '0982184126', 'Archidona, Barrio PIEDRA GRANDE', 'ernestojurado2004@gmail.com', '$2y$10$FxBR8nZGU55H3Amjl82W.OhFRk89LAEBs7KbPMghgA980iYByMNw6', 'ADM', 'ACTIVO', 1, NULL, NULL, NULL),
+(16, 'Ing. Franklin ', 'Mayorga', NULL, NULL, NULL, '09885784545', 'Ambato', 'fmayorga@uta.edu.ec', '$2y$10$jd8btvoDAXYUHRuLrNHTFOQnkRVuQTqhGJZ1ql6EQmK3It1TsQK1e', 'DECANO', 'INACTIVO', 1, 'perfil_68453715908fb_franklin_mayorga.png', NULL, NULL),
+(17, 'Ing. Luis', 'Morales', NULL, NULL, NULL, '0982184126', 'Ambato', 'luisamorales@uta.edu.ec', '$2y$10$zhHNQdBczuYUGPyug01NYunxM9NA9E6jn/vSa15ZdXXdrvBUUbppq', 'SUBDECANO', 'INACTIVO', 1, 'perfil_684537231ab49_luis_morales.png', NULL, NULL),
+(18, 'Ing. Daniel', 'Jerez', NULL, NULL, NULL, '09784334934', 'Ambato', 'jerezD@uta.edu.ec', '$2y$10$ENH1c55NGiQYlIoN.YXcHee50cDBv.wfgNYLzn3KNi44y1YZr6adW', 'COORDINADOR', 'INACTIVO', 1, 'perfil_684536f4b3c0f_daniel_jerez.jpeg', NULL, NULL),
+(19, 'Ing. Marco', 'Guachimboza', NULL, NULL, NULL, '0984384394', 'Ambato', 'marcovguachimboza@uta.edu.ec', '$2y$10$sAskvAiElJ8xegl8RJa/qeMSeRz8siV7D5lrQLjbGaoTou4rHs8CC', 'RECTOR', 'INACTIVO', 1, 'perfil_6845373c24875_marcoG.png', NULL, NULL),
+(21, 'Juan', 'Jurado', '1501185798', 'cedula_684535b500cce.pdf', '2004-06-14', '0996874183', 'Archidona', 'prueba@gmail.com', '$2y$10$n0a8qdZXW/sSL7L32VSSWulfG3rhKCU/Z/fPuVgzeC/p4i5wf3nOK', 'INV', 'ACTIVO', 1, 'perfil_684535b5009c0.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -670,7 +633,9 @@ CREATE TABLE `usuario_carrera` (
 --
 
 INSERT INTO `usuario_carrera` (`SECUENCIAL`, `SECUENCIALUSUARIO`, `SECUENCIALCARRERA`) VALUES
-(9, 87, 16);
+(6, 11, 37),
+(7, 12, 43),
+(8, 21, 17);
 
 --
 -- Índices para tablas volcadas
@@ -741,14 +706,6 @@ ALTER TABLE `evento`
   ADD KEY `CODIGOMODALIDAD` (`CODIGOMODALIDAD`),
   ADD KEY `SECUENCIALCARRERA` (`SECUENCIALCARRERA`),
   ADD KEY `SECUENCIALCATEGORIA` (`SECUENCIALCATEGORIA`);
-
---
--- Indices de la tabla `evento_carrera`
---
-ALTER TABLE `evento_carrera`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `SECUENCIALEVENTO` (`SECUENCIALEVENTO`),
-  ADD KEY `SECUENCIALCARRERA` (`SECUENCIALCARRERA`);
 
 --
 -- Indices de la tabla `facultad`
@@ -859,13 +816,13 @@ ALTER TABLE `usuario_carrera`
 -- AUTO_INCREMENT de la tabla `archivo_requisito`
 --
 ALTER TABLE `archivo_requisito`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencia_nota`
 --
 ALTER TABLE `asistencia_nota`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `carrera`
@@ -883,19 +840,13 @@ ALTER TABLE `categoria_evento`
 -- AUTO_INCREMENT de la tabla `certificado`
 --
 ALTER TABLE `certificado`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
-
---
--- AUTO_INCREMENT de la tabla `evento_carrera`
---
-ALTER TABLE `evento_carrera`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=637;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT de la tabla `facultad`
@@ -907,55 +858,55 @@ ALTER TABLE `facultad`
 -- AUTO_INCREMENT de la tabla `imagen_evento`
 --
 ALTER TABLE `imagen_evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1051;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1012;
 
 --
 -- AUTO_INCREMENT de la tabla `organizador_evento`
 --
 ALTER TABLE `organizador_evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `recepcion_cambio`
 --
 ALTER TABLE `recepcion_cambio`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `requisito_evento`
 --
 ALTER TABLE `requisito_evento`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_cambio`
 --
 ALTER TABLE `solicitud_cambio`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_carrera`
 --
 ALTER TABLE `usuario_carrera`
-  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `SECUENCIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -997,13 +948,6 @@ ALTER TABLE `evento`
   ADD CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`CODIGOMODALIDAD`) REFERENCES `modalidad_evento` (`CODIGO`),
   ADD CONSTRAINT `evento_ibfk_3` FOREIGN KEY (`SECUENCIALCARRERA`) REFERENCES `carrera` (`SECUENCIAL`),
   ADD CONSTRAINT `evento_ibfk_4` FOREIGN KEY (`SECUENCIALCATEGORIA`) REFERENCES `categoria_evento` (`SECUENCIAL`);
-
---
--- Filtros para la tabla `evento_carrera`
---
-ALTER TABLE `evento_carrera`
-  ADD CONSTRAINT `evento_carrera_ibfk_1` FOREIGN KEY (`SECUENCIALEVENTO`) REFERENCES `evento` (`SECUENCIAL`) ON DELETE CASCADE,
-  ADD CONSTRAINT `evento_carrera_ibfk_2` FOREIGN KEY (`SECUENCIALCARRERA`) REFERENCES `carrera` (`SECUENCIAL`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `imagen_evento`

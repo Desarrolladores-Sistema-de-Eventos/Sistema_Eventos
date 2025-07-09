@@ -54,10 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
             reqHtml += '</ul>';
             setHTML('requisitosEvento', reqHtml);
 
-            if (ev.CONTENIDO) {
-                setHTML('contenidoEvento', ev.CONTENIDO);
-            }
-
             // Organizador
             if (ev.ORGANIZADOR) {
                 setText('nombreOrganizador', `${ev.ORGANIZADOR.NOMBRES} ${ev.ORGANIZADOR.APELLIDOS}`);

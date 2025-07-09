@@ -24,40 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     eventos.forEach(evento => {
       const tarjeta = document.createElement('div');
-      tarjeta.classList.add('tarjeta-evento', 'activo', 'shadow-sm');
+      tarjeta.classList.add('tarjeta-evento', 'activo');
 
-     tarjeta.innerHTML = `
-  <img src="../${evento.PORTADA || 'assets/img/default.jpg'}" alt="Evento" class="evento-img rounded-top" style="height: 170px; object-fit: cover;">
-  <div class="p-3 bg-white rounded-bottom">
-
-    <h5 class="text-dark font-weight-bold mb-3">
-      <i class="fa fa-calendar-alt mr-2 text-danger"></i> ${evento.TITULO}
-    </h5>
-
-    <div class="info-line">
-      <i class="fa fa-calendar text-curso"></i>
-      <span class="etiqueta">${evento.TIPO_EVENTO || 'General'}</span>
-    </div>
-
-    <div class="info-line">
-      <i class="fa fa-flag text-estado"></i>
-      <span>Estado: <span class="estado-label ${evento.ESTADO.toLowerCase()}">${evento.ESTADO}</span></span>
-    </div>
-
-    <div class="info-line">
-      <i class="fa fa-check-circle text-inscrito"></i>
-      <span class="inscrito-texto">Inscrito</span>
-    </div>
-
-    <div class="text-center mt-3">
-      <button class="btn btn-sm ver-contenido btn-ver"
-              data-contenido="${evento.CONTENIDO || ''}">
-        <i class="fas fa-book-open"></i> Ver Contenido
-      </button>
-    </div>
-
-  </div>
-`;
+      tarjeta.innerHTML = `
+        <img src="../${evento.PORTADA || 'assets/img/default.jpg'}" alt="Evento" class="evento-img">
+        <h4><i class="fa fa-calendar-alt"></i> ${evento.TITULO}</h4>
+        <p><i class="fa fa-calendar"></i> <strong>${formatearFecha(evento.FECHAINICIO)}</strong> al <strong>${formatearFecha(evento.FECHAFIN)}</strong></p>
+        <p><i class="fa fa-clock"></i> En curso</p>
+        <p><i class="fa fa-check-circle"></i> <span class="inscrito">Inscrito</span></p>
+      `;
 
       contenedor.appendChild(tarjeta);
     });
@@ -68,30 +43,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const fecha = new Date(fechaISO);
     return fecha.toLocaleDateString('es-ES', opciones);
   }
-  function mostrarModalContenido(contenido) {
-  $('#contenidoModal .modal-body').html(contenido || '<p class="text-muted">Sin contenido disponible.</p>');
-  $('#contenidoModal').modal('show');
-}
 
-
-  document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('ver-contenido') || e.target.closest('.ver-contenido')) {
-      const btn = e.target.closest('.ver-contenido');
-      const contenido = btn.dataset.contenido || 'Sin contenido registrado.';
-      mostrarModalContenido(contenido);
-    }
-  });
-
+  // Buscador
   inputBusqueda.addEventListener('input', function () {
     const filtro = this.value.toLowerCase();
     const tarjetas = document.querySelectorAll('.tarjeta-evento');
 
     tarjetas.forEach(tarjeta => {
-      const titulo = tarjeta.querySelector('h5')?.textContent.toLowerCase() || '';
+      const titulo = tarjeta.querySelector('h4')?.textContent.toLowerCase() || '';
       tarjeta.style.display = titulo.includes(filtro) ? '' : 'none';
     });
   });
 
   cargarEventos();
 });
-
