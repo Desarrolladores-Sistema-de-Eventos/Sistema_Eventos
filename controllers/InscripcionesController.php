@@ -324,7 +324,7 @@ private function subirComprobantePago() {
 
     $extension = pathinfo($archivo['name'], PATHINFO_EXTENSION);
     $nombreArchivo = uniqid('comprobante_') . "." . $extension;
-    $rutaDestino = "../facturas_Comprobantes/" . $nombreArchivo;
+    $rutaDestino = "../documents/comprobantes/" . $nombreArchivo;
 
     if (!move_uploaded_file($archivo['tmp_name'], $rutaDestino)) {
         return $this->json([

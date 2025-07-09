@@ -4161,3 +4161,519 @@
     ),
   ),
 )
+2025-07-09 12:20:23 [getEvento] ID recibido: '182'
+2025-07-09 12:20:23 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 12:20:23 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 182,
+  'TITULO' => 'LA LEY DE PROTECCIÓN DE DATOS ',
+  'CONTENIDO' => '<ul><li><strong>Clase 1:</strong>&nbsp;Fundamentos de la Protección de Datos Personales: Contexto Nacional e Internacional</li><li><strong>Clase 2:</strong>&nbsp;Derechos del Titular y Obligaciones de los Responsables del Tratamiento</li><li><strong>Clase 3:</strong>&nbsp;Gestión y Seguridad de los Datos en Organizaciones</li><li><strong>Clase 4:</strong>&nbsp;Aplicación Práctica y Casos Reales</li></ul>',
+  'DESCRIPCION' => '<p>Este curso tiene como objetivo ofrecer a estudiantes, docentes y al público en general una comprensión sólida sobre la Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador y su reglamento. A través de un análisis de los fundamentos legales, principios clave y casos prácticos, los participantes aprenderán a identificar los derechos que tienen como titulares de datos, así como las responsabilidades que deben cumplir las instituciones, tanto públicas como privadas, al manejar información personal.<br><br>La propuesta académica se basa en ejemplos reales de políticas internas, normativas internacionales y estándares como el GDPR europeo. El curso promueve una perspectiva humanista sobre la protección de datos, fomentando el uso responsable de la información como un derecho fundamental y un aspecto esencial en nuestra sociedad digital.</p><h2>OBJETIVOS</h2><h3>Objetivo Principal</h3><p>Capacitar a estudiantes, docentes y ciudadanía en general en los principios, derechos y obligaciones establecidos por la Ley Orgánica de Protección de Datos Personales del Ecuador, promoviendo una cultura de respeto a la privacidad, responsabilidad en el tratamiento de datos y cumplimiento normativo en contextos educativos, laborales y sociales.</p><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Centro de Transferencia y Desarrollo de Tecnologías CTT-FISEI.</li><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li></ul>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-17',
+  'FECHAFIN' => '2025-09-18',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 7,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '60.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 3,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Deportiva',
+)
+2025-07-09 12:20:23 [getEvento] Evento final: array (
+  'SECUENCIAL' => 182,
+  'TITULO' => 'LA LEY DE PROTECCIÓN DE DATOS ',
+  'CONTENIDO' => '<ul><li><strong>Clase 1:</strong>&nbsp;Fundamentos de la Protección de Datos Personales: Contexto Nacional e Internacional</li><li><strong>Clase 2:</strong>&nbsp;Derechos del Titular y Obligaciones de los Responsables del Tratamiento</li><li><strong>Clase 3:</strong>&nbsp;Gestión y Seguridad de los Datos en Organizaciones</li><li><strong>Clase 4:</strong>&nbsp;Aplicación Práctica y Casos Reales</li></ul>',
+  'DESCRIPCION' => '<p>Este curso tiene como objetivo ofrecer a estudiantes, docentes y al público en general una comprensión sólida sobre la Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador y su reglamento. A través de un análisis de los fundamentos legales, principios clave y casos prácticos, los participantes aprenderán a identificar los derechos que tienen como titulares de datos, así como las responsabilidades que deben cumplir las instituciones, tanto públicas como privadas, al manejar información personal.<br><br>La propuesta académica se basa en ejemplos reales de políticas internas, normativas internacionales y estándares como el GDPR europeo. El curso promueve una perspectiva humanista sobre la protección de datos, fomentando el uso responsable de la información como un derecho fundamental y un aspecto esencial en nuestra sociedad digital.</p><h2>OBJETIVOS</h2><h3>Objetivo Principal</h3><p>Capacitar a estudiantes, docentes y ciudadanía en general en los principios, derechos y obligaciones establecidos por la Ley Orgánica de Protección de Datos Personales del Ecuador, promoviendo una cultura de respeto a la privacidad, responsabilidad en el tratamiento de datos y cumplimiento normativo en contextos educativos, laborales y sociales.</p><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Centro de Transferencia y Desarrollo de Tecnologías CTT-FISEI.</li><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li></ul>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-17',
+  'FECHAFIN' => '2025-09-18',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 7,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '60.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 3,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Deportiva',
+  'PORTADA' => 'portada_686dec5911ae6.jpg',
+  'GALERIA' => 'galeria_686dec5912522.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 38,
+      'NOMBRE_CARRERA' => 'Electrónica y Telecomunicaciones',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 146,
+    1 => 147,
+    2 => 148,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 146,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 182,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 147,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 182,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 148,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 182,
+    ),
+  ),
+)
+2025-07-09 12:21:05 [getEvento] ID recibido: '182'
+2025-07-09 12:21:05 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 12:21:05 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 182,
+  'TITULO' => 'LA LEY DE PROTECCIÓN DE DATOS ',
+  'CONTENIDO' => '<ul><li><strong>Clase 1:</strong>&nbsp;Fundamentos de la Protección de Datos Personales: Contexto Nacional e Internacional</li><li><strong>Clase 2:</strong>&nbsp;Derechos del Titular y Obligaciones de los Responsables del Tratamiento</li><li><strong>Clase 3:</strong>&nbsp;Gestión y Seguridad de los Datos en Organizaciones</li><li><strong>Clase 4:</strong>&nbsp;Aplicación Práctica y Casos Reales</li></ul>',
+  'DESCRIPCION' => '<p>Este curso tiene como objetivo ofrecer a estudiantes, docentes y al público en general una comprensión sólida sobre la Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador y su reglamento. A través de un análisis de los fundamentos legales, principios clave y casos prácticos, los participantes aprenderán a identificar los derechos que tienen como titulares de datos, así como las responsabilidades que deben cumplir las instituciones, tanto públicas como privadas, al manejar información personal.<br><br>La propuesta académica se basa en ejemplos reales de políticas internas, normativas internacionales y estándares como el GDPR europeo. El curso promueve una perspectiva humanista sobre la protección de datos, fomentando el uso responsable de la información como un derecho fundamental y un aspecto esencial en nuestra sociedad digital.</p><h2>OBJETIVOS</h2><h3>Objetivo Principal</h3><p>Capacitar a estudiantes, docentes y ciudadanía en general en los principios, derechos y obligaciones establecidos por la Ley Orgánica de Protección de Datos Personales del Ecuador, promoviendo una cultura de respeto a la privacidad, responsabilidad en el tratamiento de datos y cumplimiento normativo en contextos educativos, laborales y sociales.</p><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Centro de Transferencia y Desarrollo de Tecnologías CTT-FISEI.</li><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li></ul>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-17',
+  'FECHAFIN' => '2025-09-18',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 7,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '60.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 3,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Deportiva',
+)
+2025-07-09 12:21:05 [getEvento] Evento final: array (
+  'SECUENCIAL' => 182,
+  'TITULO' => 'LA LEY DE PROTECCIÓN DE DATOS ',
+  'CONTENIDO' => '<ul><li><strong>Clase 1:</strong>&nbsp;Fundamentos de la Protección de Datos Personales: Contexto Nacional e Internacional</li><li><strong>Clase 2:</strong>&nbsp;Derechos del Titular y Obligaciones de los Responsables del Tratamiento</li><li><strong>Clase 3:</strong>&nbsp;Gestión y Seguridad de los Datos en Organizaciones</li><li><strong>Clase 4:</strong>&nbsp;Aplicación Práctica y Casos Reales</li></ul>',
+  'DESCRIPCION' => '<p>Este curso tiene como objetivo ofrecer a estudiantes, docentes y al público en general una comprensión sólida sobre la Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador y su reglamento. A través de un análisis de los fundamentos legales, principios clave y casos prácticos, los participantes aprenderán a identificar los derechos que tienen como titulares de datos, así como las responsabilidades que deben cumplir las instituciones, tanto públicas como privadas, al manejar información personal.<br><br>La propuesta académica se basa en ejemplos reales de políticas internas, normativas internacionales y estándares como el GDPR europeo. El curso promueve una perspectiva humanista sobre la protección de datos, fomentando el uso responsable de la información como un derecho fundamental y un aspecto esencial en nuestra sociedad digital.</p><h2>OBJETIVOS</h2><h3>Objetivo Principal</h3><p>Capacitar a estudiantes, docentes y ciudadanía en general en los principios, derechos y obligaciones establecidos por la Ley Orgánica de Protección de Datos Personales del Ecuador, promoviendo una cultura de respeto a la privacidad, responsabilidad en el tratamiento de datos y cumplimiento normativo en contextos educativos, laborales y sociales.</p><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Centro de Transferencia y Desarrollo de Tecnologías CTT-FISEI.</li><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li></ul>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-17',
+  'FECHAFIN' => '2025-09-18',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 7,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '60.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 3,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Deportiva',
+  'PORTADA' => 'portada_686dec5911ae6.jpg',
+  'GALERIA' => 'galeria_686dec5912522.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 38,
+      'NOMBRE_CARRERA' => 'Electrónica y Telecomunicaciones',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 146,
+    1 => 147,
+    2 => 148,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 146,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 182,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 147,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 182,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 148,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 182,
+    ),
+  ),
+)
+2025-07-09 12:44:39 [getEvento] ID recibido: '182'
+2025-07-09 12:44:39 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 12:44:39 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 182,
+  'TITULO' => 'LA LEY DE PROTECCIÓN DE DATOS ',
+  'CONTENIDO' => '<ul><li><strong>Clase 1:</strong>&nbsp;Fundamentos de la Protección de Datos Personales: Contexto Nacional e Internacional</li><li><strong>Clase 2:</strong>&nbsp;Derechos del Titular y Obligaciones de los Responsables del Tratamiento</li><li><strong>Clase 3:</strong>&nbsp;Gestión y Seguridad de los Datos en Organizaciones</li><li><strong>Clase 4:</strong>&nbsp;Aplicación Práctica y Casos Reales</li></ul>',
+  'DESCRIPCION' => '<p>Este curso tiene como objetivo ofrecer a estudiantes, docentes y al público en general una comprensión sólida sobre la Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador y su reglamento. A través de un análisis de los fundamentos legales, principios clave y casos prácticos, los participantes aprenderán a identificar los derechos que tienen como titulares de datos, así como las responsabilidades que deben cumplir las instituciones, tanto públicas como privadas, al manejar información personal.<br><br>La propuesta académica se basa en ejemplos reales de políticas internas, normativas internacionales y estándares como el GDPR europeo. El curso promueve una perspectiva humanista sobre la protección de datos, fomentando el uso responsable de la información como un derecho fundamental y un aspecto esencial en nuestra sociedad digital.</p><h2>OBJETIVOS</h2><h3>Objetivo Principal</h3><p>Capacitar a estudiantes, docentes y ciudadanía en general en los principios, derechos y obligaciones establecidos por la Ley Orgánica de Protección de Datos Personales del Ecuador, promoviendo una cultura de respeto a la privacidad, responsabilidad en el tratamiento de datos y cumplimiento normativo en contextos educativos, laborales y sociales.</p><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Centro de Transferencia y Desarrollo de Tecnologías CTT-FISEI.</li><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li></ul>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-17',
+  'FECHAFIN' => '2025-09-18',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 7,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '60.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 3,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Deportiva',
+)
+2025-07-09 12:44:39 [getEvento] Evento final: array (
+  'SECUENCIAL' => 182,
+  'TITULO' => 'LA LEY DE PROTECCIÓN DE DATOS ',
+  'CONTENIDO' => '<ul><li><strong>Clase 1:</strong>&nbsp;Fundamentos de la Protección de Datos Personales: Contexto Nacional e Internacional</li><li><strong>Clase 2:</strong>&nbsp;Derechos del Titular y Obligaciones de los Responsables del Tratamiento</li><li><strong>Clase 3:</strong>&nbsp;Gestión y Seguridad de los Datos en Organizaciones</li><li><strong>Clase 4:</strong>&nbsp;Aplicación Práctica y Casos Reales</li></ul>',
+  'DESCRIPCION' => '<p>Este curso tiene como objetivo ofrecer a estudiantes, docentes y al público en general una comprensión sólida sobre la Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador y su reglamento. A través de un análisis de los fundamentos legales, principios clave y casos prácticos, los participantes aprenderán a identificar los derechos que tienen como titulares de datos, así como las responsabilidades que deben cumplir las instituciones, tanto públicas como privadas, al manejar información personal.<br><br>La propuesta académica se basa en ejemplos reales de políticas internas, normativas internacionales y estándares como el GDPR europeo. El curso promueve una perspectiva humanista sobre la protección de datos, fomentando el uso responsable de la información como un derecho fundamental y un aspecto esencial en nuestra sociedad digital.</p><h2>OBJETIVOS</h2><h3>Objetivo Principal</h3><p>Capacitar a estudiantes, docentes y ciudadanía en general en los principios, derechos y obligaciones establecidos por la Ley Orgánica de Protección de Datos Personales del Ecuador, promoviendo una cultura de respeto a la privacidad, responsabilidad en el tratamiento de datos y cumplimiento normativo en contextos educativos, laborales y sociales.</p><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial.</p><ul><li>Centro de Transferencia y Desarrollo de Tecnologías CTT-FISEI.</li><li>Avda. Los Chasquis entre Río Payamino y Río Guayllabamba</li><li>Campus Huachi, Ambato-Ecuador.</li></ul>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-17',
+  'FECHAFIN' => '2025-09-18',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 7,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '60.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 3,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '100.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Deportiva',
+  'PORTADA' => 'portada_686dec5911ae6.jpg',
+  'GALERIA' => 'galeria_686dec5912522.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 38,
+      'NOMBRE_CARRERA' => 'Electrónica y Telecomunicaciones',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 146,
+    1 => 147,
+    2 => 148,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 146,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 182,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 147,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 182,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 148,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 182,
+    ),
+  ),
+)

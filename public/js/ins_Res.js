@@ -444,15 +444,16 @@ function subirComprobantePago(input, idPago) {
         showConfirmButton: false
       });
     })
-    .catch(() => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo subir el comprobante',
-        timer: 2500,
-        showConfirmButton: false
-      });
-    });
+    .catch((err) => {
+  console.error('Error al subir comprobante:', err.response ? err.response.data : err);
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: err.response && err.response.data ? err.response.data.mensaje || 'No se pudo subir el comprobante' : 'No se pudo subir el comprobante',
+    timer: 2500,
+    showConfirmButton: false
+  });
+});
 }
 
 // Función para verificar si todo está validado y cerrar el modal automáticamente
