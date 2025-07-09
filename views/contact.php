@@ -7,73 +7,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../public/img/favicon.ico">
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Estilos personalizados -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
         :root {
-            --uta-rojo: #b10024;
-            --uta-gris: #f8f9fa;
+            --uta-rojo: #b10024; /* Primario: Rojo */
+            --uta-negro: #1a1a1a; /* Secundario: Negro */
+            --uta-blanco: #ffffff; /* Complemento: Blanco */
+            --uta-gris: #f8f9fa; /* Gris claro para fondos, manteniendo consistencia */
+            --uta-texto-claro: #6c757d; /* Color para texto secundario o "muted" */
         }
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: var(--uta-gris); /* Fondo general de la página */
+            color: var(--uta-negro); /* Color de texto por defecto */
         }
         .uta-header {
-            background-color: var(--uta-rojo);
-            color: white;
+            background-color: var(--uta-rojo); /* Fondo del encabezado en rojo primario */
+            color: var(--uta-blanco); /* Texto del encabezado en blanco */
         }
         .uta-card-icon {
             font-size: 2.5rem;
-            color: var(--uta-rojo);
+            color: var(--uta-rojo); /* Iconos de las tarjetas en rojo primario */
         }
         .form-control:focus {
             border-color: var(--uta-rojo);
             box-shadow: 0 0 0 0.25rem rgba(177, 0, 36, 0.2);
         }
         .btn-uta {
-            background-color: var(--uta-rojo);
-            color: white;
+            background-color: var(--uta-rojo); /* Botón principal en rojo primario */
+            color: var(--uta-blanco); /* Texto del botón en blanco */
             font-weight: 600;
         }
         .btn-uta:hover {
-            background-color: #94001d;
+            background-color: #94001d; /* Rojo más oscuro al pasar el ratón */
         }
         .social-icons i {
             font-size: 1.3rem;
             margin-right: 10px;
-            color: var(--uta-rojo);
+            color: var(--uta-negro); /* Iconos de redes sociales en negro secundario */
+            transition: color 0.3s ease;
+        }
+        .social-icons i:hover {
+            color: var(--uta-rojo); /* Iconos de redes sociales en rojo al pasar el ratón */
         }
 
-.card {
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid transparent; /* Define el borde base */
-}
+        .card {
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent; /* Define el borde base */
+        }
 
-.card:hover {
-    transform: scale(1.03);
-    border-color: #b10024; /* Rojo institucional UTA */
-    box-shadow: 0 10px 20px rgba(177, 0, 36, 0.3); /* Sombra suave en rojo */
-}
+        .card:hover {
+            transform: scale(1.03);
+            border-color: var(--uta-rojo); /* Borde de la tarjeta en rojo al pasar el ratón */
+            box-shadow: 0 10px 20px rgba(177, 0, 36, 0.3); /* Sombra suave en rojo */
+        }
 
-
-
-
+        /* Estilos específicos para texto */
+        .text-secondary {
+            color: var(--uta-negro) !important; /* Texto secundario en negro */
+        }
+        .text-muted {
+            color: var(--uta-texto-claro) !important; /* Texto "muted" en gris claro */
+        }
+        .text-danger {
+            color: var(--uta-rojo) !important; /* Texto de peligro/importancia en rojo */
+        }
     </style>
 </head>
 <body>
 <?php include('partials/header.php'); ?>
 
-<!-- HEADER -->
 <section class="uta-header text-center py-5">
     <div class="container">
         <h1 class="display-5 fw-bold">Contáctanos</h1>
@@ -81,7 +91,6 @@
     </div>
 </section>
 
-<!-- INFORMACIÓN DE CONTACTO -->
 <section class="container py-5">
     <div class="text-center mb-5">
         <h6 class="text-uppercase text-secondary fw-semibold" style="letter-spacing: 2px;">Soporte y Ayuda</h6>
@@ -122,7 +131,6 @@
         </div>
     </div>
 
-    <!-- FORMULARIO -->
     <div class="row justify-content-center mb-5">
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 p-4">
@@ -152,23 +160,21 @@
         </div>
     </div>
 
-    <!-- MAPA DE UBICACIÓN -->
     <div class="row justify-content-center mb-4">
         <div class="col-lg-10">
             <div class="ratio ratio-16x9 shadow-sm border rounded">
-                <iframe src="https://www.google.com/maps?q=Universidad+T%C3%A9cnica+de+Ambato&output=embed" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.72667822941!2d-78.61868352467389!3d-1.2464731355447155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d38201a4f0b2f5%3A0xc3f8e5d0f6b3e9a7!2sUniversidad%20T%C3%A9cnica%20de%20Ambato!5e0!3m2!1ses-419!2sec!4v1700000000000!5m2!1ses-419!2sec" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- REDES SOCIALES -->
     <div class="text-center mt-4">
         <p class="mb-1 fw-semibold">Síguenos en redes sociales:</p>
         <div class="social-icons">
             <a href="https://www.facebook.com/search/top?q=universidad%20t%C3%A9cnica%20de%20ambato%20-%20oficial" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://x.com/UTecnicaAmbato?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://x.com/UTecnicaAmbato?ref_src=twsrc%55Egoogle%7Ctwcamp%55Eserp%7Ctwgr%55Eauthor" target="_blank"><i class="fab fa-twitter"></i></a>
             <a href="https://www.instagram.com/utecnicaambato/?hl=es" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/@utecnicaambato" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.youtube.com/@UTecnicaAmbato" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
     </div>
 </section>
@@ -177,17 +183,27 @@
 
 <a href="#" class="btn btn-uta btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
-<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.getElementById('contactForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    await fetch('../controllers/ContactoController.php', {
-        method: 'POST',
-        body: formData
-    });
-    this.reset();
+    try {
+        const response = await fetch('../controllers/ContactoController.php', {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert('Mensaje enviado con éxito. ¡Gracias por contactarnos!');
+            this.reset();
+        } else {
+            alert('Hubo un error al enviar tu mensaje: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        alert('Hubo un problema de conexión al enviar el mensaje. Inténtalo de nuevo más tarde.');
+    }
 });
 </script>
 </body>

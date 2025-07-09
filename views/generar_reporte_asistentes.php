@@ -35,51 +35,72 @@ $html = '
     /* Definición de colores principales: ÚNICAMENTE ROJO, BLANCO Y NEGRO */
     :root {
         --uta-rojo: #b10024; /* Rojo principal de UTA */
-        --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
-        --uta-negro: #000000;
-        --uta-blanco: #ffffff;
+        --uta-negro: #1a1a1a; /* Negro secundario */
+        --uta-blanco: #ffffff; /* Blanco de complemento */
+        --line-color: #666666; /* Color gris para las líneas menos visibles */
     }
 
     body {
         font-family: Arial, sans-serif;
-        font-size: 12px;
+        font-size: 10px; /* Tamaño de fuente ligeramente reducido para PDF */
         margin: 0;
         padding: 0;
         color: var(--uta-negro); /* Texto general en negro */
+        /* Para centrar el contenido en la página de Dompdf */
+        text-align: center; /* Centra los elementos de bloque */
     }
-    h2 {
-        text-align: center;
-        margin-top: 25px;
-        margin-bottom: 15px;
-        color: var(--uta-negro); /* Título principal en negro */
-        font-size: 18px;
+
+    /* Contenedor principal para el contenido del reporte */
+    .report-container {
+        width: 95%; /* Ajusta el ancho para que el contenido no toque los bordes */
+        margin: 20px auto; /* Centra el contenedor en la página */
+        text-align: left; /* Restablece la alineación de texto para el contenido interno */
     }
-    .main-header { /* Nuevo contenedor para la cabecera principal */
+
+    /* Estilos para el encabezado principal (como se ve en la imagen) */
+    .main-header {
         background-color: var(--uta-rojo); /* Fondo rojo para la cabecera */
         color: var(--uta-blanco); /* Texto blanco en la cabecera */
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        padding: 15px 0; /* Padding vertical para el encabezado */
+        text-align: center; /* Centrar el texto dentro del encabezado */
         width: 100%;
         box-sizing: border-box;
     }
-    .main-header-text {
-        text-align: center;
-    }
-    .main-header-text h3, .main-header-text h4, .main-header-text p {
+    .main-header h3, .main-header h4, .main-header p {
         margin: 0;
         line-height: 1.2;
         color: var(--uta-blanco); /* Texto blanco */
+        font-weight: normal; /* Asegura que no sea negrita excesiva */
     }
-    .section-title { /* Para "RESUMEN DEL EVENTO" o "Listado de Asistentes" */
-        background-color: var(--uta-negro); /* Fondo negro */
+    .main-header h3 {
+        font-size: 16px; /* Ajusta el tamaño de la fuente para el PDF */
+        font-weight: bold; /* Nombre de la universidad en negrita */
+    }
+    .main-header h4 {
+        font-size: 14px; /* Tamaño de fuente para la facultad */
+    }
+    .main-header p {
+        font-size: 12px; /* Tamaño de fuente para el sistema */
+    }
+
+    h2 { /* Título "Reporte de Evento y Asistentes" */
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 20px; /* Espacio debajo del título */
+        color: var(--uta-negro); /* Título principal en negro */
+        font-size: 18px; /* Tamaño de fuente para el título del reporte */
+        font-weight: bold;
+    }
+
+    /* Sección de Título para "RESUMEN DEL EVENTO" o "Listado de Asistentes" */
+    .section-title {
+        background-color: var(--uta-rojo); /* CAMBIADO: Fondo rojo */
         color: var(--uta-blanco); /* Texto blanco */
         padding: 6px 10px;
         font-weight: bold;
         margin-top: 20px;
         margin-bottom: 5px; /* Más margen inferior para separar del contenido */
-        border-bottom: 1px solid var(--uta-negro); /* Línea debajo en negro */
+        border-bottom: 1px solid var(--line-color); /* CAMBIADO: Línea debajo en gris */
     }
     .stats-table { /* Para el resumen del evento */
         width: 100%;
@@ -89,7 +110,7 @@ $html = '
     }
     .stats-table td {
         padding: 4px;
-        border: 1px solid var(--uta-negro); /* Bordes en negro */
+        border: 1px solid var(--line-color); /* CAMBIADO: Bordes grises */
         background-color: var(--uta-blanco); /* Fondo blanco */
         color: var(--uta-negro); /* Texto en negro */
     }
@@ -108,14 +129,14 @@ $html = '
         font-size: 11px;
     }
     th {
-        background-color: var(--uta-negro); /* Color negro para los encabezados de tabla */
-        color: var(--uta-blanco);
+        background-color: var(--uta-rojo); /* CAMBIADO: Color rojo para los encabezados de tabla */
+        color: var(--uta-blanco); /* Texto blanco */
         padding: 6px;
-        border: 1px solid var(--uta-negro); /* Borde negro para celdas */
+        border: 1px solid var(--line-color); /* CAMBIADO: Borde gris */
         text-align: left;
     }
     td {
-        border: 1px solid var(--uta-negro); /* Borde negro */
+        border: 1px solid var(--line-color); /* CAMBIADO: Borde gris */
         padding: 5px;
         background-color: var(--uta-blanco);
         color: var(--uta-negro); /* Texto en negro */
@@ -144,38 +165,37 @@ $html = '
 </style>
 
 <div class="main-header">
-    <div class="main-header-text">
-        <h3>UNIVERSIDAD TÉCNICA DE AMBATO</h3>
-        <h4>FACULTAD DE INGENIERÍA EN SISTEMAS</h4>
-        <p>SISTEMA DE GESTIÓN ESTUDIANTIL</p>
-    </div>
+    <h3>UNIVERSIDAD TÉCNICA DE AMBATO</h3>
+    <h4>FACULTAD DE INGENIERÍA EN SISTEMAS</h4>
+    <p>SISTEMA DE GESTIÓN ESTUDIANTIL</p>
 </div>
 
-<h2>Reporte de Evento y Asistentes</h2>
+<div class="report-container">
+    <h2>Reporte de Evento y Asistentes</h2>
 
-<div class="section-title">RESUMEN DEL EVENTO</div>
-<table class="stats-table">
-    <tr>
-        <td><strong>Evento:</strong></td>
-        <td>' . htmlspecialchars($eventoNombre) . '</td>
-    </tr>
-    <tr>
-        <td><strong>Fechas:</strong></td>
-        <td>' . $fechaInicio . ' al ' . $fechaFin . '</td>
-    </tr>
-    <tr>
-        <td><strong>Fecha de Generación:</strong></td>
-        <td>' . $fechaGeneracion . '</td>
-    </tr>
-    <tr>
-        <td><strong>Total de Asistentes:</strong></td>
-        <td>' . count($asistentes) . '</td>
-    </tr>
-</table>
+    <div class="section-title">RESUMEN DEL EVENTO</div>
+    <table class="stats-table">
+        <tr>
+            <td><strong>Evento:</strong></td>
+            <td>' . htmlspecialchars($eventoNombre) . '</td>
+        </tr>
+        <tr>
+            <td><strong>Fechas:</strong></td>
+            <td>' . $fechaInicio . ' al ' . $fechaFin . '</td>
+        </tr>
+        <tr>
+            <td><strong>Fecha de Generación:</strong></td>
+            <td>' . $fechaGeneracion . '</td>
+        </tr>
+        <tr>
+            <td><strong>Total de Asistentes:</strong></td>
+            <td>' . count($asistentes) . '</td>
+        </tr>
+    </table>
 
-<br>
-<div class="section-title">Responsables</div>
-<ul>';
+    <br>
+    <div class="section-title">Responsables</div>
+    <ul>';
 foreach ($responsables as $r) {
     $html .= '<li><strong>Nombre:</strong> ' . htmlspecialchars($r['RESPONSABLE']) .
              ' (' . htmlspecialchars($r['CARGO']) . ') - <strong>Correo:</strong> ' .
@@ -183,19 +203,19 @@ foreach ($responsables as $r) {
 }
 $html .= '</ul>
 
-<div class="section-title">Listado de Asistentes</div>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Facultad</th>
-            <th>Carrera</th>
-            <th>Estado</th>
-            <th>Ponderación</th>
-        </tr>
-    </thead>
-    <tbody>';
+    <div class="section-title">Listado de Asistentes</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Facultad</th>
+                <th>Carrera</th>
+                <th>Estado</th>
+                <th>Ponderación</th>
+            </tr>
+        </thead>
+        <tbody>';
 
 foreach ($asistentes as $a) {
     $html .= '<tr>
@@ -208,7 +228,8 @@ foreach ($asistentes as $a) {
     </tr>';
 }
 
-$html .= '</tbody></table>';
+$html .= '</tbody></table>
+</div>'; // Cierre del report-container
 
 // Generar PDF
 $dompdf = new Dompdf();

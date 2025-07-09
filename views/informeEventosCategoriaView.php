@@ -18,26 +18,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['categoria'])) {
     :root {
         --uta-rojo: #b10024; /* Rojo principal de UTA */
         --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
-        --uta-negro: #000000;
-        --uta-blanco: #ffffff;
+        --uta-negro: #1a1a1a; /* CAMBIADO: Negro secundario, como en el reporte de certificados */
+        --uta-blanco: #ffffff; /* Blanco de complemento */
+        --line-color: #666666; /* AGREGADO: Color gris para las líneas menos visibles */
+        --uta-gris-claro: #f5f5f5; /* Mantenido para compatibilidad si se usa en otro lado */
+        --uta-gris-medio: #e0e0e0; /* Mantenido para compatibilidad si se usa en otro lado */
+        --uta-gris-oscuro: #333; /* Mantenido para compatibilidad si se usa en otro lado */
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif; /* Usar Poppins si está enlazado en header_Admin */
+        background-color: var(--uta-blanco); /* Fondo general de la página en blanco */
+        color: var(--uta-negro); /* CAMBIADO: Texto general en negro */
+    }
+
+    /* Contenedor principal para centrar el contenido */
+    #page-inner {
+        padding: 25px; /* Espaciado interno */
+        max-width: 1200px; /* Ancho máximo para el contenido principal */
+        margin: 0 auto; /* Centrar el contenido en la página */
     }
 
     /* Títulos */
-    h2, h3 {
+    h2, h3, h4 {
         color: var(--uta-rojo); /* Títulos en rojo principal */
         font-weight: bold;
         margin-bottom: 15px;
+        text-align: left; /* Alineación por defecto para subtítulos */
     }
 
     h2 {
-        text-align: center;
-        margin-bottom: 25px;
+        text-align: center; /* Título principal centrado */
+        margin-bottom: 25px; /* Más espacio debajo del título principal */
+        font-size: 18px; /* CAMBIADO: Tamaño de fuente como en el PDF */
         color: var(--uta-negro); /* Título principal en negro */
     }
 
     h2 i {
         color: var(--uta-rojo); /* Icono del título en rojo */
-        margin-right: 10px;
+        margin-right: 10px; /* Espaciado adecuado para el icono */
     }
 
     /* Contenedores de tarjetas/paneles */
@@ -70,6 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['categoria'])) {
         background-position: right 10px center;
         background-size: 20px;
         cursor: pointer;
+    }
+    select:focus {
+        border-color: var(--uta-rojo);
+        box-shadow: 0 0 0 0.25rem rgba(177, 0, 36, 0.2); /* Usa el valor RGB del rojo para la sombra */
+        outline: none;
     }
 
     .form-group {
@@ -116,8 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['categoria'])) {
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 25px;
-        margin-bottom: 30px;
+        margin-top: 25px; /* Mantenido el tamaño de margin-top original */
+        margin-bottom: 30px; /* Mantenido el tamaño de margin-bottom original */
         background-color: var(--uta-blanco);
         border-radius: 8px;
         overflow: hidden;
@@ -126,25 +150,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['categoria'])) {
 
     th, td {
         padding: 15px;
-        border: 1px solid var(--uta-negro); /* Bordes en negro */
+        border: 1px solid var(--line-color); /* CAMBIADO: Bordes en gris como en el PDF */
         text-align: left;
         color: var(--uta-negro); /* Color de texto en negro */
     }
 
     th {
-        background-color: var(--uta-negro); /* Fondo de encabezado en negro */
+        background-color: var(--uta-rojo); /* CAMBIADO: Fondo de encabezado en rojo como en el PDF */
         color: var(--uta-blanco); /* Texto de encabezado en blanco */
         font-weight: 700;
         text-transform: uppercase;
-        font-size: 0.95rem;
+        font-size: 10px; /* CAMBIADO: Tamaño de fuente como en el PDF */
+        padding: 8px 10px; /* CAMBIADO: Padding como en el PDF */
     }
 
     /* Estilos para filas impares/pares */
     tbody tr:nth-child(odd) {
-        background-color: var(--uta-blanco);
+        background-color: var(--uta-blanco); /* CAMBIADO: Todas las filas en blanco */
     }
     tbody tr:nth-child(even) {
-        background-color: var(--uta-blanco); /* Todas las filas en blanco para evitar grises */
+        background-color: var(--uta-blanco); /* CAMBIADO: Todas las filas en blanco */
     }
 
     p.no-data {

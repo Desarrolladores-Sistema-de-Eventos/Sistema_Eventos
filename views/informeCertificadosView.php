@@ -18,29 +18,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
     :root {
         --uta-rojo: #b10024; /* Rojo principal de UTA */
         --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
-        --uta-negro: #000000;
-        --uta-blanco: #ffffff;
-        --uta-gris-claro: #f5f5f5; /* Para fondos sutiles */
-        --uta-gris-medio: #e0e0e0; /* Para bordes */
-        --uta-gris-oscuro: #333; /* Para texto principal */
+        --uta-negro: #000000; /* Negro para bordes y texto principal */
+        --uta-blanco: #ffffff; /* Blanco para fondos y texto complementario */
+        --uta-gris-claro: #f5f5f5; /* Para fondos sutiles de filas pares, etc. */
+        --uta-gris-medio: #e0e0e0; /* Para bordes de formularios y elementos */
+        --uta-gris-oscuro: #333; /* Para texto general que no es negro puro */
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif; /* Usar Poppins si está enlazado en header_Admin */
+        background-color: var(--uta-blanco); /* Fondo general de la página en blanco */
+        color: var(--uta-gris-oscuro); /* Color de texto por defecto */
+    }
+
+    /* Contenedor principal para centrar el contenido */
+    #page-inner {
+        padding: 25px; /* Espaciado interno */
+        max-width: 1200px; /* Ancho máximo para el contenido principal */
+        margin: 0 auto; /* Centrar el contenido en la página */
     }
 
     /* Títulos */
     h2, h3, h4 {
-        color: var(--uta-rojo); /* Cambiado de azul a rojo */
-        font-weight: bold; /* Asegurar negrita */
-        margin-bottom: 15px; /* Espaciado uniforme */
+        color: var(--uta-rojo); /* Títulos de sección en rojo primario */
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-align: left; /* Alineación por defecto para subtítulos */
     }
 
     h2 {
-        text-align: center;
-        margin-bottom: 25px;
-        color: var(--uta-negro); /* Título principal en negro */
+        text-align: center; /* Título principal centrado */
+        margin-bottom: 25px; /* Más espacio debajo del título principal */
+        font-size: 2.2rem; /* Mantenido el tamaño de fuente original */
+        color: var(--uta-negro); /* Título principal en negro secundario */
     }
 
     h2 i {
-        color: var(--uta-rojo); /* Icono en rojo */
-        margin-right: 10px;
+        color: var(--uta-rojo); /* Icono en rojo primario */
+        margin-right: 10px; /* Espaciado adecuado para el icono */
     }
 
     /* Contenedores de tarjetas/paneles */
@@ -50,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         margin-bottom: 30px;
         border-radius: 10px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sombra mejorada */
-        border: 1px solid var(--uta-gris-medio); /* Borde sutil */
+        border: 1px solid var(--uta-negro); /* Ambos cards ahora tienen borde negro */
     }
 
     /* Grupos de formulario */
@@ -68,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
     /* Selectores de formulario */
     select {
         width: 100%;
-        padding: 12px; /* Aumentar padding */
-        font-size: 16px; /* Tamaño de fuente legible */
-        border: 1px solid var(--uta-gris-medio); /* Borde en gris */
+        padding: 12px; /* Mantenido el tamaño de padding original */
+        font-size: 16px; /* Mantenido el tamaño de fuente original */
+        border: 1px solid var(--uta-negro); /* CAMBIADO: Borde en negro para el select */
         border-radius: 6px;
         box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); /* Sombra interna sutil */
         appearance: none; /* Eliminar estilo nativo del select */
@@ -80,11 +95,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         background-size: 20px;
         cursor: pointer;
     }
+    select:focus {
+        border-color: var(--uta-rojo);
+        box-shadow: 0 0 0 0.25rem rgba(177, 0, 36, 0.2); /* Usa el valor RGB del rojo para la sombra */
+        outline: none;
+    }
 
     /* Botones de acción */
     .action-buttons {
         display: flex;
-        gap: 15px; /* Aumentar espacio entre botones y elementos */
+        gap: 15px; /* Mantenido el tamaño de gap original */
         margin-top: 20px;
         flex-wrap: wrap;
         align-items: flex-end; /* Alinea los elementos al final (abajo) */
@@ -94,51 +114,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         display: flex;
         flex-direction: column; /* Apila label y select/button */
         flex-grow: 1; /* Permite que el formulario crezca */
-        gap: 8px; /* Espacio entre label y select/button */
+        gap: 8px; /* Mantenido el tamaño de gap original */
     }
 
     button[type="submit"], .btn-primary { /* Aplicar a ambos tipos de botones */
-        background-color: var(--uta-rojo); /* Cambiado de azul a rojo */
-        color: var(--uta-blanco);
-        padding: 12px 25px; /* Aumentar padding */
-        font-size: 16px; /* Tamaño de fuente legible */
+        background-color: var(--uta-rojo); /* Botón en rojo primario */
+        color: var(--uta-blanco); /* Texto del botón en blanco */
+        padding: 12px 25px; /* Mantenido el tamaño de padding original */
+        font-size: 16px; /* Mantenido el tamaño de fuente original */
         border: none; /* Eliminado borde, ya que el background es el color principal */
         border-radius: 8px; /* Bordes más redondeados */
         cursor: pointer;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        font-weight: 600; /* Negrita para el texto del botón */
-        min-width: 140px; /* Asegura un ancho mínimo para los botones */
+        font-weight: 600;
+        min-width: 140px; /* Mantenido el tamaño de min-width original */
         text-align: center;
+        margin-top: auto; /* Empuja los botones hacia abajo para alinear con el select */
     }
 
     button[type="submit"]:hover, .btn-primary:hover {
-        background-color: var(--uta-rojo-oscuro); /* Cambiado de azul oscuro a rojo oscuro */
-        box-shadow: 0 6px 15px rgba(var(--uta-rojo), 0.3); /* Sombra al pasar el ratón */
+        background-color: var(--uta-rojo-oscuro); /* Rojo más oscuro al pasar el ratón */
+        box-shadow: 0 6px 15px rgba(177, 0, 36, 0.3); /* Sombra al pasar el ratón */
     }
 
     /* Tablas */
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 25px; /* Más espacio superior */
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* Sombra para la tabla */
-        border-radius: 8px; /* Bordes redondeados para la tabla */
+        margin-top: 25px; /* Mantenido el tamaño de margin-top original */
+        margin-bottom: 30px; /* Mantenido el tamaño de margin-bottom original */
+        background-color: var(--uta-blanco);
+        border-radius: 8px;
         overflow: hidden; /* Para que los bordes redondeados se apliquen al contenido */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* Sombra con negro */
     }
 
     th, td {
-        padding: 15px; /* Aumentar padding */
-        border: 1px solid var(--uta-gris-medio); /* Bordes en gris */
+        padding: 15px; /* Mantenido el tamaño de padding original */
+        border: 1px solid var(--uta-negro); /* Bordes en negro */
         text-align: left;
-        color: var(--uta-gris-oscuro); /* Color de texto para celdas */
+        color: var(--uta-negro); /* Color de texto para celdas en negro */
     }
 
     th {
-        background-color: var(--uta-gris-claro); /* Fondo gris claro para cabecera (antes azul claro) */
-        color: var(--uta-negro); /* Texto de cabecera en negro */
-        font-weight: 700; /* Negrita para cabeceras */
-        text-transform: uppercase; /* Mayúsculas para cabeceras */
-        font-size: 0.95rem; /* Tamaño de fuente ligeramente menor para cabeceras */
+        background-color: var(--uta-negro); /* Fondo de encabezado en negro */
+        color: var(--uta-blanco); /* Texto de encabezado en blanco */
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.95rem; /* Mantenido el tamaño de fuente original */
     }
 
     /* Estilos para filas impares/pares */
@@ -149,18 +172,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         background-color: var(--uta-gris-claro); /* Fondo ligeramente gris para filas pares */
     }
 
-    /* Responsividad */
+    /* Mensaje de no data */
+    p.no-data {
+        color: var(--uta-rojo); /* Mensaje sin datos en rojo */
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: var(--uta-blanco);
+        border-radius: 8px;
+        border: 1px solid var(--uta-negro); /* Borde en negro */
+    }
+
+    /* Total de montos (si se aplica, aunque no está en este HTML) */
+    .total-monto {
+        font-weight: bold;
+        text-align: right;
+        padding: 15px;
+        background-color: var(--uta-negro);
+        color: var(--uta-blanco);
+        border-top: 2px solid var(--uta-rojo); /* Borde superior en rojo */
+        font-size: 1.1rem; /* Mantenido el tamaño de fuente original */
+    }
+
+
+    /* Responsive */
     @media (max-width: 768px) {
         .action-buttons {
             flex-direction: column; /* Apila los botones en pantallas pequeñas */
             align-items: stretch; /* Estira los elementos para ocupar el ancho completo */
-            gap: 10px;
+            gap: 10px; /* Mantenido el tamaño de gap original */
         }
         .action-buttons form {
             width: 100%; /* Las formas ocupan todo el ancho */
+            max-width: none; /* Eliminar restricción de ancho máximo en móvil */
         }
         button[type="submit"], .btn-primary {
             width: 100%; /* Botones ocupan todo el ancho en móviles */
+            margin-top: 0; /* Eliminar margin-top auto en móvil */
+        }
+        select {
+            font-size: 14px; /* Mantenido el tamaño de fuente original */
         }
         table, thead, tbody, th, td, tr {
             display: block; /* Convertir tabla a bloques para móviles */
@@ -170,13 +222,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             top: -9999px;
             left: -9999px;
         }
-        tr { border: 1px solid var(--uta-gris-medio); margin-bottom: 15px; border-radius: 8px; } /* Borde y margen para filas en móviles */
+        tr { border: 1px solid var(--uta-negro); margin-bottom: 15px; border-radius: 8px; } /* Borde negro para filas en móviles */
         td {
             border: none;
-            border-bottom: 1px solid var(--uta-gris-medio);
+            border-bottom: 1px solid var(--uta-negro); /* Borde inferior negro */
             position: relative;
             padding-left: 50%; /* Espacio para la etiqueta */
             text-align: right;
+        }
+        td:last-child {
+            border-bottom: none; /* Eliminar el borde inferior de la última celda */
         }
         td:before {
             position: absolute;
@@ -203,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
     <div id="page-inner">
         <h2><i class="fa fa-certificate"></i> Reporte de Certificados Emitidos</h2>
 
-        <div class="card">
+        <div class="card"> <!-- Este card ahora tendrá borde negro -->
             <div class="action-buttons">
                 <!-- Formulario de selección de evento y botón "Ver Reporte" -->
                 <form method="POST" style="flex-grow: 1;">
@@ -234,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         </div>
 
         <?php if (!empty($certificados)): ?>
-            <div class="card">
+            <div class="card"> <!-- Este card también tendrá borde negro por la regla general de .card -->
                 <h3>Certificados Emitidos</h3>
                 <table>
                     <thead>
@@ -263,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             </div>
         <?php else: ?>
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])): ?>
-                <p style="color: var(--uta-rojo); font-weight: bold; text-align: center;">No hay certificados emitidos para este evento.</p>
+                <p class="no-data">No hay certificados emitidos para este evento.</p>
             <?php endif; ?>
         <?php endif; ?>
 

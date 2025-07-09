@@ -31,33 +31,36 @@ $html = '
     :root {
         --uta-rojo: #b10024; /* Rojo principal de UTA */
         --uta-rojo-oscuro: #92001c; /* Tono más oscuro de rojo */
-        --uta-negro: #000000;
-        --uta-blanco: #ffffff;
+        --uta-negro: #1a1a1a; /* CAMBIADO: Negro secundario, como en el reporte de certificados */
+        --uta-blanco: #ffffff; /* Blanco de complemento */
+        --line-color: #666666; /* AGREGADO: Color gris para las líneas menos visibles */
     }
 
     body {
         font-family: Arial, sans-serif;
-        font-size: 12px;
+        font-size: 10px; /* CAMBIADO: Tamaño de fuente ligeramente reducido para PDF */
         margin: 0;
         padding: 0;
         color: var(--uta-negro); /* Texto general en negro */
+        text-align: center; /* AGREGADO: Para centrar el contenido en la página de Dompdf */
     }
-    h2 {
-        text-align: center;
-        margin-top: 25px; /* Un poco más de margen para que no se pegue al encabezado */
-        margin-bottom: 15px;
-        color: var(--uta-negro); /* Título principal en negro */
-        font-size: 18px;
+
+    /* Contenedor principal para el contenido del reporte */
+    .report-container {
+        width: 95%; /* Ajusta el ancho para que el contenido no toque los bordes */
+        margin: 20px auto; /* Centra el contenedor en la página */
+        text-align: left; /* Restablece la alineación de texto para el contenido interno */
     }
+
+    /* Estilos para el encabezado principal (como se ve en la imagen) */
     .main-header { /* Nuevo contenedor para la cabecera principal */
         background-color: var(--uta-rojo); /* Fondo rojo para la cabecera */
         color: var(--uta-blanco); /* Texto blanco en la cabecera */
-        padding: 10px 20px; /* Padding interno */
-        display: flex;
-        align-items: center;
-        justify-content: center; /* Centrar el contenido */
+        padding: 15px 0; /* CAMBIADO: Padding vertical para el encabezado */
+        text-align: center; /* Centrar el texto dentro del encabezado */
         width: 100%;
         box-sizing: border-box; /* Incluye padding en el ancho total */
+        /* Eliminados display: flex, align-items, justify-content ya que el texto ya está centrado con text-align */
     }
     .main-header-text {
         text-align: center; /* Centrar el texto */
@@ -66,24 +69,45 @@ $html = '
         margin: 0;
         line-height: 1.2;
         color: var(--uta-blanco); /* Texto blanco */
+        font-weight: normal; /* AGREGADO: Asegura que no sea negrita excesiva */
     }
+    .main-header-text h3 {
+        font-size: 16px; /* CAMBIADO: Ajusta el tamaño de la fuente para el PDF */
+        font-weight: bold; /* AGREGADO: Nombre de la universidad en negrita */
+    }
+    .main-header-text h4 {
+        font-size: 14px; /* CAMBIADO: Tamaño de fuente para la facultad */
+    }
+    .main-header-text p {
+        font-size: 12px; /* CAMBIADO: Tamaño de fuente para el sistema */
+    }
+
+    h2 { /* Título "Reporte Financiero del Evento" */
+        text-align: center;
+        margin-top: 25px; /* Un poco más de margen para que no se pegue al encabezado */
+        margin-bottom: 20px; /* CAMBIADO: Espacio debajo del título */
+        color: var(--uta-negro); /* Título principal en negro */
+        font-size: 18px; /* Mantenido el tamaño de fuente original */
+        font-weight: bold; /* AGREGADO: Asegura que sea negrita */
+    }
+
     .section-title { /* Para "Recaudación por Forma de Pago", etc. */
-        background-color: var(--uta-negro); /* Fondo negro */
+        background-color: var(--uta-rojo); /* CAMBIADO: Fondo rojo */
         color: var(--uta-blanco); /* Texto blanco */
         padding: 6px 10px;
         font-weight: bold;
         margin-top: 20px;
-        border-bottom: 1px solid var(--uta-negro); /* Línea debajo en negro */
+        border-bottom: 1px solid var(--line-color); /* CAMBIADO: Línea debajo en gris */
     }
     .stats-table { /* Para el resumen general del reporte */
         width: 100%;
         border-collapse: collapse;
-        margin-top: 5px;
-        font-size: 11px;
+        margin-top: 0; /* CAMBIADO: Pegado a la section-title */
+        font-size: 10px; /* CAMBIADO: Tamaño de fuente */
     }
     .stats-table td {
-        padding: 4px;
-        border: 1px solid var(--uta-negro); /* Bordes en negro */
+        padding: 6px 8px; /* CAMBIADO: Padding ajustado */
+        border: 1px solid var(--line-color); /* CAMBIADO: Bordes grises */
         background-color: var(--uta-blanco); /* Fondo blanco */
         color: var(--uta-negro); /* Texto en negro */
     }
@@ -98,19 +122,21 @@ $html = '
     table { /* Tablas de datos principales */
         border-collapse: collapse;
         width: 100%;
-        margin-top: 10px;
-        font-size: 11px;
+        margin-top: 0; /* CAMBIADO: Pegado a la section-title */
+        font-size: 10px; /* CAMBIADO: Tamaño de fuente */
     }
     th {
-        background-color: var(--uta-negro); /* Color negro para los encabezados de tabla */
+        background-color: var(--uta-rojo); /* CAMBIADO: Color rojo para los encabezados de tabla */
         color: var(--uta-blanco);
-        padding: 6px;
-        border: 1px solid var(--uta-negro); /* Borde negro para celdas */
+        padding: 8px 10px; /* CAMBIADO: Padding ajustado */
+        border: 1px solid var(--line-color); /* CAMBIADO: Borde gris para celdas */
         text-align: left;
+        font-weight: bold; /* AGREGADO: Asegura que sea negrita */
+        text-transform: uppercase; /* AGREGADO: Mayúsculas para los encabezados */
     }
     td {
-        border: 1px solid var(--uta-negro); /* Borde negro */
-        padding: 5px;
+        border: 1px solid var(--line-color); /* CAMBIADO: Borde gris */
+        padding: 7px 10px; /* CAMBIADO: Padding ajustado */
         background-color: var(--uta-blanco);
         color: var(--uta-negro); /* Texto en negro */
     }
@@ -143,27 +169,28 @@ $html = '
     </div>
 </div>
 
-<h2>Reporte Financiero del Evento</h2>
+<div class="report-container"> <!-- AGREGADO: Contenedor principal para el contenido del reporte -->
+    <h2>Reporte Financiero del Evento</h2>
 
-<div class="section-title">RESUMEN DEL REPORTE</div>
-<table class="stats-table">
-    <tr>
-        <td><strong>Evento:</strong></td>
-        <td>' . htmlspecialchars($nombreEvento) . '</td>
-    </tr>
-    <tr>
-        <td><strong>Fecha de Generación:</strong></td>
-        <td>' . $fechaGeneracion . '</td>
-    </tr>
-</table>
+    <div class="section-title">RESUMEN DEL REPORTE</div>
+    <table class="stats-table">
+        <tr>
+            <td><strong>Evento:</strong></td>
+            <td>' . htmlspecialchars($nombreEvento) . '</td>
+        </tr>
+        <tr>
+            <td><strong>Fecha de Generación:</strong></td>
+            <td>' . $fechaGeneracion . '</td>
+        </tr>
+    </table>
 
-<br>
-<div class="section-title">1. Recaudación por Forma de Pago</div>
-<table>
-    <thead>
-        <tr><th>Forma de Pago</th><th>Total Recaudado</th></tr>
-    </thead>
-    <tbody>';
+    <br>
+    <div class="section-title">1. Recaudación por Forma de Pago</div>
+    <table>
+        <thead>
+            <tr><th>Forma de Pago</th><th>Total Recaudado</th></tr>
+        </thead>
+        <tbody>';
 $totalRecaudadoGeneral = 0;
 foreach ($montos as $m) {
     $html .= '<tr>';
@@ -180,14 +207,14 @@ $html .= '</tr>';
 $html .= '</tbody></table>';
 
 $html .= '<div class="section-title">2. Pagos Pendientes</div>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th><th>Correo</th><th>Forma de Pago</th>
-            <th>Monto</th><th>Estado</th><th>Fecha</th>
-        </tr>
-    </thead>
-    <tbody>';
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th><th>Correo</th><th>Forma de Pago</th>
+                <th>Monto</th><th>Estado</th><th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>';
 $totalPendiente = 0;
 foreach ($pendientes as $p) {
     $html .= '<tr>';
@@ -209,11 +236,11 @@ $html .= '</tr>';
 $html .= '</tbody></table>';
 
 $html .= '<div class="section-title">3. Comprobantes Subidos</div>
-<table>
-    <thead>
-        <tr><th>Nombre</th><th>Correo</th><th>Monto</th><th>Comprobante</th><th>Estado</th></tr>
-    </thead>
-    <tbody>';
+    <table>
+        <thead>
+            <tr><th>Nombre</th><th>Correo</th><th>Monto</th><th>Comprobante</th><th>Estado</th></tr>
+        </thead>
+        <tbody>';
 $totalComprobantes = 0;
 foreach ($comprobantes as $c) {
     $html .= '<tr>';
@@ -231,7 +258,8 @@ $html .= '<td colspan="2"><strong>TOTAL COMPROBANTES:</strong></td>';
 $html .= '<td><strong>$' . number_format($totalComprobantes, 2) . '</strong></td>';
 $html .= '<td colspan="2"></td>'; // Celdas vacías para completar la fila
 $html .= '</tr>';
-$html .= '</tbody></table>';
+$html .= '</tbody></table>
+</div>'; // Cierre del report-container
 
 // Generar PDF
 $dompdf = new Dompdf();

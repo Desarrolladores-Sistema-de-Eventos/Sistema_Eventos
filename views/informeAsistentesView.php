@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             margin-bottom: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sombra mejorada */
-            border: 1px solid var(--uta-gris-medio); /* Borde sutil */
+            border: 1px solid var(--uta-negro); /* CAMBIADO: Borde en negro */
         }
 
         /* Grupos de formulario */
@@ -65,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         /* Selectores de formulario */
         select {
             width: 100%;
-            padding: 12px; /* Aumentar padding */
-            font-size: 16px; /* Tamaño de fuente legible */
-            border: 1px solid var(--uta-gris-medio); /* Borde en gris */
+            padding: 12px; /* Mantenido el tamaño de padding original */
+            font-size: 16px; /* Mantenido el tamaño de fuente original */
+            border: 1px solid var(--uta-negro); /* CAMBIADO: Borde en negro */
             border-radius: 6px;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); /* Sombra interna sutil */
             appearance: none; /* Eliminar estilo nativo del select */
@@ -77,11 +77,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             background-size: 20px;
             cursor: pointer;
         }
+        select:focus {
+            border-color: var(--uta-rojo);
+            box-shadow: 0 0 0 0.25rem rgba(177, 0, 36, 0.2); /* Usa el valor RGB del rojo para la sombra */
+            outline: none;
+        }
 
         /* Botones de acción */
         .action-buttons {
             display: flex;
-            gap: 15px; /* Aumentar espacio entre botones */
+            gap: 15px; /* Mantenido el tamaño de gap original */
             margin-top: 20px;
             flex-wrap: wrap;
         }
@@ -89,8 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         button[type="submit"], button { /* Aplicar a ambos tipos de botones */
             background-color: var(--uta-rojo); /* Cambiado de azul a rojo */
             color: var(--uta-blanco);
-            padding: 12px 25px; /* Aumentar padding */
-            font-size: 16px; /* Tamaño de fuente legible */
+            padding: 12px 25px; /* Mantenido el tamaño de padding original */
+            font-size: 16px; /* Mantenido el tamaño de fuente original */
             border: none;
             border-radius: 8px; /* Bordes más redondeados */
             cursor: pointer;
@@ -114,18 +119,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
         }
 
         th, td {
-            padding: 15px; /* Aumentar padding */
-            border: 1px solid var(--uta-gris-medio); /* Bordes en gris */
+            padding: 15px; /* Mantenido el tamaño de padding original */
+            border: 1px solid var(--uta-negro); /* CAMBIADO: Bordes en negro */
             text-align: left;
-            color: var(--uta-gris-oscuro); /* Color de texto para celdas */
+            color: var(--uta-negro); /* Color de texto para celdas */
         }
 
         th {
-            background-color: var(--uta-gris-claro); /* Fondo gris claro para cabecera (antes azul claro) */
-            color: var(--uta-negro); /* Texto de cabecera en negro */
-            font-weight: 700; /* Negrita para cabeceras */
-            text-transform: uppercase; /* Mayúsculas para cabeceras */
-            font-size: 0.95rem; /* Tamaño de fuente ligeramente menor para cabeceras */
+            background-color: var(--uta-negro); /* CAMBIADO: Fondo gris claro para cabecera (antes azul claro) */
+            color: var(--uta-blanco); /* Texto de cabecera en blanco */
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.95rem; /* Mantenido el tamaño de fuente ligeramente menor para cabeceras */
         }
 
         /* Estilos para filas impares/pares si se desea */
@@ -136,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
             background-color: var(--uta-gris-claro); /* Fondo ligeramente gris para filas pares */
         }
 
-        /* Responsividad */
+        /* Responsive */
         @media (max-width: 768px) {
             .action-buttons {
                 flex-direction: column;
@@ -153,10 +158,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                 top: -9999px;
                 left: -9999px;
             }
-            tr { border: 1px solid var(--uta-gris-medio); margin-bottom: 15px; border-radius: 8px; } /* Borde y margen para filas en móviles */
+            tr { border: 1px solid var(--uta-negro); margin-bottom: 15px; border-radius: 8px; } /* CAMBIADO: Borde negro para filas en móviles */
             td {
                 border: none;
-                border-bottom: 1px solid var(--uta-gris-medio);
+                border-bottom: 1px solid var(--uta-negro); /* CAMBIADO: Borde inferior negro */
                 position: relative;
                 padding-left: 50%; /* Espacio para la etiqueta */
                 text-align: right;
@@ -262,6 +267,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])) {
                     </tbody>
                 </table>
             </div>
+        <?php else: ?>
+            <!-- Mensaje de no data, si aplica -->
+            <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento'])): ?>
+                <p class="no-data-message">No hay datos de responsables o asistentes para este evento.</p>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </div>
