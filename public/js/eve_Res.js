@@ -385,14 +385,15 @@ function llenarCheckboxesRequisitos(requisitos) {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.className = 'form-check-input';
-    input.id = 'req_' + req.value;
+    // Soporta tanto {value, text} como {SECUENCIAL, DESCRIPCION}
+    input.id = 'req_' + (req.value || req.SECUENCIAL);
     input.name = 'requisitos[]';
-    input.value = req.value;
+    input.value = req.value || req.SECUENCIAL;
 
     const label = document.createElement('label');
     label.className = 'form-check-label';
     label.htmlFor = input.id;
-    label.textContent = req.text;
+    label.textContent = req.text || req.DESCRIPCION;
 
     div.appendChild(input);
     div.appendChild(label);
@@ -604,6 +605,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Limpiar requisitos
     document.querySelectorAll('input[name="requisitos[]"]').forEach(chk => chk.checked = false);
     toggleCosto();
+    // Mostrar solo requisitos generales al crear (igual que eventoAdmin.js, robusto)
+    axios.get('../controllers/SelectsController.php')
+      .then(res => {
+        const data = res.data;
+        let generales = [];
+        if (Array.isArray(data.requisitos)) {
+          // Solo los que NO tienen SECUENCIALEVENTO (null, undefined, 0, '', etc.)
+          generales = data.requisitos.filter(r => !r.SECUENCIALEVENTO);
+        }
+        llenarCheckboxesRequisitos(generales);
+      });
     $('#modalEvento').modal('show');
   });
 });

@@ -2605,3 +2605,1559 @@
     ),
   ),
 )
+2025-07-09 11:55:10 [editar] ID recibido: '188'
+2025-07-09 11:55:10 [getEvento] ID recibido: '188'
+2025-07-09 11:55:10 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:55:10 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+)
+2025-07-09 11:55:10 [getEvento] Evento final: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 11:55:10 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 11:57:44 [editar] ID recibido: '188'
+2025-07-09 11:57:44 [getEvento] ID recibido: '188'
+2025-07-09 11:57:44 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 11:57:44 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+)
+2025-07-09 11:57:44 [getEvento] Evento final: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 11:57:44 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 12:01:47 [editar] ID recibido: '188'
+2025-07-09 12:01:47 [getEvento] ID recibido: '188'
+2025-07-09 12:01:47 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 12:01:47 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+)
+2025-07-09 12:01:47 [getEvento] Evento final: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 12:01:47 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 188,
+  'TITULO' => 'Descubre tu Poder Personal',
+  'CONTENIDO' => '<h2>&nbsp;</h2><p><strong>1. Introducción al poder personal</strong></p><ul><li>¿Qué es y por qué lo hemos perdido?</li><li>Causas comunes de desconexión interna</li></ul><p><strong>2. Autoconocimiento y fortalezas internas</strong></p><ul><li>Dinámica de identificación de talentos</li><li>Mapa personal de recursos</li></ul><p><strong>3. Inteligencia emocional práctica</strong></p><ul><li>Reconocimiento y regulación emocional</li><li>Comunicación asertiva y manejo de conflictos</li></ul><p><strong>4. Autoestima y límites sanos</strong></p><ul><li>Cómo decir “no” sin culpa</li><li>Construcción de límites personales</li></ul><p><strong>5. Cierre y plan de acción personal</strong></p><ul><li>Compromisos personales</li><li>Rueda de cierre grupal</li></ul>',
+  'DESCRIPCION' => '<h4>Este taller vivencial tiene como objetivo ayudarte a reconectar contigo mismo/a, identificar tus fortalezas internas y desarrollar habilidades clave para mejorar tu bienestar personal y profesional. A través de dinámicas grupales, reflexión y herramientas prácticas, los participantes aprenderán a gestionar emociones, establecer límites sanos y potenciar su autoestima.</h4><h2>OBJETIVO:</h2><h4><br>Brindar a los participantes herramientas prácticas para desarrollar su inteligencia emocional, fortalecer su autoestima y mejorar sus relaciones personales y profesionales.</h4><h2>LUGAR:&nbsp;</h2><h4><br>Centro Cultural Comunitario “Raíces Vivas” – Sala 2<br>(Calle Libertad 123, Ciudad Central)</h4>',
+  'CODIGOTIPOEVENTO' => 'TALL',
+  'FECHAINICIO' => '2025-09-19',
+  'FECHAFIN' => '2025-09-22',
+  'CODIGOMODALIDAD' => 'VIRT',
+  'HORAS' => 20,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '5.00',
+  'ES_SOLO_INTERNOS' => 1,
+  'SECUENCIALCATEGORIA' => 5,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 20,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Virtual',
+  'TIPO' => 'Taller',
+  'CATEGORIA' => 'Social',
+  'PORTADA' => 'portada_686df5bdf3e2f.jpg',
+  'GALERIA' => 'galeria_686df5bdf4173.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 16,
+      'NOMBRE_CARRERA' => 'Psicología Clínica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 45,
+      'NOMBRE_CARRERA' => 'Comunicación Social',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 165,
+    1 => 166,
+    2 => 167,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 165,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 166,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => 188,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 167,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => 188,
+    ),
+  ),
+)
+2025-07-09 12:05:24 [editar] ID recibido: '180'
+2025-07-09 12:05:24 [getEvento] ID recibido: '180'
+2025-07-09 12:05:24 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 12:05:24 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+)
+2025-07-09 12:05:24 [getEvento] Evento final: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de83b995b3.png',
+  'GALERIA' => 'galeria_686de83b9a4e4.png',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 40,
+      'NOMBRE_CARRERA' => 'Tecnologías de la Información',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 155,
+    1 => 156,
+    2 => 157,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 155,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 156,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 157,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 180,
+    ),
+  ),
+)
+2025-07-09 12:05:24 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 180,
+  'TITULO' => 'JavaScript Essentials 2',
+  'CONTENIDO' => '<ul><li><strong>Módulo 1: Objetos sin clases</strong>&nbsp;Manipulación de objetos, comparación, clonación, métodos, getters/setters, prototipos y herencia.</li><li><strong>Módulo 2: Clases y programación basada en clases</strong>&nbsp;Declaración de clases, propiedades, herencia, miembros estáticos, getters y setters.</li><li><strong>Módulo 3: Objetos integrados</strong>&nbsp;Uso de objetos como String, Date, Array, Map, Set; manejo de JSON; operaciones matemáticas y expresiones regulares</li><li><strong>Módulo 4: Uso avanzado de funciones&nbsp;</strong>Parámetros extendidos, closures, funciones de orden superior, generadores, programación asincrónica con callbacks y promesas.</li></ul>',
+  'DESCRIPCION' => '<p>JavaScript Essentials 2 es un curso avanzado diseñado para profundizar en las capacidades de programación con JavaScript, abordando conceptos avanzados como la programación orientada a objetos (OOP), técnicas funcionales y asincrónicas. A través de un enfoque práctico, los estudiantes aprenderán a analizar y resolver problemas del mundo real, trabajar con estructuras de datos complejas y desarrollar aplicaciones más eficientes y escalables. Este curso prepara a los participantes construir un portafolio profesional que demuestre habilidades avanzadas en el desarrollo de aplicaciones con JavaScript.</p><h2>OBJETIVOS</h2><ul><li>Comprender e implementar clases y programación basada en clases para estructurar aplicaciones siguiendo principios modernos de diseño orientado a objetos.</li><li>Explorar y utilizar objetos integrados y estructuras avanzadas como Map, Set y JSON para optimizar el manejo de datos y mejorar el rendimiento de las aplicaciones</li><li>Aplicar técnicas avanzadas de programación funcional y asincrónica usando closures, funciones de orden superior, generadores y promesas para gestionar tareas complejas y asincrónicas.</li><li>Desarrollar habilidades analíticas y prácticas en resolución de problemas aplicando conceptos de JavaScript en proyectos prácticos para construir un portafolio competitivo.&nbsp;</li></ul><h2>LUGAR DE CELEBRACIÓN</h2><p>Facultad de Ingeniería en Sistemas, Electrónica e Industrial, CTT-FISEI. Campus Huachi, Ambato-Ecuador.</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-09',
+  'FECHAFIN' => '2025-09-10',
+  'CODIGOMODALIDAD' => 'PRES',
+  'HORAS' => 5,
+  'NOTAAPROBACION' => NULL,
+  'ES_PAGADO' => 1,
+  'COSTO' => '10.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 4,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 40,
+  'ES_DESTACADO' => 1,
+  'ASISTENCIAMINIMA' => '70.00',
+  'MODALIDAD' => 'Presencial',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Académica',
+  'PORTADA' => 'portada_686de83b995b3.png',
+  'GALERIA' => 'galeria_686de83b9a4e4.png',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 40,
+      'NOMBRE_CARRERA' => 'Tecnologías de la Información',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 43,
+      'NOMBRE_CARRERA' => 'Software',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 155,
+    1 => 156,
+    2 => 157,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 155,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 156,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => 180,
+    ),
+    11 => 
+    array (
+      'SECUENCIAL' => 157,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 180,
+    ),
+  ),
+)
+2025-07-09 12:07:07 [crearEvento] Rol asociado: RESPONSABLE
+2025-07-09 12:07:07 [crearEvento] Rol asociado: ORGANIZADOR
+2025-07-09 12:07:07 [crearEvento] Portada asociada: portada_686e3f4b95322_taller.jpg
+2025-07-09 12:07:07 [crearEvento] Galeria asociada: galeria_686e3f4b955b8_juan.jpg
+2025-07-09 12:07:07 [crearEvento] COMMIT OK
+2025-07-09 12:08:40 [editar] ID recibido: '190'
+2025-07-09 12:08:40 [getEvento] ID recibido: '190'
+2025-07-09 12:08:40 [getEvento] SQL: SELECT e.*, 
+                       me.NOMBRE AS MODALIDAD,
+                       te.NOMBRE AS TIPO,
+                       ce.NOMBRE AS CATEGORIA,
+                       e.ES_DESTACADO
+                FROM evento e
+                LEFT JOIN modalidad_evento me ON e.CODIGOMODALIDAD = me.CODIGO
+                LEFT JOIN tipo_evento te ON e.CODIGOTIPOEVENTO = te.CODIGO
+                LEFT JOIN categoria_evento ce ON e.SECUENCIALCATEGORIA = ce.SECUENCIAL
+                WHERE e.SECUENCIAL = ?
+2025-07-09 12:08:40 [getEvento] Resultado SQL: array (
+  'SECUENCIAL' => 190,
+  'TITULO' => 'prubea',
+  'CONTENIDO' => '<p>,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-12',
+  'FECHAFIN' => '2025-09-13',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 2,
+  'NOTAAPROBACION' => '9.00',
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '30.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Cultural',
+)
+2025-07-09 12:08:40 [getEvento] Evento final: array (
+  'SECUENCIAL' => 190,
+  'TITULO' => 'prubea',
+  'CONTENIDO' => '<p>,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-12',
+  'FECHAFIN' => '2025-09-13',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 2,
+  'NOTAAPROBACION' => '9.00',
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '30.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686e3f4b95322_taller.jpg',
+  'GALERIA' => 'galeria_686e3f4b955b8_juan.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 168,
+    1 => 169,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 168,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 190,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 169,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => 190,
+    ),
+  ),
+)
+2025-07-09 12:08:40 [editar] getEvento devuelve: array (
+  'SECUENCIAL' => 190,
+  'TITULO' => 'prubea',
+  'CONTENIDO' => '<p>,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</p>',
+  'DESCRIPCION' => '<p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>',
+  'CODIGOTIPOEVENTO' => 'CUR',
+  'FECHAINICIO' => '2025-09-12',
+  'FECHAFIN' => '2025-09-13',
+  'CODIGOMODALIDAD' => 'HIBR',
+  'HORAS' => 2,
+  'NOTAAPROBACION' => '9.00',
+  'ES_PAGADO' => 0,
+  'COSTO' => '0.00',
+  'ES_SOLO_INTERNOS' => 0,
+  'SECUENCIALCATEGORIA' => 2,
+  'ESTADO' => 'DISPONIBLE',
+  'CAPACIDAD' => 10,
+  'ES_DESTACADO' => 0,
+  'ASISTENCIAMINIMA' => '30.00',
+  'MODALIDAD' => 'Híbrida',
+  'TIPO' => 'Curso',
+  'CATEGORIA' => 'Cultural',
+  'PORTADA' => 'portada_686e3f4b95322_taller.jpg',
+  'GALERIA' => 'galeria_686e3f4b955b8_juan.jpg',
+  'CARRERAS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 3,
+      'NOMBRE_CARRERA' => 'Bioquímica',
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 4,
+      'NOMBRE_CARRERA' => 'Administración de Empresas EC',
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 5,
+      'NOMBRE_CARRERA' => 'Mercadotecnia',
+    ),
+  ),
+  'REQUISITOS' => 
+  array (
+    0 => 168,
+    1 => 169,
+  ),
+  'ORGANIZADORES' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'RESPONSABLE',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+    1 => 
+    array (
+      'SECUENCIALUSUARIO' => 92,
+      'ROL_ORGANIZADOR' => 'ORGANIZADOR',
+      'NOMBRES' => 'Andres',
+      'APELLIDOS' => 'Pérez',
+      'CORREO' => 'cjurado5795@uta.edu.ec',
+    ),
+  ),
+  'TODOS_REQUISITOS' => 
+  array (
+    0 => 
+    array (
+      'SECUENCIAL' => 1,
+      'DESCRIPCION' => 'Cédula o documento de identidad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    1 => 
+    array (
+      'SECUENCIAL' => 2,
+      'DESCRIPCION' => 'Comprobante de matrícula vigente',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    2 => 
+    array (
+      'SECUENCIAL' => 4,
+      'DESCRIPCION' => 'Aval Institucional',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    3 => 
+    array (
+      'SECUENCIAL' => 5,
+      'DESCRIPCION' => 'Carta de autorización de la facultad',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    4 => 
+    array (
+      'SECUENCIAL' => 6,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    5 => 
+    array (
+      'SECUENCIAL' => 7,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    6 => 
+    array (
+      'SECUENCIAL' => 9,
+      'DESCRIPCION' => 'Ticket de descuento',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    7 => 
+    array (
+      'SECUENCIAL' => 10,
+      'DESCRIPCION' => 'Carta de invitación oficial',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    8 => 
+    array (
+      'SECUENCIAL' => 142,
+      'DESCRIPCION' => 'Acta de Matrimonio',
+      'SECUENCIALEVENTO' => NULL,
+    ),
+    9 => 
+    array (
+      'SECUENCIAL' => 168,
+      'DESCRIPCION' => 'Ensayo o trabajo previo requerido',
+      'SECUENCIALEVENTO' => 190,
+    ),
+    10 => 
+    array (
+      'SECUENCIAL' => 169,
+      'DESCRIPCION' => 'Certificado de Aprobación Inglés B1',
+      'SECUENCIALEVENTO' => 190,
+    ),
+  ),
+)
